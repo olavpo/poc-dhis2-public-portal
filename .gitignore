@@ -1,0 +1,8 @@
+node_modules/
+.DS_Store
+builds/
+current
+evidence/sources/**/*.parquet
+.evidence/
+**/.evidence-queries/
+coverage/
