@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 34" role="img" aria-label="DHIS2">
+  <text x="0" y="26" font-family="Inter, system-ui, -apple-system, Segoe UI, sans-serif" font-size="27" font-weight="700" letter-spacing="0.3">
+    <tspan fill="#1f6aa5">DHIS</tspan><tspan fill="#46a485">2</tspan>
+  </text>
+  <text x="103" y="26" font-family="Inter, system-ui, -apple-system, Segoe UI, sans-serif" font-size="11" font-weight="500" letter-spacing="0.2" fill="#8dacbf">portal</text>
+</svg>

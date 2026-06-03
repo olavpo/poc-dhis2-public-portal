@@ -1,12 +1,15 @@
 /**
- * Idempotent build-time optimisations applied to the installed Evidence template.
+ * Idempotent build-time optimisations + branding applied to the installed Evidence template.
  * These are NOT environment workarounds — the build is stock prerendering. They are:
  *
  *   1. adapter-static `fallback: '200.html'` — a safety net so a route the prerender
  *      crawler didn't reach still resolves client-side instead of 404-ing.
  *   2. lazy DuckDB-WASM init — defer booting the ~6 MB (compressed) engine until the
- *      first client-side query, so baked pages (national, indicators) that only read
- *      prerendered .arrow results never download it.
+ *      first client-side query, so baked pages that only read prerendered .arrow
+ *      results never download it.
+ *   3. layout + branding — full-width content, a DHIS2 logo in place of the Evidence
+ *      wordmark, and the "Built with Evidence" footer hidden. The default layout is the
+ *      stock `<EvidenceDefaultLayout>`; we only pass its existing props.
  *
  * Patches the installed template so they survive the .evidence/template sync.
  */
@@ -72,8 +75,15 @@ patch(
   'lazy duckdb init',
 );
 
-// (The Parquet read path is stock Evidence — manifest tables load via registerFileURL.
-// The per-state school tier is read on demand by the SchoolExplorer component, which
-// queries its own Parquet by URL; it is not in the manifest.)
+// Layout + branding: pass props to the stock <EvidenceDefaultLayout>. fullWidth makes the
+// content use the available width (so a single element fills the row and the responsive
+// grids spread out); the logo props swap the Evidence wordmark for the DHIS2 mark
+// (light/dark variants from evidence/static); builtWithEvidence={false} hides the footer.
+patch(
+  'src/pages/+layout.svelte',
+  '<EvidenceDefaultLayout {data}>',
+  '<EvidenceDefaultLayout {data} fullWidth={true} builtWithEvidence={false} lightLogo={"/dhis2-logo.svg"} darkLogo={"/dhis2-logo-dark.svg"}>',
+  'layout: full width + DHIS2 logo + no Evidence footer',
+);
 
-console.log('Evidence template patched (adapter fallback + lazy DuckDB init).');
+console.log('Evidence template patched (adapter fallback + lazy DuckDB init + DHIS2 branding).');
