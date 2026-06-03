@@ -16,7 +16,7 @@ if (!dir) { console.error('usage: precompress.mjs <dir>'); process.exit(1); }
 // .wasm included: the DuckDB engine wasm is ~33 MB and ships uncompressed otherwise
 // (the single largest asset). It compresses ~4x and the browser decompresses it
 // transparently for WebAssembly.instantiateStreaming.
-const EXT = new Set(['.js', '.mjs', '.css', '.html', '.json', '.svg', '.map', '.wasm']);
+const EXT = new Set(['.js', '.mjs', '.css', '.html', '.json', '.geojson', '.svg', '.map', '.wasm']);
 const MIN = 1024; // don't bother with tiny files
 let n = 0, raw = 0, gz = 0, br = 0;
 
