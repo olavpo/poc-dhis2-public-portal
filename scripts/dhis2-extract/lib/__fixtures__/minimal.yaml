@@ -1,0 +1,4 @@
+baseUrl: https://example.org/dhis
+dx: [Uvn6LCg7dVU]
+ouLevels: [1, 2]
+periods: { range: '2024..2024', types: [yearly] }
