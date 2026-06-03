@@ -86,21 +86,22 @@ disaggregations:               # optional extra-dimension "cuts" → separate fa
   resolved to a human label (`category_name`) from the analytics `metaData.items` so
   chart legends need no further lookup. Keeps the primary star schema clean; isolates
   extra-dimension complexity. Filename uses the config `slug` (e.g. `fact_facility_type.csv`).
-- `ou.csv` — from `GET /api/geoFeatures.json?ou=ou:LEVEL-n` per level. Exact field map:
+- `ou.csv` — hierarchy from `GET /api/organisationUnits.json?fields=id,name,level,parent[id,name],path&filter=level:in:[…]&paging=false`, **left-joined to geometry** (`ty`,`lng`,`lat`) from geoFeatures by id. Columns:
 
-  | ou.csv column | geoFeatures field | example |
+  | ou.csv column | source | example |
   |---|---|---|
-  | `id` | `id` | `YuQRtpLP10I` |
-  | `name` | `na` | `Badjia` |
-  | `level` | `le` | `3` |
-  | `parent_id` | `pi` | `O6uvpzGd5pu` |
-  | `parent_name` | `pn` | `Bo` |
-  | `path` | `pg` (ancestor path, self excluded) | `ImspTQPwCqd/O6uvpzGd5pu` |
-  | `ty` | `ty` (1=point/facility, 2=polygon/area) | `2` |
+  | `id` | organisationUnits `id` | `YuQRtpLP10I` |
+  | `name` | organisationUnits `name` | `Badjia` |
+  | `level` | organisationUnits `level` | `3` |
+  | `parent_id` | organisationUnits `parent.id` (`''` for root) | `O6uvpzGd5pu` |
+  | `parent_name` | organisationUnits `parent.name` | `Bo` |
+  | `path` | organisationUnits `path` (DHIS2 form: leading `/`, **includes self**) | `/ImspTQPwCqd/O6uvpzGd5pu/YuQRtpLP10I` |
+  | `ty` | geoFeatures `ty` (1=point, 2=polygon; `''` if no geometry) | `2` |
+  | `lng`,`lat` | geoFeatures point `co` (`''` for polygons / no geometry) | `-12.9487`,`9.0131` |
 
-  (Geometry `co` is **not** in `ou.csv`; it goes to `ou.geojson`.)
-- `ou.geojson` — FeatureCollection: polygons (areas) + points (facilities), built from
-  the same geoFeatures call (`co` → geometry, `id`/`na`/`le` → properties).
+  **Why two endpoints:** geoFeatures omits geometry-less units (e.g. the national root), so it cannot be the hierarchy source — see "Known pitfalls". The descendant-or-self scope predicate works with the DHIS2 `path` (self-inclusive): `('/' || path || '/') like '%/' || root || '/%'`.
+- `ou.geojson` — FeatureCollection: polygons (areas) + points (facilities), built from the
+  geoFeatures call (`co` → geometry, `id`/`na`/`le` → properties).
 - `dx.csv` — `(id, name)` from analytics `metaData.items` (covers both indicators and
   data elements uniformly; no separate metadata calls needed).
 - `pe.csv` — `(period, periodType, year, quarter, month, startDate)` parsed locally.
@@ -205,6 +206,19 @@ set must gain `.geojson` so `ou.geojson` (largest at level 4) ships `.br`/`.gz`.
 - Live DHIS2 API calls from the browser (chosen against — local-parquet drill-down).
 - Authentication / non-public data.
 - Pixel-perfect DHIS2 layout parity.
+
+## Known pitfalls (discovered during implementation)
+- **geoFeatures ≠ the org-unit hierarchy.** `geoFeatures` returns only units that *have*
+  geometry; the SL demo's national root has none, so sourcing the hierarchy from it drops
+  the root entirely. Symptom: the root-OU `<Dropdown>`'s `defaultValue` matches no option,
+  the input never initialises, and **every input-driven query hangs in "loading" forever**
+  (charts show grey skeletons, no error). Fix: hierarchy from `/api/organisationUnits`,
+  geometry from geoFeatures, merged by id.
+- **Dropdown defaultValue must match an option's value, by type.** A `defaultValue="2026"`
+  (string) will not select an option whose value column is an integer. Keep year columns as
+  TEXT, or pass a numeric default. An uninitialised input also hangs its queries.
+- **The DHIS2 demo's analytics live in a recent window** (≈ current ± 1 year). Aim the
+  extract's period range there (2025..2026 as of mid-2026), not at arbitrary past years.
 
 ## Risks / open points for the plan
 - **Analytics chunking:** large requests may hit URL/row limits — chunk by period-type
