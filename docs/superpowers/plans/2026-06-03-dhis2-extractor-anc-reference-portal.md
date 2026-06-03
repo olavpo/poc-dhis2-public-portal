@@ -739,6 +739,8 @@ git commit -m "build: precompress .geojson assets"
 # PART B — Evidence portal (consumes the extract)
 
 > Pages are not unit-tested; verify each by building and (for engine pages) a Playwright check using the **webapp-testing** skill (`scripts/with_server.py`). The acceptance signal for *baked* pages is **no DuckDB engine request**; for *engine* pages it's that changing an input changes the rendered values.
+>
+> **Build ordering (important):** `/anc/index.md` links to `/anc/dashboard` and `/anc/profile`, and SvelteKit's prerenderer fails on internal links whose target pages don't exist yet. So **author all four page files (Tasks 11–14) before running `npm run build`**, then do one consolidated build + per-page verification. The per-task "Build" steps below are therefore deferred to a single build at the end of Task 14 / start of Task 15 — author and commit page content per task, but don't build until the cross-linked pages all exist.
 
 ### Task 10: CSV source + `npm run sources`
 
