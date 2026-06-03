@@ -22,10 +22,20 @@ data sources**: those are added per deployment.
   symlink; **serve** is a range-capable static server (nginx stand-in) that serves the
   precompressed `.br`/`.gz` assets.
 
-## Add your portal
+## Worked example: Antenatal Care (Sierra Leone)
 
-1. Add a datasource under `evidence/sources/` (see the Evidence docs) — for DHIS2,
-   point a DuckDB source at an analytics-API extract, or drop pre-extracted files.
+A complete reference portal built on this foundation, from a live DHIS2 demo instance:
+
+- **[National overview](/anc)** — baked; renders with no SQL engine downloaded.
+- **[ANC dashboard](/anc/dashboard)** — the full DHIS2 dashboard replica; pick a root org
+  unit and reference year and every chart/map recomputes in your browser.
+- **[Org-unit profile](/anc/profile)** — drill into any district or chiefdom on demand.
+
+## Add your own portal
+
+1. Add a datasource under `evidence/sources/` — for DHIS2, use the bundled extractor
+   (`scripts/dhis2-extract/`), point a DuckDB source at an analytics-API extract, or drop
+   pre-extracted files.
 2. Add Markdown+SQL pages under `evidence/pages/`.
 3. `npm run sources && npm run build && npm run deploy`.
 

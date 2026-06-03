@@ -4,14 +4,34 @@ A reusable, **static** public-portal foundation for DHIS2 analytics data, built 
 [Evidence](https://evidence.dev) over DuckDB-WASM. No database, no app server — the
 site is prerendered to static files and served by any static host.
 
-This branch (`master`) is the **infrastructure only**: the build/deploy/serve pipeline,
-asset precompression, a range-capable static server (nginx stand-in), and two build-time
-Evidence optimisations. It ships with **no dashboards and no datasources** — you add
-those per deployment.
+This branch (`master`) provides the build/deploy/serve pipeline, asset precompression, a
+range-capable static server (nginx stand-in), and two build-time Evidence optimisations —
+**plus a self-contained Sierra Leone reference example**: a generic DHIS2 extractor and a
+worked **Antenatal Care** portal (`/anc`) replicating DHIS2 dashboard `nghVC4wtyzi`.
 
-> **Worked example:** the **`the prior example`** branch is a complete public education-statistics
-> portal (another portal) built on this foundation — synthetic data, national → state →
-> LGA → school drill-down, and a minister's dashboard. Use it as a reference.
+The example spans the full **baked ↔ engine** spectrum:
+
+- **`/anc`** — baked national overview; pure static HTML, no SQL engine downloaded.
+- **`/anc/dashboard`** — the 11-item ANC replica; a root-org-unit + reference-year selector
+  re-computes every chart and map client-side in DuckDB-WASM.
+- **`/anc/profile`** — on-demand org-unit profile drill-down (queried live in-browser,
+  deep-linkable).
+
+> **Another worked example:** the **`the prior example`** branch is a complete public
+> education-statistics portal (another portal) — national → state → LGA → school
+> drill-down and a minister's dashboard.
+
+## ANC reference example
+
+```bash
+# 1. Extract from a live DHIS2 instance (public demo: admin/district).
+DHIS2_USERNAME=admin DHIS2_PASSWORD=district npm run extract:anc
+# 2. Ingest → parquet, build, deploy, serve.
+npm run sources && npm run build && npm run deploy && npm run serve
+```
+
+The extractor (`scripts/dhis2-extract/`) is generic and config-driven — point
+`config/anc.yaml` (or your own) at any DHIS2 instance. See its `README.md`.
 
 ## Pipeline
 
