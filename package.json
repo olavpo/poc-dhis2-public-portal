@@ -13,6 +13,7 @@
     "serve": "bash scripts/serve.sh",
     "test": "vitest run"
   },
+  "dependencies": { "yaml": "^2.5.0" },
   "devDependencies": {
     "tsx": "^4.19.2",
     "typescript": "^5.6.3",
