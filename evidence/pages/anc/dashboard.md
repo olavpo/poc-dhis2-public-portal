@@ -108,7 +108,7 @@ order by f.value desc
   <LineChart data={coverage_yoy} x=month y=value series=year title="ANC 1 coverage — year over year (root unit)" chartAreaHeight={363} />
   <ECharts height="420px" config={{
     title: { text: 'ANC 1 coverage by chiefdom (reference year)', left: 'center', textStyle: { fontSize: 14, fontWeight: 'bold' } },
-    grid: { left: 130, right: 56, top: 40, bottom: 16 },
+    grid: { left: 8, right: 56, top: 40, bottom: 16, containLabel: true },
     tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' }, formatter: '{b}: {c}' },
     xAxis: { type: 'value' },
     yAxis: { type: 'category', inverse: true, data: [...coverage_chiefdoms].map(r => r.chiefdom) },
@@ -227,7 +227,7 @@ where f.dx='Tt5TAvdfdVK' and f.periodType='YEARLY' and f.pe='${inputs.refyear.va
     title="ANC IPT 2 Coverage (chiefdoms)" tooltip={[{id:'name',showColumnTitles:false},{id:'value',fmt:'num1'}]}
     link="profile_url" height={400} />
   <AreaMap data={llitn_districts} geoJsonUrl="/anc.geojson" geoId="id" areaCol="id" value="value"
-    title="ANC LLITN coverage — districts" height={400} />
+    title="ANC LLITN coverage — districts" tooltip={[{id:'name',showColumnTitles:false},{id:'value',fmt:'num1'}]} height={400} />
 </Grid>
 
 <PointMap data={llitn_facilities} lat="lat" long="lng" value="value" pointName="name"
