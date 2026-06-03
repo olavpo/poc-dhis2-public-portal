@@ -1,0 +1,19 @@
+# Antenatal Care reference extract (Sierra Leone demo). A *superset* — all levels and a
+# multi-year, multi-granularity period range — so the portal's root-OU and reference-period
+# selectors have data to filter. Auth comes from env: DHIS2_USERNAME / DHIS2_PASSWORD.
+baseUrl: https://play.im.dhis2.org/stable-2-43-0
+dx: [Uvn6LCg7dVU, OdiHJayrsKo, sB79w2hiLp8, fbfJHSPpUQD, cYeuwXTCPkU,
+     Jtf34kNZhzP, hfdmMSPBgLG, c8fABiNpT0B, Tt5TAvdfdVK]
+ouLevels: [1, 2, 3, 4]
+periods:
+  range: '2021..2025'
+  types: [monthly, quarterly, yearly]
+disaggregations:
+  - dim: J5jldMd8OHv      # Facility Type — items 7 & 8
+    slug: facility_type
+    dx: [hfdmMSPBgLG, Jtf34kNZhzP]
+    ouLevels: [1, 2]
+  - dim: fMZEcRHuamy      # Fixed vs Outreach — item 9
+    slug: fixed_outreach
+    dx: [fbfJHSPpUQD, cYeuwXTCPkU, Jtf34kNZhzP, hfdmMSPBgLG]
+    ouLevels: [1, 2]

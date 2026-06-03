@@ -12,3 +12,8 @@ evidence/sources/**/*.duckdb
 
 # Local extract / data output
 data/
+
+# DHIS2 extractor output (regenerate with `npm run extract:anc`)
+evidence/sources/anc/*.csv
+evidence/sources/anc/*.geojson
+evidence/static/anc.geojson

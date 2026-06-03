@@ -11,6 +11,7 @@
     "dev": "npm --prefix evidence run dev",
     "deploy": "bash scripts/deploy.sh",
     "serve": "bash scripts/serve.sh",
+    "extract:anc": "node scripts/dhis2-extract/index.mjs --config scripts/dhis2-extract/config/anc.yaml --out evidence/sources/anc && mkdir -p evidence/static && cp evidence/sources/anc/ou.geojson evidence/static/anc.geojson",
     "test": "vitest run"
   },
   "dependencies": { "yaml": "^2.5.0" },
