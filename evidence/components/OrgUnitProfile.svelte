@@ -1,42 +1,64 @@
 <script>
 	import { page } from '$app/stores';
-	import { buildQuery } from '@evidence-dev/component-utilities/buildQuery';
+	import { query } from '@evidence-dev/universal-sql/client-duckdb';
+	import { onMount } from 'svelte';
 
-	// Read the deep-link target, e.g. /anc/profile?ou=O6uvpzGd5pu
-	// `$page` is available during SSR/prerender too, so guard on a missing param:
-	// when there is no `?ou=`, `ouId` is null and we render nothing.
-	$: ouId = $page.url.searchParams.get('ou');
+	// Client-only: this section reads the `?ou=` query string and queries the manifest
+	// tables in DuckDB-WASM. It must NOT touch either during SSR/prerender:
+	//  - `$page.url.searchParams` THROWS during prerender ("Cannot access url.searchParams
+	//    on a page with prerendering enabled"), and
+	//  - `query()` needs the browser engine + the parquet views the layout registers.
+	// So gate everything behind onMount — mirroring the established SchoolExplorer-style pattern.
+	let mounted = false;
+	onMount(() => {
+		mounted = true;
+	});
+
+	// Read the deep-link target, e.g. /anc/profile?ou=O6uvpzGd5pu (browser only).
+	$: ouId = mounted ? $page.url.searchParams.get('ou') : null;
 
 	// Defensive: only allow DHIS2-style ids so we never inject odd characters
 	// into the SQL string. If it doesn't look like an id, treat as absent.
 	$: safeOu = ouId && /^[A-Za-z0-9]+$/.test(ouId) ? ouId : null;
 
-	// buildQuery(queryString, id, initialData?, opts?) -> reactive Query store
-	// (verified against @evidence-dev/component-utilities 4.0.13 +
-	// @evidence-dev/sdk 4.0.2: buildQuery returns Query.create(...), a store whose
-	// dereferenced value ($q) is an array-like proxy of rows).
-	$: q = safeOu
-		? buildQuery(
+	let rows = [];
+	let loading = false;
+	let error = null;
+
+	async function load(ou) {
+		loading = true;
+		error = null;
+		try {
+			const data = await query(
 				`select d.name as indicator, f.value as value
-				 from anc.fact f join anc.dx d on f.dx=d.id
-				 where f.ou = '${safeOu}' and f.periodType='YEARLY'
-				   and f.pe = (select max(pe) from anc.fact where periodType='YEARLY')
-				 order by d.name`,
-				`org_unit_profile_${safeOu}`
-			)
-		: null;
+				 from anc.fact f join anc.dx d on f.dx = d.id
+				 where f.ou = '${ou}' and f.periodType = 'YEARLY'
+				   and f.pe = (select max(pe) from anc.fact where periodType = 'YEARLY')
+				 order by d.name`
+			);
+			rows = [...data].map((r) => ({ indicator: String(r.indicator), value: Number(r.value) }));
+		} catch (e) {
+			error = String(e);
+			rows = [];
+		}
+		loading = false;
+	}
+
+	$: if (mounted && safeOu) load(safeOu);
 </script>
 
-{#if safeOu && q}
+{#if safeOu}
 	<div class="org-unit-profile">
 		<h3>Profile for {safeOu} (deep link)</h3>
-		{#if $q.error}
+		{#if loading}
+			<p>Loading profile for <code>{safeOu}</code>…</p>
+		{:else if error}
 			<p>Could not load profile for <code>{safeOu}</code>.</p>
-		{:else if $q.length === 0}
+		{:else if rows.length === 0}
 			<p>No annual indicators found for <code>{safeOu}</code>.</p>
 		{:else}
 			<ul>
-				{#each [...$q] as r}
+				{#each rows as r}
 					<li>{r.indicator}: {r.value}</li>
 				{/each}
 			</ul>

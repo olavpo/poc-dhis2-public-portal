@@ -3,17 +3,17 @@ title: Antenatal Care dashboard
 ---
 
 ```sql root_options
-select id as value, name as label, level from anc.ou where level in (1,2) order by level, name
+select id, name, level from anc.ou where level in (1,2) order by level, name
 ```
 
 ```sql year_options
 -- Source years from actual fact data (not anc.pe), so the selector never offers empty years.
-select distinct cast(substr(pe,1,4) as integer) as value, substr(pe,1,4) as label
-from anc.fact where periodType='YEARLY' order by value desc
+-- Keep yr as TEXT so it matches the string defaultValue (Evidence parses defaultValue as a string).
+select distinct substr(pe,1,4) as yr from anc.fact where periodType='YEARLY' order by yr desc
 ```
 
-<Dropdown data={root_options} name=root value=value label=label title="Root org unit" defaultValue="ImspTQPwCqd" />
-<Dropdown data={year_options} name=refyear value=value label=label title="Reference year" />
+<Dropdown data={root_options} name=root value=id label=name title="Root org unit" defaultValue="ImspTQPwCqd" />
+<Dropdown data={year_options} name=refyear value=yr title="Reference year" defaultValue="2026" />
 
 *ANC Overview — coverage and visits for the selected root unit and reference year. Use the icons on each chart to switch table/chart views.*
 
