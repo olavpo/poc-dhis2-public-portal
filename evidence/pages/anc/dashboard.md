@@ -18,18 +18,19 @@ select distinct substr(pe,1,4) as yr from anc.fact where periodType='YEARLY' ord
 *ANC Overview — coverage and visits for the selected root unit and reference year. Use the icons on each chart to switch table/chart views.*
 
 <!--
-Root-OU scope (descendant-or-self). The extractor's `path` (from geoFeatures `pg`) EXCLUDES
-self, so scoping includes the root itself and matches on `/`-segment boundaries to avoid
-id-substring false positives. The exact predicate (substitute the chart's target level N):
+NOTE ON LAYOUT: keep ```sql``` query blocks OUTSIDE <Grid>. In mdsvex each sql block renders
+an (invisible) container element; if it sits inside <Grid> it consumes a grid cell, pushing the
+chart into the next column and leaving a blank cell. So: define queries first, then put ONLY the
+chart components inside <Grid>.
 
+Root-OU scope (descendant-or-self). The extractor's `path` is the DHIS2 path
+("/root/.../self", includes self); match on `/`-segment boundaries:
   and o.level = N
   and ( o.id = '${inputs.root.value}'
         or ('/' || o.path || '/') like '%/' || '${inputs.root.value}' || '/%' )
 -->
 
 ## Coverage
-
-<Grid cols=2>
 
 ```sql coverage_quarterly
 -- Item 2: ANC 1 & 2 coverage by district, last 4 quarters (descendant-or-self of root, level 2).
@@ -56,15 +57,6 @@ group by o.name, d.name
 order by o.name, d.name
 ```
 
-<BarChart
-  data={coverage_quarterly}
-  x=district
-  y=value
-  series=indicator
-  title="ANC 1 & 2 coverage by district (last 4 quarters)"
-  swapXY=true
-/>
-
 ```sql coverage_avg_monthly
 -- Item 3: ANC 3 coverage — average over last 12 months by district (descendant-or-self, level 2).
 select district, avg(value) as value
@@ -85,18 +77,6 @@ group by district
 order by value desc
 ```
 
-<BarChart
-  data={coverage_avg_monthly}
-  x=district
-  y=value
-  title="ANC 3 coverage — avg over last 12 months"
-  swapXY=true
-/>
-
-</Grid>
-
-<Grid cols=2>
-
 ```sql coverage_yoy
 -- Item 4: ANC 1 coverage at the root unit, monthly, one line per year (year-over-year).
 select p.month as month, cast(p.year as varchar) as year, f.value as value
@@ -107,14 +87,6 @@ where f.dx = 'Uvn6LCg7dVU'
   and f.periodType = 'MONTHLY'
 order by p.year, p.month
 ```
-
-<LineChart
-  data={coverage_yoy}
-  x=month
-  y=value
-  series=year
-  title="ANC 1 coverage — year over year (root unit)"
-/>
 
 ```sql coverage_chiefdoms
 -- Item 5: ANC 1 coverage by chiefdom (level 3), reference year (descendant-or-self of root).
@@ -130,19 +102,14 @@ where f.dx = 'Uvn6LCg7dVU'
 order by f.value desc
 ```
 
-<BarChart
-  data={coverage_chiefdoms}
-  x=chiefdom
-  y=value
-  title="ANC 1 coverage by chiefdom (reference year)"
-  swapXY=true
-/>
-
+<Grid cols=2>
+  <BarChart data={coverage_quarterly} x=district y=value series=indicator title="ANC 1 & 2 coverage by district (last 4 quarters)" swapXY=true />
+  <BarChart data={coverage_avg_monthly} x=district y=value title="ANC 3 coverage — avg over last 12 months" swapXY=true />
+  <LineChart data={coverage_yoy} x=month y=value series=year title="ANC 1 coverage — year over year (root unit)" />
+  <BarChart data={coverage_chiefdoms} x=chiefdom y=value title="ANC 1 coverage by chiefdom (reference year)" swapXY=true />
 </Grid>
 
 ## Visits
-
-<Grid cols=2>
 
 ```sql visits_cumulative
 -- Item 6: ANC 1st visit — cumulative monthly total per district over last 12 months.
@@ -163,14 +130,6 @@ from (
 order by district, month
 ```
 
-<LineChart
-  data={visits_cumulative}
-  x=month
-  y=cum
-  series=district
-  title="ANC 1st visit — cumulative (last 12 months)"
-/>
-
 ```sql visits_facility_type_pie
 -- Item 7: ANC 4th+ visits at the root unit, reference year, split by facility type (pie).
 select category_name, value
@@ -181,24 +140,6 @@ where dx = 'hfdmMSPBgLG'
   and ou = '${inputs.root.value}'
 order by value desc
 ```
-
-<ECharts
-  config={{
-    tooltip: { trigger: 'item', formatter: '{b}: {c} ({d}%)' },
-    legend: { bottom: 0 },
-    title: { text: 'ANC 4th+ visits by facility type', left: 'center', textStyle: { fontSize: 14 } },
-    series: [{
-      type: 'pie',
-      radius: '60%',
-      center: ['50%', '50%'],
-      data: [...visits_facility_type_pie].map(r => ({ name: r.category_name, value: r.value }))
-    }]
-  }}
-/>
-
-</Grid>
-
-<Grid cols=2>
 
 ```sql visits_3rd_facility_type
 -- Item 8: ANC 3rd visit at the root unit, monthly, 100%-stacked by facility type.
@@ -213,15 +154,6 @@ group by p.startDate, f.category_name
 order by p.startDate, f.category_name
 ```
 
-<BarChart
-  data={visits_3rd_facility_type}
-  x=month
-  y=value
-  series=category_name
-  type=stacked100
-  title="ANC 3rd visit by facility type (monthly, % share)"
-/>
-
 ```sql visits_fixed_outreach
 -- Item 9: 4 visit indicators at the root unit, reference year, 100%-stacked by Fixed vs Outreach.
 select d.name as indicator, f.category_name as category_name, sum(f.value) as value
@@ -235,16 +167,17 @@ group by d.name, f.category_name
 order by d.name, f.category_name
 ```
 
-<BarChart
-  data={visits_fixed_outreach}
-  x=indicator
-  y=value
-  series=category_name
-  type=stacked100
-  title="ANC visits: fixed vs outreach (reference year)"
-  swapXY=true
-/>
-
+<Grid cols=2>
+  <LineChart data={visits_cumulative} x=month y=cum series=district title="ANC 1st visit — cumulative (last 12 months)" />
+  <ECharts config={{
+    tooltip: { trigger: 'item', formatter: '{b}: {c} ({d}%)' },
+    legend: { bottom: 0 },
+    title: { text: 'ANC 4th+ visits by facility type', left: 'center', textStyle: { fontSize: 14 } },
+    series: [{ type: 'pie', radius: '60%', center: ['50%', '50%'],
+      data: [...visits_facility_type_pie].map(r => ({ name: r.category_name, value: r.value })) }]
+  }} />
+  <BarChart data={visits_3rd_facility_type} x=month y=value series=category_name type=stacked100 title="ANC 3rd visit by facility type (monthly, % share)" />
+  <BarChart data={visits_fixed_outreach} x=indicator y=value series=category_name type=stacked100 title="ANC visits: fixed vs outreach (reference year)" swapXY=true />
 </Grid>
 
 ## Maps
@@ -259,10 +192,6 @@ where f.dx = 'c8fABiNpT0B' and f.periodType = 'YEARLY' and f.pe = '${inputs.refy
         or ('/' || o.path || '/') like '%/' || '${inputs.root.value}' || '/%' )
 ```
 
-<AreaMap data={ipt2_map} geoJsonUrl="/anc.geojson" geoId="id" areaCol="id" value="value"
-  title="ANC IPT 2 Coverage" tooltip={[{id:'name',showColumnTitles:false},{id:'value',fmt:'num1'}]}
-  link="profile_url" height={400} />
-
 ```sql llitn_districts
 -- Item 11a: ANC LLITN coverage choropleth by district (level 2).
 select o.id, o.name, f.value from anc.fact f join anc.ou o on f.ou=o.id
@@ -273,9 +202,7 @@ where f.dx='Tt5TAvdfdVK' and f.periodType='YEARLY' and f.pe='${inputs.refyear.va
 ```
 
 ```sql llitn_facilities
--- Item 11b: ANC LLITN coverage by facility (level 4 points). `lng`/`lat` are DOUBLE in the
--- parquet (polygons carry NULL), so filter on `is not null`, not `<> ''` (which errors on a
--- numeric column under the CSV connector's auto_detect typing).
+-- Item 11b: ANC LLITN coverage by facility (level 4 points). lng/lat are DOUBLE (polygons → NULL).
 select o.name, o.lng, o.lat, f.value from anc.fact f join anc.ou o on f.ou=o.id
 where f.dx='Tt5TAvdfdVK' and f.periodType='YEARLY' and f.pe='${inputs.refyear.value}'
   and o.level=4 and o.lng is not null
@@ -283,8 +210,13 @@ where f.dx='Tt5TAvdfdVK' and f.periodType='YEARLY' and f.pe='${inputs.refyear.va
         or ('/' || o.path || '/') like '%/' || '${inputs.root.value}' || '/%' )
 ```
 
-<AreaMap data={llitn_districts} geoJsonUrl="/anc.geojson" geoId="id" areaCol="id" value="value"
-  title="ANC LLITN coverage — districts" height={400} />
+<Grid cols=2>
+  <AreaMap data={ipt2_map} geoJsonUrl="/anc.geojson" geoId="id" areaCol="id" value="value"
+    title="ANC IPT 2 Coverage (chiefdoms)" tooltip={[{id:'name',showColumnTitles:false},{id:'value',fmt:'num1'}]}
+    link="profile_url" height={400} />
+  <AreaMap data={llitn_districts} geoJsonUrl="/anc.geojson" geoId="id" areaCol="id" value="value"
+    title="ANC LLITN coverage — districts" height={400} />
+</Grid>
 
 <PointMap data={llitn_facilities} lat="lat" long="lng" value="value" pointName="name"
-  title="ANC LLITN coverage — facilities" height={400} />
+  title="ANC LLITN coverage — facilities" height={420} />
