@@ -246,3 +246,45 @@ order by d.name, f.category_name
 />
 
 </Grid>
+
+## Maps
+
+```sql ipt2_map
+-- Item 10: ANC IPT 2 coverage choropleth by chiefdom (level 3); profile_url deep-links into the profile page.
+select o.id, o.name, f.value, '/anc/profile?ou=' || o.id as profile_url
+from anc.fact f join anc.ou o on f.ou = o.id
+where f.dx = 'c8fABiNpT0B' and f.periodType = 'YEARLY' and f.pe = '${inputs.refyear.value}'
+  and o.level = 3
+  and ( o.id = '${inputs.root.value}'
+        or ('/' || o.path || '/') like '%/' || '${inputs.root.value}' || '/%' )
+```
+
+<AreaMap data={ipt2_map} geoJsonUrl="/anc.geojson" geoId="id" areaCol="id" value="value"
+  title="ANC IPT 2 Coverage" tooltip={[{id:'name',showColumnTitles:false},{id:'value',fmt:'num1'}]}
+  link="profile_url" height={400} />
+
+```sql llitn_districts
+-- Item 11a: ANC LLITN coverage choropleth by district (level 2).
+select o.id, o.name, f.value from anc.fact f join anc.ou o on f.ou=o.id
+where f.dx='Tt5TAvdfdVK' and f.periodType='YEARLY' and f.pe='${inputs.refyear.value}'
+  and o.level=2
+  and ( o.id = '${inputs.root.value}'
+        or ('/' || o.path || '/') like '%/' || '${inputs.root.value}' || '/%' )
+```
+
+```sql llitn_facilities
+-- Item 11b: ANC LLITN coverage by facility (level 4 points). `lng`/`lat` are DOUBLE in the
+-- parquet (polygons carry NULL), so filter on `is not null`, not `<> ''` (which errors on a
+-- numeric column under the CSV connector's auto_detect typing).
+select o.name, o.lng, o.lat, f.value from anc.fact f join anc.ou o on f.ou=o.id
+where f.dx='Tt5TAvdfdVK' and f.periodType='YEARLY' and f.pe='${inputs.refyear.value}'
+  and o.level=4 and o.lng is not null
+  and ( o.id = '${inputs.root.value}'
+        or ('/' || o.path || '/') like '%/' || '${inputs.root.value}' || '/%' )
+```
+
+<AreaMap data={llitn_districts} geoJsonUrl="/anc.geojson" geoId="id" areaCol="id" value="value"
+  title="ANC LLITN coverage — districts" height={400} />
+
+<PointMap data={llitn_facilities} lat="lat" long="lng" value="value" pointName="name"
+  title="ANC LLITN coverage — facilities" height={400} />
