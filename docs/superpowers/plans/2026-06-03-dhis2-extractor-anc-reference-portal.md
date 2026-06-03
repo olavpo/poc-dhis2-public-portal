@@ -944,7 +944,7 @@ where f.dx='Tt5TAvdfdVK' and f.periodType='YEARLY' and f.pe='${inputs.refyear.va
 ```sql llitn_facilities
 select o.name, o.lng, o.lat, f.value from anc.fact f join anc.ou o on f.ou=o.id
 where f.dx='Tt5TAvdfdVK' and f.periodType='YEARLY' and f.pe='${inputs.refyear.value}'
-  and o.level=4 and o.lng <> ''
+  and o.level=4 and o.lng is not null   -- NOT o.lng <> '' : DuckDB types lng/lat as DOUBLE (polygons → NULL); '' comparison errors
   and ( o.id = '${inputs.root.value}'
         or ('/' || o.path || '/') like '%/' || '${inputs.root.value}' || '/%' )
 ```
