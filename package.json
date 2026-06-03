@@ -1,0 +1,21 @@
+{
+  "name": "dhis2-public-portal",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Generic static public-portal foundation for DHIS2 — Evidence + DuckDB-WASM, served from static files",
+  "scripts": {
+    "patch": "node evidence/scripts/patch-evidence.mjs",
+    "sources": "npm --prefix evidence run sources",
+    "build": "npm run patch && npm --prefix evidence run build",
+    "dev": "npm --prefix evidence run dev",
+    "deploy": "bash scripts/deploy.sh",
+    "serve": "bash scripts/serve.sh",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "tsx": "^4.19.2",
+    "typescript": "^5.6.3",
+    "vitest": "^2.1.8"
+  }
+}
