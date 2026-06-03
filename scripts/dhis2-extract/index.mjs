@@ -5,7 +5,7 @@ import { loadConfig } from './lib/config.mjs';
 import { expandPeriods, parsePeriod } from './lib/periods.mjs';
 import { makeClient, chunkPeriods } from './lib/dhis2.mjs';
 import { analyticsToFactRows, analyticsToDisaggRows, dxRowsFromMeta } from './lib/facts.mjs';
-import { geoFeatureToOuRow, geoFeaturesToGeoJSON } from './lib/orgunits.mjs';
+import { buildOuRows, geoFeaturesToGeoJSON } from './lib/orgunits.mjs';
 import { toCsv } from './lib/csv.mjs';
 
 function arg(name, def) {
@@ -39,14 +39,17 @@ async function main() {
     console.log(`fact_${d.slug}.csv: ${rows.length} rows`);
   }
 
-  // --- org units + geometry ---
+  // --- org units (hierarchy) + geometry ---
+  // Hierarchy from /api/organisationUnits (complete — includes geometry-less units like the
+  // national root); geometry from geoFeatures (only units with a boundary/point), merged by id.
+  const orgUnits = await client.organisationUnits(cfg.ouLevels);
   const features = [];
   for (const level of cfg.ouLevels) features.push(...(await client.geoFeatures(level)));
-  const ouRows = features.map(geoFeatureToOuRow);
+  const ouRows = buildOuRows(orgUnits, features);
   writeFileSync(join(outDir, 'ou.csv'),
     toCsv(ouRows, ['id', 'name', 'level', 'parent_id', 'parent_name', 'path', 'ty', 'lng', 'lat']));
   writeFileSync(join(outDir, 'ou.geojson'), JSON.stringify(geoFeaturesToGeoJSON(features)));
-  console.log(`ou.csv: ${ouRows.length} rows; ou.geojson written`);
+  console.log(`ou.csv: ${ouRows.length} rows (${features.length} with geometry); ou.geojson written`);
 
   // --- dimensions ---
   writeFileSync(join(outDir, 'dx.csv'), toCsv(dxRowsFromMeta(factResponses, cfg.dx), ['id', 'name']));

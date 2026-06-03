@@ -17,6 +17,11 @@ export function makeClient({ baseUrl, username, password }) {
     getJson,
     analytics: (dx, ouLevels, periods, extraDim) => getJson(dimsURL(dx, ouLevels, periods, extraDim)),
     geoFeatures: (level) => getJson(`/api/geoFeatures.json?ou=ou:LEVEL-${level}`),
+    // Full org-unit hierarchy (incl. geometry-less units like the national root) for the dimension table.
+    organisationUnits: (levels) =>
+      getJson(`/api/organisationUnits.json?fields=id,name,level,parent[id,name],path` +
+        `&filter=level:in:[${levels.join(',')}]&paging=false&order=level:asc`)
+        .then((d) => d.organisationUnits ?? []),
   };
 }
 
