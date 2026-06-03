@@ -106,7 +106,19 @@ order by f.value desc
   <BarChart data={coverage_quarterly} x=district y=value series=indicator title="ANC 1 & 2 coverage by district (last 4 quarters)" swapXY=true />
   <BarChart data={coverage_avg_monthly} x=district y=value title="ANC 3 coverage — avg over last 12 months" swapXY=true />
   <LineChart data={coverage_yoy} x=month y=value series=year title="ANC 1 coverage — year over year (root unit)" />
-  <BarChart data={coverage_chiefdoms} x=chiefdom y=value title="ANC 1 coverage by chiefdom (reference year)" swapXY=true />
+  <ECharts height="420px" config={{
+    title: { text: 'ANC 1 coverage by chiefdom (reference year)', left: 'center', textStyle: { fontSize: 14, fontWeight: 'bold' } },
+    grid: { left: 130, right: 56, top: 40, bottom: 16 },
+    tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' }, formatter: '{b}: {c}' },
+    xAxis: { type: 'value' },
+    yAxis: { type: 'category', inverse: true, data: [...coverage_chiefdoms].map(r => r.chiefdom) },
+    dataZoom: [
+      { type: 'slider', yAxisIndex: 0, startValue: 0, endValue: 13, right: 8, width: 12 },
+      { type: 'inside', yAxisIndex: 0, startValue: 0, endValue: 13 }
+    ],
+    series: [{ type: 'bar', name: 'ANC 1 Coverage', color: '#236aa4',
+      data: [...coverage_chiefdoms].map(r => r.value) }]
+  }} />
 </Grid>
 
 ## Visits
