@@ -15,6 +15,7 @@
 ## Conventions & ground truth (read before starting)
 
 - **Reference DHIS2 instance:** `https://play.im.dhis2.org/stable-2-43-0`, auth `admin`/`district` (public Sierra Leone demo, v2.43.0). Credentials come from env `DHIS2_USERNAME` / `DHIS2_PASSWORD` (never commit them). Org levels: 1 National, 2 District (13), 3 Chiefdom, 4 Facility (601, all points).
+- **Data window (verified):** the demo only carries analytics for the recent window relative to its server clock. As of mid-2026 that is **2025 (full) + 2026** — earlier years return zero rows. The ANC config therefore extracts `2025..2026` (not 2021..2025). Don't be surprised that pre-2025 periods are empty; widen the range as the demo's window advances.
 - **curl note:** the DHIS2 field syntax uses `[...]`; with curl you must pass `-g` (globoff). In Node `fetch` this is a non-issue.
 - **API shapes (verified):**
   - `GET /api/analytics.json?dimension=dx:..&dimension=ou:..&dimension=pe:..&paging=false&skipMeta=false&displayProperty=NAME` → `{ headers:[{name:'dx'},{name:'ou'},{name:'pe'},{name:'value'}], rows:[['dx','ou','pe','value'],...], metaData:{ items:{ "<id>":{name} } } }`. With an extra dimension (e.g. `&dimension=J5jldMd8OHv:`), that dimension id appears as an extra header/column.
@@ -598,7 +599,7 @@ dx: [Uvn6LCg7dVU, OdiHJayrsKo, sB79w2hiLp8, fbfJHSPpUQD, cYeuwXTCPkU,
      Jtf34kNZhzP, hfdmMSPBgLG, c8fABiNpT0B, Tt5TAvdfdVK]
 ouLevels: [1, 2, 3, 4]
 periods:
-  range: '2021..2025'
+  range: '2025..2026'   # the demo's populated window (see "Data window" above)
   types: [monthly, quarterly, yearly]
 disaggregations:
   - dim: J5jldMd8OHv      # Facility Type — items 7 & 8
@@ -703,7 +704,7 @@ head -3 evidence/sources/anc/fact.csv
 wc -l evidence/sources/anc/*.csv
 python3 -c "import json;d=json.load(open('evidence/sources/anc/ou.geojson'));print('features',len(d['features']),'types',set(f['geometry']['type'] for f in d['features']))"
 ```
-Expected: `fact.csv` header `dx,ou,pe,periodType,value`; geojson has `Point` and `Polygon`/`MultiPolygon` features; `pe.csv` is **86 lines** via `wc -l` = 85 data rows (60 monthly + 20 quarterly + 5 yearly) + 1 header.
+Expected: `fact.csv` header `dx,ou,pe,periodType,value`; geojson has `Point` and `Polygon`/`MultiPolygon` features; `pe.csv` is **35 lines** via `wc -l` = 34 data rows (2 years × [12 monthly + 4 quarterly + 1 yearly]) + 1 header. (`fact.csv` ≈ 312k rows — analytics is sparse but both years are well populated; exact count not pinned.)
 
 - [ ] **Step 8: Commit** (code + config + README + wiring; generated CSVs are gitignored)
 ```bash
@@ -860,7 +861,9 @@ title: Antenatal Care dashboard
 select id as value, name as label, level from anc.ou where level in (1,2) order by level, name
 ```
 ```sql year_options
-select distinct year as value, year as label from anc.pe where periodType='YEARLY' order by year desc
+-- Source years from actual fact data (not anc.pe), so the selector never offers empty years.
+select distinct cast(substr(pe,1,4) as integer) as value, substr(pe,1,4) as label
+from anc.fact where periodType='YEARLY' order by value desc
 ```
 
 <Dropdown data={root_options} name=root value=value label=label title="Root org unit" defaultValue="ImspTQPwCqd" />
