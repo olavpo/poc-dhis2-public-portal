@@ -21,6 +21,10 @@ The example spans the full **baked ↔ engine** spectrum:
 > education-statistics portal (another portal) — national → state → LGA → school
 > drill-down and a minister's dashboard.
 
+📖 **Want to build your own?** Read the **[User Manual](docs/USER-MANUAL.md)** — a
+task-oriented walkthrough of the whole pipeline (extract → source → pages → deploy),
+plus `AGENTS.md` for the architecture and the hard-won gotchas list.
+
 ## ANC reference example
 
 ```bash
@@ -62,12 +66,16 @@ npm run serve                     # serve on http://localhost:$SANDBOX_HOST_PORT
 ## Add your portal
 
 1. **Datasource** — create `evidence/sources/<name>/` with a `connection.yaml`
-   (`type: csv`, `type: duckdb`, …) and your files/queries. For DHIS2, point a DuckDB
-   source at an analytics-API extract, or drop pre-extracted CSV/Parquet files.
+   (`type: csv`, `type: duckdb`, …) and your files/queries. For DHIS2, use the bundled
+   `scripts/dhis2-extract/` extractor, point a DuckDB source at an analytics-API extract,
+   or drop pre-extracted CSV/Parquet files.
 2. **Pages** — add Markdown + SQL under `evidence/pages/`. Queries with no reactive
    input are baked at build (no client engine); queries referencing `${inputs.x}` run
    client-side in DuckDB-WASM on demand.
 3. `npm run sources && npm run build && npm run deploy`.
+
+The **[User Manual](docs/USER-MANUAL.md)** walks through each step in detail, including
+adapting the extractor to your own DHIS2 instance and replicating an existing dashboard.
 
 ## Environment requirement
 
@@ -75,6 +83,7 @@ The build is **stock Evidence** — stock `evidence sources` and stock prerender
 shims. The single requirement is that **`extensions.duckdb.org` is reachable** (DuckDB-WASM
 autoloads its Parquet/httpfs extensions there at build and runtime, once, then caches).
 
-`evidence/scripts/patch-evidence.mjs` applies only two build-time *optimisations*: an
-adapter fallback page and lazy DuckDB-WASM init (so baked pages never download the
-engine). See `AGENTS.md` for the full guide and conventions.
+`evidence/scripts/patch-evidence.mjs` applies idempotent build-time tweaks to the stock
+template: an adapter fallback page, lazy DuckDB-WASM init (so baked pages never download
+the engine), and the layout/branding (full-width, DHIS2 logo, no Evidence footer). See
+`AGENTS.md` for the full guide and conventions, and `docs/USER-MANUAL.md` for the how-to.

@@ -105,7 +105,7 @@ order by f.value desc
 <Grid cols=2>
   <BarChart data={coverage_quarterly} x=district y=value series=indicator title="ANC 1 & 2 coverage by district (last 4 quarters)" swapXY=true />
   <BarChart data={coverage_avg_monthly} x=district y=value title="ANC 3 coverage — avg over last 12 months" swapXY=true />
-  <LineChart data={coverage_yoy} x=month y=value series=year title="ANC 1 coverage — year over year (root unit)" />
+  <LineChart data={coverage_yoy} x=month y=value series=year title="ANC 1 coverage — year over year (root unit)" chartAreaHeight={363} />
   <ECharts height="420px" config={{
     title: { text: 'ANC 1 coverage by chiefdom (reference year)', left: 'center', textStyle: { fontSize: 14, fontWeight: 'bold' } },
     grid: { left: 130, right: 56, top: 40, bottom: 16 },

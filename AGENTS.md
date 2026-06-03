@@ -88,18 +88,72 @@ baked pages never download the engine. See that file's header.
 
 ## Conventions & gotchas
 
-- **Custom HTML loops must live in a `.svelte` component**, not in markdown — mdsvex
-  does not compile `{#each}`/`{expr}` inside raw-HTML islands.
-- **Input-driven queries need an input to initialise** (e.g. a `<Dropdown>`); Evidence
-  defers any query referencing `${inputs.x}` until `inputs.x` exists. Two traps that
-  leave charts stuck "loading" forever (no error): a `<Dropdown defaultValue=…>` whose
-  value doesn't **type-match** an option (e.g. string `"2026"` vs an integer column), and
-  a default whose value is **absent from the options** (e.g. the national org unit was
-  missing because the extractor sourced the hierarchy from geoFeatures — see below).
+Hard-won papercuts — read these before authoring pages or touching the extractor. Most
+cost an hour the first time; none throw an obvious error.
+
+**Authoring pages (Markdown + SQL + components)**
+
+- **Keep ```` ```sql ```` blocks OUTSIDE `<Grid>`.** mdsvex renders every query block as an
+  (invisible) container element. Inside `<Grid cols=2>` each one consumes a grid cell, so
+  charts get pushed into the next column and half the grid is blank. Define all queries for
+  a section *before* its `<Grid>`, and put only the chart components inside.
+- **No raw-HTML wrappers around components.** mdsvex won't compile a component (or
+  `{#each}`/`{expr}`) inside a raw-HTML island — e.g. `<div style="overflow:auto"><BarChart/></div>`
+  silently fails. Use the `<Grid>` component for layout, or a `.svelte` component for
+  anything custom (scroll containers, loops, DOM work).
+- **Input-driven queries hang until their input initialises.** Evidence defers any query
+  referencing `${inputs.x}` until `inputs.x` has a value; if it never gets one the chart
+  sits in a grey "loading" skeleton forever, with **no error**. Two ways a `<Dropdown>`
+  fails to initialise its input:
+  1. `defaultValue` doesn't **type-match** an option's value column — e.g. `defaultValue="2026"`
+     (string) against `cast(... as integer)`. Keep the value column a string, or pass a number.
+  2. `defaultValue` names a value **not present in the options** — e.g. the national org
+     unit was absent because the extractor mis-sourced the hierarchy (see extractor note).
+  When debugging, dev mode (`npm run dev`) shows each query's state ("loading…" vs "N records")
+  and a `{inputs.x.value}` expression prints the live value.
+- **Every fact query must filter `periodType`.** `fact.csv` holds monthly, quarterly AND
+  yearly rows at once; an unfiltered query triple-counts. Resolve relative windows in SQL
+  against the `pe` table (see `pages/anc/dashboard.md`).
+- **Descendant-or-self org-unit scoping:** `ou.path` is the DHIS2 self-inclusive path
+  (`/root/.../self`). Match on `/`-segment boundaries: `('/' || o.path || '/') like '%/' || root || '/%'`.
+- **Custom components must query via `$page.data.__db.query`, not the raw client-duckdb
+  `query`.** `__db.query` awaits `database_initialization`, which registers the manifest's
+  parquet tables; the raw engine query skips that, so on a page with no other queries you
+  get **"Timeout while initializing database"**. Also gate component query/`$page.url`
+  access behind `onMount` — `$page.url.searchParams` throws during prerender, and the
+  engine only exists in the browser. (See `components/OrgUnitProfile.svelte`.)
+- **Charts can't scroll internally.** A category chart with hundreds of rows (e.g. 152
+  chiefdoms) grows unbounded and stretches the page. Render it as a raw `<ECharts>` with a
+  fixed `height` and a `dataZoom` slider on the category axis. Match a neighbouring Evidence
+  chart's height with its `chartAreaHeight` prop (total ≈ chartAreaHeight + ~95px chrome).
+- **DuckDB types empty CSV cells.** A numeric column with blanks (e.g. `lng`/`lat` for
+  non-point org units) is typed `DOUBLE`, blanks → `NULL`. Filter with `is not null`, not
+  `<> ''` (which errors: "Could not convert string '' to DOUBLE").
+
+**Extractor / DHIS2**
+
+- **Hierarchy from `/api/organisationUnits`, geometry from `/api/geoFeatures`.** geoFeatures
+  silently omits units without geometry (the national root has none in the SL demo), so
+  using it for the hierarchy drops the root and breaks every root-OU selector. The extractor
+  sources `ou.csv` from organisationUnits and left-joins geometry by id.
+- **The play demo only has recent data** (≈ current ± 1 year relative to its server clock).
+  Aim the config's `periods.range` at that window; older years return zero rows.
+- **`curl` needs `-g`** for DHIS2's `[...]` field syntax (URL-globbing off). Node `fetch`
+  is unaffected.
+
+**Build / serve**
+
+- **Author all cross-linked pages before building.** SvelteKit prerender fails on an
+  internal link whose target page doesn't exist yet. Build once, after the pages it links to.
 - **Assets are precompressed.** `scripts/precompress.mjs` (run by `deploy.sh`) writes
   `.br`/`.gz` for JS/CSS/HTML/**wasm**/**geojson**; `serve.mjs` serves them (nginx
   `brotli_static` parity). Without it the DuckDB-WASM engine ships ~33 MB uncompressed.
-- Builds take a few minutes at scale; run them in the background and poll the log.
+- **Build/serve in the background and poll the log** — foreground `sleep` is blocked in the
+  sandbox, and builds take a few minutes. Serve range-capably with `serve.mjs` (plain
+  `python -m http.server` drops the DuckDB-WASM range requests under load).
+- **Layout/branding live in `patch-evidence.mjs`.** The template's `+layout.svelte` is
+  regenerated each build, so full-width / logo / footer changes are applied there as
+  idempotent patches to the stock `<EvidenceDefaultLayout>` props.
 
 ## Connecting DHIS2 data
 
