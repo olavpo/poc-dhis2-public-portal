@@ -33,8 +33,11 @@ Root-OU scope (descendant-or-self). The extractor's `path` is the DHIS2 path
 ## Coverage
 
 ```sql coverage_quarterly
--- Item 2: ANC 1 & 2 coverage by district, last 4 quarters (descendant-or-self of root, level 2).
-select o.name as district, d.name as indicator, sum(f.value) as value
+-- Item 2: ANC 1 & 2 coverage by district, avg of last 4 quarters (descendant-or-self, level 2).
+-- NOTE: ANC*Coverage are INDICATORS (rates) — never sum() them across periods (4×~120% = 480%).
+-- avg() across time is itself only an approximation; the rigorous aggregate would recompute the
+-- indicator from summed numerators/denominators (i.e. the underlying data elements). See AGENTS.md.
+select o.name as district, d.name as indicator, avg(f.value) as value
 from anc.fact f
 join anc.ou o on f.ou = o.id
 join anc.pe p on f.pe = p.period
@@ -103,7 +106,7 @@ order by f.value desc
 ```
 
 <Grid cols=2>
-  <BarChart data={coverage_quarterly} x=district y=value series=indicator title="ANC 1 & 2 coverage by district (last 4 quarters)" swapXY=true />
+  <BarChart data={coverage_quarterly} x=district y=value series=indicator title="ANC 1 & 2 coverage by district (avg, last 4 quarters)" swapXY=true />
   <BarChart data={coverage_avg_monthly} x=district y=value title="ANC 3 coverage — avg over last 12 months" swapXY=true />
   <LineChart data={coverage_yoy} x=month y=value series=year title="ANC 1 coverage — year over year (root unit)" chartAreaHeight={363} />
   <ECharts height="420px" config={{

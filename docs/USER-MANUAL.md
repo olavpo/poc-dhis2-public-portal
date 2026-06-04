@@ -121,6 +121,34 @@ hierarchy comes from `/api/organisationUnits` (geoFeatures drops geometry-less u
 the national root), and `fact.csv` carries `periodType` because it mixes monthly/quarterly/
 yearly rows (queries must always filter it).
 
+### ⚠️ Indicators vs. data elements — what you may aggregate
+
+This is the single most important analytical caveat. A `dx` is **either**:
+
+- a **data element** — a raw measured value (counts, e.g. "ANC 1st visit"). These
+  **aggregate freely**: you can `sum()` them across org units and across periods (subject
+  to the element's own aggregation type). The visit-count charts in the example legitimately
+  sum across facility-type categories.
+- an **indicator** — a *calculated* expression, almost always a rate/ratio/percentage
+  (e.g. "ANC 1 Coverage" = visits ÷ target × 100). Indicators **must not** be summed across
+  geography or time — `sum()` of percentages is nonsense (4 quarters of ~120% → 480%), and
+  an unweighted `avg()` across districts or periods is only a rough approximation. The
+  rigorous aggregate recomputes the indicator from **summed numerators and denominators**,
+  which means you'd extract the underlying *data elements*, not the indicator.
+
+**Practical rules:**
+
+- Identify each `dx`'s type up front — `/api/indicators` vs `/api/dataElements`, or the
+  `dimensionItemType` field on a visualization's dimension items.
+- DHIS2's analytics API returns an indicator already aggregated for the exact `ou`/`pe` you
+  request, so **query it at the level you want** (e.g. district-level coverage, this year)
+  rather than re-aggregating in SQL. Show indicators **per period or as trends**, not summed
+  across time.
+- If you genuinely need an aggregatable rate (e.g. "coverage for a custom region"), extract
+  its numerator and denominator data elements and compute `sum(num)/sum(den)` yourself.
+- If you must summarise an indicator over a window for a dashboard, **average it and label
+  it as an approximation** — the example does this (item 2/3 say "avg, last N …").
+
 ### Pure-function tests
 
 The extractor's transforms (period parsing, org-unit rows, fact/disagg rows, CSV) are
