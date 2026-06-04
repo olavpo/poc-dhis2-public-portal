@@ -2,8 +2,13 @@
 
 A practical guide to building a fast, **static** public portal over DHIS2 analytics data
 using this foundation. It walks through the whole pipeline — extract → source → pages →
-deploy — using the bundled Sierra Leone **Antenatal Care** example (`/anc`) as the worked
-reference, and shows how to adapt it to your own instance and dashboards.
+deploy — and shows how to adapt it to your own instance and dashboards.
+
+The foundation is **domain-agnostic**. Examples throughout use the bundled **Antenatal
+Care** portal (`/anc`), but that is only a demonstration — extracted from the *public DHIS2
+Sierra Leone demo server* (`play.im.dhis2.org`) and replicating its `nghVC4wtyzi` dashboard.
+Nothing here is ANC- or Sierra-Leone-specific; you point the same machinery at your own
+program, indicators, and org units.
 
 > New to the codebase? Skim `AGENTS.md` first (architecture + the gotchas list). This
 > manual is the longer, task-oriented companion.

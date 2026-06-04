@@ -4,17 +4,19 @@ Guidance for AI agents (and humans) working in this repo.
 
 ## What this is
 
-A generic, reusable **static public-portal foundation** for DHIS2 analytics data,
-built with [Evidence](https://evidence.dev) over DuckDB-WASM — no database, no app
-server. This branch (`master`) provides the build/deploy/serve pipeline and the two
-build-time Evidence optimisations, **plus a self-contained Sierra Leone reference
-example**: a generic DHIS2 extractor (`scripts/dhis2-extract/`) and a worked Antenatal
-Care portal (`/anc`) replicating DHIS2 dashboard `nghVC4wtyzi`. Build your own portal
-by adding sources + pages, or use the ANC example as a template.
+A generic, reusable, **domain-agnostic** static public-portal foundation for DHIS2
+analytics data, built with [Evidence](https://evidence.dev) over DuckDB-WASM — no database,
+no app server. `master` provides the build/deploy/serve pipeline, the build-time Evidence
+optimisations, and a generic config-driven **DHIS2 extractor** (`scripts/dhis2-extract/`).
+Point it at any DHIS2 program/indicators/org-unit hierarchy and build your own portal.
 
-The reference example spans the full **baked ↔ engine** spectrum:
+It ships with **one worked example to copy from**: an Antenatal Care portal (`/anc`)
+extracted from the **public DHIS2 Sierra Leone demo server** (`play.im.dhis2.org`),
+replicating dashboard `nghVC4wtyzi`. **ANC is illustrative, not the point** — the repo is
+not ANC-specific or Sierra-Leone-specific; swap in your own config, sources, and pages. The
+example spans the full **baked ↔ engine** spectrum:
 - **`/anc`** — baked national overview (no client engine downloaded).
-- **`/anc/dashboard`** — the 11-item ANC replica; selectable root org unit + reference
+- **`/anc/dashboard`** — the 11-item dashboard replica; selectable root org unit + reference
   year drive every chart/map client-side in DuckDB-WASM.
 - **`/anc/profile`** — on-demand org-unit profile drill-down (local-parquet, deep-linkable).
 

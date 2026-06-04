@@ -4,16 +4,20 @@ A reusable, **static** public-portal foundation for DHIS2 analytics data, built 
 [Evidence](https://evidence.dev) over DuckDB-WASM. No database, no app server — the
 site is prerendered to static files and served by any static host.
 
-This branch (`master`) provides the build/deploy/serve pipeline, asset precompression, a
-range-capable static server (nginx stand-in), and two build-time Evidence optimisations —
-**plus a self-contained Sierra Leone reference example**: a generic DHIS2 extractor and a
-worked **Antenatal Care** portal (`/anc`) replicating DHIS2 dashboard `nghVC4wtyzi`.
+`master` is the reusable, **domain-agnostic** foundation: the build/deploy/serve pipeline,
+asset precompression, a range-capable static server (nginx stand-in), build-time Evidence
+optimisations, and a generic, config-driven **DHIS2 extractor**. Point it at any DHIS2
+program, indicators, and org-unit hierarchy to build your own portal.
 
-The example spans the full **baked ↔ engine** spectrum:
+It ships with **one worked example to copy from** — an **Antenatal Care** portal (`/anc`)
+extracted from the **public DHIS2 Sierra Leone demo server** (`play.im.dhis2.org`),
+replicating dashboard `nghVC4wtyzi`. The ANC content is purely illustrative; the project is
+**not** ANC-specific — swap in your own config, sources, and pages. The example spans the
+full **baked ↔ engine** spectrum:
 
 - **`/anc`** — baked national overview; pure static HTML, no SQL engine downloaded.
-- **`/anc/dashboard`** — the 11-item ANC replica; a root-org-unit + reference-year selector
-  re-computes every chart and map client-side in DuckDB-WASM.
+- **`/anc/dashboard`** — the 11-item dashboard replica; a root-org-unit + reference-year
+  selector re-computes every chart and map client-side in DuckDB-WASM.
 - **`/anc/profile`** — on-demand org-unit profile drill-down (queried live in-browser,
   deep-linkable).
 

@@ -3,12 +3,12 @@ title: DHIS2 Public Portal
 ---
 
 A generic, static **public-portal foundation** for DHIS2 analytics data, built with
-[Evidence](https://evidence.dev) and DuckDB-WASM.
+[Evidence](https://evidence.dev) and DuckDB-WASM. It is **domain-agnostic**: point it at
+any DHIS2 program, indicators, and org-unit hierarchy and build your own portal.
 
-This branch (`master`) is the reusable **infrastructure only** — the build pipeline,
-the static-serving stack (precompression + range-capable server, an nginx stand-in),
-and the two build-time Evidence optimisations. It ships with **no dashboards and no
-data sources**: those are added per deployment.
+> The portal linked below is **just one example** — an Antenatal Care dashboard built from
+> the **public DHIS2 Sierra Leone demo** server (`play.im.dhis2.org`). It demonstrates the
+> foundation; it is **not** what the project is for. Swap in your own data sources and pages.
 
 ## How it works
 
@@ -22,9 +22,10 @@ data sources**: those are added per deployment.
   symlink; **serve** is a range-capable static server (nginx stand-in) that serves the
   precompressed `.br`/`.gz` assets.
 
-## Worked example: Antenatal Care (Sierra Leone)
+## Example portal: Antenatal Care (Sierra Leone demo data)
 
-A complete reference portal built on this foundation, from a live DHIS2 demo instance:
+One worked example built on this foundation, extracted from the public DHIS2 Sierra Leone
+demo server — purely illustrative of what you can build:
 
 - **[National overview](/anc)** — baked; renders with no SQL engine downloaded.
 - **[ANC dashboard](/anc/dashboard)** — the full DHIS2 dashboard replica; pick a root org
