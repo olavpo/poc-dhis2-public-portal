@@ -134,25 +134,26 @@ cost an hour the first time; none throw an obvious error.
 
 **Extractor / DHIS2**
 
-- **Don't aggregate indicators across geography or time — only data elements.** A `dx` is
+- **Let DHIS2 aggregate indicators; never re-aggregate them *after* extraction.** A `dx` is
   either a **data element** (raw measured value, e.g. counts like "ANC 1st visit") or an
-  **indicator** (a calculated expression, usually a rate/ratio/percentage like "ANC 1
-  Coverage" = visits ÷ target × 100).
-  - *Data elements aggregate freely* (subject to their aggregation type): `sum()` counts
-    across org units and periods. The visit-count charts here sum facility-type categories
-    legitimately.
-  - *Indicators (rates) generally do not.* Summing percentages is meaningless (4 quarters
-    of ~120% → 480%); an unweighted `avg()` across districts or periods is only a crude
-    approximation. The statistically correct aggregate recomputes the indicator from summed
-    numerators/denominators — which means extracting the **underlying data elements**, not
-    the indicator. The DHIS2 analytics API already returns an indicator aggregated for the
-    exact ou/pe you ask for, so **query it at the level you want** rather than re-aggregating
-    in SQL; show indicators per-period or as trends, not summed across time.
-  - *When configuring the extractor:* know which of your `dx` are indicators vs data
-    elements (`/api/indicators` vs `/api/dataElements`, or `dimensionItemType` in a
-    visualization). If you need an aggregatable rate, extract its numerator/denominator data
-    elements too. (The ANC example averages coverage over a window and labels it
-    "(avg, …)" — a documented approximation, not a rigorous aggregate.)
+  **indicator** (a calculated rate/ratio/percentage, e.g. "ANC 1 Coverage" = visits ÷ target
+  × 100). The analytics API returns each value **already correctly aggregated for the exact
+  `ou`/`pe` you request** — *trust that*. The extractor pulls every level and granularity
+  (the ANC config: levels 1–4 × monthly/quarterly/yearly), so the correctly-aggregated
+  national, quarterly, yearly, … values are all in `fact.csv` already.
+  - **In your pages, query the row at the level you want** (national coverage, a given
+    quarter, the year) — don't compute it from finer data.
+  - **Do NOT re-aggregate an indicator in SQL:** never `avg()`/`sum()` monthly coverages
+    into a quarter, or district coverages into a national figure. Rates aren't additive, and
+    equal-weight averaging ignores denominators. (Summing is nonsense — 4 quarters of ~120%
+    → 480%; averaging is a biased approximation.) The ANC dashboard shows each coverage at a
+    single DHIS2-supplied `ou`/`pe` (latest quarter, reference year) for this reason.
+  - **Data elements (raw counts) *can* be aggregated post-extraction** (subject to their
+    aggregation type) — the visit-count charts legitimately `sum()` across facility-type
+    categories. If you need a rate at a level you didn't extract, pull its numerator +
+    denominator data elements and compute `sum(num)/sum(den)` yourself.
+  - Tell the two apart via `/api/indicators` vs `/api/dataElements`, or `dimensionItemType`
+    on a visualization's dimension items.
 - **Hierarchy from `/api/organisationUnits`, geometry from `/api/geoFeatures`.** geoFeatures
   silently omits units without geometry (the national root has none in the SL demo), so
   using it for the hierarchy drops the root and breaks every root-OU selector. The extractor

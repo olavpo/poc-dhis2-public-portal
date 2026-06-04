@@ -33,51 +33,36 @@ Root-OU scope (descendant-or-self). The extractor's `path` is the DHIS2 path
 ## Coverage
 
 ```sql coverage_quarterly
--- Item 2: ANC 1 & 2 coverage by district, avg of last 4 quarters (descendant-or-self, level 2).
--- NOTE: ANC*Coverage are INDICATORS (rates) — never sum() them across periods (4×~120% = 480%).
--- avg() across time is itself only an approximation; the rigorous aggregate would recompute the
--- indicator from summed numerators/denominators (i.e. the underlying data elements). See AGENTS.md.
-select o.name as district, d.name as indicator, avg(f.value) as value
+-- Item 2: ANC 1 & 2 coverage by district — the latest quarter of the reference year, read
+-- DIRECTLY from DHIS2's quarterly value. We do NOT aggregate a rate in SQL: each value is a
+-- single (dx, ou, quarter) cell that DHIS2 already aggregated correctly. See AGENTS.md.
+select o.name as district, d.name as indicator, f.value as value
 from anc.fact f
 join anc.ou o on f.ou = o.id
-join anc.pe p on f.pe = p.period
 join anc.dx d on f.dx = d.id
 where f.dx in ('Uvn6LCg7dVU','OdiHJayrsKo')
   and f.periodType = 'QUARTERLY'
-  and p.year in (${inputs.refyear.value}, ${inputs.refyear.value}-1)
+  and f.pe = (select max(pe) from anc.fact
+              where periodType='QUARTERLY' and cast(substr(pe,1,4) as integer) = ${inputs.refyear.value})
   and o.level = 2
   and ( o.id = '${inputs.root.value}'
         or ('/' || o.path || '/') like '%/' || '${inputs.root.value}' || '/%' )
-  and f.pe in (
-    select pe from (
-      select distinct pe from anc.fact
-      where periodType = 'QUARTERLY'
-        and cast(substr(pe,1,4) as integer) in (${inputs.refyear.value}, ${inputs.refyear.value}-1)
-      order by pe desc limit 4
-    )
-  )
-group by o.name, d.name
 order by o.name, d.name
 ```
 
-```sql coverage_avg_monthly
--- Item 3: ANC 3 coverage — average over last 12 months by district (descendant-or-self, level 2).
-select district, avg(value) as value
-from (
-  select o.name as district, p.startDate as startDate, f.value
-  from anc.fact f
-  join anc.ou o on f.ou = o.id
-  join anc.pe p on f.pe = p.period
-  where f.dx = 'sB79w2hiLp8'
-    and f.periodType = 'MONTHLY'
-    and p.year in (${inputs.refyear.value}, ${inputs.refyear.value}-1)
-    and o.level = 2
-    and ( o.id = '${inputs.root.value}'
-          or ('/' || o.path || '/') like '%/' || '${inputs.root.value}' || '/%' )
-  qualify dense_rank() over (order by startDate desc) <= 12
-) t
-group by district
-order by value desc
+```sql coverage_annual
+-- Item 3: ANC 3 coverage by district for the reference year — DHIS2's YEARLY value directly
+-- (the correct annual coverage; no SQL aggregation of a rate). See AGENTS.md.
+select o.name as district, f.value as value
+from anc.fact f
+join anc.ou o on f.ou = o.id
+where f.dx = 'sB79w2hiLp8'
+  and f.periodType = 'YEARLY'
+  and f.pe = '${inputs.refyear.value}'
+  and o.level = 2
+  and ( o.id = '${inputs.root.value}'
+        or ('/' || o.path || '/') like '%/' || '${inputs.root.value}' || '/%' )
+order by f.value desc
 ```
 
 ```sql coverage_yoy
@@ -106,8 +91,8 @@ order by f.value desc
 ```
 
 <Grid cols=2>
-  <BarChart data={coverage_quarterly} x=district y=value series=indicator title="ANC 1 & 2 coverage by district (avg, last 4 quarters)" swapXY=true />
-  <BarChart data={coverage_avg_monthly} x=district y=value title="ANC 3 coverage — avg over last 12 months" swapXY=true />
+  <BarChart data={coverage_quarterly} x=district y=value series=indicator title="ANC 1 & 2 coverage by district (latest quarter)" swapXY=true />
+  <BarChart data={coverage_annual} x=district y=value title="ANC 3 coverage by district (reference year)" swapXY=true />
   <LineChart data={coverage_yoy} x=month y=value series=year title="ANC 1 coverage — year over year (root unit)" chartAreaHeight={363} />
   <ECharts height="420px" config={{
     title: { text: 'ANC 1 coverage by chiefdom (reference year)', left: 'center', textStyle: { fontSize: 14, fontWeight: 'bold' } },
