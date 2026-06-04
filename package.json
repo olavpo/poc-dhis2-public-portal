@@ -4,6 +4,7 @@
   "private": true,
   "type": "module",
   "description": "Generic static public-portal foundation for DHIS2 — Evidence + DuckDB-WASM, served from static files",
+  "license": "BSD-3-Clause",
   "scripts": {
     "patch": "node evidence/scripts/patch-evidence.mjs",
     "sources": "npm --prefix evidence run sources",

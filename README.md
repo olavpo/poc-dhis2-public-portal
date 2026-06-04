@@ -1,5 +1,10 @@
 # DHIS2 Public Portal — generic foundation
 
+> ⚠️ **Proof of concept — not production-ready.** This is a demonstration / reference
+> implementation to explore the approach. It has **not** been hardened, performance-tested
+> at scale, accessibility-audited, or security-reviewed for production. Use it as a starting
+> point and learning resource, not as-is in production.
+
 A reusable, **static** public-portal foundation for DHIS2 analytics data, built with
 [Evidence](https://evidence.dev) over DuckDB-WASM. No database, no app server — the
 site is prerendered to static files and served by any static host.
