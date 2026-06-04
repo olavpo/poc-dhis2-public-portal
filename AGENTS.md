@@ -20,13 +20,6 @@ example spans the full **baked ↔ engine** spectrum:
   year drive every chart/map client-side in DuckDB-WASM.
 - **`/anc/profile`** — on-demand org-unit profile drill-down (local-parquet, deep-linkable).
 
-> Another full worked example — a public education-statistics portal for Nigeria's
-> the prior example, with national → state → LGA → school drill-down and a minister's dashboard —
-> lives on the **`the prior example`** branch.
-
-The reference architecture this implements is in
-`docs/portal-architecture.md`.
-
 ## Pipeline & commands
 
 ```

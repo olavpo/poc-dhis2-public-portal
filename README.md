@@ -21,10 +21,6 @@ full **baked ↔ engine** spectrum:
 - **`/anc/profile`** — on-demand org-unit profile drill-down (queried live in-browser,
   deep-linkable).
 
-> **Another worked example:** the **`the prior example`** branch is a complete public
-> education-statistics portal (another portal) — national → state → LGA → school
-> drill-down and a minister's dashboard.
-
 📖 **Want to build your own?** Read the **[User Manual](docs/USER-MANUAL.md)** — a
 task-oriented walkthrough of the whole pipeline (extract → source → pages → deploy),
 plus `AGENTS.md` for the architecture and the hard-won gotchas list.

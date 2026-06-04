@@ -339,9 +339,7 @@ content change.
 ## 8. Reference
 
 - `AGENTS.md` — architecture + the full gotchas list (read before authoring).
-- `docs/portal-architecture.md` — the reference architecture this implements.
 - `docs/superpowers/specs/…` and `docs/superpowers/plans/…` — the design spec and
   implementation plan for the ANC example.
-- The separate branch — a second worked example (national → state → LGA → school).
 - The ANC example itself: `scripts/dhis2-extract/config/anc.yaml`,
   `evidence/sources/anc/`, `evidence/pages/anc/`, `evidence/components/OrgUnitProfile.svelte`.
