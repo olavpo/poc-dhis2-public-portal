@@ -8,7 +8,7 @@
   "scripts": {
     "patch": "node evidence/scripts/patch-evidence.mjs",
     "sources": "npm --prefix evidence run sources",
-    "build": "npm run patch && npm --prefix evidence run build",
+    "build": "npm run patch && npm run pages:asc && npm --prefix evidence run build",
     "dev": "npm --prefix evidence run dev",
     "deploy": "bash scripts/deploy.sh",
     "serve": "bash scripts/serve.sh",

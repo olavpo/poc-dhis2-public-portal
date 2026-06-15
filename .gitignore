@@ -21,6 +21,10 @@ evidence/sources/asc/*.csv
 evidence/sources/asc/*.geojson
 evidence/static/asc.geojson
 
+# Generated ASC portal pages (regenerate with `npm run pages:asc`)
+evidence/pages/index.md
+evidence/pages/asc/
+
 # Brainstorming visual companion
 .superpowers/
 
