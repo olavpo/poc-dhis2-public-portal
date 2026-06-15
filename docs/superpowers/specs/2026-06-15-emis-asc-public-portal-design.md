@@ -1,0 +1,163 @@
+# DNEMIS — Annual School Census (ASC) Public Portal — Design
+
+**Date:** 2026-06-15
+**Status:** Design (pending spec review + user sign-off)
+**Branch:** `emis-pp`
+
+## Goal
+
+Build a **public, static EMIS portal** on the existing Evidence/DuckDB-WASM foundation that
+reproduces Nigeria's DNEMIS **Annual School Census (ASC)** dashboard, with:
+
+1. The **DNEMIS module navigation** (6 links from `emis.education.gov.ng`) as a prominent
+   top bar — ASC is the active module; the other five link out.
+2. The **ASC dashboard content** (from the supplied `metadata.json`: 1 dashboard, 12
+   visualizations, 2 maps) plus two **LGA-level indicator tables** (Public Pre-Primary/
+   Primary and Public JSS, from the two screenshots).
+3. A **Federal → State → LGA geographic drill-down**, where each org unit is its own
+   prerendered, fully **baked** page (no client engine), scoped via a top-right navigator.
+
+The portal is **domain content built on the foundation** — it does not change the generic
+foundation contract (extractor, build/deploy/serve, patch optimisations).
+
+## Decisions (locked during brainstorming)
+
+| # | Decision | Choice |
+|---|---|---|
+| 1 | Portal shape | **One-page ASC portal** — DNEMIS module links across the top, ASC dashboard below. Not a multi-module shell. |
+| 2 | Data source | **Synthetic now, real later.** Generate plausible ASC data; swap in real data once available. |
+| 3 | Geography | **Realistic Nigeria-shaped hierarchy:** Nation › States › LGAs › Schools, with synthetic admin **polygons** (choropleths) **and** school **points**. |
+| 4 | Interactivity | **Faithful, fully baked, 2024 only.** No live selector now; reserve a top-right slot for a future year/scope filter. |
+| 5 | Drill-down | **Federal → State → LGA**, top-right scope navigator that **navigates between baked per-OU pages**; page body **compares sub-units** (children table + choropleth). |
+| 6 | Metrics | **All metrics are DHIS2 indicators.** Build **one real indicator** end-to-end now (numerator/denominator data elements → indicator); scale the rest by the same pattern later. |
+| 7 | Indicator rule | Extract each indicator/value **at every level it is displayed** (Nation/State/LGA), read as-is — **never re-aggregate after calculation** (foundation hard rule). |
+| 8 | School type | Disaggregate by **Public / Private / Total**. |
+| 9 | Visual style | **Apache Superset look** for the viz (Inter font, white chart cards, Big-Number tiles + trendline, ECharts gauge, Superset categorical palette, data table with in-cell bars), under the green DNEMIS portal chrome. |
+| 10 | Example instance | **`agent-asc-ind`** (DHIS2 broker instance). Currently near-empty (6 OUs, no geometry, indicators unresolved) — we populate it with synthetic metadata + data, then extract via the foundation pipeline. |
+
+## Example instance (current state)
+
+`http://dhis2-agent-asc-ind:8080` (reachable on dev-net, `admin`/`district`). Today it holds
+only a 3-level test fixture: **ASC Nation** (L1) › **ASC District** (L2) › 4 schools (L3),
+no org-unit levels, no geometry, none of the dashboard's referenced indicators. We treat it
+as a blank instance to load synthetic metadata + data into.
+
+## Architecture (all static — mirrors the foundation)
+
+```
+[0] scripts/asc-synth/        Node generator (NEW): builds synthetic DHIS2 metadata
+    (synthetic data, one-off)  (Nigeria hierarchy + geometry, data elements, 1 indicator,
+                               school-type disagg, 2024 data values) and IMPORTS it into
+                               agent-asc-ind via the DHIS2 metadata + dataValueSets API,
+                               then triggers analytics. Idempotent; re-runnable.
+                                        │
+[A] scripts/dhis2-extract/    config/asc.yaml (NEW): pull indicators + data elements at
+    (generic, REUSED)          levels 1–3 (Nation/State/LGA) × yearly 2024, school-type
+                               disagg, geometry. Writes tidy CSVs + ou.geojson.
+                                        │  npm run sources
+[B] evidence/sources/asc/     connection.yaml (csv) ─────────────► parquet + manifest
+    + evidence/static/asc.geojson
+                                        │  npm run build
+[C] evidence/pages/asc/       baked pages: Federal overview + one page per State + one per
+                               LGA (same shape). DNEMIS nav + Superset theme.
+```
+
+No database, no app server, no client engine (everything baked). The synthetic generator
+[0] is a throwaway dev convenience; when real data arrives, only [0] is replaced — [A]–[C]
+are unchanged.
+
+### Why a generator that imports into the instance (not direct synthetic CSVs)
+
+The user wants `agent-asc-ind` as the example instance and wants indicators computed **by
+DHIS2** at each level (decision 7). So we let DHIS2 own aggregation: import data elements +
+the indicator definition + dummy `dataValueSets`, run analytics, and extract the
+already-correctly-aggregated values. This exercises the real foundation path end-to-end and
+proves the swap-in-real-data story.
+
+## Synthetic geography & data
+
+- **Hierarchy:** Nation (1) › ~6 **States** (2) › ~4 **LGAs** each (3) › ~12–15 **Schools**
+  each (4). ≈ 6 states, ≈ 24 LGAs, ≈ 300+ schools. Bounded so per-OU pages prerender cheaply
+  (~31 baked pages: 1 federal + 6 state + 24 LGA; school pages out of scope — LGA is the
+  deepest page, schools appear as the LGA page's child rows/points).
+- **Geometry:** generated synthetically (no external boundary download): a tessellation of
+  non-overlapping polygons over a Nigeria-like bounding box, partitioned Nation→State→LGA so
+  child polygons nest in their parent; school **points** scattered within their LGA polygon.
+  Written as `ou.geojson` (polygons keyed by OU id; points via `lng`/`lat` in `ou.csv`).
+  Real Nigeria admin GeoJSON can replace this later without page changes.
+- **Data elements (raw counts, 2024 yearly), per school, by school-type category (Public/
+  Private):** schools reported, enrolment (by sex), teachers, usable classrooms, usable
+  toilets, special-needs learners, infrastructure-usable flags, reporting (for reporting
+  rate). Counts roll up additively via DHIS2.
+- **Indicator built now (the one real one):** **Pupil–Teacher Ratio** = `enrolment /
+  teachers` (factor 1), as a DHIS2 indicator so it aggregates correctly at every level.
+  Demonstrates the numerator/denominator pattern; the other ratios + coverage indicators
+  follow the same recipe later.
+- **Values:** plausible ranges, varied per OU and school type, deterministic (seeded, no
+  RNG that breaks re-runs) so re-imports are stable.
+
+## Page architecture
+
+- `evidence/pages/asc/index.md` — **Federal overview** (the approved layout): KPI Big-Number
+  tiles + reporting-rate gauge; two maps (learners/teachers by location); the dashboard
+  charts (learners by sex & school type, infrastructure %, etc.); **Compare sub-units**
+  (states) choropleth + indicator table (tabs: Pre-Prim/Primary ↔ JSS), each state row
+  linking to its page.
+- `evidence/pages/asc/[state].md` (or generated per-state files) — **same shape**, scoped to
+  the state; child table/choropleth = its LGAs, linking to LGA pages.
+- `evidence/pages/asc/[lga].md` — same shape, scoped to the LGA; children = its schools
+  (shown as the table rows + map points; no per-school page).
+- **Scope navigator + breadcrumb** (top-right / under title) = links between these baked
+  pages. **Reserved (disabled) year/scope filter** slot for the future engine-driven version.
+- **Generation of per-OU pages:** authored as a small set of Evidence **templated pages**
+  driven by the OU list (a build-time generator script writes one `.md` per state/LGA from a
+  shared template, OR a single dynamic page prerendered per-OU via SvelteKit entries). Chosen
+  approach: **generator script** writing `.md` files from a template (simplest, stays within
+  stock Evidence prerender; no custom routing). All cross-links exist before build (foundation
+  gotcha: prerender fails on dangling internal links).
+
+## Theming (Superset look)
+
+- **Approach:** extend `evidence/scripts/patch-evidence.mjs` + `evidence.config.yaml` theme +
+  a portal CSS/Svelte layer. Inter font; Superset categorical palette as the Evidence series
+  colors; chart cards, Big-Number tiles, gauge, and the in-cell-bar data table built as small
+  **Svelte components** (`components/`) or themed Evidence components (Evidence renders via
+  ECharts, so gauge/bar/table map closely).
+- **DNEMIS chrome:** the green header + 6 module nav buttons live in the layout (patched into
+  the stock `EvidenceDefaultLayout`, where the foundation already injects branding), with the
+  ASC module active and the other five as external links.
+
+## Phasing (incremental, verifiable)
+
+1. **Pipeline spike:** generator creates the Nigeria hierarchy + geometry + the count data
+   elements + the **one** Pupil–Teacher Ratio indicator + 2024 dummy values; import into
+   `agent-asc-ind`; run analytics; `asc.yaml` extract → CSVs + geojson; `npm run sources`.
+   Verify: extracted CSVs contain Nation/State/LGA rows; the indicator value differs per level
+   and is **not** a SQL re-aggregation.
+2. **Federal page** baked with KPIs, one map, the compare-states table — themed Superset.
+3. **Drill-down**: generate state + LGA pages from the template; wire scope navigator,
+   breadcrumb, child links, choropleth deep-links. Build (all links resolve).
+4. **Fill in** remaining dashboard tiles + the second (JSS) table tab.
+5. **Deploy + serve**; visual check against the approved mockup.
+
+## Non-goals (YAGNI)
+
+- No live year/scope **selector** yet (engine deferred); only a reserved layout slot.
+- No per-**school** pages (schools are leaf rows/points on the LGA page).
+- No real Nigeria boundary data, no real ASC values (synthetic until provided).
+- No changes to the generic foundation contract beyond adding the ASC source/pages/theme and
+  the `asc.yaml` extractor config + the throwaway synthetic generator.
+- Building **all** indicators now — exactly one is wired end-to-end; the rest are a documented
+  repeat of the same pattern.
+
+## Verification
+
+- Extractor unit tests already cover the generic path; add a fixture for the ASC config shape.
+- Build must complete with **no dangling internal links** (all state/LGA pages generated
+  first).
+- Indicator correctness: spot-check that the Pupil–Teacher Ratio at Nation ≠ mean of State
+  values (proves DHIS2-side aggregation, not SQL re-aggregation).
+- Final: `npm run deploy && npm run serve`; the Federal page and a drilled-in LGA page render
+  and match the approved Superset mockup; maps + deep-links work; no DuckDB-WASM engine
+  downloaded on baked pages.
+```
