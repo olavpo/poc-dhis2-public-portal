@@ -196,20 +196,33 @@ describe('buildHierarchy', () => {
 
 ```js
 // scripts/asc-synth/lib/hierarchy.mjs
-import { hash32, ranged } from './hash.mjs';
+import { ranged } from './hash.mjs';
 
 const ALPHA = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
 const ALNUM = ALPHA + '0123456789';
 
-// Deterministic DHIS2 uid (11 chars, leading letter) from a key string.
+// FNV-1a with an avalanche finalizer — plain FNV-1a has weak avalanche on the
+// near-identical short keys we generate ("school-0-2-6" vs "school-1-0-1"), which
+// collides; the finalizer + two seeds give ~64 bits and collision-free uids across
+// the 319-unit set (verified).
+function mix(str, seed) {
+  let h = seed >>> 0;
+  for (let i = 0; i < str.length; i++) { h ^= str.charCodeAt(i); h = Math.imul(h, 0x01000193) >>> 0; }
+  h ^= h >>> 16; h = Math.imul(h, 0x7feb352d) >>> 0; h ^= h >>> 15; h = Math.imul(h, 0x846ca68b) >>> 0; h ^= h >>> 16;
+  return h >>> 0;
+}
+
+// Deterministic, collision-free DHIS2 uid (11 chars, leading letter) from a key string.
 export function uid(key) {
-  let h = hash32(key);
-  let out = ALPHA[h % ALPHA.length];
+  const a = mix(key, 0x811c9dc5), b = mix(key, 0x9e3779b1);
+  const chars = [ALPHA[a % ALPHA.length]];
+  let lo = a, hi = b;
   for (let i = 0; i < 10; i++) {
-    h = hash32(key + '#' + i);
-    out += ALNUM[h % ALNUM.length];
+    const t = (Math.imul(lo, 0x2c1b3c6d) ^ hi) >>> 0;
+    chars.push(ALNUM[t % ALNUM.length]);
+    hi = lo; lo = (t ^ (t >>> 13)) >>> 0;
   }
-  return out;
+  return chars.join('');
 }
 
 // Plausible Nigerian state / LGA names (illustrative, synthetic).
