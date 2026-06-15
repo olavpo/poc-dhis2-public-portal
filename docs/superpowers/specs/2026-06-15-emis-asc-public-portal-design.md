@@ -97,6 +97,9 @@ This exercises the real foundation path end-to-end and proves the swap-in-real-d
 - **Geometry:** generated synthetically (no external boundary download): a tessellation of
   non-overlapping polygons over a Nigeria-like bounding box, partitioned Nation→State→LGA so
   child polygons nest in their parent; school **points** scattered within their LGA polygon.
+  **Every level gets geometry, including the national root** (a country polygon) and every
+  state — otherwise the extractor's geoFeatures merge silently drops geometry-less units and
+  the Federal/State choropleths break (CLAUDE.md gotcha).
   Written as `ou.geojson` (polygons keyed by OU id; points via `lng`/`lat` in `ou.csv`).
   Real Nigeria admin GeoJSON can replace this later without page changes.
 - **Metrics = the real metadata (reused, not authored).** The 67 indicators and their 108
@@ -125,10 +128,14 @@ This exercises the real foundation path end-to-end and proves the swap-in-real-d
   charts (learners by sex & school type, infrastructure %, etc.); **Compare sub-units**
   (states) choropleth + indicator table (tabs: Pre-Prim/Primary ↔ JSS), each state row
   linking to its page.
-- `evidence/pages/asc/[state].md` (or generated per-state files) — **same shape**, scoped to
+- One **generated `.md` per state** (e.g. `asc/state-<id>.md`) — **same shape**, scoped to
   the state; child table/choropleth = its LGAs, linking to LGA pages.
-- `evidence/pages/asc/[lga].md` — same shape, scoped to the LGA; children = its schools
-  (shown as the table rows + map points; no per-school page).
+- One **generated `.md` per LGA** (e.g. `asc/lga-<id>.md`) — same shape, scoped to the LGA;
+  children = its schools (table rows + map points; no per-school page).
+- **Child scoping uses `parent = <currentOU>` (direct children only)** — not path matching —
+  so the drill-down does not depend on the `ou.csv.path` convention. (The plan should still
+  confirm whether `ou.csv.path` is self-inclusive or ancestor-only before using any path-based
+  query, since the README and CLAUDE.md describe it differently.)
 - **Scope navigator + breadcrumb** (top-right / under title) = links between these baked
   pages. **Reserved (disabled) year/scope filter** slot for the future engine-driven version.
 - **Generation of per-OU pages:** authored as a small set of Evidence **templated pages**
