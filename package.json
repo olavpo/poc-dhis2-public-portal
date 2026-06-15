@@ -14,7 +14,7 @@
     "serve": "bash scripts/serve.sh",
     "extract:anc": "node scripts/dhis2-extract/index.mjs --config scripts/dhis2-extract/config/anc.yaml --out evidence/sources/anc && mkdir -p evidence/static && cp evidence/sources/anc/ou.geojson evidence/static/anc.geojson",
     "synth:asc": "node scripts/asc-synth/index.mjs",
-    "extract:asc": "node scripts/dhis2-extract/index.mjs --config scripts/dhis2-extract/config/asc.yaml --out evidence/sources/asc && mkdir -p evidence/static && cp evidence/sources/asc/ou.geojson evidence/static/asc.geojson",
+    "extract:asc": "node scripts/dhis2-extract/index.mjs --config scripts/dhis2-extract/config/asc.yaml --out evidence/sources/census && mkdir -p evidence/static && cp evidence/sources/census/ou.geojson evidence/static/asc.geojson",
     "pages:asc": "node scripts/asc-pages/generate.mjs",
     "test": "vitest run"
   },

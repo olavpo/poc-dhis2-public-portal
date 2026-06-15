@@ -17,8 +17,8 @@ data/
 evidence/sources/anc/*.csv
 evidence/sources/anc/*.geojson
 evidence/static/anc.geojson
-evidence/sources/asc/*.csv
-evidence/sources/asc/*.geojson
+evidence/sources/census/*.csv
+evidence/sources/census/*.geojson
 evidence/static/asc.geojson
 
 # Generated ASC portal pages (regenerate with `npm run pages:asc`)

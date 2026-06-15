@@ -23,13 +23,13 @@ title: ${ou.name} — Annual School Census
 function head(ou, ancestors) {
   return `${frontmatter(ou)}
 \`\`\`sql kpis
-select dx, value from asc.fact
+select dx, value from census.fact
 where ou = '${ou.id}' and periodType = 'YEARLY' and pe = '2024'
   and dx in ('${I.enrol}','${I.teachers}','${I.ptr}','${I.female}')
 \`\`\`
 
 \`\`\`sql enrol_trend
-select pe, value from asc.fact
+select pe, value from census.fact
 where ou = '${ou.id}' and dx = '${I.enrol}' and periodType = 'YEARLY' order by pe
 \`\`\`
 
@@ -50,7 +50,7 @@ function branchSection(ou, childLevel, childLinkPrefix) {
   return `
 \`\`\`sql children_map
 select o.id, o.name, f.value
-from asc.fact f join asc.ou o on f.ou = o.id
+from census.fact f join census.ou o on f.ou = o.id
 where o.parent_id = '${ou.id}' and f.dx = '${I.ptr}' and f.periodType = 'YEARLY' and f.pe = '2024'
 \`\`\`
 
@@ -62,7 +62,7 @@ where o.parent_id = '${ou.id}' and f.dx = '${I.ptr}' and f.periodType = 'YEARLY'
 \`\`\`sql preprimary
 select o.name as ou_name, '${childLinkPrefix}' || o.id as link,
   ${pivot(I.pry_enrol)} as enrolment, ${pivot(I.ptr)} as ptr, ${pivot(I.ptoilet)} as ptoilet
-from asc.ou o left join asc.fact f on f.ou = o.id and f.periodType = 'YEARLY' and f.pe = '2024'
+from census.ou o left join census.fact f on f.ou = o.id and f.periodType = 'YEARLY' and f.pe = '2024'
 where o.parent_id = '${ou.id}'
 group by o.name, o.id order by o.name
 \`\`\`
@@ -70,7 +70,7 @@ group by o.name, o.id order by o.name
 \`\`\`sql jss
 select o.name as ou_name, '${childLinkPrefix}' || o.id as link,
   ${pivot(I.jss_enrol)} as enrolment, ${pivot(I.ptr)} as ptr, ${pivot(I.ptoilet)} as ptoilet
-from asc.ou o left join asc.fact f on f.ou = o.id and f.periodType = 'YEARLY' and f.pe = '2024'
+from census.ou o left join census.fact f on f.ou = o.id and f.periodType = 'YEARLY' and f.pe = '2024'
 where o.parent_id = '${ou.id}'
 group by o.name, o.id order by o.name
 \`\`\`
@@ -91,7 +91,7 @@ select
     when '${I.preprry_enrol}' then '1 Pre-Primary' when '${I.pry_enrol}' then '2 Primary'
     when '${I.jss_enrol}' then '3 JSS' when '${I.sss_enrol}' then '4 SSS' when '${I.anfe_enrol}' then '5 ANFE' end as level,
   f.value as enrolment
-from asc.fact f
+from census.fact f
 where f.ou = '${ou.id}' and f.periodType = 'YEARLY' and f.pe = '2024'
   and f.dx in ('${I.preprry_enrol}','${I.pry_enrol}','${I.jss_enrol}','${I.sss_enrol}','${I.anfe_enrol}')
 order by level

@@ -14,7 +14,7 @@ function readCsv(path) {
   return lines.map((line) => Object.fromEntries(line.split(',').map((v, i) => [cols[i], v])));
 }
 
-const ou = readCsv('evidence/sources/asc/ou.csv');
+const ou = readCsv('evidence/sources/census/ou.csv');
 const byId = Object.fromEntries(ou.map((o) => [o.id, o]));
 
 // Only OUs in our subtree (walk parent_id up to ROOT).
