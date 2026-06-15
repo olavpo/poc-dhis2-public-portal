@@ -17,6 +17,9 @@ data/
 evidence/sources/anc/*.csv
 evidence/sources/anc/*.geojson
 evidence/static/anc.geojson
+evidence/sources/asc/*.csv
+evidence/sources/asc/*.geojson
+evidence/static/asc.geojson
 
 # Brainstorming visual companion
 .superpowers/
