@@ -695,7 +695,11 @@ theme:
 ```
 > Confirm the exact key Evidence expects for series colors in this version; if `seriesColors` isn't honored, set ECharts colors per-chart in the page template instead.
 
-- [ ] **Step 2: Extend `patch-evidence.mjs`** — add an idempotent patch (same pattern as the existing branding patch) that injects into the layout `<svelte:head>`: the **Inter** Google Font, and renders the **DNEMIS header + 6-module nav** above `<slot/>`. The nav links (from `emis-public-portal-input/DNEMIS Platform.html`):
+- [ ] **Step 2a: First, read the installed layout and capture exact anchors.** The existing branding patch only swaps the `<EvidenceDefaultLayout {data}>` opening tag for one with extra props — it does NOT touch `<slot/>` or `<svelte:head>`. So before writing the new patch, open the generated layout and copy the literal strings you'll target:
+
+Run: `sed -n '1,80p' evidence/.evidence/template/src/pages/+layout.svelte` (path may differ — find it with `find evidence/.evidence -name '+layout.svelte' -path '*pages*'`). Identify (a) a stable anchor to insert the DNEMIS header markup just inside the layout body (e.g. immediately before `<slot` or before the `<EvidenceDefaultLayout` closing), and (b) where to add the Inter `<link>` / `@import`. The `patch()` helper does one guarded `replace(from, to)` per patch, so each insertion needs an exact `from` substring that exists in the regenerated template.
+
+- [ ] **Step 2b: Extend `patch-evidence.mjs`** — add an idempotent patch (marker-guarded `[skip]` like the others) that, using the anchors from 2a, injects the **Inter** Google Font and renders the **DNEMIS header + 6-module nav** at the top of the layout body. The nav links (from `emis-public-portal-input/DNEMIS Platform.html`):
 
 ```js
 // Idempotent block appended to the existing patch list in patch-evidence.mjs.
@@ -988,10 +992,15 @@ export function page({ ou, ancestors, leaf, childLevel, childLinkPrefix }) {
 ```js
 // scripts/asc-pages/generate.mjs
 import { readFileSync, writeFileSync, mkdirSync, rmSync } from 'node:fs';
-import { parse } from 'csv-parse/sync';
 import { page } from './template.mjs';
 
-const ou = parse(readFileSync('evidence/sources/asc/ou.csv'), { columns: true });
+// Tiny CSV reader — ou.csv has no embedded commas/quotes (ids, names, ints). No new dep.
+function readCsv(path) {
+  const [header, ...lines] = readFileSync(path, 'utf8').trim().split('\n');
+  const cols = header.split(',');
+  return lines.map((line) => Object.fromEntries(line.split(',').map((v, i) => [cols[i], v])));
+}
+const ou = readCsv('evidence/sources/asc/ou.csv');
 const byId = Object.fromEntries(ou.map((o) => [o.id, o]));
 const ancestorsOf = (o) => {
   const chain = []; let c = o;
