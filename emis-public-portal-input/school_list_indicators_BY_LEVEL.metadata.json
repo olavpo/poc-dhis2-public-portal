@@ -1,0 +1,1076 @@
+{
+ "indicators": [
+  {
+   "id": "DiEriq7urPG",
+   "name": "ASC-PREPRY Enrolment",
+   "shortName": "Pre-pry Enrolment",
+   "code": "ASC_PREPRY_ENROL",
+   "description": "Total pre-primary enrolment (current year), summed across all census forms that collect this level.",
+   "indicatorType": {
+    "id": "jEvXVGHRCsj"
+   },
+   "numerator": "#{u8MSpa6e4tu}+#{KrjARNwUOFF}+#{w34HAnkMJDW}+#{PPWh2jFXBWV}+#{hXqrubrJPRr}",
+   "numeratorDescription": "Total pre-primary enrolment (all forms)",
+   "denominator": "1",
+   "denominatorDescription": "one",
+   "annualized": false,
+   "decimals": 0
+  },
+  {
+   "id": "L7wp6IPJGhV",
+   "name": "ASC-PREPRY Enrolment boys",
+   "shortName": "Pre-pry Enrolment boys",
+   "code": "ASC_PREPRY_ENROL_M",
+   "description": "Male pre-primary enrolment (current year), all forms.",
+   "indicatorType": {
+    "id": "jEvXVGHRCsj"
+   },
+   "numerator": "#{u8MSpa6e4tu.N36C2yx2jKL}+#{u8MSpa6e4tu.FPfuzNpUspF}+#{u8MSpa6e4tu.SXMomFE6OI4}+#{u8MSpa6e4tu.AiQfmu1GI61}+#{u8MSpa6e4tu.K3y4YS6MQJr}+#{KrjARNwUOFF.N36C2yx2jKL}+#{KrjARNwUOFF.FPfuzNpUspF}+#{KrjARNwUOFF.SXMomFE6OI4}+#{KrjARNwUOFF.AiQfmu1GI61}+#{KrjARNwUOFF.K3y4YS6MQJr}+#{w34HAnkMJDW.N36C2yx2jKL}+#{w34HAnkMJDW.FPfuzNpUspF}+#{w34HAnkMJDW.SXMomFE6OI4}+#{w34HAnkMJDW.AiQfmu1GI61}+#{w34HAnkMJDW.K3y4YS6MQJr}+#{PPWh2jFXBWV.N36C2yx2jKL}+#{PPWh2jFXBWV.FPfuzNpUspF}+#{PPWh2jFXBWV.SXMomFE6OI4}+#{PPWh2jFXBWV.AiQfmu1GI61}+#{PPWh2jFXBWV.K3y4YS6MQJr}+#{hXqrubrJPRr.N36C2yx2jKL}+#{hXqrubrJPRr.FPfuzNpUspF}+#{hXqrubrJPRr.SXMomFE6OI4}+#{hXqrubrJPRr.AiQfmu1GI61}+#{hXqrubrJPRr.K3y4YS6MQJr}+#{u8MSpa6e4tu.ygatak2nPse}+#{u8MSpa6e4tu.h72uqXbdIc2}+#{u8MSpa6e4tu.RxGSWrtF9Bi}+#{u8MSpa6e4tu.aCftWxUH4xK}+#{u8MSpa6e4tu.PhsfKKRh76e}+#{KrjARNwUOFF.ygatak2nPse}+#{KrjARNwUOFF.h72uqXbdIc2}+#{KrjARNwUOFF.RxGSWrtF9Bi}+#{KrjARNwUOFF.aCftWxUH4xK}+#{KrjARNwUOFF.PhsfKKRh76e}+#{w34HAnkMJDW.ygatak2nPse}+#{w34HAnkMJDW.h72uqXbdIc2}+#{w34HAnkMJDW.RxGSWrtF9Bi}+#{w34HAnkMJDW.aCftWxUH4xK}+#{w34HAnkMJDW.PhsfKKRh76e}+#{PPWh2jFXBWV.ygatak2nPse}+#{PPWh2jFXBWV.h72uqXbdIc2}+#{PPWh2jFXBWV.RxGSWrtF9Bi}+#{PPWh2jFXBWV.aCftWxUH4xK}+#{PPWh2jFXBWV.PhsfKKRh76e}+#{hXqrubrJPRr.ygatak2nPse}+#{hXqrubrJPRr.h72uqXbdIc2}+#{hXqrubrJPRr.RxGSWrtF9Bi}+#{hXqrubrJPRr.aCftWxUH4xK}+#{hXqrubrJPRr.PhsfKKRh76e}",
+   "numeratorDescription": "Male pre-primary enrolment",
+   "denominator": "1",
+   "denominatorDescription": "one",
+   "annualized": false,
+   "decimals": 0
+  },
+  {
+   "id": "NnvopxD62MT",
+   "name": "ASC-PREPRY Enrolment girls",
+   "shortName": "Pre-pry Enrolment girls",
+   "code": "ASC_PREPRY_ENROL_F",
+   "description": "Female pre-primary enrolment (current year), all forms.",
+   "indicatorType": {
+    "id": "jEvXVGHRCsj"
+   },
+   "numerator": "#{u8MSpa6e4tu.ND6R1ECWKes}+#{u8MSpa6e4tu.ouwhZRJlira}+#{u8MSpa6e4tu.eNoCIgIkRkU}+#{u8MSpa6e4tu.yw9UyOdR2mS}+#{u8MSpa6e4tu.fDHsrZJRNVc}+#{KrjARNwUOFF.ND6R1ECWKes}+#{KrjARNwUOFF.ouwhZRJlira}+#{KrjARNwUOFF.eNoCIgIkRkU}+#{KrjARNwUOFF.yw9UyOdR2mS}+#{KrjARNwUOFF.fDHsrZJRNVc}+#{w34HAnkMJDW.ND6R1ECWKes}+#{w34HAnkMJDW.ouwhZRJlira}+#{w34HAnkMJDW.eNoCIgIkRkU}+#{w34HAnkMJDW.yw9UyOdR2mS}+#{w34HAnkMJDW.fDHsrZJRNVc}+#{PPWh2jFXBWV.ND6R1ECWKes}+#{PPWh2jFXBWV.ouwhZRJlira}+#{PPWh2jFXBWV.eNoCIgIkRkU}+#{PPWh2jFXBWV.yw9UyOdR2mS}+#{PPWh2jFXBWV.fDHsrZJRNVc}+#{hXqrubrJPRr.ND6R1ECWKes}+#{hXqrubrJPRr.ouwhZRJlira}+#{hXqrubrJPRr.eNoCIgIkRkU}+#{hXqrubrJPRr.yw9UyOdR2mS}+#{hXqrubrJPRr.fDHsrZJRNVc}+#{u8MSpa6e4tu.GwvoYZx4IjG}+#{u8MSpa6e4tu.DxPA1wlJuQc}+#{u8MSpa6e4tu.uzx0YvwDHdV}+#{u8MSpa6e4tu.RC2IhV7hbBo}+#{u8MSpa6e4tu.MYu4MgzJFDz}+#{KrjARNwUOFF.GwvoYZx4IjG}+#{KrjARNwUOFF.DxPA1wlJuQc}+#{KrjARNwUOFF.uzx0YvwDHdV}+#{KrjARNwUOFF.RC2IhV7hbBo}+#{KrjARNwUOFF.MYu4MgzJFDz}+#{w34HAnkMJDW.GwvoYZx4IjG}+#{w34HAnkMJDW.DxPA1wlJuQc}+#{w34HAnkMJDW.uzx0YvwDHdV}+#{w34HAnkMJDW.RC2IhV7hbBo}+#{w34HAnkMJDW.MYu4MgzJFDz}+#{PPWh2jFXBWV.GwvoYZx4IjG}+#{PPWh2jFXBWV.DxPA1wlJuQc}+#{PPWh2jFXBWV.uzx0YvwDHdV}+#{PPWh2jFXBWV.RC2IhV7hbBo}+#{PPWh2jFXBWV.MYu4MgzJFDz}+#{hXqrubrJPRr.GwvoYZx4IjG}+#{hXqrubrJPRr.DxPA1wlJuQc}+#{hXqrubrJPRr.uzx0YvwDHdV}+#{hXqrubrJPRr.RC2IhV7hbBo}+#{hXqrubrJPRr.MYu4MgzJFDz}",
+   "numeratorDescription": "Female pre-primary enrolment",
+   "denominator": "1",
+   "denominatorDescription": "one",
+   "annualized": false,
+   "decimals": 0
+  },
+  {
+   "id": "QZl1LOTpSat",
+   "name": "ASC-PREPRY Female learners (%)",
+   "shortName": "Pre-pry Female learners (%)",
+   "code": "ASC_PREPRY_FEMALE_PCT",
+   "description": "Share of pre-primary enrolment that is female (all forms).",
+   "indicatorType": {
+    "id": "D0J1oRr1ESx"
+   },
+   "numerator": "#{u8MSpa6e4tu.ND6R1ECWKes}+#{u8MSpa6e4tu.ouwhZRJlira}+#{u8MSpa6e4tu.eNoCIgIkRkU}+#{u8MSpa6e4tu.yw9UyOdR2mS}+#{u8MSpa6e4tu.fDHsrZJRNVc}+#{KrjARNwUOFF.ND6R1ECWKes}+#{KrjARNwUOFF.ouwhZRJlira}+#{KrjARNwUOFF.eNoCIgIkRkU}+#{KrjARNwUOFF.yw9UyOdR2mS}+#{KrjARNwUOFF.fDHsrZJRNVc}+#{w34HAnkMJDW.ND6R1ECWKes}+#{w34HAnkMJDW.ouwhZRJlira}+#{w34HAnkMJDW.eNoCIgIkRkU}+#{w34HAnkMJDW.yw9UyOdR2mS}+#{w34HAnkMJDW.fDHsrZJRNVc}+#{PPWh2jFXBWV.ND6R1ECWKes}+#{PPWh2jFXBWV.ouwhZRJlira}+#{PPWh2jFXBWV.eNoCIgIkRkU}+#{PPWh2jFXBWV.yw9UyOdR2mS}+#{PPWh2jFXBWV.fDHsrZJRNVc}+#{hXqrubrJPRr.ND6R1ECWKes}+#{hXqrubrJPRr.ouwhZRJlira}+#{hXqrubrJPRr.eNoCIgIkRkU}+#{hXqrubrJPRr.yw9UyOdR2mS}+#{hXqrubrJPRr.fDHsrZJRNVc}+#{u8MSpa6e4tu.GwvoYZx4IjG}+#{u8MSpa6e4tu.DxPA1wlJuQc}+#{u8MSpa6e4tu.uzx0YvwDHdV}+#{u8MSpa6e4tu.RC2IhV7hbBo}+#{u8MSpa6e4tu.MYu4MgzJFDz}+#{KrjARNwUOFF.GwvoYZx4IjG}+#{KrjARNwUOFF.DxPA1wlJuQc}+#{KrjARNwUOFF.uzx0YvwDHdV}+#{KrjARNwUOFF.RC2IhV7hbBo}+#{KrjARNwUOFF.MYu4MgzJFDz}+#{w34HAnkMJDW.GwvoYZx4IjG}+#{w34HAnkMJDW.DxPA1wlJuQc}+#{w34HAnkMJDW.uzx0YvwDHdV}+#{w34HAnkMJDW.RC2IhV7hbBo}+#{w34HAnkMJDW.MYu4MgzJFDz}+#{PPWh2jFXBWV.GwvoYZx4IjG}+#{PPWh2jFXBWV.DxPA1wlJuQc}+#{PPWh2jFXBWV.uzx0YvwDHdV}+#{PPWh2jFXBWV.RC2IhV7hbBo}+#{PPWh2jFXBWV.MYu4MgzJFDz}+#{hXqrubrJPRr.GwvoYZx4IjG}+#{hXqrubrJPRr.DxPA1wlJuQc}+#{hXqrubrJPRr.uzx0YvwDHdV}+#{hXqrubrJPRr.RC2IhV7hbBo}+#{hXqrubrJPRr.MYu4MgzJFDz}",
+   "numeratorDescription": "Female pre-primary enrolment",
+   "denominator": "#{u8MSpa6e4tu}+#{KrjARNwUOFF}+#{w34HAnkMJDW}+#{PPWh2jFXBWV}+#{hXqrubrJPRr}",
+   "denominatorDescription": "Total pre-primary enrolment",
+   "annualized": false,
+   "decimals": 1
+  },
+  {
+   "id": "i8mFzOkO9Wi",
+   "name": "ASC-PREPRY Pupil-stream ratio (ratio)",
+   "shortName": "Pre-pry Pupil-stream ratio",
+   "code": "ASC_PREPRY_PUPIL_STREAM",
+   "description": "Average class size: pre-primary enrolment divided by number of streams (class arms), all forms.",
+   "indicatorType": {
+    "id": "jEvXVGHRCsj"
+   },
+   "numerator": "#{u8MSpa6e4tu}+#{KrjARNwUOFF}+#{w34HAnkMJDW}+#{PPWh2jFXBWV}+#{hXqrubrJPRr}",
+   "numeratorDescription": "Total pre-primary enrolment",
+   "denominator": "#{q95gGy0yKw1}",
+   "denominatorDescription": "pre-primary streams",
+   "annualized": false,
+   "decimals": 1
+  },
+  {
+   "id": "Rszp9Ippq5N",
+   "name": "ASC-PREPRY Learners with special needs",
+   "shortName": "Pre-pry SNE learners",
+   "code": "ASC_PREPRY_SNE",
+   "description": "Pre-primary learners with special needs (sum of categories, all forms). May double-count across categories.",
+   "indicatorType": {
+    "id": "jEvXVGHRCsj"
+   },
+   "numerator": "#{uwdSKGMeT4d.HD9GI0fEbAB}+#{uwdSKGMeT4d.TVSDrUqO3wh}+#{uwdSKGMeT4d.sJJ2QtgpSvY}+#{uwdSKGMeT4d.If5zWn2Fa6y}+#{uwdSKGMeT4d.gKBKtFzJHhl}+#{uwdSKGMeT4d.tASULEh6X86}+#{PlYsC2x7Yuz.HD9GI0fEbAB}+#{PlYsC2x7Yuz.TVSDrUqO3wh}+#{PlYsC2x7Yuz.sJJ2QtgpSvY}+#{PlYsC2x7Yuz.If5zWn2Fa6y}+#{PlYsC2x7Yuz.gKBKtFzJHhl}+#{PlYsC2x7Yuz.tASULEh6X86}+#{sEfR7GtJTev.HD9GI0fEbAB}+#{sEfR7GtJTev.TVSDrUqO3wh}+#{sEfR7GtJTev.sJJ2QtgpSvY}+#{sEfR7GtJTev.If5zWn2Fa6y}+#{sEfR7GtJTev.gKBKtFzJHhl}+#{sEfR7GtJTev.tASULEh6X86}+#{cK2VlbKCsBQ.HD9GI0fEbAB}+#{cK2VlbKCsBQ.TVSDrUqO3wh}+#{cK2VlbKCsBQ.sJJ2QtgpSvY}+#{cK2VlbKCsBQ.If5zWn2Fa6y}+#{cK2VlbKCsBQ.gKBKtFzJHhl}+#{cK2VlbKCsBQ.tASULEh6X86}+#{FAd1EMxGRMh.HD9GI0fEbAB}+#{FAd1EMxGRMh.TVSDrUqO3wh}+#{FAd1EMxGRMh.sJJ2QtgpSvY}+#{FAd1EMxGRMh.If5zWn2Fa6y}+#{FAd1EMxGRMh.gKBKtFzJHhl}+#{FAd1EMxGRMh.tASULEh6X86}+#{obqupsZBMLi.HD9GI0fEbAB}+#{obqupsZBMLi.TVSDrUqO3wh}+#{obqupsZBMLi.sJJ2QtgpSvY}+#{obqupsZBMLi.If5zWn2Fa6y}+#{obqupsZBMLi.gKBKtFzJHhl}+#{obqupsZBMLi.tASULEh6X86}",
+   "numeratorDescription": "Sum of pre-primary special-needs categories",
+   "denominator": "1",
+   "denominatorDescription": "one",
+   "annualized": false,
+   "decimals": 0
+  },
+  {
+   "id": "pc4DSr5MyOC",
+   "name": "ASC-PREPRY Learners with special needs (%)",
+   "shortName": "Pre-pry SNE learners (%)",
+   "code": "ASC_PREPRY_SNE_PCT",
+   "description": "Pre-primary learners with special needs as a share of enrolment (all forms).",
+   "indicatorType": {
+    "id": "D0J1oRr1ESx"
+   },
+   "numerator": "#{uwdSKGMeT4d.HD9GI0fEbAB}+#{uwdSKGMeT4d.TVSDrUqO3wh}+#{uwdSKGMeT4d.sJJ2QtgpSvY}+#{uwdSKGMeT4d.If5zWn2Fa6y}+#{uwdSKGMeT4d.gKBKtFzJHhl}+#{uwdSKGMeT4d.tASULEh6X86}+#{PlYsC2x7Yuz.HD9GI0fEbAB}+#{PlYsC2x7Yuz.TVSDrUqO3wh}+#{PlYsC2x7Yuz.sJJ2QtgpSvY}+#{PlYsC2x7Yuz.If5zWn2Fa6y}+#{PlYsC2x7Yuz.gKBKtFzJHhl}+#{PlYsC2x7Yuz.tASULEh6X86}+#{sEfR7GtJTev.HD9GI0fEbAB}+#{sEfR7GtJTev.TVSDrUqO3wh}+#{sEfR7GtJTev.sJJ2QtgpSvY}+#{sEfR7GtJTev.If5zWn2Fa6y}+#{sEfR7GtJTev.gKBKtFzJHhl}+#{sEfR7GtJTev.tASULEh6X86}+#{cK2VlbKCsBQ.HD9GI0fEbAB}+#{cK2VlbKCsBQ.TVSDrUqO3wh}+#{cK2VlbKCsBQ.sJJ2QtgpSvY}+#{cK2VlbKCsBQ.If5zWn2Fa6y}+#{cK2VlbKCsBQ.gKBKtFzJHhl}+#{cK2VlbKCsBQ.tASULEh6X86}+#{FAd1EMxGRMh.HD9GI0fEbAB}+#{FAd1EMxGRMh.TVSDrUqO3wh}+#{FAd1EMxGRMh.sJJ2QtgpSvY}+#{FAd1EMxGRMh.If5zWn2Fa6y}+#{FAd1EMxGRMh.gKBKtFzJHhl}+#{FAd1EMxGRMh.tASULEh6X86}+#{obqupsZBMLi.HD9GI0fEbAB}+#{obqupsZBMLi.TVSDrUqO3wh}+#{obqupsZBMLi.sJJ2QtgpSvY}+#{obqupsZBMLi.If5zWn2Fa6y}+#{obqupsZBMLi.gKBKtFzJHhl}+#{obqupsZBMLi.tASULEh6X86}",
+   "numeratorDescription": "Sum of pre-primary special-needs categories",
+   "denominator": "#{u8MSpa6e4tu}+#{KrjARNwUOFF}+#{w34HAnkMJDW}+#{PPWh2jFXBWV}+#{hXqrubrJPRr}",
+   "denominatorDescription": "Total pre-primary enrolment",
+   "annualized": false,
+   "decimals": 1
+  },
+  {
+   "id": "Sydf7CTCFuC",
+   "name": "ASC-PREPRY Orphans",
+   "shortName": "Pre-pry Orphans",
+   "code": "ASC_PREPRY_ORPHANS",
+   "description": "Pre-primary orphans (lost one/both parents), all forms.",
+   "indicatorType": {
+    "id": "jEvXVGHRCsj"
+   },
+   "numerator": "#{HGJ0PGQtnmm.OAMWgQasao3}+#{HGJ0PGQtnmm.MGDsY3zx46G}+#{HGJ0PGQtnmm.z5d1Grtyp6q}+#{HGJ0PGQtnmm.ilYZdWjFrEt}+#{HGJ0PGQtnmm.FPKYmK8cHUG}+#{HGJ0PGQtnmm.jwqM56IsTj1}+#{jFT5nFRBeZr.OAMWgQasao3}+#{jFT5nFRBeZr.MGDsY3zx46G}+#{jFT5nFRBeZr.z5d1Grtyp6q}+#{jFT5nFRBeZr.ilYZdWjFrEt}+#{jFT5nFRBeZr.FPKYmK8cHUG}+#{jFT5nFRBeZr.jwqM56IsTj1}+#{eB0gZ6eaTIj.OAMWgQasao3}+#{eB0gZ6eaTIj.MGDsY3zx46G}+#{eB0gZ6eaTIj.z5d1Grtyp6q}+#{eB0gZ6eaTIj.ilYZdWjFrEt}+#{eB0gZ6eaTIj.FPKYmK8cHUG}+#{eB0gZ6eaTIj.jwqM56IsTj1}",
+   "numeratorDescription": "Sum of pre-primary orphan categories",
+   "denominator": "1",
+   "denominatorDescription": "one",
+   "annualized": false,
+   "decimals": 0
+  },
+  {
+   "id": "Qsgrw7qe8cC",
+   "name": "ASC-PREPRY Orphans (%)",
+   "shortName": "Pre-pry Orphans (%)",
+   "code": "ASC_PREPRY_ORPHANS_PCT",
+   "description": "Pre-primary orphans as a share of enrolment (all forms).",
+   "indicatorType": {
+    "id": "D0J1oRr1ESx"
+   },
+   "numerator": "#{HGJ0PGQtnmm.OAMWgQasao3}+#{HGJ0PGQtnmm.MGDsY3zx46G}+#{HGJ0PGQtnmm.z5d1Grtyp6q}+#{HGJ0PGQtnmm.ilYZdWjFrEt}+#{HGJ0PGQtnmm.FPKYmK8cHUG}+#{HGJ0PGQtnmm.jwqM56IsTj1}+#{jFT5nFRBeZr.OAMWgQasao3}+#{jFT5nFRBeZr.MGDsY3zx46G}+#{jFT5nFRBeZr.z5d1Grtyp6q}+#{jFT5nFRBeZr.ilYZdWjFrEt}+#{jFT5nFRBeZr.FPKYmK8cHUG}+#{jFT5nFRBeZr.jwqM56IsTj1}+#{eB0gZ6eaTIj.OAMWgQasao3}+#{eB0gZ6eaTIj.MGDsY3zx46G}+#{eB0gZ6eaTIj.z5d1Grtyp6q}+#{eB0gZ6eaTIj.ilYZdWjFrEt}+#{eB0gZ6eaTIj.FPKYmK8cHUG}+#{eB0gZ6eaTIj.jwqM56IsTj1}",
+   "numeratorDescription": "Sum of pre-primary orphan categories",
+   "denominator": "#{u8MSpa6e4tu}+#{KrjARNwUOFF}+#{w34HAnkMJDW}+#{PPWh2jFXBWV}+#{hXqrubrJPRr}",
+   "denominatorDescription": "Total pre-primary enrolment",
+   "annualized": false,
+   "decimals": 1
+  },
+  {
+   "id": "d8qCE7aPWtD",
+   "name": "ASC-PRY Enrolment",
+   "shortName": "Primary Enrolment",
+   "code": "ASC_PRY_ENROL",
+   "description": "Total primary enrolment (current year), summed across all census forms that collect this level.",
+   "indicatorType": {
+    "id": "jEvXVGHRCsj"
+   },
+   "numerator": "#{CADSef49FaO}+#{wPDF1OLjYM2}+#{meegE8oyjXY}+#{cFwJLHE4Dps}+#{jAcTIg5mOlx}+#{eBTbIITRm3H}+#{tno1y7kW71Z}+#{D2FfTq9m77w}",
+   "numeratorDescription": "Total primary enrolment (all forms)",
+   "denominator": "1",
+   "denominatorDescription": "one",
+   "annualized": false,
+   "decimals": 0
+  },
+  {
+   "id": "yjH9LAuAMrk",
+   "name": "ASC-PRY Enrolment boys",
+   "shortName": "Primary Enrolment boys",
+   "code": "ASC_PRY_ENROL_M",
+   "description": "Male primary enrolment (current year), all forms.",
+   "indicatorType": {
+    "id": "jEvXVGHRCsj"
+   },
+   "numerator": "#{CADSef49FaO.cn5mjpcjczz}+#{CADSef49FaO.eVEbydcf5qX}+#{CADSef49FaO.s8zOlNm05Dq}+#{CADSef49FaO.E4a2NBmGsGT}+#{CADSef49FaO.gB7JZExaZSe}+#{CADSef49FaO.v86Ah57BmL6}+#{wPDF1OLjYM2.cn5mjpcjczz}+#{wPDF1OLjYM2.eVEbydcf5qX}+#{wPDF1OLjYM2.s8zOlNm05Dq}+#{wPDF1OLjYM2.E4a2NBmGsGT}+#{wPDF1OLjYM2.gB7JZExaZSe}+#{wPDF1OLjYM2.v86Ah57BmL6}+#{meegE8oyjXY.cn5mjpcjczz}+#{meegE8oyjXY.eVEbydcf5qX}+#{meegE8oyjXY.s8zOlNm05Dq}+#{meegE8oyjXY.E4a2NBmGsGT}+#{meegE8oyjXY.gB7JZExaZSe}+#{meegE8oyjXY.v86Ah57BmL6}+#{cFwJLHE4Dps.cn5mjpcjczz}+#{cFwJLHE4Dps.eVEbydcf5qX}+#{cFwJLHE4Dps.s8zOlNm05Dq}+#{cFwJLHE4Dps.E4a2NBmGsGT}+#{cFwJLHE4Dps.gB7JZExaZSe}+#{cFwJLHE4Dps.v86Ah57BmL6}+#{jAcTIg5mOlx.cn5mjpcjczz}+#{jAcTIg5mOlx.eVEbydcf5qX}+#{jAcTIg5mOlx.s8zOlNm05Dq}+#{jAcTIg5mOlx.E4a2NBmGsGT}+#{jAcTIg5mOlx.gB7JZExaZSe}+#{jAcTIg5mOlx.v86Ah57BmL6}+#{eBTbIITRm3H.cn5mjpcjczz}+#{eBTbIITRm3H.eVEbydcf5qX}+#{eBTbIITRm3H.s8zOlNm05Dq}+#{eBTbIITRm3H.E4a2NBmGsGT}+#{eBTbIITRm3H.gB7JZExaZSe}+#{eBTbIITRm3H.v86Ah57BmL6}+#{tno1y7kW71Z.cn5mjpcjczz}+#{tno1y7kW71Z.eVEbydcf5qX}+#{tno1y7kW71Z.s8zOlNm05Dq}+#{tno1y7kW71Z.E4a2NBmGsGT}+#{tno1y7kW71Z.gB7JZExaZSe}+#{tno1y7kW71Z.v86Ah57BmL6}+#{D2FfTq9m77w.cn5mjpcjczz}+#{D2FfTq9m77w.eVEbydcf5qX}+#{D2FfTq9m77w.s8zOlNm05Dq}+#{D2FfTq9m77w.E4a2NBmGsGT}+#{D2FfTq9m77w.gB7JZExaZSe}+#{D2FfTq9m77w.v86Ah57BmL6}+#{CADSef49FaO.yl9sU3evA5p}+#{CADSef49FaO.WNzLOKpVBlp}+#{CADSef49FaO.MMCgkH4y1ZB}+#{CADSef49FaO.Fs6kRoyMpse}+#{CADSef49FaO.sIRnse62gRp}+#{CADSef49FaO.B1FawPZBdCd}+#{wPDF1OLjYM2.yl9sU3evA5p}+#{wPDF1OLjYM2.WNzLOKpVBlp}+#{wPDF1OLjYM2.MMCgkH4y1ZB}+#{wPDF1OLjYM2.Fs6kRoyMpse}+#{wPDF1OLjYM2.sIRnse62gRp}+#{wPDF1OLjYM2.B1FawPZBdCd}+#{meegE8oyjXY.yl9sU3evA5p}+#{meegE8oyjXY.WNzLOKpVBlp}+#{meegE8oyjXY.MMCgkH4y1ZB}+#{meegE8oyjXY.Fs6kRoyMpse}+#{meegE8oyjXY.sIRnse62gRp}+#{meegE8oyjXY.B1FawPZBdCd}+#{cFwJLHE4Dps.yl9sU3evA5p}+#{cFwJLHE4Dps.WNzLOKpVBlp}+#{cFwJLHE4Dps.MMCgkH4y1ZB}+#{cFwJLHE4Dps.Fs6kRoyMpse}+#{cFwJLHE4Dps.sIRnse62gRp}+#{cFwJLHE4Dps.B1FawPZBdCd}+#{jAcTIg5mOlx.yl9sU3evA5p}+#{jAcTIg5mOlx.WNzLOKpVBlp}+#{jAcTIg5mOlx.MMCgkH4y1ZB}+#{jAcTIg5mOlx.Fs6kRoyMpse}+#{jAcTIg5mOlx.sIRnse62gRp}+#{jAcTIg5mOlx.B1FawPZBdCd}+#{eBTbIITRm3H.yl9sU3evA5p}+#{eBTbIITRm3H.WNzLOKpVBlp}+#{eBTbIITRm3H.MMCgkH4y1ZB}+#{eBTbIITRm3H.Fs6kRoyMpse}+#{eBTbIITRm3H.sIRnse62gRp}+#{eBTbIITRm3H.B1FawPZBdCd}+#{tno1y7kW71Z.yl9sU3evA5p}+#{tno1y7kW71Z.WNzLOKpVBlp}+#{tno1y7kW71Z.MMCgkH4y1ZB}+#{tno1y7kW71Z.Fs6kRoyMpse}+#{tno1y7kW71Z.sIRnse62gRp}+#{tno1y7kW71Z.B1FawPZBdCd}+#{D2FfTq9m77w.yl9sU3evA5p}+#{D2FfTq9m77w.WNzLOKpVBlp}+#{D2FfTq9m77w.MMCgkH4y1ZB}+#{D2FfTq9m77w.Fs6kRoyMpse}+#{D2FfTq9m77w.sIRnse62gRp}+#{D2FfTq9m77w.B1FawPZBdCd}",
+   "numeratorDescription": "Male primary enrolment",
+   "denominator": "1",
+   "denominatorDescription": "one",
+   "annualized": false,
+   "decimals": 0
+  },
+  {
+   "id": "Qwjg1QG0Hws",
+   "name": "ASC-PRY Enrolment girls",
+   "shortName": "Primary Enrolment girls",
+   "code": "ASC_PRY_ENROL_F",
+   "description": "Female primary enrolment (current year), all forms.",
+   "indicatorType": {
+    "id": "jEvXVGHRCsj"
+   },
+   "numerator": "#{CADSef49FaO.MzCuUq4r7RN}+#{CADSef49FaO.tdigCHbLsX9}+#{CADSef49FaO.FJY93b05T3d}+#{CADSef49FaO.Ul3n6Rs3nmN}+#{CADSef49FaO.wpWPigQKzve}+#{CADSef49FaO.kVfmCFFGGJ4}+#{wPDF1OLjYM2.MzCuUq4r7RN}+#{wPDF1OLjYM2.tdigCHbLsX9}+#{wPDF1OLjYM2.FJY93b05T3d}+#{wPDF1OLjYM2.Ul3n6Rs3nmN}+#{wPDF1OLjYM2.wpWPigQKzve}+#{wPDF1OLjYM2.kVfmCFFGGJ4}+#{meegE8oyjXY.MzCuUq4r7RN}+#{meegE8oyjXY.tdigCHbLsX9}+#{meegE8oyjXY.FJY93b05T3d}+#{meegE8oyjXY.Ul3n6Rs3nmN}+#{meegE8oyjXY.wpWPigQKzve}+#{meegE8oyjXY.kVfmCFFGGJ4}+#{cFwJLHE4Dps.MzCuUq4r7RN}+#{cFwJLHE4Dps.tdigCHbLsX9}+#{cFwJLHE4Dps.FJY93b05T3d}+#{cFwJLHE4Dps.Ul3n6Rs3nmN}+#{cFwJLHE4Dps.wpWPigQKzve}+#{cFwJLHE4Dps.kVfmCFFGGJ4}+#{jAcTIg5mOlx.MzCuUq4r7RN}+#{jAcTIg5mOlx.tdigCHbLsX9}+#{jAcTIg5mOlx.FJY93b05T3d}+#{jAcTIg5mOlx.Ul3n6Rs3nmN}+#{jAcTIg5mOlx.wpWPigQKzve}+#{jAcTIg5mOlx.kVfmCFFGGJ4}+#{eBTbIITRm3H.MzCuUq4r7RN}+#{eBTbIITRm3H.tdigCHbLsX9}+#{eBTbIITRm3H.FJY93b05T3d}+#{eBTbIITRm3H.Ul3n6Rs3nmN}+#{eBTbIITRm3H.wpWPigQKzve}+#{eBTbIITRm3H.kVfmCFFGGJ4}+#{tno1y7kW71Z.MzCuUq4r7RN}+#{tno1y7kW71Z.tdigCHbLsX9}+#{tno1y7kW71Z.FJY93b05T3d}+#{tno1y7kW71Z.Ul3n6Rs3nmN}+#{tno1y7kW71Z.wpWPigQKzve}+#{tno1y7kW71Z.kVfmCFFGGJ4}+#{D2FfTq9m77w.MzCuUq4r7RN}+#{D2FfTq9m77w.tdigCHbLsX9}+#{D2FfTq9m77w.FJY93b05T3d}+#{D2FfTq9m77w.Ul3n6Rs3nmN}+#{D2FfTq9m77w.wpWPigQKzve}+#{D2FfTq9m77w.kVfmCFFGGJ4}+#{CADSef49FaO.mJ0bMVCQB3V}+#{CADSef49FaO.y3NHP2dQheZ}+#{CADSef49FaO.aZ6Zgd8lAo4}+#{CADSef49FaO.z6Xu3zA2prE}+#{CADSef49FaO.ICs2Bc5FuOs}+#{CADSef49FaO.w87tdegTUrW}+#{wPDF1OLjYM2.mJ0bMVCQB3V}+#{wPDF1OLjYM2.y3NHP2dQheZ}+#{wPDF1OLjYM2.aZ6Zgd8lAo4}+#{wPDF1OLjYM2.z6Xu3zA2prE}+#{wPDF1OLjYM2.ICs2Bc5FuOs}+#{wPDF1OLjYM2.w87tdegTUrW}+#{meegE8oyjXY.mJ0bMVCQB3V}+#{meegE8oyjXY.y3NHP2dQheZ}+#{meegE8oyjXY.aZ6Zgd8lAo4}+#{meegE8oyjXY.z6Xu3zA2prE}+#{meegE8oyjXY.ICs2Bc5FuOs}+#{meegE8oyjXY.w87tdegTUrW}+#{cFwJLHE4Dps.mJ0bMVCQB3V}+#{cFwJLHE4Dps.y3NHP2dQheZ}+#{cFwJLHE4Dps.aZ6Zgd8lAo4}+#{cFwJLHE4Dps.z6Xu3zA2prE}+#{cFwJLHE4Dps.ICs2Bc5FuOs}+#{cFwJLHE4Dps.w87tdegTUrW}+#{jAcTIg5mOlx.mJ0bMVCQB3V}+#{jAcTIg5mOlx.y3NHP2dQheZ}+#{jAcTIg5mOlx.aZ6Zgd8lAo4}+#{jAcTIg5mOlx.z6Xu3zA2prE}+#{jAcTIg5mOlx.ICs2Bc5FuOs}+#{jAcTIg5mOlx.w87tdegTUrW}+#{eBTbIITRm3H.mJ0bMVCQB3V}+#{eBTbIITRm3H.y3NHP2dQheZ}+#{eBTbIITRm3H.aZ6Zgd8lAo4}+#{eBTbIITRm3H.z6Xu3zA2prE}+#{eBTbIITRm3H.ICs2Bc5FuOs}+#{eBTbIITRm3H.w87tdegTUrW}+#{tno1y7kW71Z.mJ0bMVCQB3V}+#{tno1y7kW71Z.y3NHP2dQheZ}+#{tno1y7kW71Z.aZ6Zgd8lAo4}+#{tno1y7kW71Z.z6Xu3zA2prE}+#{tno1y7kW71Z.ICs2Bc5FuOs}+#{tno1y7kW71Z.w87tdegTUrW}+#{D2FfTq9m77w.mJ0bMVCQB3V}+#{D2FfTq9m77w.y3NHP2dQheZ}+#{D2FfTq9m77w.aZ6Zgd8lAo4}+#{D2FfTq9m77w.z6Xu3zA2prE}+#{D2FfTq9m77w.ICs2Bc5FuOs}+#{D2FfTq9m77w.w87tdegTUrW}",
+   "numeratorDescription": "Female primary enrolment",
+   "denominator": "1",
+   "denominatorDescription": "one",
+   "annualized": false,
+   "decimals": 0
+  },
+  {
+   "id": "JH1hYfoV2hb",
+   "name": "ASC-PRY Female learners (%)",
+   "shortName": "Primary Female learners (%)",
+   "code": "ASC_PRY_FEMALE_PCT",
+   "description": "Share of primary enrolment that is female (all forms).",
+   "indicatorType": {
+    "id": "D0J1oRr1ESx"
+   },
+   "numerator": "#{CADSef49FaO.MzCuUq4r7RN}+#{CADSef49FaO.tdigCHbLsX9}+#{CADSef49FaO.FJY93b05T3d}+#{CADSef49FaO.Ul3n6Rs3nmN}+#{CADSef49FaO.wpWPigQKzve}+#{CADSef49FaO.kVfmCFFGGJ4}+#{wPDF1OLjYM2.MzCuUq4r7RN}+#{wPDF1OLjYM2.tdigCHbLsX9}+#{wPDF1OLjYM2.FJY93b05T3d}+#{wPDF1OLjYM2.Ul3n6Rs3nmN}+#{wPDF1OLjYM2.wpWPigQKzve}+#{wPDF1OLjYM2.kVfmCFFGGJ4}+#{meegE8oyjXY.MzCuUq4r7RN}+#{meegE8oyjXY.tdigCHbLsX9}+#{meegE8oyjXY.FJY93b05T3d}+#{meegE8oyjXY.Ul3n6Rs3nmN}+#{meegE8oyjXY.wpWPigQKzve}+#{meegE8oyjXY.kVfmCFFGGJ4}+#{cFwJLHE4Dps.MzCuUq4r7RN}+#{cFwJLHE4Dps.tdigCHbLsX9}+#{cFwJLHE4Dps.FJY93b05T3d}+#{cFwJLHE4Dps.Ul3n6Rs3nmN}+#{cFwJLHE4Dps.wpWPigQKzve}+#{cFwJLHE4Dps.kVfmCFFGGJ4}+#{jAcTIg5mOlx.MzCuUq4r7RN}+#{jAcTIg5mOlx.tdigCHbLsX9}+#{jAcTIg5mOlx.FJY93b05T3d}+#{jAcTIg5mOlx.Ul3n6Rs3nmN}+#{jAcTIg5mOlx.wpWPigQKzve}+#{jAcTIg5mOlx.kVfmCFFGGJ4}+#{eBTbIITRm3H.MzCuUq4r7RN}+#{eBTbIITRm3H.tdigCHbLsX9}+#{eBTbIITRm3H.FJY93b05T3d}+#{eBTbIITRm3H.Ul3n6Rs3nmN}+#{eBTbIITRm3H.wpWPigQKzve}+#{eBTbIITRm3H.kVfmCFFGGJ4}+#{tno1y7kW71Z.MzCuUq4r7RN}+#{tno1y7kW71Z.tdigCHbLsX9}+#{tno1y7kW71Z.FJY93b05T3d}+#{tno1y7kW71Z.Ul3n6Rs3nmN}+#{tno1y7kW71Z.wpWPigQKzve}+#{tno1y7kW71Z.kVfmCFFGGJ4}+#{D2FfTq9m77w.MzCuUq4r7RN}+#{D2FfTq9m77w.tdigCHbLsX9}+#{D2FfTq9m77w.FJY93b05T3d}+#{D2FfTq9m77w.Ul3n6Rs3nmN}+#{D2FfTq9m77w.wpWPigQKzve}+#{D2FfTq9m77w.kVfmCFFGGJ4}+#{CADSef49FaO.mJ0bMVCQB3V}+#{CADSef49FaO.y3NHP2dQheZ}+#{CADSef49FaO.aZ6Zgd8lAo4}+#{CADSef49FaO.z6Xu3zA2prE}+#{CADSef49FaO.ICs2Bc5FuOs}+#{CADSef49FaO.w87tdegTUrW}+#{wPDF1OLjYM2.mJ0bMVCQB3V}+#{wPDF1OLjYM2.y3NHP2dQheZ}+#{wPDF1OLjYM2.aZ6Zgd8lAo4}+#{wPDF1OLjYM2.z6Xu3zA2prE}+#{wPDF1OLjYM2.ICs2Bc5FuOs}+#{wPDF1OLjYM2.w87tdegTUrW}+#{meegE8oyjXY.mJ0bMVCQB3V}+#{meegE8oyjXY.y3NHP2dQheZ}+#{meegE8oyjXY.aZ6Zgd8lAo4}+#{meegE8oyjXY.z6Xu3zA2prE}+#{meegE8oyjXY.ICs2Bc5FuOs}+#{meegE8oyjXY.w87tdegTUrW}+#{cFwJLHE4Dps.mJ0bMVCQB3V}+#{cFwJLHE4Dps.y3NHP2dQheZ}+#{cFwJLHE4Dps.aZ6Zgd8lAo4}+#{cFwJLHE4Dps.z6Xu3zA2prE}+#{cFwJLHE4Dps.ICs2Bc5FuOs}+#{cFwJLHE4Dps.w87tdegTUrW}+#{jAcTIg5mOlx.mJ0bMVCQB3V}+#{jAcTIg5mOlx.y3NHP2dQheZ}+#{jAcTIg5mOlx.aZ6Zgd8lAo4}+#{jAcTIg5mOlx.z6Xu3zA2prE}+#{jAcTIg5mOlx.ICs2Bc5FuOs}+#{jAcTIg5mOlx.w87tdegTUrW}+#{eBTbIITRm3H.mJ0bMVCQB3V}+#{eBTbIITRm3H.y3NHP2dQheZ}+#{eBTbIITRm3H.aZ6Zgd8lAo4}+#{eBTbIITRm3H.z6Xu3zA2prE}+#{eBTbIITRm3H.ICs2Bc5FuOs}+#{eBTbIITRm3H.w87tdegTUrW}+#{tno1y7kW71Z.mJ0bMVCQB3V}+#{tno1y7kW71Z.y3NHP2dQheZ}+#{tno1y7kW71Z.aZ6Zgd8lAo4}+#{tno1y7kW71Z.z6Xu3zA2prE}+#{tno1y7kW71Z.ICs2Bc5FuOs}+#{tno1y7kW71Z.w87tdegTUrW}+#{D2FfTq9m77w.mJ0bMVCQB3V}+#{D2FfTq9m77w.y3NHP2dQheZ}+#{D2FfTq9m77w.aZ6Zgd8lAo4}+#{D2FfTq9m77w.z6Xu3zA2prE}+#{D2FfTq9m77w.ICs2Bc5FuOs}+#{D2FfTq9m77w.w87tdegTUrW}",
+   "numeratorDescription": "Female primary enrolment",
+   "denominator": "#{CADSef49FaO}+#{wPDF1OLjYM2}+#{meegE8oyjXY}+#{cFwJLHE4Dps}+#{jAcTIg5mOlx}+#{eBTbIITRm3H}+#{tno1y7kW71Z}+#{D2FfTq9m77w}",
+   "denominatorDescription": "Total primary enrolment",
+   "annualized": false,
+   "decimals": 1
+  },
+  {
+   "id": "uNvBLdtslJ5",
+   "name": "ASC-PRY Pupil-stream ratio (ratio)",
+   "shortName": "Primary Pupil-stream ratio",
+   "code": "ASC_PRY_PUPIL_STREAM",
+   "description": "Average class size: primary enrolment divided by number of streams (class arms), all forms.",
+   "indicatorType": {
+    "id": "jEvXVGHRCsj"
+   },
+   "numerator": "#{CADSef49FaO}+#{wPDF1OLjYM2}+#{meegE8oyjXY}+#{cFwJLHE4Dps}+#{jAcTIg5mOlx}+#{eBTbIITRm3H}+#{tno1y7kW71Z}+#{D2FfTq9m77w}",
+   "numeratorDescription": "Total primary enrolment",
+   "denominator": "#{HITcThdr9al}",
+   "denominatorDescription": "primary streams",
+   "annualized": false,
+   "decimals": 1
+  },
+  {
+   "id": "Mmn0SEDyzOC",
+   "name": "ASC-PRY Learners with special needs",
+   "shortName": "Primary SNE learners",
+   "code": "ASC_PRY_SNE",
+   "description": "Primary learners with special needs (sum of categories, all forms). May double-count across categories.",
+   "indicatorType": {
+    "id": "jEvXVGHRCsj"
+   },
+   "numerator": "#{uwdSKGMeT4d.PVqNXOwDchC}+#{uwdSKGMeT4d.erSa2OQRnpW}+#{uwdSKGMeT4d.UOaEcJy3RY3}+#{uwdSKGMeT4d.YPsLCCPq0Tg}+#{uwdSKGMeT4d.geATIQdMF9A}+#{uwdSKGMeT4d.P0SB621kDA8}+#{uwdSKGMeT4d.CDuDJLEb22r}+#{uwdSKGMeT4d.PRR3iz396Gn}+#{uwdSKGMeT4d.hLSoGLHSi0T}+#{uwdSKGMeT4d.FbwcRP4og2n}+#{uwdSKGMeT4d.uVI65u027T4}+#{uwdSKGMeT4d.p6Pi3RatNH3}+#{PlYsC2x7Yuz.PVqNXOwDchC}+#{PlYsC2x7Yuz.erSa2OQRnpW}+#{PlYsC2x7Yuz.UOaEcJy3RY3}+#{PlYsC2x7Yuz.YPsLCCPq0Tg}+#{PlYsC2x7Yuz.geATIQdMF9A}+#{PlYsC2x7Yuz.P0SB621kDA8}+#{PlYsC2x7Yuz.CDuDJLEb22r}+#{PlYsC2x7Yuz.PRR3iz396Gn}+#{PlYsC2x7Yuz.hLSoGLHSi0T}+#{PlYsC2x7Yuz.FbwcRP4og2n}+#{PlYsC2x7Yuz.uVI65u027T4}+#{PlYsC2x7Yuz.p6Pi3RatNH3}+#{sEfR7GtJTev.PVqNXOwDchC}+#{sEfR7GtJTev.erSa2OQRnpW}+#{sEfR7GtJTev.UOaEcJy3RY3}+#{sEfR7GtJTev.YPsLCCPq0Tg}+#{sEfR7GtJTev.geATIQdMF9A}+#{sEfR7GtJTev.P0SB621kDA8}+#{sEfR7GtJTev.CDuDJLEb22r}+#{sEfR7GtJTev.PRR3iz396Gn}+#{sEfR7GtJTev.hLSoGLHSi0T}+#{sEfR7GtJTev.FbwcRP4og2n}+#{sEfR7GtJTev.uVI65u027T4}+#{sEfR7GtJTev.p6Pi3RatNH3}+#{cK2VlbKCsBQ.PVqNXOwDchC}+#{cK2VlbKCsBQ.erSa2OQRnpW}+#{cK2VlbKCsBQ.UOaEcJy3RY3}+#{cK2VlbKCsBQ.YPsLCCPq0Tg}+#{cK2VlbKCsBQ.geATIQdMF9A}+#{cK2VlbKCsBQ.P0SB621kDA8}+#{cK2VlbKCsBQ.CDuDJLEb22r}+#{cK2VlbKCsBQ.PRR3iz396Gn}+#{cK2VlbKCsBQ.hLSoGLHSi0T}+#{cK2VlbKCsBQ.FbwcRP4og2n}+#{cK2VlbKCsBQ.uVI65u027T4}+#{cK2VlbKCsBQ.p6Pi3RatNH3}+#{FAd1EMxGRMh.PVqNXOwDchC}+#{FAd1EMxGRMh.erSa2OQRnpW}+#{FAd1EMxGRMh.UOaEcJy3RY3}+#{FAd1EMxGRMh.YPsLCCPq0Tg}+#{FAd1EMxGRMh.geATIQdMF9A}+#{FAd1EMxGRMh.P0SB621kDA8}+#{FAd1EMxGRMh.CDuDJLEb22r}+#{FAd1EMxGRMh.PRR3iz396Gn}+#{FAd1EMxGRMh.hLSoGLHSi0T}+#{FAd1EMxGRMh.FbwcRP4og2n}+#{FAd1EMxGRMh.uVI65u027T4}+#{FAd1EMxGRMh.p6Pi3RatNH3}+#{obqupsZBMLi.PVqNXOwDchC}+#{obqupsZBMLi.erSa2OQRnpW}+#{obqupsZBMLi.UOaEcJy3RY3}+#{obqupsZBMLi.YPsLCCPq0Tg}+#{obqupsZBMLi.geATIQdMF9A}+#{obqupsZBMLi.P0SB621kDA8}+#{obqupsZBMLi.CDuDJLEb22r}+#{obqupsZBMLi.PRR3iz396Gn}+#{obqupsZBMLi.hLSoGLHSi0T}+#{obqupsZBMLi.FbwcRP4og2n}+#{obqupsZBMLi.uVI65u027T4}+#{obqupsZBMLi.p6Pi3RatNH3}",
+   "numeratorDescription": "Sum of primary special-needs categories",
+   "denominator": "1",
+   "denominatorDescription": "one",
+   "annualized": false,
+   "decimals": 0
+  },
+  {
+   "id": "DANh9bP86R9",
+   "name": "ASC-PRY Learners with special needs (%)",
+   "shortName": "Primary SNE learners (%)",
+   "code": "ASC_PRY_SNE_PCT",
+   "description": "Primary learners with special needs as a share of enrolment (all forms).",
+   "indicatorType": {
+    "id": "D0J1oRr1ESx"
+   },
+   "numerator": "#{uwdSKGMeT4d.PVqNXOwDchC}+#{uwdSKGMeT4d.erSa2OQRnpW}+#{uwdSKGMeT4d.UOaEcJy3RY3}+#{uwdSKGMeT4d.YPsLCCPq0Tg}+#{uwdSKGMeT4d.geATIQdMF9A}+#{uwdSKGMeT4d.P0SB621kDA8}+#{uwdSKGMeT4d.CDuDJLEb22r}+#{uwdSKGMeT4d.PRR3iz396Gn}+#{uwdSKGMeT4d.hLSoGLHSi0T}+#{uwdSKGMeT4d.FbwcRP4og2n}+#{uwdSKGMeT4d.uVI65u027T4}+#{uwdSKGMeT4d.p6Pi3RatNH3}+#{PlYsC2x7Yuz.PVqNXOwDchC}+#{PlYsC2x7Yuz.erSa2OQRnpW}+#{PlYsC2x7Yuz.UOaEcJy3RY3}+#{PlYsC2x7Yuz.YPsLCCPq0Tg}+#{PlYsC2x7Yuz.geATIQdMF9A}+#{PlYsC2x7Yuz.P0SB621kDA8}+#{PlYsC2x7Yuz.CDuDJLEb22r}+#{PlYsC2x7Yuz.PRR3iz396Gn}+#{PlYsC2x7Yuz.hLSoGLHSi0T}+#{PlYsC2x7Yuz.FbwcRP4og2n}+#{PlYsC2x7Yuz.uVI65u027T4}+#{PlYsC2x7Yuz.p6Pi3RatNH3}+#{sEfR7GtJTev.PVqNXOwDchC}+#{sEfR7GtJTev.erSa2OQRnpW}+#{sEfR7GtJTev.UOaEcJy3RY3}+#{sEfR7GtJTev.YPsLCCPq0Tg}+#{sEfR7GtJTev.geATIQdMF9A}+#{sEfR7GtJTev.P0SB621kDA8}+#{sEfR7GtJTev.CDuDJLEb22r}+#{sEfR7GtJTev.PRR3iz396Gn}+#{sEfR7GtJTev.hLSoGLHSi0T}+#{sEfR7GtJTev.FbwcRP4og2n}+#{sEfR7GtJTev.uVI65u027T4}+#{sEfR7GtJTev.p6Pi3RatNH3}+#{cK2VlbKCsBQ.PVqNXOwDchC}+#{cK2VlbKCsBQ.erSa2OQRnpW}+#{cK2VlbKCsBQ.UOaEcJy3RY3}+#{cK2VlbKCsBQ.YPsLCCPq0Tg}+#{cK2VlbKCsBQ.geATIQdMF9A}+#{cK2VlbKCsBQ.P0SB621kDA8}+#{cK2VlbKCsBQ.CDuDJLEb22r}+#{cK2VlbKCsBQ.PRR3iz396Gn}+#{cK2VlbKCsBQ.hLSoGLHSi0T}+#{cK2VlbKCsBQ.FbwcRP4og2n}+#{cK2VlbKCsBQ.uVI65u027T4}+#{cK2VlbKCsBQ.p6Pi3RatNH3}+#{FAd1EMxGRMh.PVqNXOwDchC}+#{FAd1EMxGRMh.erSa2OQRnpW}+#{FAd1EMxGRMh.UOaEcJy3RY3}+#{FAd1EMxGRMh.YPsLCCPq0Tg}+#{FAd1EMxGRMh.geATIQdMF9A}+#{FAd1EMxGRMh.P0SB621kDA8}+#{FAd1EMxGRMh.CDuDJLEb22r}+#{FAd1EMxGRMh.PRR3iz396Gn}+#{FAd1EMxGRMh.hLSoGLHSi0T}+#{FAd1EMxGRMh.FbwcRP4og2n}+#{FAd1EMxGRMh.uVI65u027T4}+#{FAd1EMxGRMh.p6Pi3RatNH3}+#{obqupsZBMLi.PVqNXOwDchC}+#{obqupsZBMLi.erSa2OQRnpW}+#{obqupsZBMLi.UOaEcJy3RY3}+#{obqupsZBMLi.YPsLCCPq0Tg}+#{obqupsZBMLi.geATIQdMF9A}+#{obqupsZBMLi.P0SB621kDA8}+#{obqupsZBMLi.CDuDJLEb22r}+#{obqupsZBMLi.PRR3iz396Gn}+#{obqupsZBMLi.hLSoGLHSi0T}+#{obqupsZBMLi.FbwcRP4og2n}+#{obqupsZBMLi.uVI65u027T4}+#{obqupsZBMLi.p6Pi3RatNH3}",
+   "numeratorDescription": "Sum of primary special-needs categories",
+   "denominator": "#{CADSef49FaO}+#{wPDF1OLjYM2}+#{meegE8oyjXY}+#{cFwJLHE4Dps}+#{jAcTIg5mOlx}+#{eBTbIITRm3H}+#{tno1y7kW71Z}+#{D2FfTq9m77w}",
+   "denominatorDescription": "Total primary enrolment",
+   "annualized": false,
+   "decimals": 1
+  },
+  {
+   "id": "uXpZ0iaeH4P",
+   "name": "ASC-PRY Dropout",
+   "shortName": "Primary Dropout",
+   "code": "ASC_PRY_DROPOUT",
+   "description": "Primary dropout during the current academic year (all forms).",
+   "indicatorType": {
+    "id": "jEvXVGHRCsj"
+   },
+   "numerator": "#{xMWmvOO6bqn.x5jcvz4OVcU}+#{xMWmvOO6bqn.onG3tiwhi6x}+#{xMWmvOO6bqn.fcmiCRwDVm4}+#{xMWmvOO6bqn.R0mFlxnjDP4}+#{xMWmvOO6bqn.nj369VyjYG0}+#{xMWmvOO6bqn.wqCPraQ0q7j}+#{xMWmvOO6bqn.dkXPIu2cgM6}+#{xMWmvOO6bqn.Vqm0n6Y6G2Z}+#{xMWmvOO6bqn.F9TFoBL5g23}+#{xMWmvOO6bqn.NPLFfFDCWHB}+#{xMWmvOO6bqn.QYtyLwZfXOe}+#{xMWmvOO6bqn.Knxt5TPPzi3}+#{xMWmvOO6bqn.B8DodBiEd93}+#{xMWmvOO6bqn.dxNsUm9HFXV}+#{xMWmvOO6bqn.P4dM22Dr4W7}+#{xMWmvOO6bqn.AX6kA3VcQeS}+#{xMWmvOO6bqn.wt2OvDNo1Oi}+#{xMWmvOO6bqn.FKJZ5eXnwe7}+#{xMWmvOO6bqn.U9celgRTc7s}+#{xMWmvOO6bqn.L0faV2clWAd}+#{xMWmvOO6bqn.YRCNkaJZrP2}+#{xMWmvOO6bqn.k89SqpxgQlX}+#{xMWmvOO6bqn.L6gV7DbQ26I}+#{xMWmvOO6bqn.HZ5hjMdvGQA}",
+   "numeratorDescription": "primary dropout",
+   "denominator": "1",
+   "denominatorDescription": "one",
+   "annualized": false,
+   "decimals": 0
+  },
+  {
+   "id": "QETjPTty02O",
+   "name": "ASC-PRY Dropout (%)",
+   "shortName": "Primary Dropout (%)",
+   "code": "ASC_PRY_DROPOUT_PCT",
+   "description": "Primary dropout as a share of enrolment (all forms).",
+   "indicatorType": {
+    "id": "D0J1oRr1ESx"
+   },
+   "numerator": "#{xMWmvOO6bqn.x5jcvz4OVcU}+#{xMWmvOO6bqn.onG3tiwhi6x}+#{xMWmvOO6bqn.fcmiCRwDVm4}+#{xMWmvOO6bqn.R0mFlxnjDP4}+#{xMWmvOO6bqn.nj369VyjYG0}+#{xMWmvOO6bqn.wqCPraQ0q7j}+#{xMWmvOO6bqn.dkXPIu2cgM6}+#{xMWmvOO6bqn.Vqm0n6Y6G2Z}+#{xMWmvOO6bqn.F9TFoBL5g23}+#{xMWmvOO6bqn.NPLFfFDCWHB}+#{xMWmvOO6bqn.QYtyLwZfXOe}+#{xMWmvOO6bqn.Knxt5TPPzi3}+#{xMWmvOO6bqn.B8DodBiEd93}+#{xMWmvOO6bqn.dxNsUm9HFXV}+#{xMWmvOO6bqn.P4dM22Dr4W7}+#{xMWmvOO6bqn.AX6kA3VcQeS}+#{xMWmvOO6bqn.wt2OvDNo1Oi}+#{xMWmvOO6bqn.FKJZ5eXnwe7}+#{xMWmvOO6bqn.U9celgRTc7s}+#{xMWmvOO6bqn.L0faV2clWAd}+#{xMWmvOO6bqn.YRCNkaJZrP2}+#{xMWmvOO6bqn.k89SqpxgQlX}+#{xMWmvOO6bqn.L6gV7DbQ26I}+#{xMWmvOO6bqn.HZ5hjMdvGQA}",
+   "numeratorDescription": "primary dropout",
+   "denominator": "#{CADSef49FaO}+#{wPDF1OLjYM2}+#{meegE8oyjXY}+#{cFwJLHE4Dps}+#{jAcTIg5mOlx}+#{eBTbIITRm3H}+#{tno1y7kW71Z}+#{D2FfTq9m77w}",
+   "denominatorDescription": "Total primary enrolment",
+   "annualized": false,
+   "decimals": 1
+  },
+  {
+   "id": "aX6SpmH2icc",
+   "name": "ASC-PRY Orphans",
+   "shortName": "Primary Orphans",
+   "code": "ASC_PRY_ORPHANS",
+   "description": "Primary orphans (lost one/both parents), all forms.",
+   "indicatorType": {
+    "id": "jEvXVGHRCsj"
+   },
+   "numerator": "#{HGJ0PGQtnmm.AHbMMCQaTou}+#{HGJ0PGQtnmm.zctmlSXqqSf}+#{HGJ0PGQtnmm.Bvm9dEnNNzH}+#{HGJ0PGQtnmm.FFc9RVWJlLU}+#{HGJ0PGQtnmm.A5SoG8C4YS4}+#{HGJ0PGQtnmm.FwcmTAVMunq}+#{HGJ0PGQtnmm.CgeqO8FF3Or}+#{HGJ0PGQtnmm.ks7A61gMfe4}+#{HGJ0PGQtnmm.iRK9qcOsqPo}+#{HGJ0PGQtnmm.hPvVBHWxdon}+#{HGJ0PGQtnmm.zljdhcpEXQF}+#{HGJ0PGQtnmm.kSo8tQUtdHo}+#{jFT5nFRBeZr.AHbMMCQaTou}+#{jFT5nFRBeZr.zctmlSXqqSf}+#{jFT5nFRBeZr.Bvm9dEnNNzH}+#{jFT5nFRBeZr.FFc9RVWJlLU}+#{jFT5nFRBeZr.A5SoG8C4YS4}+#{jFT5nFRBeZr.FwcmTAVMunq}+#{jFT5nFRBeZr.CgeqO8FF3Or}+#{jFT5nFRBeZr.ks7A61gMfe4}+#{jFT5nFRBeZr.iRK9qcOsqPo}+#{jFT5nFRBeZr.hPvVBHWxdon}+#{jFT5nFRBeZr.zljdhcpEXQF}+#{jFT5nFRBeZr.kSo8tQUtdHo}+#{eB0gZ6eaTIj.AHbMMCQaTou}+#{eB0gZ6eaTIj.zctmlSXqqSf}+#{eB0gZ6eaTIj.Bvm9dEnNNzH}+#{eB0gZ6eaTIj.FFc9RVWJlLU}+#{eB0gZ6eaTIj.A5SoG8C4YS4}+#{eB0gZ6eaTIj.FwcmTAVMunq}+#{eB0gZ6eaTIj.CgeqO8FF3Or}+#{eB0gZ6eaTIj.ks7A61gMfe4}+#{eB0gZ6eaTIj.iRK9qcOsqPo}+#{eB0gZ6eaTIj.hPvVBHWxdon}+#{eB0gZ6eaTIj.zljdhcpEXQF}+#{eB0gZ6eaTIj.kSo8tQUtdHo}",
+   "numeratorDescription": "Sum of primary orphan categories",
+   "denominator": "1",
+   "denominatorDescription": "one",
+   "annualized": false,
+   "decimals": 0
+  },
+  {
+   "id": "zGdBeuyjOeQ",
+   "name": "ASC-PRY Orphans (%)",
+   "shortName": "Primary Orphans (%)",
+   "code": "ASC_PRY_ORPHANS_PCT",
+   "description": "Primary orphans as a share of enrolment (all forms).",
+   "indicatorType": {
+    "id": "D0J1oRr1ESx"
+   },
+   "numerator": "#{HGJ0PGQtnmm.AHbMMCQaTou}+#{HGJ0PGQtnmm.zctmlSXqqSf}+#{HGJ0PGQtnmm.Bvm9dEnNNzH}+#{HGJ0PGQtnmm.FFc9RVWJlLU}+#{HGJ0PGQtnmm.A5SoG8C4YS4}+#{HGJ0PGQtnmm.FwcmTAVMunq}+#{HGJ0PGQtnmm.CgeqO8FF3Or}+#{HGJ0PGQtnmm.ks7A61gMfe4}+#{HGJ0PGQtnmm.iRK9qcOsqPo}+#{HGJ0PGQtnmm.hPvVBHWxdon}+#{HGJ0PGQtnmm.zljdhcpEXQF}+#{HGJ0PGQtnmm.kSo8tQUtdHo}+#{jFT5nFRBeZr.AHbMMCQaTou}+#{jFT5nFRBeZr.zctmlSXqqSf}+#{jFT5nFRBeZr.Bvm9dEnNNzH}+#{jFT5nFRBeZr.FFc9RVWJlLU}+#{jFT5nFRBeZr.A5SoG8C4YS4}+#{jFT5nFRBeZr.FwcmTAVMunq}+#{jFT5nFRBeZr.CgeqO8FF3Or}+#{jFT5nFRBeZr.ks7A61gMfe4}+#{jFT5nFRBeZr.iRK9qcOsqPo}+#{jFT5nFRBeZr.hPvVBHWxdon}+#{jFT5nFRBeZr.zljdhcpEXQF}+#{jFT5nFRBeZr.kSo8tQUtdHo}+#{eB0gZ6eaTIj.AHbMMCQaTou}+#{eB0gZ6eaTIj.zctmlSXqqSf}+#{eB0gZ6eaTIj.Bvm9dEnNNzH}+#{eB0gZ6eaTIj.FFc9RVWJlLU}+#{eB0gZ6eaTIj.A5SoG8C4YS4}+#{eB0gZ6eaTIj.FwcmTAVMunq}+#{eB0gZ6eaTIj.CgeqO8FF3Or}+#{eB0gZ6eaTIj.ks7A61gMfe4}+#{eB0gZ6eaTIj.iRK9qcOsqPo}+#{eB0gZ6eaTIj.hPvVBHWxdon}+#{eB0gZ6eaTIj.zljdhcpEXQF}+#{eB0gZ6eaTIj.kSo8tQUtdHo}",
+   "numeratorDescription": "Sum of primary orphan categories",
+   "denominator": "#{CADSef49FaO}+#{wPDF1OLjYM2}+#{meegE8oyjXY}+#{cFwJLHE4Dps}+#{jAcTIg5mOlx}+#{eBTbIITRm3H}+#{tno1y7kW71Z}+#{D2FfTq9m77w}",
+   "denominatorDescription": "Total primary enrolment",
+   "annualized": false,
+   "decimals": 1
+  },
+  {
+   "id": "wDf8ZOwWgib",
+   "name": "ASC-JSS Enrolment",
+   "shortName": "JSS Enrolment",
+   "code": "ASC_JSS_ENROL",
+   "description": "Total junior secondary enrolment (current year), summed across all census forms that collect this level.",
+   "indicatorType": {
+    "id": "jEvXVGHRCsj"
+   },
+   "numerator": "#{Qg9jKQ6EloS}+#{FFcdIMV8Mff}+#{GNZr8JEDK1o}+#{ZYUxhci2GJr}+#{bsqEkvwCRNw}+#{FBDmI9CFxDy}+#{GpUBgs01fVn}+#{eVvRPLqvUjE}+#{xviWUjTv0W7}+#{sJ83z0bd1NH}+#{gHQpD9Sf8mZ}+#{cvUyfDuLcQK}+#{DpHe6KOsGf8}+#{TLasvK4KJAO}+#{FK1cqfAhjf9}",
+   "numeratorDescription": "Total junior secondary enrolment (all forms)",
+   "denominator": "1",
+   "denominatorDescription": "one",
+   "annualized": false,
+   "decimals": 0
+  },
+  {
+   "id": "gAfSf7sfxib",
+   "name": "ASC-JSS Enrolment boys",
+   "shortName": "JSS Enrolment boys",
+   "code": "ASC_JSS_ENROL_M",
+   "description": "Male junior secondary enrolment (current year), all forms.",
+   "indicatorType": {
+    "id": "jEvXVGHRCsj"
+   },
+   "numerator": "#{Qg9jKQ6EloS.K5jz1D57g3o}+#{Qg9jKQ6EloS.MIjv9VE4B2F}+#{Qg9jKQ6EloS.TbkNNYelUbc}+#{FFcdIMV8Mff.K5jz1D57g3o}+#{FFcdIMV8Mff.MIjv9VE4B2F}+#{FFcdIMV8Mff.TbkNNYelUbc}+#{GNZr8JEDK1o.K5jz1D57g3o}+#{GNZr8JEDK1o.MIjv9VE4B2F}+#{GNZr8JEDK1o.TbkNNYelUbc}+#{ZYUxhci2GJr.K5jz1D57g3o}+#{ZYUxhci2GJr.MIjv9VE4B2F}+#{ZYUxhci2GJr.TbkNNYelUbc}+#{bsqEkvwCRNw.K5jz1D57g3o}+#{bsqEkvwCRNw.MIjv9VE4B2F}+#{bsqEkvwCRNw.TbkNNYelUbc}+#{FBDmI9CFxDy.NiA4nnDQOXF}+#{FBDmI9CFxDy.MRbUOvah4ga}+#{FBDmI9CFxDy.BQnhFz3scRT}+#{GpUBgs01fVn.NiA4nnDQOXF}+#{GpUBgs01fVn.MRbUOvah4ga}+#{GpUBgs01fVn.BQnhFz3scRT}+#{eVvRPLqvUjE.NiA4nnDQOXF}+#{eVvRPLqvUjE.MRbUOvah4ga}+#{eVvRPLqvUjE.BQnhFz3scRT}+#{xviWUjTv0W7.NiA4nnDQOXF}+#{xviWUjTv0W7.MRbUOvah4ga}+#{xviWUjTv0W7.BQnhFz3scRT}+#{sJ83z0bd1NH.NiA4nnDQOXF}+#{sJ83z0bd1NH.MRbUOvah4ga}+#{sJ83z0bd1NH.BQnhFz3scRT}+#{gHQpD9Sf8mZ.K5jz1D57g3o}+#{gHQpD9Sf8mZ.MIjv9VE4B2F}+#{gHQpD9Sf8mZ.TbkNNYelUbc}+#{cvUyfDuLcQK.K5jz1D57g3o}+#{cvUyfDuLcQK.MIjv9VE4B2F}+#{cvUyfDuLcQK.TbkNNYelUbc}+#{DpHe6KOsGf8.K5jz1D57g3o}+#{DpHe6KOsGf8.MIjv9VE4B2F}+#{DpHe6KOsGf8.TbkNNYelUbc}+#{TLasvK4KJAO.K5jz1D57g3o}+#{TLasvK4KJAO.MIjv9VE4B2F}+#{TLasvK4KJAO.TbkNNYelUbc}+#{FK1cqfAhjf9.K5jz1D57g3o}+#{FK1cqfAhjf9.MIjv9VE4B2F}+#{FK1cqfAhjf9.TbkNNYelUbc}",
+   "numeratorDescription": "Male junior secondary enrolment",
+   "denominator": "1",
+   "denominatorDescription": "one",
+   "annualized": false,
+   "decimals": 0
+  },
+  {
+   "id": "uSfibhbGRT1",
+   "name": "ASC-JSS Enrolment girls",
+   "shortName": "JSS Enrolment girls",
+   "code": "ASC_JSS_ENROL_F",
+   "description": "Female junior secondary enrolment (current year), all forms.",
+   "indicatorType": {
+    "id": "jEvXVGHRCsj"
+   },
+   "numerator": "#{Qg9jKQ6EloS.ILzLfZLo3Be}+#{Qg9jKQ6EloS.OoYNR4Ejmjb}+#{Qg9jKQ6EloS.J3xpAHQKDwX}+#{FFcdIMV8Mff.ILzLfZLo3Be}+#{FFcdIMV8Mff.OoYNR4Ejmjb}+#{FFcdIMV8Mff.J3xpAHQKDwX}+#{GNZr8JEDK1o.ILzLfZLo3Be}+#{GNZr8JEDK1o.OoYNR4Ejmjb}+#{GNZr8JEDK1o.J3xpAHQKDwX}+#{ZYUxhci2GJr.ILzLfZLo3Be}+#{ZYUxhci2GJr.OoYNR4Ejmjb}+#{ZYUxhci2GJr.J3xpAHQKDwX}+#{bsqEkvwCRNw.ILzLfZLo3Be}+#{bsqEkvwCRNw.OoYNR4Ejmjb}+#{bsqEkvwCRNw.J3xpAHQKDwX}+#{FBDmI9CFxDy.q03tguiLbIK}+#{FBDmI9CFxDy.yRYVurxUNZ5}+#{FBDmI9CFxDy.k0sHNu2OE02}+#{GpUBgs01fVn.q03tguiLbIK}+#{GpUBgs01fVn.yRYVurxUNZ5}+#{GpUBgs01fVn.k0sHNu2OE02}+#{eVvRPLqvUjE.q03tguiLbIK}+#{eVvRPLqvUjE.yRYVurxUNZ5}+#{eVvRPLqvUjE.k0sHNu2OE02}+#{xviWUjTv0W7.q03tguiLbIK}+#{xviWUjTv0W7.yRYVurxUNZ5}+#{xviWUjTv0W7.k0sHNu2OE02}+#{sJ83z0bd1NH.q03tguiLbIK}+#{sJ83z0bd1NH.yRYVurxUNZ5}+#{sJ83z0bd1NH.k0sHNu2OE02}+#{gHQpD9Sf8mZ.ILzLfZLo3Be}+#{gHQpD9Sf8mZ.OoYNR4Ejmjb}+#{gHQpD9Sf8mZ.J3xpAHQKDwX}+#{cvUyfDuLcQK.ILzLfZLo3Be}+#{cvUyfDuLcQK.OoYNR4Ejmjb}+#{cvUyfDuLcQK.J3xpAHQKDwX}+#{DpHe6KOsGf8.ILzLfZLo3Be}+#{DpHe6KOsGf8.OoYNR4Ejmjb}+#{DpHe6KOsGf8.J3xpAHQKDwX}+#{TLasvK4KJAO.ILzLfZLo3Be}+#{TLasvK4KJAO.OoYNR4Ejmjb}+#{TLasvK4KJAO.J3xpAHQKDwX}+#{FK1cqfAhjf9.ILzLfZLo3Be}+#{FK1cqfAhjf9.OoYNR4Ejmjb}+#{FK1cqfAhjf9.J3xpAHQKDwX}",
+   "numeratorDescription": "Female junior secondary enrolment",
+   "denominator": "1",
+   "denominatorDescription": "one",
+   "annualized": false,
+   "decimals": 0
+  },
+  {
+   "id": "nghVrzkls6X",
+   "name": "ASC-JSS Female learners (%)",
+   "shortName": "JSS Female learners (%)",
+   "code": "ASC_JSS_FEMALE_PCT",
+   "description": "Share of junior secondary enrolment that is female (all forms).",
+   "indicatorType": {
+    "id": "D0J1oRr1ESx"
+   },
+   "numerator": "#{Qg9jKQ6EloS.ILzLfZLo3Be}+#{Qg9jKQ6EloS.OoYNR4Ejmjb}+#{Qg9jKQ6EloS.J3xpAHQKDwX}+#{FFcdIMV8Mff.ILzLfZLo3Be}+#{FFcdIMV8Mff.OoYNR4Ejmjb}+#{FFcdIMV8Mff.J3xpAHQKDwX}+#{GNZr8JEDK1o.ILzLfZLo3Be}+#{GNZr8JEDK1o.OoYNR4Ejmjb}+#{GNZr8JEDK1o.J3xpAHQKDwX}+#{ZYUxhci2GJr.ILzLfZLo3Be}+#{ZYUxhci2GJr.OoYNR4Ejmjb}+#{ZYUxhci2GJr.J3xpAHQKDwX}+#{bsqEkvwCRNw.ILzLfZLo3Be}+#{bsqEkvwCRNw.OoYNR4Ejmjb}+#{bsqEkvwCRNw.J3xpAHQKDwX}+#{FBDmI9CFxDy.q03tguiLbIK}+#{FBDmI9CFxDy.yRYVurxUNZ5}+#{FBDmI9CFxDy.k0sHNu2OE02}+#{GpUBgs01fVn.q03tguiLbIK}+#{GpUBgs01fVn.yRYVurxUNZ5}+#{GpUBgs01fVn.k0sHNu2OE02}+#{eVvRPLqvUjE.q03tguiLbIK}+#{eVvRPLqvUjE.yRYVurxUNZ5}+#{eVvRPLqvUjE.k0sHNu2OE02}+#{xviWUjTv0W7.q03tguiLbIK}+#{xviWUjTv0W7.yRYVurxUNZ5}+#{xviWUjTv0W7.k0sHNu2OE02}+#{sJ83z0bd1NH.q03tguiLbIK}+#{sJ83z0bd1NH.yRYVurxUNZ5}+#{sJ83z0bd1NH.k0sHNu2OE02}+#{gHQpD9Sf8mZ.ILzLfZLo3Be}+#{gHQpD9Sf8mZ.OoYNR4Ejmjb}+#{gHQpD9Sf8mZ.J3xpAHQKDwX}+#{cvUyfDuLcQK.ILzLfZLo3Be}+#{cvUyfDuLcQK.OoYNR4Ejmjb}+#{cvUyfDuLcQK.J3xpAHQKDwX}+#{DpHe6KOsGf8.ILzLfZLo3Be}+#{DpHe6KOsGf8.OoYNR4Ejmjb}+#{DpHe6KOsGf8.J3xpAHQKDwX}+#{TLasvK4KJAO.ILzLfZLo3Be}+#{TLasvK4KJAO.OoYNR4Ejmjb}+#{TLasvK4KJAO.J3xpAHQKDwX}+#{FK1cqfAhjf9.ILzLfZLo3Be}+#{FK1cqfAhjf9.OoYNR4Ejmjb}+#{FK1cqfAhjf9.J3xpAHQKDwX}",
+   "numeratorDescription": "Female junior secondary enrolment",
+   "denominator": "#{Qg9jKQ6EloS}+#{FFcdIMV8Mff}+#{GNZr8JEDK1o}+#{ZYUxhci2GJr}+#{bsqEkvwCRNw}+#{FBDmI9CFxDy}+#{GpUBgs01fVn}+#{eVvRPLqvUjE}+#{xviWUjTv0W7}+#{sJ83z0bd1NH}+#{gHQpD9Sf8mZ}+#{cvUyfDuLcQK}+#{DpHe6KOsGf8}+#{TLasvK4KJAO}+#{FK1cqfAhjf9}",
+   "denominatorDescription": "Total junior secondary enrolment",
+   "annualized": false,
+   "decimals": 1
+  },
+  {
+   "id": "Yf6K5jD4oED",
+   "name": "ASC-JSS Pupil-stream ratio (ratio)",
+   "shortName": "JSS Pupil-stream ratio",
+   "code": "ASC_JSS_PUPIL_STREAM",
+   "description": "Average class size: junior secondary enrolment divided by number of streams (class arms), all forms.",
+   "indicatorType": {
+    "id": "jEvXVGHRCsj"
+   },
+   "numerator": "#{Qg9jKQ6EloS}+#{FFcdIMV8Mff}+#{GNZr8JEDK1o}+#{ZYUxhci2GJr}+#{bsqEkvwCRNw}+#{FBDmI9CFxDy}+#{GpUBgs01fVn}+#{eVvRPLqvUjE}+#{xviWUjTv0W7}+#{sJ83z0bd1NH}+#{gHQpD9Sf8mZ}+#{cvUyfDuLcQK}+#{DpHe6KOsGf8}+#{TLasvK4KJAO}+#{FK1cqfAhjf9}",
+   "numeratorDescription": "Total junior secondary enrolment",
+   "denominator": "#{BCVRmjdx4H9}+#{Gc0JDPZHuav}",
+   "denominatorDescription": "junior secondary streams",
+   "annualized": false,
+   "decimals": 1
+  },
+  {
+   "id": "bCMrPV3785Y",
+   "name": "ASC-JSS Learners with special needs",
+   "shortName": "JSS SNE learners",
+   "code": "ASC_JSS_SNE",
+   "description": "Junior secondary learners with special needs (sum of categories, all forms). May double-count across categories.",
+   "indicatorType": {
+    "id": "jEvXVGHRCsj"
+   },
+   "numerator": "#{uwdSKGMeT4d.rV6q4DVl5Q9}+#{uwdSKGMeT4d.ub0g2OXspRz}+#{uwdSKGMeT4d.uzBQK4LVVW0}+#{uwdSKGMeT4d.G9GUm98VRAQ}+#{uwdSKGMeT4d.S7xLT7V9ixI}+#{uwdSKGMeT4d.ITaqmbNwaZ9}+#{PlYsC2x7Yuz.rV6q4DVl5Q9}+#{PlYsC2x7Yuz.ub0g2OXspRz}+#{PlYsC2x7Yuz.uzBQK4LVVW0}+#{PlYsC2x7Yuz.G9GUm98VRAQ}+#{PlYsC2x7Yuz.S7xLT7V9ixI}+#{PlYsC2x7Yuz.ITaqmbNwaZ9}+#{sEfR7GtJTev.rV6q4DVl5Q9}+#{sEfR7GtJTev.ub0g2OXspRz}+#{sEfR7GtJTev.uzBQK4LVVW0}+#{sEfR7GtJTev.G9GUm98VRAQ}+#{sEfR7GtJTev.S7xLT7V9ixI}+#{sEfR7GtJTev.ITaqmbNwaZ9}+#{cK2VlbKCsBQ.rV6q4DVl5Q9}+#{cK2VlbKCsBQ.ub0g2OXspRz}+#{cK2VlbKCsBQ.uzBQK4LVVW0}+#{cK2VlbKCsBQ.G9GUm98VRAQ}+#{cK2VlbKCsBQ.S7xLT7V9ixI}+#{cK2VlbKCsBQ.ITaqmbNwaZ9}+#{FAd1EMxGRMh.rV6q4DVl5Q9}+#{FAd1EMxGRMh.ub0g2OXspRz}+#{FAd1EMxGRMh.uzBQK4LVVW0}+#{FAd1EMxGRMh.G9GUm98VRAQ}+#{FAd1EMxGRMh.S7xLT7V9ixI}+#{FAd1EMxGRMh.ITaqmbNwaZ9}+#{obqupsZBMLi.rV6q4DVl5Q9}+#{obqupsZBMLi.ub0g2OXspRz}+#{obqupsZBMLi.uzBQK4LVVW0}+#{obqupsZBMLi.G9GUm98VRAQ}+#{obqupsZBMLi.S7xLT7V9ixI}+#{obqupsZBMLi.ITaqmbNwaZ9}+#{YIXAMLOuA33.P7Rj0Mbnk3e}+#{YIXAMLOuA33.dqzRnNdDWEL}+#{YIXAMLOuA33.yAUTWsvqz3Q}+#{YIXAMLOuA33.A6QNw81YPjC}+#{YIXAMLOuA33.ohUA1HPaFKs}+#{YIXAMLOuA33.UhR4cy7nDyp}+#{XaDGlEDFtve.P7Rj0Mbnk3e}+#{XaDGlEDFtve.dqzRnNdDWEL}+#{XaDGlEDFtve.yAUTWsvqz3Q}+#{XaDGlEDFtve.A6QNw81YPjC}+#{XaDGlEDFtve.ohUA1HPaFKs}+#{XaDGlEDFtve.UhR4cy7nDyp}+#{rtBOLl5TK5C.P7Rj0Mbnk3e}+#{rtBOLl5TK5C.dqzRnNdDWEL}+#{rtBOLl5TK5C.yAUTWsvqz3Q}+#{rtBOLl5TK5C.A6QNw81YPjC}+#{rtBOLl5TK5C.ohUA1HPaFKs}+#{rtBOLl5TK5C.UhR4cy7nDyp}+#{mSQeuoS6dAB.P7Rj0Mbnk3e}+#{mSQeuoS6dAB.dqzRnNdDWEL}+#{mSQeuoS6dAB.yAUTWsvqz3Q}+#{mSQeuoS6dAB.A6QNw81YPjC}+#{mSQeuoS6dAB.ohUA1HPaFKs}+#{mSQeuoS6dAB.UhR4cy7nDyp}+#{rcFRewnpMYC.P7Rj0Mbnk3e}+#{rcFRewnpMYC.dqzRnNdDWEL}+#{rcFRewnpMYC.yAUTWsvqz3Q}+#{rcFRewnpMYC.A6QNw81YPjC}+#{rcFRewnpMYC.ohUA1HPaFKs}+#{rcFRewnpMYC.UhR4cy7nDyp}+#{CbAJgzuuZ4E.P7Rj0Mbnk3e}+#{CbAJgzuuZ4E.dqzRnNdDWEL}+#{CbAJgzuuZ4E.yAUTWsvqz3Q}+#{CbAJgzuuZ4E.A6QNw81YPjC}+#{CbAJgzuuZ4E.ohUA1HPaFKs}+#{CbAJgzuuZ4E.UhR4cy7nDyp}+#{Dr63TzKiYQq.ISW4HjR7zMc}+#{Dr63TzKiYQq.dg0BT2iPLrS}+#{Dr63TzKiYQq.fKvH3LtjCpz}+#{Dr63TzKiYQq.vaLILHpXP8g}+#{Dr63TzKiYQq.DHdtAfKSbL2}+#{Dr63TzKiYQq.fi9GPX44n7H}+#{UB0MDwjsB1e.ISW4HjR7zMc}+#{UB0MDwjsB1e.dg0BT2iPLrS}+#{UB0MDwjsB1e.fKvH3LtjCpz}+#{UB0MDwjsB1e.vaLILHpXP8g}+#{UB0MDwjsB1e.DHdtAfKSbL2}+#{UB0MDwjsB1e.fi9GPX44n7H}+#{oMncvtHypJ1.ISW4HjR7zMc}+#{oMncvtHypJ1.dg0BT2iPLrS}+#{oMncvtHypJ1.fKvH3LtjCpz}+#{oMncvtHypJ1.vaLILHpXP8g}+#{oMncvtHypJ1.DHdtAfKSbL2}+#{oMncvtHypJ1.fi9GPX44n7H}+#{lUglXgpcC23.ISW4HjR7zMc}+#{lUglXgpcC23.dg0BT2iPLrS}+#{lUglXgpcC23.fKvH3LtjCpz}+#{lUglXgpcC23.vaLILHpXP8g}+#{lUglXgpcC23.DHdtAfKSbL2}+#{lUglXgpcC23.fi9GPX44n7H}+#{LSYnspriQJF.ISW4HjR7zMc}+#{LSYnspriQJF.dg0BT2iPLrS}+#{LSYnspriQJF.fKvH3LtjCpz}+#{LSYnspriQJF.vaLILHpXP8g}+#{LSYnspriQJF.DHdtAfKSbL2}+#{LSYnspriQJF.fi9GPX44n7H}+#{tnqyOnXH3WB.ISW4HjR7zMc}+#{tnqyOnXH3WB.dg0BT2iPLrS}+#{tnqyOnXH3WB.fKvH3LtjCpz}+#{tnqyOnXH3WB.vaLILHpXP8g}+#{tnqyOnXH3WB.DHdtAfKSbL2}+#{tnqyOnXH3WB.fi9GPX44n7H}",
+   "numeratorDescription": "Sum of junior secondary special-needs categories",
+   "denominator": "1",
+   "denominatorDescription": "one",
+   "annualized": false,
+   "decimals": 0
+  },
+  {
+   "id": "eLOZ1cSBHJM",
+   "name": "ASC-JSS Learners with special needs (%)",
+   "shortName": "JSS SNE learners (%)",
+   "code": "ASC_JSS_SNE_PCT",
+   "description": "Junior secondary learners with special needs as a share of enrolment (all forms).",
+   "indicatorType": {
+    "id": "D0J1oRr1ESx"
+   },
+   "numerator": "#{uwdSKGMeT4d.rV6q4DVl5Q9}+#{uwdSKGMeT4d.ub0g2OXspRz}+#{uwdSKGMeT4d.uzBQK4LVVW0}+#{uwdSKGMeT4d.G9GUm98VRAQ}+#{uwdSKGMeT4d.S7xLT7V9ixI}+#{uwdSKGMeT4d.ITaqmbNwaZ9}+#{PlYsC2x7Yuz.rV6q4DVl5Q9}+#{PlYsC2x7Yuz.ub0g2OXspRz}+#{PlYsC2x7Yuz.uzBQK4LVVW0}+#{PlYsC2x7Yuz.G9GUm98VRAQ}+#{PlYsC2x7Yuz.S7xLT7V9ixI}+#{PlYsC2x7Yuz.ITaqmbNwaZ9}+#{sEfR7GtJTev.rV6q4DVl5Q9}+#{sEfR7GtJTev.ub0g2OXspRz}+#{sEfR7GtJTev.uzBQK4LVVW0}+#{sEfR7GtJTev.G9GUm98VRAQ}+#{sEfR7GtJTev.S7xLT7V9ixI}+#{sEfR7GtJTev.ITaqmbNwaZ9}+#{cK2VlbKCsBQ.rV6q4DVl5Q9}+#{cK2VlbKCsBQ.ub0g2OXspRz}+#{cK2VlbKCsBQ.uzBQK4LVVW0}+#{cK2VlbKCsBQ.G9GUm98VRAQ}+#{cK2VlbKCsBQ.S7xLT7V9ixI}+#{cK2VlbKCsBQ.ITaqmbNwaZ9}+#{FAd1EMxGRMh.rV6q4DVl5Q9}+#{FAd1EMxGRMh.ub0g2OXspRz}+#{FAd1EMxGRMh.uzBQK4LVVW0}+#{FAd1EMxGRMh.G9GUm98VRAQ}+#{FAd1EMxGRMh.S7xLT7V9ixI}+#{FAd1EMxGRMh.ITaqmbNwaZ9}+#{obqupsZBMLi.rV6q4DVl5Q9}+#{obqupsZBMLi.ub0g2OXspRz}+#{obqupsZBMLi.uzBQK4LVVW0}+#{obqupsZBMLi.G9GUm98VRAQ}+#{obqupsZBMLi.S7xLT7V9ixI}+#{obqupsZBMLi.ITaqmbNwaZ9}+#{YIXAMLOuA33.P7Rj0Mbnk3e}+#{YIXAMLOuA33.dqzRnNdDWEL}+#{YIXAMLOuA33.yAUTWsvqz3Q}+#{YIXAMLOuA33.A6QNw81YPjC}+#{YIXAMLOuA33.ohUA1HPaFKs}+#{YIXAMLOuA33.UhR4cy7nDyp}+#{XaDGlEDFtve.P7Rj0Mbnk3e}+#{XaDGlEDFtve.dqzRnNdDWEL}+#{XaDGlEDFtve.yAUTWsvqz3Q}+#{XaDGlEDFtve.A6QNw81YPjC}+#{XaDGlEDFtve.ohUA1HPaFKs}+#{XaDGlEDFtve.UhR4cy7nDyp}+#{rtBOLl5TK5C.P7Rj0Mbnk3e}+#{rtBOLl5TK5C.dqzRnNdDWEL}+#{rtBOLl5TK5C.yAUTWsvqz3Q}+#{rtBOLl5TK5C.A6QNw81YPjC}+#{rtBOLl5TK5C.ohUA1HPaFKs}+#{rtBOLl5TK5C.UhR4cy7nDyp}+#{mSQeuoS6dAB.P7Rj0Mbnk3e}+#{mSQeuoS6dAB.dqzRnNdDWEL}+#{mSQeuoS6dAB.yAUTWsvqz3Q}+#{mSQeuoS6dAB.A6QNw81YPjC}+#{mSQeuoS6dAB.ohUA1HPaFKs}+#{mSQeuoS6dAB.UhR4cy7nDyp}+#{rcFRewnpMYC.P7Rj0Mbnk3e}+#{rcFRewnpMYC.dqzRnNdDWEL}+#{rcFRewnpMYC.yAUTWsvqz3Q}+#{rcFRewnpMYC.A6QNw81YPjC}+#{rcFRewnpMYC.ohUA1HPaFKs}+#{rcFRewnpMYC.UhR4cy7nDyp}+#{CbAJgzuuZ4E.P7Rj0Mbnk3e}+#{CbAJgzuuZ4E.dqzRnNdDWEL}+#{CbAJgzuuZ4E.yAUTWsvqz3Q}+#{CbAJgzuuZ4E.A6QNw81YPjC}+#{CbAJgzuuZ4E.ohUA1HPaFKs}+#{CbAJgzuuZ4E.UhR4cy7nDyp}+#{Dr63TzKiYQq.ISW4HjR7zMc}+#{Dr63TzKiYQq.dg0BT2iPLrS}+#{Dr63TzKiYQq.fKvH3LtjCpz}+#{Dr63TzKiYQq.vaLILHpXP8g}+#{Dr63TzKiYQq.DHdtAfKSbL2}+#{Dr63TzKiYQq.fi9GPX44n7H}+#{UB0MDwjsB1e.ISW4HjR7zMc}+#{UB0MDwjsB1e.dg0BT2iPLrS}+#{UB0MDwjsB1e.fKvH3LtjCpz}+#{UB0MDwjsB1e.vaLILHpXP8g}+#{UB0MDwjsB1e.DHdtAfKSbL2}+#{UB0MDwjsB1e.fi9GPX44n7H}+#{oMncvtHypJ1.ISW4HjR7zMc}+#{oMncvtHypJ1.dg0BT2iPLrS}+#{oMncvtHypJ1.fKvH3LtjCpz}+#{oMncvtHypJ1.vaLILHpXP8g}+#{oMncvtHypJ1.DHdtAfKSbL2}+#{oMncvtHypJ1.fi9GPX44n7H}+#{lUglXgpcC23.ISW4HjR7zMc}+#{lUglXgpcC23.dg0BT2iPLrS}+#{lUglXgpcC23.fKvH3LtjCpz}+#{lUglXgpcC23.vaLILHpXP8g}+#{lUglXgpcC23.DHdtAfKSbL2}+#{lUglXgpcC23.fi9GPX44n7H}+#{LSYnspriQJF.ISW4HjR7zMc}+#{LSYnspriQJF.dg0BT2iPLrS}+#{LSYnspriQJF.fKvH3LtjCpz}+#{LSYnspriQJF.vaLILHpXP8g}+#{LSYnspriQJF.DHdtAfKSbL2}+#{LSYnspriQJF.fi9GPX44n7H}+#{tnqyOnXH3WB.ISW4HjR7zMc}+#{tnqyOnXH3WB.dg0BT2iPLrS}+#{tnqyOnXH3WB.fKvH3LtjCpz}+#{tnqyOnXH3WB.vaLILHpXP8g}+#{tnqyOnXH3WB.DHdtAfKSbL2}+#{tnqyOnXH3WB.fi9GPX44n7H}",
+   "numeratorDescription": "Sum of junior secondary special-needs categories",
+   "denominator": "#{Qg9jKQ6EloS}+#{FFcdIMV8Mff}+#{GNZr8JEDK1o}+#{ZYUxhci2GJr}+#{bsqEkvwCRNw}+#{FBDmI9CFxDy}+#{GpUBgs01fVn}+#{eVvRPLqvUjE}+#{xviWUjTv0W7}+#{sJ83z0bd1NH}+#{gHQpD9Sf8mZ}+#{cvUyfDuLcQK}+#{DpHe6KOsGf8}+#{TLasvK4KJAO}+#{FK1cqfAhjf9}",
+   "denominatorDescription": "Total junior secondary enrolment",
+   "annualized": false,
+   "decimals": 1
+  },
+  {
+   "id": "AoOq7RrHxMr",
+   "name": "ASC-JSS Dropout",
+   "shortName": "JSS Dropout",
+   "code": "ASC_JSS_DROPOUT",
+   "description": "Junior secondary dropout during the current academic year (all forms).",
+   "indicatorType": {
+    "id": "jEvXVGHRCsj"
+   },
+   "numerator": "#{l1kbkNFLQCk.iZnls1WvtbS}+#{l1kbkNFLQCk.L2xEgQ8vr6P}+#{l1kbkNFLQCk.MrwCHkasmFE}+#{l1kbkNFLQCk.GTELixHc1Vy}+#{l1kbkNFLQCk.wmI7tbzFveT}+#{l1kbkNFLQCk.n1TXoNTmuaO}+#{l1kbkNFLQCk.O3KnMtDL9wq}+#{l1kbkNFLQCk.RklSYOQYvf8}+#{l1kbkNFLQCk.kbAEQBj7NxU}+#{l1kbkNFLQCk.xJQBG9jDapN}+#{l1kbkNFLQCk.PPfWoaMButf}+#{l1kbkNFLQCk.khAYqf0PlDN}+#{JqlLGbimPr4.DbPrqr70cbB}+#{JqlLGbimPr4.ENzfuipEV8k}+#{JqlLGbimPr4.dwTnTqx0QN0}+#{JqlLGbimPr4.qfuXoyofOch}+#{JqlLGbimPr4.Rf2lnpcjgdI}+#{JqlLGbimPr4.IKFcTyCdhLs}",
+   "numeratorDescription": "junior secondary dropout",
+   "denominator": "1",
+   "denominatorDescription": "one",
+   "annualized": false,
+   "decimals": 0
+  },
+  {
+   "id": "CEgyg6JJbNv",
+   "name": "ASC-JSS Dropout (%)",
+   "shortName": "JSS Dropout (%)",
+   "code": "ASC_JSS_DROPOUT_PCT",
+   "description": "Junior secondary dropout as a share of enrolment (all forms).",
+   "indicatorType": {
+    "id": "D0J1oRr1ESx"
+   },
+   "numerator": "#{l1kbkNFLQCk.iZnls1WvtbS}+#{l1kbkNFLQCk.L2xEgQ8vr6P}+#{l1kbkNFLQCk.MrwCHkasmFE}+#{l1kbkNFLQCk.GTELixHc1Vy}+#{l1kbkNFLQCk.wmI7tbzFveT}+#{l1kbkNFLQCk.n1TXoNTmuaO}+#{l1kbkNFLQCk.O3KnMtDL9wq}+#{l1kbkNFLQCk.RklSYOQYvf8}+#{l1kbkNFLQCk.kbAEQBj7NxU}+#{l1kbkNFLQCk.xJQBG9jDapN}+#{l1kbkNFLQCk.PPfWoaMButf}+#{l1kbkNFLQCk.khAYqf0PlDN}+#{JqlLGbimPr4.DbPrqr70cbB}+#{JqlLGbimPr4.ENzfuipEV8k}+#{JqlLGbimPr4.dwTnTqx0QN0}+#{JqlLGbimPr4.qfuXoyofOch}+#{JqlLGbimPr4.Rf2lnpcjgdI}+#{JqlLGbimPr4.IKFcTyCdhLs}",
+   "numeratorDescription": "junior secondary dropout",
+   "denominator": "#{Qg9jKQ6EloS}+#{FFcdIMV8Mff}+#{GNZr8JEDK1o}+#{ZYUxhci2GJr}+#{bsqEkvwCRNw}+#{FBDmI9CFxDy}+#{GpUBgs01fVn}+#{eVvRPLqvUjE}+#{xviWUjTv0W7}+#{sJ83z0bd1NH}+#{gHQpD9Sf8mZ}+#{cvUyfDuLcQK}+#{DpHe6KOsGf8}+#{TLasvK4KJAO}+#{FK1cqfAhjf9}",
+   "denominatorDescription": "Total junior secondary enrolment",
+   "annualized": false,
+   "decimals": 1
+  },
+  {
+   "id": "IYNEmLyFgbe",
+   "name": "ASC-SSS Enrolment",
+   "shortName": "SSS Enrolment",
+   "code": "ASC_SSS_ENROL",
+   "description": "Total senior secondary enrolment (current year), summed across all census forms that collect this level.",
+   "indicatorType": {
+    "id": "jEvXVGHRCsj"
+   },
+   "numerator": "#{BrJc41TPhGS}+#{Zjf7HpytGV2}+#{rkbfeYWzA63}+#{qV5djLlxhk2}+#{LItsHtx5A6B}+#{dnTyNijcRH1}+#{hpYA6Hhu0GF}+#{AqoSAqJXzdI}+#{g1MxeJzX1c3}+#{g3SbUJLyEsK}",
+   "numeratorDescription": "Total senior secondary enrolment (all forms)",
+   "denominator": "1",
+   "denominatorDescription": "one",
+   "annualized": false,
+   "decimals": 0
+  },
+  {
+   "id": "i8dMJSyq5hO",
+   "name": "ASC-SSS Enrolment boys",
+   "shortName": "SSS Enrolment boys",
+   "code": "ASC_SSS_ENROL_M",
+   "description": "Male senior secondary enrolment (current year), all forms.",
+   "indicatorType": {
+    "id": "jEvXVGHRCsj"
+   },
+   "numerator": "#{BrJc41TPhGS.F9s6It0soo7}+#{BrJc41TPhGS.kppDzyLMsMt}+#{BrJc41TPhGS.W4d1WVVJ797}+#{Zjf7HpytGV2.F9s6It0soo7}+#{Zjf7HpytGV2.kppDzyLMsMt}+#{Zjf7HpytGV2.W4d1WVVJ797}+#{rkbfeYWzA63.F9s6It0soo7}+#{rkbfeYWzA63.kppDzyLMsMt}+#{rkbfeYWzA63.W4d1WVVJ797}+#{qV5djLlxhk2.F9s6It0soo7}+#{qV5djLlxhk2.kppDzyLMsMt}+#{qV5djLlxhk2.W4d1WVVJ797}+#{LItsHtx5A6B.F9s6It0soo7}+#{LItsHtx5A6B.kppDzyLMsMt}+#{LItsHtx5A6B.W4d1WVVJ797}+#{BrJc41TPhGS.v3skLawxyFT}+#{BrJc41TPhGS.I2okaACOPZ0}+#{BrJc41TPhGS.e9w7E5ty45w}+#{Zjf7HpytGV2.v3skLawxyFT}+#{Zjf7HpytGV2.I2okaACOPZ0}+#{Zjf7HpytGV2.e9w7E5ty45w}+#{rkbfeYWzA63.v3skLawxyFT}+#{rkbfeYWzA63.I2okaACOPZ0}+#{rkbfeYWzA63.e9w7E5ty45w}+#{qV5djLlxhk2.v3skLawxyFT}+#{qV5djLlxhk2.I2okaACOPZ0}+#{qV5djLlxhk2.e9w7E5ty45w}+#{LItsHtx5A6B.v3skLawxyFT}+#{LItsHtx5A6B.I2okaACOPZ0}+#{LItsHtx5A6B.e9w7E5ty45w}+#{dnTyNijcRH1.Cg7HnYrBFDD}+#{dnTyNijcRH1.Tkjb3a8jSYF}+#{dnTyNijcRH1.v618xz9IkaF}+#{hpYA6Hhu0GF.Cg7HnYrBFDD}+#{hpYA6Hhu0GF.Tkjb3a8jSYF}+#{hpYA6Hhu0GF.v618xz9IkaF}+#{AqoSAqJXzdI.Cg7HnYrBFDD}+#{AqoSAqJXzdI.Tkjb3a8jSYF}+#{AqoSAqJXzdI.v618xz9IkaF}+#{g1MxeJzX1c3.Cg7HnYrBFDD}+#{g1MxeJzX1c3.Tkjb3a8jSYF}+#{g1MxeJzX1c3.v618xz9IkaF}+#{g3SbUJLyEsK.Cg7HnYrBFDD}+#{g3SbUJLyEsK.Tkjb3a8jSYF}+#{g3SbUJLyEsK.v618xz9IkaF}",
+   "numeratorDescription": "Male senior secondary enrolment",
+   "denominator": "1",
+   "denominatorDescription": "one",
+   "annualized": false,
+   "decimals": 0
+  },
+  {
+   "id": "vZA5RaodnuH",
+   "name": "ASC-SSS Enrolment girls",
+   "shortName": "SSS Enrolment girls",
+   "code": "ASC_SSS_ENROL_F",
+   "description": "Female senior secondary enrolment (current year), all forms.",
+   "indicatorType": {
+    "id": "jEvXVGHRCsj"
+   },
+   "numerator": "#{BrJc41TPhGS.t2wqSeyAPXN}+#{BrJc41TPhGS.uOk36sCC8bi}+#{BrJc41TPhGS.A8Zib4l6uax}+#{Zjf7HpytGV2.t2wqSeyAPXN}+#{Zjf7HpytGV2.uOk36sCC8bi}+#{Zjf7HpytGV2.A8Zib4l6uax}+#{rkbfeYWzA63.t2wqSeyAPXN}+#{rkbfeYWzA63.uOk36sCC8bi}+#{rkbfeYWzA63.A8Zib4l6uax}+#{qV5djLlxhk2.t2wqSeyAPXN}+#{qV5djLlxhk2.uOk36sCC8bi}+#{qV5djLlxhk2.A8Zib4l6uax}+#{LItsHtx5A6B.t2wqSeyAPXN}+#{LItsHtx5A6B.uOk36sCC8bi}+#{LItsHtx5A6B.A8Zib4l6uax}+#{BrJc41TPhGS.FvPqemlyU6J}+#{BrJc41TPhGS.jjstlbX1mIr}+#{BrJc41TPhGS.fov6ISHVkK4}+#{Zjf7HpytGV2.FvPqemlyU6J}+#{Zjf7HpytGV2.jjstlbX1mIr}+#{Zjf7HpytGV2.fov6ISHVkK4}+#{rkbfeYWzA63.FvPqemlyU6J}+#{rkbfeYWzA63.jjstlbX1mIr}+#{rkbfeYWzA63.fov6ISHVkK4}+#{qV5djLlxhk2.FvPqemlyU6J}+#{qV5djLlxhk2.jjstlbX1mIr}+#{qV5djLlxhk2.fov6ISHVkK4}+#{LItsHtx5A6B.FvPqemlyU6J}+#{LItsHtx5A6B.jjstlbX1mIr}+#{LItsHtx5A6B.fov6ISHVkK4}+#{dnTyNijcRH1.WqlEb3TMUzI}+#{dnTyNijcRH1.mv76SLHIsF1}+#{dnTyNijcRH1.zVpwLUkKIPo}+#{hpYA6Hhu0GF.WqlEb3TMUzI}+#{hpYA6Hhu0GF.mv76SLHIsF1}+#{hpYA6Hhu0GF.zVpwLUkKIPo}+#{AqoSAqJXzdI.WqlEb3TMUzI}+#{AqoSAqJXzdI.mv76SLHIsF1}+#{AqoSAqJXzdI.zVpwLUkKIPo}+#{g1MxeJzX1c3.WqlEb3TMUzI}+#{g1MxeJzX1c3.mv76SLHIsF1}+#{g1MxeJzX1c3.zVpwLUkKIPo}+#{g3SbUJLyEsK.WqlEb3TMUzI}+#{g3SbUJLyEsK.mv76SLHIsF1}+#{g3SbUJLyEsK.zVpwLUkKIPo}",
+   "numeratorDescription": "Female senior secondary enrolment",
+   "denominator": "1",
+   "denominatorDescription": "one",
+   "annualized": false,
+   "decimals": 0
+  },
+  {
+   "id": "jWEK2IgsZXZ",
+   "name": "ASC-SSS Female learners (%)",
+   "shortName": "SSS Female learners (%)",
+   "code": "ASC_SSS_FEMALE_PCT",
+   "description": "Share of senior secondary enrolment that is female (all forms).",
+   "indicatorType": {
+    "id": "D0J1oRr1ESx"
+   },
+   "numerator": "#{BrJc41TPhGS.t2wqSeyAPXN}+#{BrJc41TPhGS.uOk36sCC8bi}+#{BrJc41TPhGS.A8Zib4l6uax}+#{Zjf7HpytGV2.t2wqSeyAPXN}+#{Zjf7HpytGV2.uOk36sCC8bi}+#{Zjf7HpytGV2.A8Zib4l6uax}+#{rkbfeYWzA63.t2wqSeyAPXN}+#{rkbfeYWzA63.uOk36sCC8bi}+#{rkbfeYWzA63.A8Zib4l6uax}+#{qV5djLlxhk2.t2wqSeyAPXN}+#{qV5djLlxhk2.uOk36sCC8bi}+#{qV5djLlxhk2.A8Zib4l6uax}+#{LItsHtx5A6B.t2wqSeyAPXN}+#{LItsHtx5A6B.uOk36sCC8bi}+#{LItsHtx5A6B.A8Zib4l6uax}+#{BrJc41TPhGS.FvPqemlyU6J}+#{BrJc41TPhGS.jjstlbX1mIr}+#{BrJc41TPhGS.fov6ISHVkK4}+#{Zjf7HpytGV2.FvPqemlyU6J}+#{Zjf7HpytGV2.jjstlbX1mIr}+#{Zjf7HpytGV2.fov6ISHVkK4}+#{rkbfeYWzA63.FvPqemlyU6J}+#{rkbfeYWzA63.jjstlbX1mIr}+#{rkbfeYWzA63.fov6ISHVkK4}+#{qV5djLlxhk2.FvPqemlyU6J}+#{qV5djLlxhk2.jjstlbX1mIr}+#{qV5djLlxhk2.fov6ISHVkK4}+#{LItsHtx5A6B.FvPqemlyU6J}+#{LItsHtx5A6B.jjstlbX1mIr}+#{LItsHtx5A6B.fov6ISHVkK4}+#{dnTyNijcRH1.WqlEb3TMUzI}+#{dnTyNijcRH1.mv76SLHIsF1}+#{dnTyNijcRH1.zVpwLUkKIPo}+#{hpYA6Hhu0GF.WqlEb3TMUzI}+#{hpYA6Hhu0GF.mv76SLHIsF1}+#{hpYA6Hhu0GF.zVpwLUkKIPo}+#{AqoSAqJXzdI.WqlEb3TMUzI}+#{AqoSAqJXzdI.mv76SLHIsF1}+#{AqoSAqJXzdI.zVpwLUkKIPo}+#{g1MxeJzX1c3.WqlEb3TMUzI}+#{g1MxeJzX1c3.mv76SLHIsF1}+#{g1MxeJzX1c3.zVpwLUkKIPo}+#{g3SbUJLyEsK.WqlEb3TMUzI}+#{g3SbUJLyEsK.mv76SLHIsF1}+#{g3SbUJLyEsK.zVpwLUkKIPo}",
+   "numeratorDescription": "Female senior secondary enrolment",
+   "denominator": "#{BrJc41TPhGS}+#{Zjf7HpytGV2}+#{rkbfeYWzA63}+#{qV5djLlxhk2}+#{LItsHtx5A6B}+#{dnTyNijcRH1}+#{hpYA6Hhu0GF}+#{AqoSAqJXzdI}+#{g1MxeJzX1c3}+#{g3SbUJLyEsK}",
+   "denominatorDescription": "Total senior secondary enrolment",
+   "annualized": false,
+   "decimals": 1
+  },
+  {
+   "id": "Y8uv3HrDDcF",
+   "name": "ASC-SSS Pupil-stream ratio (ratio)",
+   "shortName": "SSS Pupil-stream ratio",
+   "code": "ASC_SSS_PUPIL_STREAM",
+   "description": "Average class size: senior secondary enrolment divided by number of streams (class arms), all forms.",
+   "indicatorType": {
+    "id": "jEvXVGHRCsj"
+   },
+   "numerator": "#{BrJc41TPhGS}+#{Zjf7HpytGV2}+#{rkbfeYWzA63}+#{qV5djLlxhk2}+#{LItsHtx5A6B}+#{dnTyNijcRH1}+#{hpYA6Hhu0GF}+#{AqoSAqJXzdI}+#{g1MxeJzX1c3}+#{g3SbUJLyEsK}",
+   "numeratorDescription": "Total senior secondary enrolment",
+   "denominator": "#{Madx2s0jcB4}+#{UmcCnC4RmMf}",
+   "denominatorDescription": "senior secondary streams",
+   "annualized": false,
+   "decimals": 1
+  },
+  {
+   "id": "X4cRpKnxayU",
+   "name": "ASC-SSS Learners with special needs",
+   "shortName": "SSS SNE learners",
+   "code": "ASC_SSS_SNE",
+   "description": "Senior secondary learners with special needs (sum of categories, all forms). May double-count across categories.",
+   "indicatorType": {
+    "id": "jEvXVGHRCsj"
+   },
+   "numerator": "#{uwdSKGMeT4d.hqWfWGy2f0F}+#{uwdSKGMeT4d.vE5cVYq170d}+#{uwdSKGMeT4d.inQmJo3wUYr}+#{uwdSKGMeT4d.VDsBWmrZ3mA}+#{uwdSKGMeT4d.SqS80niAD6y}+#{uwdSKGMeT4d.XEHx5h11iPs}+#{PlYsC2x7Yuz.hqWfWGy2f0F}+#{PlYsC2x7Yuz.vE5cVYq170d}+#{PlYsC2x7Yuz.inQmJo3wUYr}+#{PlYsC2x7Yuz.VDsBWmrZ3mA}+#{PlYsC2x7Yuz.SqS80niAD6y}+#{PlYsC2x7Yuz.XEHx5h11iPs}+#{sEfR7GtJTev.hqWfWGy2f0F}+#{sEfR7GtJTev.vE5cVYq170d}+#{sEfR7GtJTev.inQmJo3wUYr}+#{sEfR7GtJTev.VDsBWmrZ3mA}+#{sEfR7GtJTev.SqS80niAD6y}+#{sEfR7GtJTev.XEHx5h11iPs}+#{cK2VlbKCsBQ.hqWfWGy2f0F}+#{cK2VlbKCsBQ.vE5cVYq170d}+#{cK2VlbKCsBQ.inQmJo3wUYr}+#{cK2VlbKCsBQ.VDsBWmrZ3mA}+#{cK2VlbKCsBQ.SqS80niAD6y}+#{cK2VlbKCsBQ.XEHx5h11iPs}+#{FAd1EMxGRMh.hqWfWGy2f0F}+#{FAd1EMxGRMh.vE5cVYq170d}+#{FAd1EMxGRMh.inQmJo3wUYr}+#{FAd1EMxGRMh.VDsBWmrZ3mA}+#{FAd1EMxGRMh.SqS80niAD6y}+#{FAd1EMxGRMh.XEHx5h11iPs}+#{obqupsZBMLi.hqWfWGy2f0F}+#{obqupsZBMLi.vE5cVYq170d}+#{obqupsZBMLi.inQmJo3wUYr}+#{obqupsZBMLi.VDsBWmrZ3mA}+#{obqupsZBMLi.SqS80niAD6y}+#{obqupsZBMLi.XEHx5h11iPs}+#{YIXAMLOuA33.MArHqBB8rP3}+#{YIXAMLOuA33.XOKztIu3oAE}+#{YIXAMLOuA33.ZpRaTwyaR0o}+#{YIXAMLOuA33.CmxJ93U4ygO}+#{YIXAMLOuA33.A7SdTuBVsX5}+#{YIXAMLOuA33.jwjdgVCddZy}+#{XaDGlEDFtve.MArHqBB8rP3}+#{XaDGlEDFtve.XOKztIu3oAE}+#{XaDGlEDFtve.ZpRaTwyaR0o}+#{XaDGlEDFtve.CmxJ93U4ygO}+#{XaDGlEDFtve.A7SdTuBVsX5}+#{XaDGlEDFtve.jwjdgVCddZy}+#{rtBOLl5TK5C.MArHqBB8rP3}+#{rtBOLl5TK5C.XOKztIu3oAE}+#{rtBOLl5TK5C.ZpRaTwyaR0o}+#{rtBOLl5TK5C.CmxJ93U4ygO}+#{rtBOLl5TK5C.A7SdTuBVsX5}+#{rtBOLl5TK5C.jwjdgVCddZy}+#{mSQeuoS6dAB.MArHqBB8rP3}+#{mSQeuoS6dAB.XOKztIu3oAE}+#{mSQeuoS6dAB.ZpRaTwyaR0o}+#{mSQeuoS6dAB.CmxJ93U4ygO}+#{mSQeuoS6dAB.A7SdTuBVsX5}+#{mSQeuoS6dAB.jwjdgVCddZy}+#{rcFRewnpMYC.MArHqBB8rP3}+#{rcFRewnpMYC.XOKztIu3oAE}+#{rcFRewnpMYC.ZpRaTwyaR0o}+#{rcFRewnpMYC.CmxJ93U4ygO}+#{rcFRewnpMYC.A7SdTuBVsX5}+#{rcFRewnpMYC.jwjdgVCddZy}+#{CbAJgzuuZ4E.MArHqBB8rP3}+#{CbAJgzuuZ4E.XOKztIu3oAE}+#{CbAJgzuuZ4E.ZpRaTwyaR0o}+#{CbAJgzuuZ4E.CmxJ93U4ygO}+#{CbAJgzuuZ4E.A7SdTuBVsX5}+#{CbAJgzuuZ4E.jwjdgVCddZy}+#{Dr63TzKiYQq.CQpEkV8GIcj}+#{Dr63TzKiYQq.lqO0g6hLZLM}+#{Dr63TzKiYQq.faKHEVrrNSj}+#{Dr63TzKiYQq.EeBZKQWzsEB}+#{Dr63TzKiYQq.fFZfdoJxW0F}+#{Dr63TzKiYQq.oiUeo7Vj1yk}+#{UB0MDwjsB1e.CQpEkV8GIcj}+#{UB0MDwjsB1e.lqO0g6hLZLM}+#{UB0MDwjsB1e.faKHEVrrNSj}+#{UB0MDwjsB1e.EeBZKQWzsEB}+#{UB0MDwjsB1e.fFZfdoJxW0F}+#{UB0MDwjsB1e.oiUeo7Vj1yk}+#{oMncvtHypJ1.CQpEkV8GIcj}+#{oMncvtHypJ1.lqO0g6hLZLM}+#{oMncvtHypJ1.faKHEVrrNSj}+#{oMncvtHypJ1.EeBZKQWzsEB}+#{oMncvtHypJ1.fFZfdoJxW0F}+#{oMncvtHypJ1.oiUeo7Vj1yk}+#{lUglXgpcC23.CQpEkV8GIcj}+#{lUglXgpcC23.lqO0g6hLZLM}+#{lUglXgpcC23.faKHEVrrNSj}+#{lUglXgpcC23.EeBZKQWzsEB}+#{lUglXgpcC23.fFZfdoJxW0F}+#{lUglXgpcC23.oiUeo7Vj1yk}+#{LSYnspriQJF.CQpEkV8GIcj}+#{LSYnspriQJF.lqO0g6hLZLM}+#{LSYnspriQJF.faKHEVrrNSj}+#{LSYnspriQJF.EeBZKQWzsEB}+#{LSYnspriQJF.fFZfdoJxW0F}+#{LSYnspriQJF.oiUeo7Vj1yk}+#{tnqyOnXH3WB.CQpEkV8GIcj}+#{tnqyOnXH3WB.lqO0g6hLZLM}+#{tnqyOnXH3WB.faKHEVrrNSj}+#{tnqyOnXH3WB.EeBZKQWzsEB}+#{tnqyOnXH3WB.fFZfdoJxW0F}+#{tnqyOnXH3WB.oiUeo7Vj1yk}",
+   "numeratorDescription": "Sum of senior secondary special-needs categories",
+   "denominator": "1",
+   "denominatorDescription": "one",
+   "annualized": false,
+   "decimals": 0
+  },
+  {
+   "id": "Bp8XVbKSqVX",
+   "name": "ASC-SSS Learners with special needs (%)",
+   "shortName": "SSS SNE learners (%)",
+   "code": "ASC_SSS_SNE_PCT",
+   "description": "Senior secondary learners with special needs as a share of enrolment (all forms).",
+   "indicatorType": {
+    "id": "D0J1oRr1ESx"
+   },
+   "numerator": "#{uwdSKGMeT4d.hqWfWGy2f0F}+#{uwdSKGMeT4d.vE5cVYq170d}+#{uwdSKGMeT4d.inQmJo3wUYr}+#{uwdSKGMeT4d.VDsBWmrZ3mA}+#{uwdSKGMeT4d.SqS80niAD6y}+#{uwdSKGMeT4d.XEHx5h11iPs}+#{PlYsC2x7Yuz.hqWfWGy2f0F}+#{PlYsC2x7Yuz.vE5cVYq170d}+#{PlYsC2x7Yuz.inQmJo3wUYr}+#{PlYsC2x7Yuz.VDsBWmrZ3mA}+#{PlYsC2x7Yuz.SqS80niAD6y}+#{PlYsC2x7Yuz.XEHx5h11iPs}+#{sEfR7GtJTev.hqWfWGy2f0F}+#{sEfR7GtJTev.vE5cVYq170d}+#{sEfR7GtJTev.inQmJo3wUYr}+#{sEfR7GtJTev.VDsBWmrZ3mA}+#{sEfR7GtJTev.SqS80niAD6y}+#{sEfR7GtJTev.XEHx5h11iPs}+#{cK2VlbKCsBQ.hqWfWGy2f0F}+#{cK2VlbKCsBQ.vE5cVYq170d}+#{cK2VlbKCsBQ.inQmJo3wUYr}+#{cK2VlbKCsBQ.VDsBWmrZ3mA}+#{cK2VlbKCsBQ.SqS80niAD6y}+#{cK2VlbKCsBQ.XEHx5h11iPs}+#{FAd1EMxGRMh.hqWfWGy2f0F}+#{FAd1EMxGRMh.vE5cVYq170d}+#{FAd1EMxGRMh.inQmJo3wUYr}+#{FAd1EMxGRMh.VDsBWmrZ3mA}+#{FAd1EMxGRMh.SqS80niAD6y}+#{FAd1EMxGRMh.XEHx5h11iPs}+#{obqupsZBMLi.hqWfWGy2f0F}+#{obqupsZBMLi.vE5cVYq170d}+#{obqupsZBMLi.inQmJo3wUYr}+#{obqupsZBMLi.VDsBWmrZ3mA}+#{obqupsZBMLi.SqS80niAD6y}+#{obqupsZBMLi.XEHx5h11iPs}+#{YIXAMLOuA33.MArHqBB8rP3}+#{YIXAMLOuA33.XOKztIu3oAE}+#{YIXAMLOuA33.ZpRaTwyaR0o}+#{YIXAMLOuA33.CmxJ93U4ygO}+#{YIXAMLOuA33.A7SdTuBVsX5}+#{YIXAMLOuA33.jwjdgVCddZy}+#{XaDGlEDFtve.MArHqBB8rP3}+#{XaDGlEDFtve.XOKztIu3oAE}+#{XaDGlEDFtve.ZpRaTwyaR0o}+#{XaDGlEDFtve.CmxJ93U4ygO}+#{XaDGlEDFtve.A7SdTuBVsX5}+#{XaDGlEDFtve.jwjdgVCddZy}+#{rtBOLl5TK5C.MArHqBB8rP3}+#{rtBOLl5TK5C.XOKztIu3oAE}+#{rtBOLl5TK5C.ZpRaTwyaR0o}+#{rtBOLl5TK5C.CmxJ93U4ygO}+#{rtBOLl5TK5C.A7SdTuBVsX5}+#{rtBOLl5TK5C.jwjdgVCddZy}+#{mSQeuoS6dAB.MArHqBB8rP3}+#{mSQeuoS6dAB.XOKztIu3oAE}+#{mSQeuoS6dAB.ZpRaTwyaR0o}+#{mSQeuoS6dAB.CmxJ93U4ygO}+#{mSQeuoS6dAB.A7SdTuBVsX5}+#{mSQeuoS6dAB.jwjdgVCddZy}+#{rcFRewnpMYC.MArHqBB8rP3}+#{rcFRewnpMYC.XOKztIu3oAE}+#{rcFRewnpMYC.ZpRaTwyaR0o}+#{rcFRewnpMYC.CmxJ93U4ygO}+#{rcFRewnpMYC.A7SdTuBVsX5}+#{rcFRewnpMYC.jwjdgVCddZy}+#{CbAJgzuuZ4E.MArHqBB8rP3}+#{CbAJgzuuZ4E.XOKztIu3oAE}+#{CbAJgzuuZ4E.ZpRaTwyaR0o}+#{CbAJgzuuZ4E.CmxJ93U4ygO}+#{CbAJgzuuZ4E.A7SdTuBVsX5}+#{CbAJgzuuZ4E.jwjdgVCddZy}+#{Dr63TzKiYQq.CQpEkV8GIcj}+#{Dr63TzKiYQq.lqO0g6hLZLM}+#{Dr63TzKiYQq.faKHEVrrNSj}+#{Dr63TzKiYQq.EeBZKQWzsEB}+#{Dr63TzKiYQq.fFZfdoJxW0F}+#{Dr63TzKiYQq.oiUeo7Vj1yk}+#{UB0MDwjsB1e.CQpEkV8GIcj}+#{UB0MDwjsB1e.lqO0g6hLZLM}+#{UB0MDwjsB1e.faKHEVrrNSj}+#{UB0MDwjsB1e.EeBZKQWzsEB}+#{UB0MDwjsB1e.fFZfdoJxW0F}+#{UB0MDwjsB1e.oiUeo7Vj1yk}+#{oMncvtHypJ1.CQpEkV8GIcj}+#{oMncvtHypJ1.lqO0g6hLZLM}+#{oMncvtHypJ1.faKHEVrrNSj}+#{oMncvtHypJ1.EeBZKQWzsEB}+#{oMncvtHypJ1.fFZfdoJxW0F}+#{oMncvtHypJ1.oiUeo7Vj1yk}+#{lUglXgpcC23.CQpEkV8GIcj}+#{lUglXgpcC23.lqO0g6hLZLM}+#{lUglXgpcC23.faKHEVrrNSj}+#{lUglXgpcC23.EeBZKQWzsEB}+#{lUglXgpcC23.fFZfdoJxW0F}+#{lUglXgpcC23.oiUeo7Vj1yk}+#{LSYnspriQJF.CQpEkV8GIcj}+#{LSYnspriQJF.lqO0g6hLZLM}+#{LSYnspriQJF.faKHEVrrNSj}+#{LSYnspriQJF.EeBZKQWzsEB}+#{LSYnspriQJF.fFZfdoJxW0F}+#{LSYnspriQJF.oiUeo7Vj1yk}+#{tnqyOnXH3WB.CQpEkV8GIcj}+#{tnqyOnXH3WB.lqO0g6hLZLM}+#{tnqyOnXH3WB.faKHEVrrNSj}+#{tnqyOnXH3WB.EeBZKQWzsEB}+#{tnqyOnXH3WB.fFZfdoJxW0F}+#{tnqyOnXH3WB.oiUeo7Vj1yk}",
+   "numeratorDescription": "Sum of senior secondary special-needs categories",
+   "denominator": "#{BrJc41TPhGS}+#{Zjf7HpytGV2}+#{rkbfeYWzA63}+#{qV5djLlxhk2}+#{LItsHtx5A6B}+#{dnTyNijcRH1}+#{hpYA6Hhu0GF}+#{AqoSAqJXzdI}+#{g1MxeJzX1c3}+#{g3SbUJLyEsK}",
+   "denominatorDescription": "Total senior secondary enrolment",
+   "annualized": false,
+   "decimals": 1
+  },
+  {
+   "id": "yVJPz2WzrgH",
+   "name": "ASC-SSS Dropout",
+   "shortName": "SSS Dropout",
+   "code": "ASC_SSS_DROPOUT",
+   "description": "Senior secondary dropout during the current academic year (all forms).",
+   "indicatorType": {
+    "id": "jEvXVGHRCsj"
+   },
+   "numerator": "#{l1kbkNFLQCk.fvipxN7FNXz}+#{l1kbkNFLQCk.Mr0ygjfbkN0}+#{l1kbkNFLQCk.r6h8uy5nlkN}+#{l1kbkNFLQCk.syHnLExmGPa}+#{l1kbkNFLQCk.wSh06h00KU2}+#{l1kbkNFLQCk.oC1C1xp31HF}+#{l1kbkNFLQCk.JNowfzwUK3Z}+#{l1kbkNFLQCk.C9gqbqsMTCj}+#{l1kbkNFLQCk.rJVpJyaXkYg}+#{l1kbkNFLQCk.PWj40a5Ux8R}+#{l1kbkNFLQCk.uGiYR5XY6Em}+#{l1kbkNFLQCk.jmEtxZq5Z0A}+#{JqlLGbimPr4.N7sK59cEmGQ}+#{JqlLGbimPr4.omhdF5NBx8d}+#{JqlLGbimPr4.LEKzy93jLAY}+#{JqlLGbimPr4.JJRsuLd8kKw}+#{JqlLGbimPr4.gAZSt12x5dT}+#{JqlLGbimPr4.rMbqIymSuqD}",
+   "numeratorDescription": "senior secondary dropout",
+   "denominator": "1",
+   "denominatorDescription": "one",
+   "annualized": false,
+   "decimals": 0
+  },
+  {
+   "id": "AtbaZYTP7Xl",
+   "name": "ASC-SSS Dropout (%)",
+   "shortName": "SSS Dropout (%)",
+   "code": "ASC_SSS_DROPOUT_PCT",
+   "description": "Senior secondary dropout as a share of enrolment (all forms).",
+   "indicatorType": {
+    "id": "D0J1oRr1ESx"
+   },
+   "numerator": "#{l1kbkNFLQCk.fvipxN7FNXz}+#{l1kbkNFLQCk.Mr0ygjfbkN0}+#{l1kbkNFLQCk.r6h8uy5nlkN}+#{l1kbkNFLQCk.syHnLExmGPa}+#{l1kbkNFLQCk.wSh06h00KU2}+#{l1kbkNFLQCk.oC1C1xp31HF}+#{l1kbkNFLQCk.JNowfzwUK3Z}+#{l1kbkNFLQCk.C9gqbqsMTCj}+#{l1kbkNFLQCk.rJVpJyaXkYg}+#{l1kbkNFLQCk.PWj40a5Ux8R}+#{l1kbkNFLQCk.uGiYR5XY6Em}+#{l1kbkNFLQCk.jmEtxZq5Z0A}+#{JqlLGbimPr4.N7sK59cEmGQ}+#{JqlLGbimPr4.omhdF5NBx8d}+#{JqlLGbimPr4.LEKzy93jLAY}+#{JqlLGbimPr4.JJRsuLd8kKw}+#{JqlLGbimPr4.gAZSt12x5dT}+#{JqlLGbimPr4.rMbqIymSuqD}",
+   "numeratorDescription": "senior secondary dropout",
+   "denominator": "#{BrJc41TPhGS}+#{Zjf7HpytGV2}+#{rkbfeYWzA63}+#{qV5djLlxhk2}+#{LItsHtx5A6B}+#{dnTyNijcRH1}+#{hpYA6Hhu0GF}+#{AqoSAqJXzdI}+#{g1MxeJzX1c3}+#{g3SbUJLyEsK}",
+   "denominatorDescription": "Total senior secondary enrolment",
+   "annualized": false,
+   "decimals": 1
+  },
+  {
+   "id": "g1ozV2n8G88",
+   "name": "ASC-ANFE Enrolment",
+   "shortName": "ANFE Enrolment",
+   "code": "ASC_ANFE_ENROL",
+   "description": "Total adult & non-formal (IQS/IQTE) enrolment (current year), summed across all census forms that collect this level.",
+   "indicatorType": {
+    "id": "jEvXVGHRCsj"
+   },
+   "numerator": "#{pENhdbNXn7c}+#{TkY79n0ul2T}+#{Glh62nt0Tug}+#{m0kpv0qeB8K}+#{aRKx5RdYE0i}+#{lwojChWstF3}+#{dm1v7qTWQ9A}+#{RW3G8MLQLqE}",
+   "numeratorDescription": "Total adult & non-formal (IQS/IQTE) enrolment (all forms)",
+   "denominator": "1",
+   "denominatorDescription": "one",
+   "annualized": false,
+   "decimals": 0
+  },
+  {
+   "id": "kxJmBoDtD9t",
+   "name": "ASC-ANFE Enrolment boys",
+   "shortName": "ANFE Enrolment boys",
+   "code": "ASC_ANFE_ENROL_M",
+   "description": "Male adult & non-formal (IQS/IQTE) enrolment (current year), all forms.",
+   "indicatorType": {
+    "id": "jEvXVGHRCsj"
+   },
+   "numerator": "#{pENhdbNXn7c.vY1TXn6Zr39}+#{pENhdbNXn7c.XoUalPAkcMw}+#{pENhdbNXn7c.u0zECOma3Xm}+#{pENhdbNXn7c.xaIaMdFRsES}+#{pENhdbNXn7c.xYuN556Rece}+#{pENhdbNXn7c.ubeOiEtP7A3}+#{pENhdbNXn7c.CRhJz3FQSHK}+#{TkY79n0ul2T.vY1TXn6Zr39}+#{TkY79n0ul2T.XoUalPAkcMw}+#{TkY79n0ul2T.u0zECOma3Xm}+#{TkY79n0ul2T.xaIaMdFRsES}+#{TkY79n0ul2T.xYuN556Rece}+#{TkY79n0ul2T.ubeOiEtP7A3}+#{TkY79n0ul2T.CRhJz3FQSHK}+#{Glh62nt0Tug.vY1TXn6Zr39}+#{Glh62nt0Tug.XoUalPAkcMw}+#{Glh62nt0Tug.u0zECOma3Xm}+#{Glh62nt0Tug.xaIaMdFRsES}+#{Glh62nt0Tug.xYuN556Rece}+#{Glh62nt0Tug.ubeOiEtP7A3}+#{Glh62nt0Tug.CRhJz3FQSHK}+#{m0kpv0qeB8K.vY1TXn6Zr39}+#{m0kpv0qeB8K.XoUalPAkcMw}+#{m0kpv0qeB8K.u0zECOma3Xm}+#{m0kpv0qeB8K.xaIaMdFRsES}+#{m0kpv0qeB8K.xYuN556Rece}+#{m0kpv0qeB8K.ubeOiEtP7A3}+#{m0kpv0qeB8K.CRhJz3FQSHK}+#{aRKx5RdYE0i.vY1TXn6Zr39}+#{aRKx5RdYE0i.XoUalPAkcMw}+#{aRKx5RdYE0i.u0zECOma3Xm}+#{aRKx5RdYE0i.xaIaMdFRsES}+#{aRKx5RdYE0i.xYuN556Rece}+#{aRKx5RdYE0i.ubeOiEtP7A3}+#{aRKx5RdYE0i.CRhJz3FQSHK}+#{lwojChWstF3.vY1TXn6Zr39}+#{lwojChWstF3.XoUalPAkcMw}+#{lwojChWstF3.u0zECOma3Xm}+#{lwojChWstF3.xaIaMdFRsES}+#{lwojChWstF3.xYuN556Rece}+#{lwojChWstF3.ubeOiEtP7A3}+#{lwojChWstF3.CRhJz3FQSHK}+#{dm1v7qTWQ9A.vY1TXn6Zr39}+#{dm1v7qTWQ9A.XoUalPAkcMw}+#{dm1v7qTWQ9A.u0zECOma3Xm}+#{dm1v7qTWQ9A.xaIaMdFRsES}+#{dm1v7qTWQ9A.xYuN556Rece}+#{dm1v7qTWQ9A.ubeOiEtP7A3}+#{dm1v7qTWQ9A.CRhJz3FQSHK}+#{RW3G8MLQLqE.vY1TXn6Zr39}+#{RW3G8MLQLqE.XoUalPAkcMw}+#{RW3G8MLQLqE.u0zECOma3Xm}+#{RW3G8MLQLqE.xaIaMdFRsES}+#{RW3G8MLQLqE.xYuN556Rece}+#{RW3G8MLQLqE.ubeOiEtP7A3}+#{RW3G8MLQLqE.CRhJz3FQSHK}",
+   "numeratorDescription": "Male adult & non-formal (IQS/IQTE) enrolment",
+   "denominator": "1",
+   "denominatorDescription": "one",
+   "annualized": false,
+   "decimals": 0
+  },
+  {
+   "id": "VzPMQzTjenn",
+   "name": "ASC-ANFE Enrolment girls",
+   "shortName": "ANFE Enrolment girls",
+   "code": "ASC_ANFE_ENROL_F",
+   "description": "Female adult & non-formal (IQS/IQTE) enrolment (current year), all forms.",
+   "indicatorType": {
+    "id": "jEvXVGHRCsj"
+   },
+   "numerator": "#{pENhdbNXn7c.hc4OtfQA0Ai}+#{pENhdbNXn7c.TlzCcBwNCIQ}+#{pENhdbNXn7c.iSIhmNWqhYp}+#{pENhdbNXn7c.SjTde0puVwb}+#{pENhdbNXn7c.CcGgm3HOwKz}+#{pENhdbNXn7c.sGWRydPlUsf}+#{pENhdbNXn7c.Ybv1AGCxJfg}+#{TkY79n0ul2T.hc4OtfQA0Ai}+#{TkY79n0ul2T.TlzCcBwNCIQ}+#{TkY79n0ul2T.iSIhmNWqhYp}+#{TkY79n0ul2T.SjTde0puVwb}+#{TkY79n0ul2T.CcGgm3HOwKz}+#{TkY79n0ul2T.sGWRydPlUsf}+#{TkY79n0ul2T.Ybv1AGCxJfg}+#{Glh62nt0Tug.hc4OtfQA0Ai}+#{Glh62nt0Tug.TlzCcBwNCIQ}+#{Glh62nt0Tug.iSIhmNWqhYp}+#{Glh62nt0Tug.SjTde0puVwb}+#{Glh62nt0Tug.CcGgm3HOwKz}+#{Glh62nt0Tug.sGWRydPlUsf}+#{Glh62nt0Tug.Ybv1AGCxJfg}+#{m0kpv0qeB8K.hc4OtfQA0Ai}+#{m0kpv0qeB8K.TlzCcBwNCIQ}+#{m0kpv0qeB8K.iSIhmNWqhYp}+#{m0kpv0qeB8K.SjTde0puVwb}+#{m0kpv0qeB8K.CcGgm3HOwKz}+#{m0kpv0qeB8K.sGWRydPlUsf}+#{m0kpv0qeB8K.Ybv1AGCxJfg}+#{aRKx5RdYE0i.hc4OtfQA0Ai}+#{aRKx5RdYE0i.TlzCcBwNCIQ}+#{aRKx5RdYE0i.iSIhmNWqhYp}+#{aRKx5RdYE0i.SjTde0puVwb}+#{aRKx5RdYE0i.CcGgm3HOwKz}+#{aRKx5RdYE0i.sGWRydPlUsf}+#{aRKx5RdYE0i.Ybv1AGCxJfg}+#{lwojChWstF3.hc4OtfQA0Ai}+#{lwojChWstF3.TlzCcBwNCIQ}+#{lwojChWstF3.iSIhmNWqhYp}+#{lwojChWstF3.SjTde0puVwb}+#{lwojChWstF3.CcGgm3HOwKz}+#{lwojChWstF3.sGWRydPlUsf}+#{lwojChWstF3.Ybv1AGCxJfg}+#{dm1v7qTWQ9A.hc4OtfQA0Ai}+#{dm1v7qTWQ9A.TlzCcBwNCIQ}+#{dm1v7qTWQ9A.iSIhmNWqhYp}+#{dm1v7qTWQ9A.SjTde0puVwb}+#{dm1v7qTWQ9A.CcGgm3HOwKz}+#{dm1v7qTWQ9A.sGWRydPlUsf}+#{dm1v7qTWQ9A.Ybv1AGCxJfg}+#{RW3G8MLQLqE.hc4OtfQA0Ai}+#{RW3G8MLQLqE.TlzCcBwNCIQ}+#{RW3G8MLQLqE.iSIhmNWqhYp}+#{RW3G8MLQLqE.SjTde0puVwb}+#{RW3G8MLQLqE.CcGgm3HOwKz}+#{RW3G8MLQLqE.sGWRydPlUsf}+#{RW3G8MLQLqE.Ybv1AGCxJfg}",
+   "numeratorDescription": "Female adult & non-formal (IQS/IQTE) enrolment",
+   "denominator": "1",
+   "denominatorDescription": "one",
+   "annualized": false,
+   "decimals": 0
+  },
+  {
+   "id": "dRBLKPEMR80",
+   "name": "ASC-ANFE Female learners (%)",
+   "shortName": "ANFE Female learners (%)",
+   "code": "ASC_ANFE_FEMALE_PCT",
+   "description": "Share of adult & non-formal (IQS/IQTE) enrolment that is female (all forms).",
+   "indicatorType": {
+    "id": "D0J1oRr1ESx"
+   },
+   "numerator": "#{pENhdbNXn7c.hc4OtfQA0Ai}+#{pENhdbNXn7c.TlzCcBwNCIQ}+#{pENhdbNXn7c.iSIhmNWqhYp}+#{pENhdbNXn7c.SjTde0puVwb}+#{pENhdbNXn7c.CcGgm3HOwKz}+#{pENhdbNXn7c.sGWRydPlUsf}+#{pENhdbNXn7c.Ybv1AGCxJfg}+#{TkY79n0ul2T.hc4OtfQA0Ai}+#{TkY79n0ul2T.TlzCcBwNCIQ}+#{TkY79n0ul2T.iSIhmNWqhYp}+#{TkY79n0ul2T.SjTde0puVwb}+#{TkY79n0ul2T.CcGgm3HOwKz}+#{TkY79n0ul2T.sGWRydPlUsf}+#{TkY79n0ul2T.Ybv1AGCxJfg}+#{Glh62nt0Tug.hc4OtfQA0Ai}+#{Glh62nt0Tug.TlzCcBwNCIQ}+#{Glh62nt0Tug.iSIhmNWqhYp}+#{Glh62nt0Tug.SjTde0puVwb}+#{Glh62nt0Tug.CcGgm3HOwKz}+#{Glh62nt0Tug.sGWRydPlUsf}+#{Glh62nt0Tug.Ybv1AGCxJfg}+#{m0kpv0qeB8K.hc4OtfQA0Ai}+#{m0kpv0qeB8K.TlzCcBwNCIQ}+#{m0kpv0qeB8K.iSIhmNWqhYp}+#{m0kpv0qeB8K.SjTde0puVwb}+#{m0kpv0qeB8K.CcGgm3HOwKz}+#{m0kpv0qeB8K.sGWRydPlUsf}+#{m0kpv0qeB8K.Ybv1AGCxJfg}+#{aRKx5RdYE0i.hc4OtfQA0Ai}+#{aRKx5RdYE0i.TlzCcBwNCIQ}+#{aRKx5RdYE0i.iSIhmNWqhYp}+#{aRKx5RdYE0i.SjTde0puVwb}+#{aRKx5RdYE0i.CcGgm3HOwKz}+#{aRKx5RdYE0i.sGWRydPlUsf}+#{aRKx5RdYE0i.Ybv1AGCxJfg}+#{lwojChWstF3.hc4OtfQA0Ai}+#{lwojChWstF3.TlzCcBwNCIQ}+#{lwojChWstF3.iSIhmNWqhYp}+#{lwojChWstF3.SjTde0puVwb}+#{lwojChWstF3.CcGgm3HOwKz}+#{lwojChWstF3.sGWRydPlUsf}+#{lwojChWstF3.Ybv1AGCxJfg}+#{dm1v7qTWQ9A.hc4OtfQA0Ai}+#{dm1v7qTWQ9A.TlzCcBwNCIQ}+#{dm1v7qTWQ9A.iSIhmNWqhYp}+#{dm1v7qTWQ9A.SjTde0puVwb}+#{dm1v7qTWQ9A.CcGgm3HOwKz}+#{dm1v7qTWQ9A.sGWRydPlUsf}+#{dm1v7qTWQ9A.Ybv1AGCxJfg}+#{RW3G8MLQLqE.hc4OtfQA0Ai}+#{RW3G8MLQLqE.TlzCcBwNCIQ}+#{RW3G8MLQLqE.iSIhmNWqhYp}+#{RW3G8MLQLqE.SjTde0puVwb}+#{RW3G8MLQLqE.CcGgm3HOwKz}+#{RW3G8MLQLqE.sGWRydPlUsf}+#{RW3G8MLQLqE.Ybv1AGCxJfg}",
+   "numeratorDescription": "Female adult & non-formal (IQS/IQTE) enrolment",
+   "denominator": "#{pENhdbNXn7c}+#{TkY79n0ul2T}+#{Glh62nt0Tug}+#{m0kpv0qeB8K}+#{aRKx5RdYE0i}+#{lwojChWstF3}+#{dm1v7qTWQ9A}+#{RW3G8MLQLqE}",
+   "denominatorDescription": "Total adult & non-formal (IQS/IQTE) enrolment",
+   "annualized": false,
+   "decimals": 1
+  },
+  {
+   "id": "mHzRpEIsf3n",
+   "name": "ASC-ANFE Pupil-stream ratio (ratio)",
+   "shortName": "ANFE Pupil-stream ratio",
+   "code": "ASC_ANFE_PUPIL_STREAM",
+   "description": "Average class size: adult & non-formal (IQS/IQTE) enrolment divided by number of streams (class arms), all forms.",
+   "indicatorType": {
+    "id": "jEvXVGHRCsj"
+   },
+   "numerator": "#{pENhdbNXn7c}+#{TkY79n0ul2T}+#{Glh62nt0Tug}+#{m0kpv0qeB8K}+#{aRKx5RdYE0i}+#{lwojChWstF3}+#{dm1v7qTWQ9A}+#{RW3G8MLQLqE}",
+   "numeratorDescription": "Total adult & non-formal (IQS/IQTE) enrolment",
+   "denominator": "#{oQjacSJKAUP}",
+   "denominatorDescription": "adult & non-formal (IQS/IQTE) streams",
+   "annualized": false,
+   "decimals": 1
+  },
+  {
+   "id": "kitIA5LU69N",
+   "name": "ASC-ANFE Learners with special needs",
+   "shortName": "ANFE SNE learners",
+   "code": "ASC_ANFE_SNE",
+   "description": "Adult & non-formal (iqs/iqte) learners with special needs (sum of categories, all forms). May double-count across categories.",
+   "indicatorType": {
+    "id": "jEvXVGHRCsj"
+   },
+   "numerator": "#{uNCikz7Yeor.qa28g9DuoIS}+#{uNCikz7Yeor.wUPADNf3GOs}+#{uNCikz7Yeor.WCpJQxZsG72}+#{uNCikz7Yeor.nf1g2RnCCFH}+#{uNCikz7Yeor.nH9mnvH2NUP}+#{uNCikz7Yeor.RoVHRqwUSKD}+#{uNCikz7Yeor.Z52FmmTyTvJ}+#{uNCikz7Yeor.kcbgyRH2yJ5}+#{uNCikz7Yeor.uyRNznqpncC}+#{uNCikz7Yeor.V9uxPiOfs9x}+#{uNCikz7Yeor.E5cqG3QAcMV}+#{uNCikz7Yeor.MOD0aTed718}+#{uNCikz7Yeor.QLzcGoLPW55}+#{uNCikz7Yeor.IGUhL0MFtD6}+#{E5ZhQYkqaQB.qa28g9DuoIS}+#{E5ZhQYkqaQB.wUPADNf3GOs}+#{E5ZhQYkqaQB.WCpJQxZsG72}+#{E5ZhQYkqaQB.nf1g2RnCCFH}+#{E5ZhQYkqaQB.nH9mnvH2NUP}+#{E5ZhQYkqaQB.RoVHRqwUSKD}+#{E5ZhQYkqaQB.Z52FmmTyTvJ}+#{E5ZhQYkqaQB.kcbgyRH2yJ5}+#{E5ZhQYkqaQB.uyRNznqpncC}+#{E5ZhQYkqaQB.V9uxPiOfs9x}+#{E5ZhQYkqaQB.E5cqG3QAcMV}+#{E5ZhQYkqaQB.MOD0aTed718}+#{E5ZhQYkqaQB.QLzcGoLPW55}+#{E5ZhQYkqaQB.IGUhL0MFtD6}+#{NmMNACs234h.qa28g9DuoIS}+#{NmMNACs234h.wUPADNf3GOs}+#{NmMNACs234h.WCpJQxZsG72}+#{NmMNACs234h.nf1g2RnCCFH}+#{NmMNACs234h.nH9mnvH2NUP}+#{NmMNACs234h.RoVHRqwUSKD}+#{NmMNACs234h.Z52FmmTyTvJ}+#{NmMNACs234h.kcbgyRH2yJ5}+#{NmMNACs234h.uyRNznqpncC}+#{NmMNACs234h.V9uxPiOfs9x}+#{NmMNACs234h.E5cqG3QAcMV}+#{NmMNACs234h.MOD0aTed718}+#{NmMNACs234h.QLzcGoLPW55}+#{NmMNACs234h.IGUhL0MFtD6}+#{ewBEuerrNUr.qa28g9DuoIS}+#{ewBEuerrNUr.wUPADNf3GOs}+#{ewBEuerrNUr.WCpJQxZsG72}+#{ewBEuerrNUr.nf1g2RnCCFH}+#{ewBEuerrNUr.nH9mnvH2NUP}+#{ewBEuerrNUr.RoVHRqwUSKD}+#{ewBEuerrNUr.Z52FmmTyTvJ}+#{ewBEuerrNUr.kcbgyRH2yJ5}+#{ewBEuerrNUr.uyRNznqpncC}+#{ewBEuerrNUr.V9uxPiOfs9x}+#{ewBEuerrNUr.E5cqG3QAcMV}+#{ewBEuerrNUr.MOD0aTed718}+#{ewBEuerrNUr.QLzcGoLPW55}+#{ewBEuerrNUr.IGUhL0MFtD6}+#{ahmvIw4r4kI.qa28g9DuoIS}+#{ahmvIw4r4kI.wUPADNf3GOs}+#{ahmvIw4r4kI.WCpJQxZsG72}+#{ahmvIw4r4kI.nf1g2RnCCFH}+#{ahmvIw4r4kI.nH9mnvH2NUP}+#{ahmvIw4r4kI.RoVHRqwUSKD}+#{ahmvIw4r4kI.Z52FmmTyTvJ}+#{ahmvIw4r4kI.kcbgyRH2yJ5}+#{ahmvIw4r4kI.uyRNznqpncC}+#{ahmvIw4r4kI.V9uxPiOfs9x}+#{ahmvIw4r4kI.E5cqG3QAcMV}+#{ahmvIw4r4kI.MOD0aTed718}+#{ahmvIw4r4kI.QLzcGoLPW55}+#{ahmvIw4r4kI.IGUhL0MFtD6}+#{kz5lDseAMmk.qa28g9DuoIS}+#{kz5lDseAMmk.wUPADNf3GOs}+#{kz5lDseAMmk.WCpJQxZsG72}+#{kz5lDseAMmk.nf1g2RnCCFH}+#{kz5lDseAMmk.nH9mnvH2NUP}+#{kz5lDseAMmk.RoVHRqwUSKD}+#{kz5lDseAMmk.Z52FmmTyTvJ}+#{kz5lDseAMmk.kcbgyRH2yJ5}+#{kz5lDseAMmk.uyRNznqpncC}+#{kz5lDseAMmk.V9uxPiOfs9x}+#{kz5lDseAMmk.E5cqG3QAcMV}+#{kz5lDseAMmk.MOD0aTed718}+#{kz5lDseAMmk.QLzcGoLPW55}+#{kz5lDseAMmk.IGUhL0MFtD6}",
+   "numeratorDescription": "Sum of adult & non-formal (IQS/IQTE) special-needs categories",
+   "denominator": "1",
+   "denominatorDescription": "one",
+   "annualized": false,
+   "decimals": 0
+  },
+  {
+   "id": "jRh7NbBDdJI",
+   "name": "ASC-ANFE Learners with special needs (%)",
+   "shortName": "ANFE SNE learners (%)",
+   "code": "ASC_ANFE_SNE_PCT",
+   "description": "Adult & non-formal (iqs/iqte) learners with special needs as a share of enrolment (all forms).",
+   "indicatorType": {
+    "id": "D0J1oRr1ESx"
+   },
+   "numerator": "#{uNCikz7Yeor.qa28g9DuoIS}+#{uNCikz7Yeor.wUPADNf3GOs}+#{uNCikz7Yeor.WCpJQxZsG72}+#{uNCikz7Yeor.nf1g2RnCCFH}+#{uNCikz7Yeor.nH9mnvH2NUP}+#{uNCikz7Yeor.RoVHRqwUSKD}+#{uNCikz7Yeor.Z52FmmTyTvJ}+#{uNCikz7Yeor.kcbgyRH2yJ5}+#{uNCikz7Yeor.uyRNznqpncC}+#{uNCikz7Yeor.V9uxPiOfs9x}+#{uNCikz7Yeor.E5cqG3QAcMV}+#{uNCikz7Yeor.MOD0aTed718}+#{uNCikz7Yeor.QLzcGoLPW55}+#{uNCikz7Yeor.IGUhL0MFtD6}+#{E5ZhQYkqaQB.qa28g9DuoIS}+#{E5ZhQYkqaQB.wUPADNf3GOs}+#{E5ZhQYkqaQB.WCpJQxZsG72}+#{E5ZhQYkqaQB.nf1g2RnCCFH}+#{E5ZhQYkqaQB.nH9mnvH2NUP}+#{E5ZhQYkqaQB.RoVHRqwUSKD}+#{E5ZhQYkqaQB.Z52FmmTyTvJ}+#{E5ZhQYkqaQB.kcbgyRH2yJ5}+#{E5ZhQYkqaQB.uyRNznqpncC}+#{E5ZhQYkqaQB.V9uxPiOfs9x}+#{E5ZhQYkqaQB.E5cqG3QAcMV}+#{E5ZhQYkqaQB.MOD0aTed718}+#{E5ZhQYkqaQB.QLzcGoLPW55}+#{E5ZhQYkqaQB.IGUhL0MFtD6}+#{NmMNACs234h.qa28g9DuoIS}+#{NmMNACs234h.wUPADNf3GOs}+#{NmMNACs234h.WCpJQxZsG72}+#{NmMNACs234h.nf1g2RnCCFH}+#{NmMNACs234h.nH9mnvH2NUP}+#{NmMNACs234h.RoVHRqwUSKD}+#{NmMNACs234h.Z52FmmTyTvJ}+#{NmMNACs234h.kcbgyRH2yJ5}+#{NmMNACs234h.uyRNznqpncC}+#{NmMNACs234h.V9uxPiOfs9x}+#{NmMNACs234h.E5cqG3QAcMV}+#{NmMNACs234h.MOD0aTed718}+#{NmMNACs234h.QLzcGoLPW55}+#{NmMNACs234h.IGUhL0MFtD6}+#{ewBEuerrNUr.qa28g9DuoIS}+#{ewBEuerrNUr.wUPADNf3GOs}+#{ewBEuerrNUr.WCpJQxZsG72}+#{ewBEuerrNUr.nf1g2RnCCFH}+#{ewBEuerrNUr.nH9mnvH2NUP}+#{ewBEuerrNUr.RoVHRqwUSKD}+#{ewBEuerrNUr.Z52FmmTyTvJ}+#{ewBEuerrNUr.kcbgyRH2yJ5}+#{ewBEuerrNUr.uyRNznqpncC}+#{ewBEuerrNUr.V9uxPiOfs9x}+#{ewBEuerrNUr.E5cqG3QAcMV}+#{ewBEuerrNUr.MOD0aTed718}+#{ewBEuerrNUr.QLzcGoLPW55}+#{ewBEuerrNUr.IGUhL0MFtD6}+#{ahmvIw4r4kI.qa28g9DuoIS}+#{ahmvIw4r4kI.wUPADNf3GOs}+#{ahmvIw4r4kI.WCpJQxZsG72}+#{ahmvIw4r4kI.nf1g2RnCCFH}+#{ahmvIw4r4kI.nH9mnvH2NUP}+#{ahmvIw4r4kI.RoVHRqwUSKD}+#{ahmvIw4r4kI.Z52FmmTyTvJ}+#{ahmvIw4r4kI.kcbgyRH2yJ5}+#{ahmvIw4r4kI.uyRNznqpncC}+#{ahmvIw4r4kI.V9uxPiOfs9x}+#{ahmvIw4r4kI.E5cqG3QAcMV}+#{ahmvIw4r4kI.MOD0aTed718}+#{ahmvIw4r4kI.QLzcGoLPW55}+#{ahmvIw4r4kI.IGUhL0MFtD6}+#{kz5lDseAMmk.qa28g9DuoIS}+#{kz5lDseAMmk.wUPADNf3GOs}+#{kz5lDseAMmk.WCpJQxZsG72}+#{kz5lDseAMmk.nf1g2RnCCFH}+#{kz5lDseAMmk.nH9mnvH2NUP}+#{kz5lDseAMmk.RoVHRqwUSKD}+#{kz5lDseAMmk.Z52FmmTyTvJ}+#{kz5lDseAMmk.kcbgyRH2yJ5}+#{kz5lDseAMmk.uyRNznqpncC}+#{kz5lDseAMmk.V9uxPiOfs9x}+#{kz5lDseAMmk.E5cqG3QAcMV}+#{kz5lDseAMmk.MOD0aTed718}+#{kz5lDseAMmk.QLzcGoLPW55}+#{kz5lDseAMmk.IGUhL0MFtD6}",
+   "numeratorDescription": "Sum of adult & non-formal (IQS/IQTE) special-needs categories",
+   "denominator": "#{pENhdbNXn7c}+#{TkY79n0ul2T}+#{Glh62nt0Tug}+#{m0kpv0qeB8K}+#{aRKx5RdYE0i}+#{lwojChWstF3}+#{dm1v7qTWQ9A}+#{RW3G8MLQLqE}",
+   "denominatorDescription": "Total adult & non-formal (IQS/IQTE) enrolment",
+   "annualized": false,
+   "decimals": 1
+  },
+  {
+   "id": "GSJ3jeCZNsD",
+   "name": "ASC-ANFE Dropout",
+   "shortName": "ANFE Dropout",
+   "code": "ASC_ANFE_DROPOUT",
+   "description": "Adult & non-formal (iqs/iqte) dropout during the current academic year (all forms).",
+   "indicatorType": {
+    "id": "jEvXVGHRCsj"
+   },
+   "numerator": "#{c1lCGWBvDnk.WmhkXzph5XL}+#{c1lCGWBvDnk.jpSfG93l50G}+#{c1lCGWBvDnk.z3JbxwYnMG4}+#{c1lCGWBvDnk.WHy6CysJSF0}+#{c1lCGWBvDnk.rDns9mT6HnN}+#{c1lCGWBvDnk.AyXra8oqEIP}+#{c1lCGWBvDnk.XZK5pH38s6G}+#{c1lCGWBvDnk.VtnVGLuZQj7}+#{c1lCGWBvDnk.McC2tLO4M0x}+#{c1lCGWBvDnk.bkYssvbYt0k}+#{c1lCGWBvDnk.pXaz337R8eI}+#{c1lCGWBvDnk.PbPHaS2XiTS}+#{c1lCGWBvDnk.BAk1z8apIUt}+#{c1lCGWBvDnk.svFwhumCDSn}",
+   "numeratorDescription": "adult & non-formal (IQS/IQTE) dropout",
+   "denominator": "1",
+   "denominatorDescription": "one",
+   "annualized": false,
+   "decimals": 0
+  },
+  {
+   "id": "VAnbcYjaaZ4",
+   "name": "ASC-ANFE Dropout (%)",
+   "shortName": "ANFE Dropout (%)",
+   "code": "ASC_ANFE_DROPOUT_PCT",
+   "description": "Adult & non-formal (iqs/iqte) dropout as a share of enrolment (all forms).",
+   "indicatorType": {
+    "id": "D0J1oRr1ESx"
+   },
+   "numerator": "#{c1lCGWBvDnk.WmhkXzph5XL}+#{c1lCGWBvDnk.jpSfG93l50G}+#{c1lCGWBvDnk.z3JbxwYnMG4}+#{c1lCGWBvDnk.WHy6CysJSF0}+#{c1lCGWBvDnk.rDns9mT6HnN}+#{c1lCGWBvDnk.AyXra8oqEIP}+#{c1lCGWBvDnk.XZK5pH38s6G}+#{c1lCGWBvDnk.VtnVGLuZQj7}+#{c1lCGWBvDnk.McC2tLO4M0x}+#{c1lCGWBvDnk.bkYssvbYt0k}+#{c1lCGWBvDnk.pXaz337R8eI}+#{c1lCGWBvDnk.PbPHaS2XiTS}+#{c1lCGWBvDnk.BAk1z8apIUt}+#{c1lCGWBvDnk.svFwhumCDSn}",
+   "numeratorDescription": "adult & non-formal (IQS/IQTE) dropout",
+   "denominator": "#{pENhdbNXn7c}+#{TkY79n0ul2T}+#{Glh62nt0Tug}+#{m0kpv0qeB8K}+#{aRKx5RdYE0i}+#{lwojChWstF3}+#{dm1v7qTWQ9A}+#{RW3G8MLQLqE}",
+   "denominatorDescription": "Total adult & non-formal (IQS/IQTE) enrolment",
+   "annualized": false,
+   "decimals": 1
+  },
+  {
+   "id": "lBfQKjSIx0P",
+   "name": "ASC-ANFE Orphans",
+   "shortName": "ANFE Orphans",
+   "code": "ASC_ANFE_ORPHANS",
+   "description": "Adult & non-formal (iqs/iqte) orphans (lost one/both parents), all forms.",
+   "indicatorType": {
+    "id": "jEvXVGHRCsj"
+   },
+   "numerator": "#{LVjWo0BFBwi.mPEcRkB3tun}+#{LVjWo0BFBwi.WD2aTj1eGEE}+#{LVjWo0BFBwi.Q79cnYysXs4}+#{LVjWo0BFBwi.P9CVgnsNxX5}+#{LVjWo0BFBwi.HcALw7pVXhK}+#{LVjWo0BFBwi.pPXVJgfcDHC}+#{LVjWo0BFBwi.YaZIFr568M4}+#{LVjWo0BFBwi.eA5XuvF1dxa}+#{LVjWo0BFBwi.bNdCciGbJMg}+#{LVjWo0BFBwi.H0fAxyMEczH}+#{LVjWo0BFBwi.n6Q3rFCuJAi}+#{LVjWo0BFBwi.w1wsIfvfde7}+#{LVjWo0BFBwi.A1RswmuidUp}+#{LVjWo0BFBwi.Glge5sWScUO}+#{pq3gqfp2AjY.mPEcRkB3tun}+#{pq3gqfp2AjY.WD2aTj1eGEE}+#{pq3gqfp2AjY.Q79cnYysXs4}+#{pq3gqfp2AjY.P9CVgnsNxX5}+#{pq3gqfp2AjY.HcALw7pVXhK}+#{pq3gqfp2AjY.pPXVJgfcDHC}+#{pq3gqfp2AjY.YaZIFr568M4}+#{pq3gqfp2AjY.eA5XuvF1dxa}+#{pq3gqfp2AjY.bNdCciGbJMg}+#{pq3gqfp2AjY.H0fAxyMEczH}+#{pq3gqfp2AjY.n6Q3rFCuJAi}+#{pq3gqfp2AjY.w1wsIfvfde7}+#{pq3gqfp2AjY.A1RswmuidUp}+#{pq3gqfp2AjY.Glge5sWScUO}+#{ldHugVeWKrU.mPEcRkB3tun}+#{ldHugVeWKrU.WD2aTj1eGEE}+#{ldHugVeWKrU.Q79cnYysXs4}+#{ldHugVeWKrU.P9CVgnsNxX5}+#{ldHugVeWKrU.HcALw7pVXhK}+#{ldHugVeWKrU.pPXVJgfcDHC}+#{ldHugVeWKrU.YaZIFr568M4}+#{ldHugVeWKrU.eA5XuvF1dxa}+#{ldHugVeWKrU.bNdCciGbJMg}+#{ldHugVeWKrU.H0fAxyMEczH}+#{ldHugVeWKrU.n6Q3rFCuJAi}+#{ldHugVeWKrU.w1wsIfvfde7}+#{ldHugVeWKrU.A1RswmuidUp}+#{ldHugVeWKrU.Glge5sWScUO}",
+   "numeratorDescription": "Sum of adult & non-formal (IQS/IQTE) orphan categories",
+   "denominator": "1",
+   "denominatorDescription": "one",
+   "annualized": false,
+   "decimals": 0
+  },
+  {
+   "id": "nK3E5siSgHS",
+   "name": "ASC-ANFE Orphans (%)",
+   "shortName": "ANFE Orphans (%)",
+   "code": "ASC_ANFE_ORPHANS_PCT",
+   "description": "Adult & non-formal (iqs/iqte) orphans as a share of enrolment (all forms).",
+   "indicatorType": {
+    "id": "D0J1oRr1ESx"
+   },
+   "numerator": "#{LVjWo0BFBwi.mPEcRkB3tun}+#{LVjWo0BFBwi.WD2aTj1eGEE}+#{LVjWo0BFBwi.Q79cnYysXs4}+#{LVjWo0BFBwi.P9CVgnsNxX5}+#{LVjWo0BFBwi.HcALw7pVXhK}+#{LVjWo0BFBwi.pPXVJgfcDHC}+#{LVjWo0BFBwi.YaZIFr568M4}+#{LVjWo0BFBwi.eA5XuvF1dxa}+#{LVjWo0BFBwi.bNdCciGbJMg}+#{LVjWo0BFBwi.H0fAxyMEczH}+#{LVjWo0BFBwi.n6Q3rFCuJAi}+#{LVjWo0BFBwi.w1wsIfvfde7}+#{LVjWo0BFBwi.A1RswmuidUp}+#{LVjWo0BFBwi.Glge5sWScUO}+#{pq3gqfp2AjY.mPEcRkB3tun}+#{pq3gqfp2AjY.WD2aTj1eGEE}+#{pq3gqfp2AjY.Q79cnYysXs4}+#{pq3gqfp2AjY.P9CVgnsNxX5}+#{pq3gqfp2AjY.HcALw7pVXhK}+#{pq3gqfp2AjY.pPXVJgfcDHC}+#{pq3gqfp2AjY.YaZIFr568M4}+#{pq3gqfp2AjY.eA5XuvF1dxa}+#{pq3gqfp2AjY.bNdCciGbJMg}+#{pq3gqfp2AjY.H0fAxyMEczH}+#{pq3gqfp2AjY.n6Q3rFCuJAi}+#{pq3gqfp2AjY.w1wsIfvfde7}+#{pq3gqfp2AjY.A1RswmuidUp}+#{pq3gqfp2AjY.Glge5sWScUO}+#{ldHugVeWKrU.mPEcRkB3tun}+#{ldHugVeWKrU.WD2aTj1eGEE}+#{ldHugVeWKrU.Q79cnYysXs4}+#{ldHugVeWKrU.P9CVgnsNxX5}+#{ldHugVeWKrU.HcALw7pVXhK}+#{ldHugVeWKrU.pPXVJgfcDHC}+#{ldHugVeWKrU.YaZIFr568M4}+#{ldHugVeWKrU.eA5XuvF1dxa}+#{ldHugVeWKrU.bNdCciGbJMg}+#{ldHugVeWKrU.H0fAxyMEczH}+#{ldHugVeWKrU.n6Q3rFCuJAi}+#{ldHugVeWKrU.w1wsIfvfde7}+#{ldHugVeWKrU.A1RswmuidUp}+#{ldHugVeWKrU.Glge5sWScUO}",
+   "numeratorDescription": "Sum of adult & non-formal (IQS/IQTE) orphan categories",
+   "denominator": "#{pENhdbNXn7c}+#{TkY79n0ul2T}+#{Glh62nt0Tug}+#{m0kpv0qeB8K}+#{aRKx5RdYE0i}+#{lwojChWstF3}+#{dm1v7qTWQ9A}+#{RW3G8MLQLqE}",
+   "denominatorDescription": "Total adult & non-formal (IQS/IQTE) enrolment",
+   "annualized": false,
+   "decimals": 1
+  },
+  {
+   "id": "jwjKmtVK2wj",
+   "name": "ASC-GEN Enrolment (all levels)",
+   "shortName": "Enrolment (all levels)",
+   "code": "ASC_GEN_ENROL",
+   "description": "Total enrolment across all levels and all census forms (whole-school).",
+   "indicatorType": {
+    "id": "jEvXVGHRCsj"
+   },
+   "numerator": "#{u8MSpa6e4tu}+#{KrjARNwUOFF}+#{w34HAnkMJDW}+#{PPWh2jFXBWV}+#{hXqrubrJPRr}+#{CADSef49FaO}+#{wPDF1OLjYM2}+#{meegE8oyjXY}+#{cFwJLHE4Dps}+#{jAcTIg5mOlx}+#{eBTbIITRm3H}+#{tno1y7kW71Z}+#{D2FfTq9m77w}+#{Qg9jKQ6EloS}+#{FFcdIMV8Mff}+#{GNZr8JEDK1o}+#{ZYUxhci2GJr}+#{bsqEkvwCRNw}+#{FBDmI9CFxDy}+#{GpUBgs01fVn}+#{eVvRPLqvUjE}+#{xviWUjTv0W7}+#{sJ83z0bd1NH}+#{gHQpD9Sf8mZ}+#{cvUyfDuLcQK}+#{DpHe6KOsGf8}+#{TLasvK4KJAO}+#{FK1cqfAhjf9}+#{BrJc41TPhGS}+#{Zjf7HpytGV2}+#{rkbfeYWzA63}+#{qV5djLlxhk2}+#{LItsHtx5A6B}+#{dnTyNijcRH1}+#{hpYA6Hhu0GF}+#{AqoSAqJXzdI}+#{g1MxeJzX1c3}+#{g3SbUJLyEsK}+#{pENhdbNXn7c}+#{TkY79n0ul2T}+#{Glh62nt0Tug}+#{m0kpv0qeB8K}+#{aRKx5RdYE0i}+#{lwojChWstF3}+#{dm1v7qTWQ9A}+#{RW3G8MLQLqE}",
+   "numeratorDescription": "Total enrolment, all levels",
+   "denominator": "1",
+   "denominatorDescription": "one",
+   "annualized": false,
+   "decimals": 0
+  },
+  {
+   "id": "zKAZUEGYL52",
+   "name": "ASC-GEN Enrolment boys (all levels)",
+   "shortName": "Enrolment boys (all levels)",
+   "code": "ASC_GEN_ENROL_M",
+   "description": "Male enrolment across all levels and forms.",
+   "indicatorType": {
+    "id": "jEvXVGHRCsj"
+   },
+   "numerator": "#{u8MSpa6e4tu.N36C2yx2jKL}+#{u8MSpa6e4tu.FPfuzNpUspF}+#{u8MSpa6e4tu.SXMomFE6OI4}+#{u8MSpa6e4tu.AiQfmu1GI61}+#{u8MSpa6e4tu.K3y4YS6MQJr}+#{KrjARNwUOFF.N36C2yx2jKL}+#{KrjARNwUOFF.FPfuzNpUspF}+#{KrjARNwUOFF.SXMomFE6OI4}+#{KrjARNwUOFF.AiQfmu1GI61}+#{KrjARNwUOFF.K3y4YS6MQJr}+#{w34HAnkMJDW.N36C2yx2jKL}+#{w34HAnkMJDW.FPfuzNpUspF}+#{w34HAnkMJDW.SXMomFE6OI4}+#{w34HAnkMJDW.AiQfmu1GI61}+#{w34HAnkMJDW.K3y4YS6MQJr}+#{PPWh2jFXBWV.N36C2yx2jKL}+#{PPWh2jFXBWV.FPfuzNpUspF}+#{PPWh2jFXBWV.SXMomFE6OI4}+#{PPWh2jFXBWV.AiQfmu1GI61}+#{PPWh2jFXBWV.K3y4YS6MQJr}+#{hXqrubrJPRr.N36C2yx2jKL}+#{hXqrubrJPRr.FPfuzNpUspF}+#{hXqrubrJPRr.SXMomFE6OI4}+#{hXqrubrJPRr.AiQfmu1GI61}+#{hXqrubrJPRr.K3y4YS6MQJr}+#{u8MSpa6e4tu.ygatak2nPse}+#{u8MSpa6e4tu.h72uqXbdIc2}+#{u8MSpa6e4tu.RxGSWrtF9Bi}+#{u8MSpa6e4tu.aCftWxUH4xK}+#{u8MSpa6e4tu.PhsfKKRh76e}+#{KrjARNwUOFF.ygatak2nPse}+#{KrjARNwUOFF.h72uqXbdIc2}+#{KrjARNwUOFF.RxGSWrtF9Bi}+#{KrjARNwUOFF.aCftWxUH4xK}+#{KrjARNwUOFF.PhsfKKRh76e}+#{w34HAnkMJDW.ygatak2nPse}+#{w34HAnkMJDW.h72uqXbdIc2}+#{w34HAnkMJDW.RxGSWrtF9Bi}+#{w34HAnkMJDW.aCftWxUH4xK}+#{w34HAnkMJDW.PhsfKKRh76e}+#{PPWh2jFXBWV.ygatak2nPse}+#{PPWh2jFXBWV.h72uqXbdIc2}+#{PPWh2jFXBWV.RxGSWrtF9Bi}+#{PPWh2jFXBWV.aCftWxUH4xK}+#{PPWh2jFXBWV.PhsfKKRh76e}+#{hXqrubrJPRr.ygatak2nPse}+#{hXqrubrJPRr.h72uqXbdIc2}+#{hXqrubrJPRr.RxGSWrtF9Bi}+#{hXqrubrJPRr.aCftWxUH4xK}+#{hXqrubrJPRr.PhsfKKRh76e}+#{CADSef49FaO.cn5mjpcjczz}+#{CADSef49FaO.eVEbydcf5qX}+#{CADSef49FaO.s8zOlNm05Dq}+#{CADSef49FaO.E4a2NBmGsGT}+#{CADSef49FaO.gB7JZExaZSe}+#{CADSef49FaO.v86Ah57BmL6}+#{wPDF1OLjYM2.cn5mjpcjczz}+#{wPDF1OLjYM2.eVEbydcf5qX}+#{wPDF1OLjYM2.s8zOlNm05Dq}+#{wPDF1OLjYM2.E4a2NBmGsGT}+#{wPDF1OLjYM2.gB7JZExaZSe}+#{wPDF1OLjYM2.v86Ah57BmL6}+#{meegE8oyjXY.cn5mjpcjczz}+#{meegE8oyjXY.eVEbydcf5qX}+#{meegE8oyjXY.s8zOlNm05Dq}+#{meegE8oyjXY.E4a2NBmGsGT}+#{meegE8oyjXY.gB7JZExaZSe}+#{meegE8oyjXY.v86Ah57BmL6}+#{cFwJLHE4Dps.cn5mjpcjczz}+#{cFwJLHE4Dps.eVEbydcf5qX}+#{cFwJLHE4Dps.s8zOlNm05Dq}+#{cFwJLHE4Dps.E4a2NBmGsGT}+#{cFwJLHE4Dps.gB7JZExaZSe}+#{cFwJLHE4Dps.v86Ah57BmL6}+#{jAcTIg5mOlx.cn5mjpcjczz}+#{jAcTIg5mOlx.eVEbydcf5qX}+#{jAcTIg5mOlx.s8zOlNm05Dq}+#{jAcTIg5mOlx.E4a2NBmGsGT}+#{jAcTIg5mOlx.gB7JZExaZSe}+#{jAcTIg5mOlx.v86Ah57BmL6}+#{eBTbIITRm3H.cn5mjpcjczz}+#{eBTbIITRm3H.eVEbydcf5qX}+#{eBTbIITRm3H.s8zOlNm05Dq}+#{eBTbIITRm3H.E4a2NBmGsGT}+#{eBTbIITRm3H.gB7JZExaZSe}+#{eBTbIITRm3H.v86Ah57BmL6}+#{tno1y7kW71Z.cn5mjpcjczz}+#{tno1y7kW71Z.eVEbydcf5qX}+#{tno1y7kW71Z.s8zOlNm05Dq}+#{tno1y7kW71Z.E4a2NBmGsGT}+#{tno1y7kW71Z.gB7JZExaZSe}+#{tno1y7kW71Z.v86Ah57BmL6}+#{D2FfTq9m77w.cn5mjpcjczz}+#{D2FfTq9m77w.eVEbydcf5qX}+#{D2FfTq9m77w.s8zOlNm05Dq}+#{D2FfTq9m77w.E4a2NBmGsGT}+#{D2FfTq9m77w.gB7JZExaZSe}+#{D2FfTq9m77w.v86Ah57BmL6}+#{CADSef49FaO.yl9sU3evA5p}+#{CADSef49FaO.WNzLOKpVBlp}+#{CADSef49FaO.MMCgkH4y1ZB}+#{CADSef49FaO.Fs6kRoyMpse}+#{CADSef49FaO.sIRnse62gRp}+#{CADSef49FaO.B1FawPZBdCd}+#{wPDF1OLjYM2.yl9sU3evA5p}+#{wPDF1OLjYM2.WNzLOKpVBlp}+#{wPDF1OLjYM2.MMCgkH4y1ZB}+#{wPDF1OLjYM2.Fs6kRoyMpse}+#{wPDF1OLjYM2.sIRnse62gRp}+#{wPDF1OLjYM2.B1FawPZBdCd}+#{meegE8oyjXY.yl9sU3evA5p}+#{meegE8oyjXY.WNzLOKpVBlp}+#{meegE8oyjXY.MMCgkH4y1ZB}+#{meegE8oyjXY.Fs6kRoyMpse}+#{meegE8oyjXY.sIRnse62gRp}+#{meegE8oyjXY.B1FawPZBdCd}+#{cFwJLHE4Dps.yl9sU3evA5p}+#{cFwJLHE4Dps.WNzLOKpVBlp}+#{cFwJLHE4Dps.MMCgkH4y1ZB}+#{cFwJLHE4Dps.Fs6kRoyMpse}+#{cFwJLHE4Dps.sIRnse62gRp}+#{cFwJLHE4Dps.B1FawPZBdCd}+#{jAcTIg5mOlx.yl9sU3evA5p}+#{jAcTIg5mOlx.WNzLOKpVBlp}+#{jAcTIg5mOlx.MMCgkH4y1ZB}+#{jAcTIg5mOlx.Fs6kRoyMpse}+#{jAcTIg5mOlx.sIRnse62gRp}+#{jAcTIg5mOlx.B1FawPZBdCd}+#{eBTbIITRm3H.yl9sU3evA5p}+#{eBTbIITRm3H.WNzLOKpVBlp}+#{eBTbIITRm3H.MMCgkH4y1ZB}+#{eBTbIITRm3H.Fs6kRoyMpse}+#{eBTbIITRm3H.sIRnse62gRp}+#{eBTbIITRm3H.B1FawPZBdCd}+#{tno1y7kW71Z.yl9sU3evA5p}+#{tno1y7kW71Z.WNzLOKpVBlp}+#{tno1y7kW71Z.MMCgkH4y1ZB}+#{tno1y7kW71Z.Fs6kRoyMpse}+#{tno1y7kW71Z.sIRnse62gRp}+#{tno1y7kW71Z.B1FawPZBdCd}+#{D2FfTq9m77w.yl9sU3evA5p}+#{D2FfTq9m77w.WNzLOKpVBlp}+#{D2FfTq9m77w.MMCgkH4y1ZB}+#{D2FfTq9m77w.Fs6kRoyMpse}+#{D2FfTq9m77w.sIRnse62gRp}+#{D2FfTq9m77w.B1FawPZBdCd}+#{Qg9jKQ6EloS.K5jz1D57g3o}+#{Qg9jKQ6EloS.MIjv9VE4B2F}+#{Qg9jKQ6EloS.TbkNNYelUbc}+#{FFcdIMV8Mff.K5jz1D57g3o}+#{FFcdIMV8Mff.MIjv9VE4B2F}+#{FFcdIMV8Mff.TbkNNYelUbc}+#{GNZr8JEDK1o.K5jz1D57g3o}+#{GNZr8JEDK1o.MIjv9VE4B2F}+#{GNZr8JEDK1o.TbkNNYelUbc}+#{ZYUxhci2GJr.K5jz1D57g3o}+#{ZYUxhci2GJr.MIjv9VE4B2F}+#{ZYUxhci2GJr.TbkNNYelUbc}+#{bsqEkvwCRNw.K5jz1D57g3o}+#{bsqEkvwCRNw.MIjv9VE4B2F}+#{bsqEkvwCRNw.TbkNNYelUbc}+#{FBDmI9CFxDy.NiA4nnDQOXF}+#{FBDmI9CFxDy.MRbUOvah4ga}+#{FBDmI9CFxDy.BQnhFz3scRT}+#{GpUBgs01fVn.NiA4nnDQOXF}+#{GpUBgs01fVn.MRbUOvah4ga}+#{GpUBgs01fVn.BQnhFz3scRT}+#{eVvRPLqvUjE.NiA4nnDQOXF}+#{eVvRPLqvUjE.MRbUOvah4ga}+#{eVvRPLqvUjE.BQnhFz3scRT}+#{xviWUjTv0W7.NiA4nnDQOXF}+#{xviWUjTv0W7.MRbUOvah4ga}+#{xviWUjTv0W7.BQnhFz3scRT}+#{sJ83z0bd1NH.NiA4nnDQOXF}+#{sJ83z0bd1NH.MRbUOvah4ga}+#{sJ83z0bd1NH.BQnhFz3scRT}+#{gHQpD9Sf8mZ.K5jz1D57g3o}+#{gHQpD9Sf8mZ.MIjv9VE4B2F}+#{gHQpD9Sf8mZ.TbkNNYelUbc}+#{cvUyfDuLcQK.K5jz1D57g3o}+#{cvUyfDuLcQK.MIjv9VE4B2F}+#{cvUyfDuLcQK.TbkNNYelUbc}+#{DpHe6KOsGf8.K5jz1D57g3o}+#{DpHe6KOsGf8.MIjv9VE4B2F}+#{DpHe6KOsGf8.TbkNNYelUbc}+#{TLasvK4KJAO.K5jz1D57g3o}+#{TLasvK4KJAO.MIjv9VE4B2F}+#{TLasvK4KJAO.TbkNNYelUbc}+#{FK1cqfAhjf9.K5jz1D57g3o}+#{FK1cqfAhjf9.MIjv9VE4B2F}+#{FK1cqfAhjf9.TbkNNYelUbc}+#{BrJc41TPhGS.F9s6It0soo7}+#{BrJc41TPhGS.kppDzyLMsMt}+#{BrJc41TPhGS.W4d1WVVJ797}+#{Zjf7HpytGV2.F9s6It0soo7}+#{Zjf7HpytGV2.kppDzyLMsMt}+#{Zjf7HpytGV2.W4d1WVVJ797}+#{rkbfeYWzA63.F9s6It0soo7}+#{rkbfeYWzA63.kppDzyLMsMt}+#{rkbfeYWzA63.W4d1WVVJ797}+#{qV5djLlxhk2.F9s6It0soo7}+#{qV5djLlxhk2.kppDzyLMsMt}+#{qV5djLlxhk2.W4d1WVVJ797}+#{LItsHtx5A6B.F9s6It0soo7}+#{LItsHtx5A6B.kppDzyLMsMt}+#{LItsHtx5A6B.W4d1WVVJ797}+#{BrJc41TPhGS.v3skLawxyFT}+#{BrJc41TPhGS.I2okaACOPZ0}+#{BrJc41TPhGS.e9w7E5ty45w}+#{Zjf7HpytGV2.v3skLawxyFT}+#{Zjf7HpytGV2.I2okaACOPZ0}+#{Zjf7HpytGV2.e9w7E5ty45w}+#{rkbfeYWzA63.v3skLawxyFT}+#{rkbfeYWzA63.I2okaACOPZ0}+#{rkbfeYWzA63.e9w7E5ty45w}+#{qV5djLlxhk2.v3skLawxyFT}+#{qV5djLlxhk2.I2okaACOPZ0}+#{qV5djLlxhk2.e9w7E5ty45w}+#{LItsHtx5A6B.v3skLawxyFT}+#{LItsHtx5A6B.I2okaACOPZ0}+#{LItsHtx5A6B.e9w7E5ty45w}+#{dnTyNijcRH1.Cg7HnYrBFDD}+#{dnTyNijcRH1.Tkjb3a8jSYF}+#{dnTyNijcRH1.v618xz9IkaF}+#{hpYA6Hhu0GF.Cg7HnYrBFDD}+#{hpYA6Hhu0GF.Tkjb3a8jSYF}+#{hpYA6Hhu0GF.v618xz9IkaF}+#{AqoSAqJXzdI.Cg7HnYrBFDD}+#{AqoSAqJXzdI.Tkjb3a8jSYF}+#{AqoSAqJXzdI.v618xz9IkaF}+#{g1MxeJzX1c3.Cg7HnYrBFDD}+#{g1MxeJzX1c3.Tkjb3a8jSYF}+#{g1MxeJzX1c3.v618xz9IkaF}+#{g3SbUJLyEsK.Cg7HnYrBFDD}+#{g3SbUJLyEsK.Tkjb3a8jSYF}+#{g3SbUJLyEsK.v618xz9IkaF}+#{pENhdbNXn7c.vY1TXn6Zr39}+#{pENhdbNXn7c.XoUalPAkcMw}+#{pENhdbNXn7c.u0zECOma3Xm}+#{pENhdbNXn7c.xaIaMdFRsES}+#{pENhdbNXn7c.xYuN556Rece}+#{pENhdbNXn7c.ubeOiEtP7A3}+#{pENhdbNXn7c.CRhJz3FQSHK}+#{TkY79n0ul2T.vY1TXn6Zr39}+#{TkY79n0ul2T.XoUalPAkcMw}+#{TkY79n0ul2T.u0zECOma3Xm}+#{TkY79n0ul2T.xaIaMdFRsES}+#{TkY79n0ul2T.xYuN556Rece}+#{TkY79n0ul2T.ubeOiEtP7A3}+#{TkY79n0ul2T.CRhJz3FQSHK}+#{Glh62nt0Tug.vY1TXn6Zr39}+#{Glh62nt0Tug.XoUalPAkcMw}+#{Glh62nt0Tug.u0zECOma3Xm}+#{Glh62nt0Tug.xaIaMdFRsES}+#{Glh62nt0Tug.xYuN556Rece}+#{Glh62nt0Tug.ubeOiEtP7A3}+#{Glh62nt0Tug.CRhJz3FQSHK}+#{m0kpv0qeB8K.vY1TXn6Zr39}+#{m0kpv0qeB8K.XoUalPAkcMw}+#{m0kpv0qeB8K.u0zECOma3Xm}+#{m0kpv0qeB8K.xaIaMdFRsES}+#{m0kpv0qeB8K.xYuN556Rece}+#{m0kpv0qeB8K.ubeOiEtP7A3}+#{m0kpv0qeB8K.CRhJz3FQSHK}+#{aRKx5RdYE0i.vY1TXn6Zr39}+#{aRKx5RdYE0i.XoUalPAkcMw}+#{aRKx5RdYE0i.u0zECOma3Xm}+#{aRKx5RdYE0i.xaIaMdFRsES}+#{aRKx5RdYE0i.xYuN556Rece}+#{aRKx5RdYE0i.ubeOiEtP7A3}+#{aRKx5RdYE0i.CRhJz3FQSHK}+#{lwojChWstF3.vY1TXn6Zr39}+#{lwojChWstF3.XoUalPAkcMw}+#{lwojChWstF3.u0zECOma3Xm}+#{lwojChWstF3.xaIaMdFRsES}+#{lwojChWstF3.xYuN556Rece}+#{lwojChWstF3.ubeOiEtP7A3}+#{lwojChWstF3.CRhJz3FQSHK}+#{dm1v7qTWQ9A.vY1TXn6Zr39}+#{dm1v7qTWQ9A.XoUalPAkcMw}+#{dm1v7qTWQ9A.u0zECOma3Xm}+#{dm1v7qTWQ9A.xaIaMdFRsES}+#{dm1v7qTWQ9A.xYuN556Rece}+#{dm1v7qTWQ9A.ubeOiEtP7A3}+#{dm1v7qTWQ9A.CRhJz3FQSHK}+#{RW3G8MLQLqE.vY1TXn6Zr39}+#{RW3G8MLQLqE.XoUalPAkcMw}+#{RW3G8MLQLqE.u0zECOma3Xm}+#{RW3G8MLQLqE.xaIaMdFRsES}+#{RW3G8MLQLqE.xYuN556Rece}+#{RW3G8MLQLqE.ubeOiEtP7A3}+#{RW3G8MLQLqE.CRhJz3FQSHK}",
+   "numeratorDescription": "Male enrolment, all levels",
+   "denominator": "1",
+   "denominatorDescription": "one",
+   "annualized": false,
+   "decimals": 0
+  },
+  {
+   "id": "HxRedgvSK2M",
+   "name": "ASC-GEN Enrolment girls (all levels)",
+   "shortName": "Enrolment girls (all levels)",
+   "code": "ASC_GEN_ENROL_F",
+   "description": "Female enrolment across all levels and forms.",
+   "indicatorType": {
+    "id": "jEvXVGHRCsj"
+   },
+   "numerator": "#{u8MSpa6e4tu.ND6R1ECWKes}+#{u8MSpa6e4tu.ouwhZRJlira}+#{u8MSpa6e4tu.eNoCIgIkRkU}+#{u8MSpa6e4tu.yw9UyOdR2mS}+#{u8MSpa6e4tu.fDHsrZJRNVc}+#{KrjARNwUOFF.ND6R1ECWKes}+#{KrjARNwUOFF.ouwhZRJlira}+#{KrjARNwUOFF.eNoCIgIkRkU}+#{KrjARNwUOFF.yw9UyOdR2mS}+#{KrjARNwUOFF.fDHsrZJRNVc}+#{w34HAnkMJDW.ND6R1ECWKes}+#{w34HAnkMJDW.ouwhZRJlira}+#{w34HAnkMJDW.eNoCIgIkRkU}+#{w34HAnkMJDW.yw9UyOdR2mS}+#{w34HAnkMJDW.fDHsrZJRNVc}+#{PPWh2jFXBWV.ND6R1ECWKes}+#{PPWh2jFXBWV.ouwhZRJlira}+#{PPWh2jFXBWV.eNoCIgIkRkU}+#{PPWh2jFXBWV.yw9UyOdR2mS}+#{PPWh2jFXBWV.fDHsrZJRNVc}+#{hXqrubrJPRr.ND6R1ECWKes}+#{hXqrubrJPRr.ouwhZRJlira}+#{hXqrubrJPRr.eNoCIgIkRkU}+#{hXqrubrJPRr.yw9UyOdR2mS}+#{hXqrubrJPRr.fDHsrZJRNVc}+#{u8MSpa6e4tu.GwvoYZx4IjG}+#{u8MSpa6e4tu.DxPA1wlJuQc}+#{u8MSpa6e4tu.uzx0YvwDHdV}+#{u8MSpa6e4tu.RC2IhV7hbBo}+#{u8MSpa6e4tu.MYu4MgzJFDz}+#{KrjARNwUOFF.GwvoYZx4IjG}+#{KrjARNwUOFF.DxPA1wlJuQc}+#{KrjARNwUOFF.uzx0YvwDHdV}+#{KrjARNwUOFF.RC2IhV7hbBo}+#{KrjARNwUOFF.MYu4MgzJFDz}+#{w34HAnkMJDW.GwvoYZx4IjG}+#{w34HAnkMJDW.DxPA1wlJuQc}+#{w34HAnkMJDW.uzx0YvwDHdV}+#{w34HAnkMJDW.RC2IhV7hbBo}+#{w34HAnkMJDW.MYu4MgzJFDz}+#{PPWh2jFXBWV.GwvoYZx4IjG}+#{PPWh2jFXBWV.DxPA1wlJuQc}+#{PPWh2jFXBWV.uzx0YvwDHdV}+#{PPWh2jFXBWV.RC2IhV7hbBo}+#{PPWh2jFXBWV.MYu4MgzJFDz}+#{hXqrubrJPRr.GwvoYZx4IjG}+#{hXqrubrJPRr.DxPA1wlJuQc}+#{hXqrubrJPRr.uzx0YvwDHdV}+#{hXqrubrJPRr.RC2IhV7hbBo}+#{hXqrubrJPRr.MYu4MgzJFDz}+#{CADSef49FaO.MzCuUq4r7RN}+#{CADSef49FaO.tdigCHbLsX9}+#{CADSef49FaO.FJY93b05T3d}+#{CADSef49FaO.Ul3n6Rs3nmN}+#{CADSef49FaO.wpWPigQKzve}+#{CADSef49FaO.kVfmCFFGGJ4}+#{wPDF1OLjYM2.MzCuUq4r7RN}+#{wPDF1OLjYM2.tdigCHbLsX9}+#{wPDF1OLjYM2.FJY93b05T3d}+#{wPDF1OLjYM2.Ul3n6Rs3nmN}+#{wPDF1OLjYM2.wpWPigQKzve}+#{wPDF1OLjYM2.kVfmCFFGGJ4}+#{meegE8oyjXY.MzCuUq4r7RN}+#{meegE8oyjXY.tdigCHbLsX9}+#{meegE8oyjXY.FJY93b05T3d}+#{meegE8oyjXY.Ul3n6Rs3nmN}+#{meegE8oyjXY.wpWPigQKzve}+#{meegE8oyjXY.kVfmCFFGGJ4}+#{cFwJLHE4Dps.MzCuUq4r7RN}+#{cFwJLHE4Dps.tdigCHbLsX9}+#{cFwJLHE4Dps.FJY93b05T3d}+#{cFwJLHE4Dps.Ul3n6Rs3nmN}+#{cFwJLHE4Dps.wpWPigQKzve}+#{cFwJLHE4Dps.kVfmCFFGGJ4}+#{jAcTIg5mOlx.MzCuUq4r7RN}+#{jAcTIg5mOlx.tdigCHbLsX9}+#{jAcTIg5mOlx.FJY93b05T3d}+#{jAcTIg5mOlx.Ul3n6Rs3nmN}+#{jAcTIg5mOlx.wpWPigQKzve}+#{jAcTIg5mOlx.kVfmCFFGGJ4}+#{eBTbIITRm3H.MzCuUq4r7RN}+#{eBTbIITRm3H.tdigCHbLsX9}+#{eBTbIITRm3H.FJY93b05T3d}+#{eBTbIITRm3H.Ul3n6Rs3nmN}+#{eBTbIITRm3H.wpWPigQKzve}+#{eBTbIITRm3H.kVfmCFFGGJ4}+#{tno1y7kW71Z.MzCuUq4r7RN}+#{tno1y7kW71Z.tdigCHbLsX9}+#{tno1y7kW71Z.FJY93b05T3d}+#{tno1y7kW71Z.Ul3n6Rs3nmN}+#{tno1y7kW71Z.wpWPigQKzve}+#{tno1y7kW71Z.kVfmCFFGGJ4}+#{D2FfTq9m77w.MzCuUq4r7RN}+#{D2FfTq9m77w.tdigCHbLsX9}+#{D2FfTq9m77w.FJY93b05T3d}+#{D2FfTq9m77w.Ul3n6Rs3nmN}+#{D2FfTq9m77w.wpWPigQKzve}+#{D2FfTq9m77w.kVfmCFFGGJ4}+#{CADSef49FaO.mJ0bMVCQB3V}+#{CADSef49FaO.y3NHP2dQheZ}+#{CADSef49FaO.aZ6Zgd8lAo4}+#{CADSef49FaO.z6Xu3zA2prE}+#{CADSef49FaO.ICs2Bc5FuOs}+#{CADSef49FaO.w87tdegTUrW}+#{wPDF1OLjYM2.mJ0bMVCQB3V}+#{wPDF1OLjYM2.y3NHP2dQheZ}+#{wPDF1OLjYM2.aZ6Zgd8lAo4}+#{wPDF1OLjYM2.z6Xu3zA2prE}+#{wPDF1OLjYM2.ICs2Bc5FuOs}+#{wPDF1OLjYM2.w87tdegTUrW}+#{meegE8oyjXY.mJ0bMVCQB3V}+#{meegE8oyjXY.y3NHP2dQheZ}+#{meegE8oyjXY.aZ6Zgd8lAo4}+#{meegE8oyjXY.z6Xu3zA2prE}+#{meegE8oyjXY.ICs2Bc5FuOs}+#{meegE8oyjXY.w87tdegTUrW}+#{cFwJLHE4Dps.mJ0bMVCQB3V}+#{cFwJLHE4Dps.y3NHP2dQheZ}+#{cFwJLHE4Dps.aZ6Zgd8lAo4}+#{cFwJLHE4Dps.z6Xu3zA2prE}+#{cFwJLHE4Dps.ICs2Bc5FuOs}+#{cFwJLHE4Dps.w87tdegTUrW}+#{jAcTIg5mOlx.mJ0bMVCQB3V}+#{jAcTIg5mOlx.y3NHP2dQheZ}+#{jAcTIg5mOlx.aZ6Zgd8lAo4}+#{jAcTIg5mOlx.z6Xu3zA2prE}+#{jAcTIg5mOlx.ICs2Bc5FuOs}+#{jAcTIg5mOlx.w87tdegTUrW}+#{eBTbIITRm3H.mJ0bMVCQB3V}+#{eBTbIITRm3H.y3NHP2dQheZ}+#{eBTbIITRm3H.aZ6Zgd8lAo4}+#{eBTbIITRm3H.z6Xu3zA2prE}+#{eBTbIITRm3H.ICs2Bc5FuOs}+#{eBTbIITRm3H.w87tdegTUrW}+#{tno1y7kW71Z.mJ0bMVCQB3V}+#{tno1y7kW71Z.y3NHP2dQheZ}+#{tno1y7kW71Z.aZ6Zgd8lAo4}+#{tno1y7kW71Z.z6Xu3zA2prE}+#{tno1y7kW71Z.ICs2Bc5FuOs}+#{tno1y7kW71Z.w87tdegTUrW}+#{D2FfTq9m77w.mJ0bMVCQB3V}+#{D2FfTq9m77w.y3NHP2dQheZ}+#{D2FfTq9m77w.aZ6Zgd8lAo4}+#{D2FfTq9m77w.z6Xu3zA2prE}+#{D2FfTq9m77w.ICs2Bc5FuOs}+#{D2FfTq9m77w.w87tdegTUrW}+#{Qg9jKQ6EloS.ILzLfZLo3Be}+#{Qg9jKQ6EloS.OoYNR4Ejmjb}+#{Qg9jKQ6EloS.J3xpAHQKDwX}+#{FFcdIMV8Mff.ILzLfZLo3Be}+#{FFcdIMV8Mff.OoYNR4Ejmjb}+#{FFcdIMV8Mff.J3xpAHQKDwX}+#{GNZr8JEDK1o.ILzLfZLo3Be}+#{GNZr8JEDK1o.OoYNR4Ejmjb}+#{GNZr8JEDK1o.J3xpAHQKDwX}+#{ZYUxhci2GJr.ILzLfZLo3Be}+#{ZYUxhci2GJr.OoYNR4Ejmjb}+#{ZYUxhci2GJr.J3xpAHQKDwX}+#{bsqEkvwCRNw.ILzLfZLo3Be}+#{bsqEkvwCRNw.OoYNR4Ejmjb}+#{bsqEkvwCRNw.J3xpAHQKDwX}+#{FBDmI9CFxDy.q03tguiLbIK}+#{FBDmI9CFxDy.yRYVurxUNZ5}+#{FBDmI9CFxDy.k0sHNu2OE02}+#{GpUBgs01fVn.q03tguiLbIK}+#{GpUBgs01fVn.yRYVurxUNZ5}+#{GpUBgs01fVn.k0sHNu2OE02}+#{eVvRPLqvUjE.q03tguiLbIK}+#{eVvRPLqvUjE.yRYVurxUNZ5}+#{eVvRPLqvUjE.k0sHNu2OE02}+#{xviWUjTv0W7.q03tguiLbIK}+#{xviWUjTv0W7.yRYVurxUNZ5}+#{xviWUjTv0W7.k0sHNu2OE02}+#{sJ83z0bd1NH.q03tguiLbIK}+#{sJ83z0bd1NH.yRYVurxUNZ5}+#{sJ83z0bd1NH.k0sHNu2OE02}+#{gHQpD9Sf8mZ.ILzLfZLo3Be}+#{gHQpD9Sf8mZ.OoYNR4Ejmjb}+#{gHQpD9Sf8mZ.J3xpAHQKDwX}+#{cvUyfDuLcQK.ILzLfZLo3Be}+#{cvUyfDuLcQK.OoYNR4Ejmjb}+#{cvUyfDuLcQK.J3xpAHQKDwX}+#{DpHe6KOsGf8.ILzLfZLo3Be}+#{DpHe6KOsGf8.OoYNR4Ejmjb}+#{DpHe6KOsGf8.J3xpAHQKDwX}+#{TLasvK4KJAO.ILzLfZLo3Be}+#{TLasvK4KJAO.OoYNR4Ejmjb}+#{TLasvK4KJAO.J3xpAHQKDwX}+#{FK1cqfAhjf9.ILzLfZLo3Be}+#{FK1cqfAhjf9.OoYNR4Ejmjb}+#{FK1cqfAhjf9.J3xpAHQKDwX}+#{BrJc41TPhGS.t2wqSeyAPXN}+#{BrJc41TPhGS.uOk36sCC8bi}+#{BrJc41TPhGS.A8Zib4l6uax}+#{Zjf7HpytGV2.t2wqSeyAPXN}+#{Zjf7HpytGV2.uOk36sCC8bi}+#{Zjf7HpytGV2.A8Zib4l6uax}+#{rkbfeYWzA63.t2wqSeyAPXN}+#{rkbfeYWzA63.uOk36sCC8bi}+#{rkbfeYWzA63.A8Zib4l6uax}+#{qV5djLlxhk2.t2wqSeyAPXN}+#{qV5djLlxhk2.uOk36sCC8bi}+#{qV5djLlxhk2.A8Zib4l6uax}+#{LItsHtx5A6B.t2wqSeyAPXN}+#{LItsHtx5A6B.uOk36sCC8bi}+#{LItsHtx5A6B.A8Zib4l6uax}+#{BrJc41TPhGS.FvPqemlyU6J}+#{BrJc41TPhGS.jjstlbX1mIr}+#{BrJc41TPhGS.fov6ISHVkK4}+#{Zjf7HpytGV2.FvPqemlyU6J}+#{Zjf7HpytGV2.jjstlbX1mIr}+#{Zjf7HpytGV2.fov6ISHVkK4}+#{rkbfeYWzA63.FvPqemlyU6J}+#{rkbfeYWzA63.jjstlbX1mIr}+#{rkbfeYWzA63.fov6ISHVkK4}+#{qV5djLlxhk2.FvPqemlyU6J}+#{qV5djLlxhk2.jjstlbX1mIr}+#{qV5djLlxhk2.fov6ISHVkK4}+#{LItsHtx5A6B.FvPqemlyU6J}+#{LItsHtx5A6B.jjstlbX1mIr}+#{LItsHtx5A6B.fov6ISHVkK4}+#{dnTyNijcRH1.WqlEb3TMUzI}+#{dnTyNijcRH1.mv76SLHIsF1}+#{dnTyNijcRH1.zVpwLUkKIPo}+#{hpYA6Hhu0GF.WqlEb3TMUzI}+#{hpYA6Hhu0GF.mv76SLHIsF1}+#{hpYA6Hhu0GF.zVpwLUkKIPo}+#{AqoSAqJXzdI.WqlEb3TMUzI}+#{AqoSAqJXzdI.mv76SLHIsF1}+#{AqoSAqJXzdI.zVpwLUkKIPo}+#{g1MxeJzX1c3.WqlEb3TMUzI}+#{g1MxeJzX1c3.mv76SLHIsF1}+#{g1MxeJzX1c3.zVpwLUkKIPo}+#{g3SbUJLyEsK.WqlEb3TMUzI}+#{g3SbUJLyEsK.mv76SLHIsF1}+#{g3SbUJLyEsK.zVpwLUkKIPo}+#{pENhdbNXn7c.hc4OtfQA0Ai}+#{pENhdbNXn7c.TlzCcBwNCIQ}+#{pENhdbNXn7c.iSIhmNWqhYp}+#{pENhdbNXn7c.SjTde0puVwb}+#{pENhdbNXn7c.CcGgm3HOwKz}+#{pENhdbNXn7c.sGWRydPlUsf}+#{pENhdbNXn7c.Ybv1AGCxJfg}+#{TkY79n0ul2T.hc4OtfQA0Ai}+#{TkY79n0ul2T.TlzCcBwNCIQ}+#{TkY79n0ul2T.iSIhmNWqhYp}+#{TkY79n0ul2T.SjTde0puVwb}+#{TkY79n0ul2T.CcGgm3HOwKz}+#{TkY79n0ul2T.sGWRydPlUsf}+#{TkY79n0ul2T.Ybv1AGCxJfg}+#{Glh62nt0Tug.hc4OtfQA0Ai}+#{Glh62nt0Tug.TlzCcBwNCIQ}+#{Glh62nt0Tug.iSIhmNWqhYp}+#{Glh62nt0Tug.SjTde0puVwb}+#{Glh62nt0Tug.CcGgm3HOwKz}+#{Glh62nt0Tug.sGWRydPlUsf}+#{Glh62nt0Tug.Ybv1AGCxJfg}+#{m0kpv0qeB8K.hc4OtfQA0Ai}+#{m0kpv0qeB8K.TlzCcBwNCIQ}+#{m0kpv0qeB8K.iSIhmNWqhYp}+#{m0kpv0qeB8K.SjTde0puVwb}+#{m0kpv0qeB8K.CcGgm3HOwKz}+#{m0kpv0qeB8K.sGWRydPlUsf}+#{m0kpv0qeB8K.Ybv1AGCxJfg}+#{aRKx5RdYE0i.hc4OtfQA0Ai}+#{aRKx5RdYE0i.TlzCcBwNCIQ}+#{aRKx5RdYE0i.iSIhmNWqhYp}+#{aRKx5RdYE0i.SjTde0puVwb}+#{aRKx5RdYE0i.CcGgm3HOwKz}+#{aRKx5RdYE0i.sGWRydPlUsf}+#{aRKx5RdYE0i.Ybv1AGCxJfg}+#{lwojChWstF3.hc4OtfQA0Ai}+#{lwojChWstF3.TlzCcBwNCIQ}+#{lwojChWstF3.iSIhmNWqhYp}+#{lwojChWstF3.SjTde0puVwb}+#{lwojChWstF3.CcGgm3HOwKz}+#{lwojChWstF3.sGWRydPlUsf}+#{lwojChWstF3.Ybv1AGCxJfg}+#{dm1v7qTWQ9A.hc4OtfQA0Ai}+#{dm1v7qTWQ9A.TlzCcBwNCIQ}+#{dm1v7qTWQ9A.iSIhmNWqhYp}+#{dm1v7qTWQ9A.SjTde0puVwb}+#{dm1v7qTWQ9A.CcGgm3HOwKz}+#{dm1v7qTWQ9A.sGWRydPlUsf}+#{dm1v7qTWQ9A.Ybv1AGCxJfg}+#{RW3G8MLQLqE.hc4OtfQA0Ai}+#{RW3G8MLQLqE.TlzCcBwNCIQ}+#{RW3G8MLQLqE.iSIhmNWqhYp}+#{RW3G8MLQLqE.SjTde0puVwb}+#{RW3G8MLQLqE.CcGgm3HOwKz}+#{RW3G8MLQLqE.sGWRydPlUsf}+#{RW3G8MLQLqE.Ybv1AGCxJfg}",
+   "numeratorDescription": "Female enrolment, all levels",
+   "denominator": "1",
+   "denominatorDescription": "one",
+   "annualized": false,
+   "decimals": 0
+  },
+  {
+   "id": "Nc9bgbCb6eO",
+   "name": "ASC-GEN Female learners (%)",
+   "shortName": "Female learners (%) all levels",
+   "code": "ASC_GEN_FEMALE_PCT",
+   "description": "Share of total enrolment (all levels) that is female.",
+   "indicatorType": {
+    "id": "D0J1oRr1ESx"
+   },
+   "numerator": "#{u8MSpa6e4tu.ND6R1ECWKes}+#{u8MSpa6e4tu.ouwhZRJlira}+#{u8MSpa6e4tu.eNoCIgIkRkU}+#{u8MSpa6e4tu.yw9UyOdR2mS}+#{u8MSpa6e4tu.fDHsrZJRNVc}+#{KrjARNwUOFF.ND6R1ECWKes}+#{KrjARNwUOFF.ouwhZRJlira}+#{KrjARNwUOFF.eNoCIgIkRkU}+#{KrjARNwUOFF.yw9UyOdR2mS}+#{KrjARNwUOFF.fDHsrZJRNVc}+#{w34HAnkMJDW.ND6R1ECWKes}+#{w34HAnkMJDW.ouwhZRJlira}+#{w34HAnkMJDW.eNoCIgIkRkU}+#{w34HAnkMJDW.yw9UyOdR2mS}+#{w34HAnkMJDW.fDHsrZJRNVc}+#{PPWh2jFXBWV.ND6R1ECWKes}+#{PPWh2jFXBWV.ouwhZRJlira}+#{PPWh2jFXBWV.eNoCIgIkRkU}+#{PPWh2jFXBWV.yw9UyOdR2mS}+#{PPWh2jFXBWV.fDHsrZJRNVc}+#{hXqrubrJPRr.ND6R1ECWKes}+#{hXqrubrJPRr.ouwhZRJlira}+#{hXqrubrJPRr.eNoCIgIkRkU}+#{hXqrubrJPRr.yw9UyOdR2mS}+#{hXqrubrJPRr.fDHsrZJRNVc}+#{u8MSpa6e4tu.GwvoYZx4IjG}+#{u8MSpa6e4tu.DxPA1wlJuQc}+#{u8MSpa6e4tu.uzx0YvwDHdV}+#{u8MSpa6e4tu.RC2IhV7hbBo}+#{u8MSpa6e4tu.MYu4MgzJFDz}+#{KrjARNwUOFF.GwvoYZx4IjG}+#{KrjARNwUOFF.DxPA1wlJuQc}+#{KrjARNwUOFF.uzx0YvwDHdV}+#{KrjARNwUOFF.RC2IhV7hbBo}+#{KrjARNwUOFF.MYu4MgzJFDz}+#{w34HAnkMJDW.GwvoYZx4IjG}+#{w34HAnkMJDW.DxPA1wlJuQc}+#{w34HAnkMJDW.uzx0YvwDHdV}+#{w34HAnkMJDW.RC2IhV7hbBo}+#{w34HAnkMJDW.MYu4MgzJFDz}+#{PPWh2jFXBWV.GwvoYZx4IjG}+#{PPWh2jFXBWV.DxPA1wlJuQc}+#{PPWh2jFXBWV.uzx0YvwDHdV}+#{PPWh2jFXBWV.RC2IhV7hbBo}+#{PPWh2jFXBWV.MYu4MgzJFDz}+#{hXqrubrJPRr.GwvoYZx4IjG}+#{hXqrubrJPRr.DxPA1wlJuQc}+#{hXqrubrJPRr.uzx0YvwDHdV}+#{hXqrubrJPRr.RC2IhV7hbBo}+#{hXqrubrJPRr.MYu4MgzJFDz}+#{CADSef49FaO.MzCuUq4r7RN}+#{CADSef49FaO.tdigCHbLsX9}+#{CADSef49FaO.FJY93b05T3d}+#{CADSef49FaO.Ul3n6Rs3nmN}+#{CADSef49FaO.wpWPigQKzve}+#{CADSef49FaO.kVfmCFFGGJ4}+#{wPDF1OLjYM2.MzCuUq4r7RN}+#{wPDF1OLjYM2.tdigCHbLsX9}+#{wPDF1OLjYM2.FJY93b05T3d}+#{wPDF1OLjYM2.Ul3n6Rs3nmN}+#{wPDF1OLjYM2.wpWPigQKzve}+#{wPDF1OLjYM2.kVfmCFFGGJ4}+#{meegE8oyjXY.MzCuUq4r7RN}+#{meegE8oyjXY.tdigCHbLsX9}+#{meegE8oyjXY.FJY93b05T3d}+#{meegE8oyjXY.Ul3n6Rs3nmN}+#{meegE8oyjXY.wpWPigQKzve}+#{meegE8oyjXY.kVfmCFFGGJ4}+#{cFwJLHE4Dps.MzCuUq4r7RN}+#{cFwJLHE4Dps.tdigCHbLsX9}+#{cFwJLHE4Dps.FJY93b05T3d}+#{cFwJLHE4Dps.Ul3n6Rs3nmN}+#{cFwJLHE4Dps.wpWPigQKzve}+#{cFwJLHE4Dps.kVfmCFFGGJ4}+#{jAcTIg5mOlx.MzCuUq4r7RN}+#{jAcTIg5mOlx.tdigCHbLsX9}+#{jAcTIg5mOlx.FJY93b05T3d}+#{jAcTIg5mOlx.Ul3n6Rs3nmN}+#{jAcTIg5mOlx.wpWPigQKzve}+#{jAcTIg5mOlx.kVfmCFFGGJ4}+#{eBTbIITRm3H.MzCuUq4r7RN}+#{eBTbIITRm3H.tdigCHbLsX9}+#{eBTbIITRm3H.FJY93b05T3d}+#{eBTbIITRm3H.Ul3n6Rs3nmN}+#{eBTbIITRm3H.wpWPigQKzve}+#{eBTbIITRm3H.kVfmCFFGGJ4}+#{tno1y7kW71Z.MzCuUq4r7RN}+#{tno1y7kW71Z.tdigCHbLsX9}+#{tno1y7kW71Z.FJY93b05T3d}+#{tno1y7kW71Z.Ul3n6Rs3nmN}+#{tno1y7kW71Z.wpWPigQKzve}+#{tno1y7kW71Z.kVfmCFFGGJ4}+#{D2FfTq9m77w.MzCuUq4r7RN}+#{D2FfTq9m77w.tdigCHbLsX9}+#{D2FfTq9m77w.FJY93b05T3d}+#{D2FfTq9m77w.Ul3n6Rs3nmN}+#{D2FfTq9m77w.wpWPigQKzve}+#{D2FfTq9m77w.kVfmCFFGGJ4}+#{CADSef49FaO.mJ0bMVCQB3V}+#{CADSef49FaO.y3NHP2dQheZ}+#{CADSef49FaO.aZ6Zgd8lAo4}+#{CADSef49FaO.z6Xu3zA2prE}+#{CADSef49FaO.ICs2Bc5FuOs}+#{CADSef49FaO.w87tdegTUrW}+#{wPDF1OLjYM2.mJ0bMVCQB3V}+#{wPDF1OLjYM2.y3NHP2dQheZ}+#{wPDF1OLjYM2.aZ6Zgd8lAo4}+#{wPDF1OLjYM2.z6Xu3zA2prE}+#{wPDF1OLjYM2.ICs2Bc5FuOs}+#{wPDF1OLjYM2.w87tdegTUrW}+#{meegE8oyjXY.mJ0bMVCQB3V}+#{meegE8oyjXY.y3NHP2dQheZ}+#{meegE8oyjXY.aZ6Zgd8lAo4}+#{meegE8oyjXY.z6Xu3zA2prE}+#{meegE8oyjXY.ICs2Bc5FuOs}+#{meegE8oyjXY.w87tdegTUrW}+#{cFwJLHE4Dps.mJ0bMVCQB3V}+#{cFwJLHE4Dps.y3NHP2dQheZ}+#{cFwJLHE4Dps.aZ6Zgd8lAo4}+#{cFwJLHE4Dps.z6Xu3zA2prE}+#{cFwJLHE4Dps.ICs2Bc5FuOs}+#{cFwJLHE4Dps.w87tdegTUrW}+#{jAcTIg5mOlx.mJ0bMVCQB3V}+#{jAcTIg5mOlx.y3NHP2dQheZ}+#{jAcTIg5mOlx.aZ6Zgd8lAo4}+#{jAcTIg5mOlx.z6Xu3zA2prE}+#{jAcTIg5mOlx.ICs2Bc5FuOs}+#{jAcTIg5mOlx.w87tdegTUrW}+#{eBTbIITRm3H.mJ0bMVCQB3V}+#{eBTbIITRm3H.y3NHP2dQheZ}+#{eBTbIITRm3H.aZ6Zgd8lAo4}+#{eBTbIITRm3H.z6Xu3zA2prE}+#{eBTbIITRm3H.ICs2Bc5FuOs}+#{eBTbIITRm3H.w87tdegTUrW}+#{tno1y7kW71Z.mJ0bMVCQB3V}+#{tno1y7kW71Z.y3NHP2dQheZ}+#{tno1y7kW71Z.aZ6Zgd8lAo4}+#{tno1y7kW71Z.z6Xu3zA2prE}+#{tno1y7kW71Z.ICs2Bc5FuOs}+#{tno1y7kW71Z.w87tdegTUrW}+#{D2FfTq9m77w.mJ0bMVCQB3V}+#{D2FfTq9m77w.y3NHP2dQheZ}+#{D2FfTq9m77w.aZ6Zgd8lAo4}+#{D2FfTq9m77w.z6Xu3zA2prE}+#{D2FfTq9m77w.ICs2Bc5FuOs}+#{D2FfTq9m77w.w87tdegTUrW}+#{Qg9jKQ6EloS.ILzLfZLo3Be}+#{Qg9jKQ6EloS.OoYNR4Ejmjb}+#{Qg9jKQ6EloS.J3xpAHQKDwX}+#{FFcdIMV8Mff.ILzLfZLo3Be}+#{FFcdIMV8Mff.OoYNR4Ejmjb}+#{FFcdIMV8Mff.J3xpAHQKDwX}+#{GNZr8JEDK1o.ILzLfZLo3Be}+#{GNZr8JEDK1o.OoYNR4Ejmjb}+#{GNZr8JEDK1o.J3xpAHQKDwX}+#{ZYUxhci2GJr.ILzLfZLo3Be}+#{ZYUxhci2GJr.OoYNR4Ejmjb}+#{ZYUxhci2GJr.J3xpAHQKDwX}+#{bsqEkvwCRNw.ILzLfZLo3Be}+#{bsqEkvwCRNw.OoYNR4Ejmjb}+#{bsqEkvwCRNw.J3xpAHQKDwX}+#{FBDmI9CFxDy.q03tguiLbIK}+#{FBDmI9CFxDy.yRYVurxUNZ5}+#{FBDmI9CFxDy.k0sHNu2OE02}+#{GpUBgs01fVn.q03tguiLbIK}+#{GpUBgs01fVn.yRYVurxUNZ5}+#{GpUBgs01fVn.k0sHNu2OE02}+#{eVvRPLqvUjE.q03tguiLbIK}+#{eVvRPLqvUjE.yRYVurxUNZ5}+#{eVvRPLqvUjE.k0sHNu2OE02}+#{xviWUjTv0W7.q03tguiLbIK}+#{xviWUjTv0W7.yRYVurxUNZ5}+#{xviWUjTv0W7.k0sHNu2OE02}+#{sJ83z0bd1NH.q03tguiLbIK}+#{sJ83z0bd1NH.yRYVurxUNZ5}+#{sJ83z0bd1NH.k0sHNu2OE02}+#{gHQpD9Sf8mZ.ILzLfZLo3Be}+#{gHQpD9Sf8mZ.OoYNR4Ejmjb}+#{gHQpD9Sf8mZ.J3xpAHQKDwX}+#{cvUyfDuLcQK.ILzLfZLo3Be}+#{cvUyfDuLcQK.OoYNR4Ejmjb}+#{cvUyfDuLcQK.J3xpAHQKDwX}+#{DpHe6KOsGf8.ILzLfZLo3Be}+#{DpHe6KOsGf8.OoYNR4Ejmjb}+#{DpHe6KOsGf8.J3xpAHQKDwX}+#{TLasvK4KJAO.ILzLfZLo3Be}+#{TLasvK4KJAO.OoYNR4Ejmjb}+#{TLasvK4KJAO.J3xpAHQKDwX}+#{FK1cqfAhjf9.ILzLfZLo3Be}+#{FK1cqfAhjf9.OoYNR4Ejmjb}+#{FK1cqfAhjf9.J3xpAHQKDwX}+#{BrJc41TPhGS.t2wqSeyAPXN}+#{BrJc41TPhGS.uOk36sCC8bi}+#{BrJc41TPhGS.A8Zib4l6uax}+#{Zjf7HpytGV2.t2wqSeyAPXN}+#{Zjf7HpytGV2.uOk36sCC8bi}+#{Zjf7HpytGV2.A8Zib4l6uax}+#{rkbfeYWzA63.t2wqSeyAPXN}+#{rkbfeYWzA63.uOk36sCC8bi}+#{rkbfeYWzA63.A8Zib4l6uax}+#{qV5djLlxhk2.t2wqSeyAPXN}+#{qV5djLlxhk2.uOk36sCC8bi}+#{qV5djLlxhk2.A8Zib4l6uax}+#{LItsHtx5A6B.t2wqSeyAPXN}+#{LItsHtx5A6B.uOk36sCC8bi}+#{LItsHtx5A6B.A8Zib4l6uax}+#{BrJc41TPhGS.FvPqemlyU6J}+#{BrJc41TPhGS.jjstlbX1mIr}+#{BrJc41TPhGS.fov6ISHVkK4}+#{Zjf7HpytGV2.FvPqemlyU6J}+#{Zjf7HpytGV2.jjstlbX1mIr}+#{Zjf7HpytGV2.fov6ISHVkK4}+#{rkbfeYWzA63.FvPqemlyU6J}+#{rkbfeYWzA63.jjstlbX1mIr}+#{rkbfeYWzA63.fov6ISHVkK4}+#{qV5djLlxhk2.FvPqemlyU6J}+#{qV5djLlxhk2.jjstlbX1mIr}+#{qV5djLlxhk2.fov6ISHVkK4}+#{LItsHtx5A6B.FvPqemlyU6J}+#{LItsHtx5A6B.jjstlbX1mIr}+#{LItsHtx5A6B.fov6ISHVkK4}+#{dnTyNijcRH1.WqlEb3TMUzI}+#{dnTyNijcRH1.mv76SLHIsF1}+#{dnTyNijcRH1.zVpwLUkKIPo}+#{hpYA6Hhu0GF.WqlEb3TMUzI}+#{hpYA6Hhu0GF.mv76SLHIsF1}+#{hpYA6Hhu0GF.zVpwLUkKIPo}+#{AqoSAqJXzdI.WqlEb3TMUzI}+#{AqoSAqJXzdI.mv76SLHIsF1}+#{AqoSAqJXzdI.zVpwLUkKIPo}+#{g1MxeJzX1c3.WqlEb3TMUzI}+#{g1MxeJzX1c3.mv76SLHIsF1}+#{g1MxeJzX1c3.zVpwLUkKIPo}+#{g3SbUJLyEsK.WqlEb3TMUzI}+#{g3SbUJLyEsK.mv76SLHIsF1}+#{g3SbUJLyEsK.zVpwLUkKIPo}+#{pENhdbNXn7c.hc4OtfQA0Ai}+#{pENhdbNXn7c.TlzCcBwNCIQ}+#{pENhdbNXn7c.iSIhmNWqhYp}+#{pENhdbNXn7c.SjTde0puVwb}+#{pENhdbNXn7c.CcGgm3HOwKz}+#{pENhdbNXn7c.sGWRydPlUsf}+#{pENhdbNXn7c.Ybv1AGCxJfg}+#{TkY79n0ul2T.hc4OtfQA0Ai}+#{TkY79n0ul2T.TlzCcBwNCIQ}+#{TkY79n0ul2T.iSIhmNWqhYp}+#{TkY79n0ul2T.SjTde0puVwb}+#{TkY79n0ul2T.CcGgm3HOwKz}+#{TkY79n0ul2T.sGWRydPlUsf}+#{TkY79n0ul2T.Ybv1AGCxJfg}+#{Glh62nt0Tug.hc4OtfQA0Ai}+#{Glh62nt0Tug.TlzCcBwNCIQ}+#{Glh62nt0Tug.iSIhmNWqhYp}+#{Glh62nt0Tug.SjTde0puVwb}+#{Glh62nt0Tug.CcGgm3HOwKz}+#{Glh62nt0Tug.sGWRydPlUsf}+#{Glh62nt0Tug.Ybv1AGCxJfg}+#{m0kpv0qeB8K.hc4OtfQA0Ai}+#{m0kpv0qeB8K.TlzCcBwNCIQ}+#{m0kpv0qeB8K.iSIhmNWqhYp}+#{m0kpv0qeB8K.SjTde0puVwb}+#{m0kpv0qeB8K.CcGgm3HOwKz}+#{m0kpv0qeB8K.sGWRydPlUsf}+#{m0kpv0qeB8K.Ybv1AGCxJfg}+#{aRKx5RdYE0i.hc4OtfQA0Ai}+#{aRKx5RdYE0i.TlzCcBwNCIQ}+#{aRKx5RdYE0i.iSIhmNWqhYp}+#{aRKx5RdYE0i.SjTde0puVwb}+#{aRKx5RdYE0i.CcGgm3HOwKz}+#{aRKx5RdYE0i.sGWRydPlUsf}+#{aRKx5RdYE0i.Ybv1AGCxJfg}+#{lwojChWstF3.hc4OtfQA0Ai}+#{lwojChWstF3.TlzCcBwNCIQ}+#{lwojChWstF3.iSIhmNWqhYp}+#{lwojChWstF3.SjTde0puVwb}+#{lwojChWstF3.CcGgm3HOwKz}+#{lwojChWstF3.sGWRydPlUsf}+#{lwojChWstF3.Ybv1AGCxJfg}+#{dm1v7qTWQ9A.hc4OtfQA0Ai}+#{dm1v7qTWQ9A.TlzCcBwNCIQ}+#{dm1v7qTWQ9A.iSIhmNWqhYp}+#{dm1v7qTWQ9A.SjTde0puVwb}+#{dm1v7qTWQ9A.CcGgm3HOwKz}+#{dm1v7qTWQ9A.sGWRydPlUsf}+#{dm1v7qTWQ9A.Ybv1AGCxJfg}+#{RW3G8MLQLqE.hc4OtfQA0Ai}+#{RW3G8MLQLqE.TlzCcBwNCIQ}+#{RW3G8MLQLqE.iSIhmNWqhYp}+#{RW3G8MLQLqE.SjTde0puVwb}+#{RW3G8MLQLqE.CcGgm3HOwKz}+#{RW3G8MLQLqE.sGWRydPlUsf}+#{RW3G8MLQLqE.Ybv1AGCxJfg}",
+   "numeratorDescription": "Female enrolment, all levels",
+   "denominator": "#{u8MSpa6e4tu}+#{KrjARNwUOFF}+#{w34HAnkMJDW}+#{PPWh2jFXBWV}+#{hXqrubrJPRr}+#{CADSef49FaO}+#{wPDF1OLjYM2}+#{meegE8oyjXY}+#{cFwJLHE4Dps}+#{jAcTIg5mOlx}+#{eBTbIITRm3H}+#{tno1y7kW71Z}+#{D2FfTq9m77w}+#{Qg9jKQ6EloS}+#{FFcdIMV8Mff}+#{GNZr8JEDK1o}+#{ZYUxhci2GJr}+#{bsqEkvwCRNw}+#{FBDmI9CFxDy}+#{GpUBgs01fVn}+#{eVvRPLqvUjE}+#{xviWUjTv0W7}+#{sJ83z0bd1NH}+#{gHQpD9Sf8mZ}+#{cvUyfDuLcQK}+#{DpHe6KOsGf8}+#{TLasvK4KJAO}+#{FK1cqfAhjf9}+#{BrJc41TPhGS}+#{Zjf7HpytGV2}+#{rkbfeYWzA63}+#{qV5djLlxhk2}+#{LItsHtx5A6B}+#{dnTyNijcRH1}+#{hpYA6Hhu0GF}+#{AqoSAqJXzdI}+#{g1MxeJzX1c3}+#{g3SbUJLyEsK}+#{pENhdbNXn7c}+#{TkY79n0ul2T}+#{Glh62nt0Tug}+#{m0kpv0qeB8K}+#{aRKx5RdYE0i}+#{lwojChWstF3}+#{dm1v7qTWQ9A}+#{RW3G8MLQLqE}",
+   "denominatorDescription": "Total enrolment, all levels",
+   "annualized": false,
+   "decimals": 1
+  },
+  {
+   "id": "Dw7f4gs9RcS",
+   "name": "ASC-GEN Teachers",
+   "shortName": "Teachers",
+   "code": "ASC_GEN_TEACHERS",
+   "description": "Teachers across all forms: the D.2 staff count (Pre-primary/Primary, JSS, SSS, Technical) plus the Private form's per-qualification teacher counts. One whole-school total.",
+   "indicatorType": {
+    "id": "jEvXVGHRCsj"
+   },
+   "numerator": "#{ERcw4yZuSSd}+#{ggYDJ86z4Bs.DYKSUuRKp4V}+#{ggYDJ86z4Bs.Cj0eoUQbLfm}+#{ggYDJ86z4Bs.q4JPJQm76jQ}+#{ggYDJ86z4Bs.Z4DNeSohplg}+#{ggYDJ86z4Bs.HHHAwIEb9Ft}+#{ggYDJ86z4Bs.m3LOv1HNDLH}+#{ggYDJ86z4Bs.HN1tDQNkNoF}+#{ggYDJ86z4Bs.nk03IW4jLNX}+#{iszrhzuTq2q.DYKSUuRKp4V}+#{iszrhzuTq2q.Cj0eoUQbLfm}+#{iszrhzuTq2q.q4JPJQm76jQ}+#{iszrhzuTq2q.Z4DNeSohplg}+#{iszrhzuTq2q.HHHAwIEb9Ft}+#{iszrhzuTq2q.m3LOv1HNDLH}+#{iszrhzuTq2q.HN1tDQNkNoF}+#{iszrhzuTq2q.nk03IW4jLNX}+#{Fl6dMGSdjzT.DYKSUuRKp4V}+#{Fl6dMGSdjzT.Cj0eoUQbLfm}+#{Fl6dMGSdjzT.q4JPJQm76jQ}+#{Fl6dMGSdjzT.Z4DNeSohplg}+#{Fl6dMGSdjzT.HHHAwIEb9Ft}+#{Fl6dMGSdjzT.m3LOv1HNDLH}+#{Fl6dMGSdjzT.HN1tDQNkNoF}+#{Fl6dMGSdjzT.nk03IW4jLNX}+#{seReeULW7O6.DYKSUuRKp4V}+#{seReeULW7O6.Cj0eoUQbLfm}+#{seReeULW7O6.q4JPJQm76jQ}+#{seReeULW7O6.Z4DNeSohplg}+#{seReeULW7O6.HHHAwIEb9Ft}+#{seReeULW7O6.m3LOv1HNDLH}+#{seReeULW7O6.HN1tDQNkNoF}+#{seReeULW7O6.nk03IW4jLNX}+#{wrCfnWCT3bI.DYKSUuRKp4V}+#{wrCfnWCT3bI.Cj0eoUQbLfm}+#{wrCfnWCT3bI.q4JPJQm76jQ}+#{wrCfnWCT3bI.Z4DNeSohplg}+#{wrCfnWCT3bI.HHHAwIEb9Ft}+#{wrCfnWCT3bI.m3LOv1HNDLH}+#{wrCfnWCT3bI.HN1tDQNkNoF}+#{wrCfnWCT3bI.nk03IW4jLNX}+#{abTiCagoeSi.DYKSUuRKp4V}+#{abTiCagoeSi.Cj0eoUQbLfm}+#{abTiCagoeSi.q4JPJQm76jQ}+#{abTiCagoeSi.Z4DNeSohplg}+#{abTiCagoeSi.HHHAwIEb9Ft}+#{abTiCagoeSi.m3LOv1HNDLH}+#{abTiCagoeSi.HN1tDQNkNoF}+#{abTiCagoeSi.nk03IW4jLNX}+#{qLmipPQWgit.DYKSUuRKp4V}+#{qLmipPQWgit.Cj0eoUQbLfm}+#{qLmipPQWgit.q4JPJQm76jQ}+#{qLmipPQWgit.Z4DNeSohplg}+#{qLmipPQWgit.HHHAwIEb9Ft}+#{qLmipPQWgit.m3LOv1HNDLH}+#{qLmipPQWgit.HN1tDQNkNoF}+#{qLmipPQWgit.nk03IW4jLNX}+#{YUZI1lCI7U6.DYKSUuRKp4V}+#{YUZI1lCI7U6.Cj0eoUQbLfm}+#{YUZI1lCI7U6.q4JPJQm76jQ}+#{YUZI1lCI7U6.Z4DNeSohplg}+#{YUZI1lCI7U6.HHHAwIEb9Ft}+#{YUZI1lCI7U6.m3LOv1HNDLH}+#{YUZI1lCI7U6.HN1tDQNkNoF}+#{YUZI1lCI7U6.nk03IW4jLNX}+#{aBcDq4RBe70.DYKSUuRKp4V}+#{aBcDq4RBe70.Cj0eoUQbLfm}+#{aBcDq4RBe70.q4JPJQm76jQ}+#{aBcDq4RBe70.Z4DNeSohplg}+#{aBcDq4RBe70.HHHAwIEb9Ft}+#{aBcDq4RBe70.m3LOv1HNDLH}+#{aBcDq4RBe70.HN1tDQNkNoF}+#{aBcDq4RBe70.nk03IW4jLNX}+#{q30dio9AK68.DYKSUuRKp4V}+#{q30dio9AK68.Cj0eoUQbLfm}+#{q30dio9AK68.q4JPJQm76jQ}+#{q30dio9AK68.Z4DNeSohplg}+#{q30dio9AK68.HHHAwIEb9Ft}+#{q30dio9AK68.m3LOv1HNDLH}+#{q30dio9AK68.HN1tDQNkNoF}+#{q30dio9AK68.nk03IW4jLNX}+#{mLd3iwpQ4Cr.DYKSUuRKp4V}+#{mLd3iwpQ4Cr.Cj0eoUQbLfm}+#{mLd3iwpQ4Cr.q4JPJQm76jQ}+#{mLd3iwpQ4Cr.Z4DNeSohplg}+#{mLd3iwpQ4Cr.HHHAwIEb9Ft}+#{mLd3iwpQ4Cr.m3LOv1HNDLH}+#{mLd3iwpQ4Cr.HN1tDQNkNoF}+#{mLd3iwpQ4Cr.nk03IW4jLNX}+#{fKfVrCjuaMN.DYKSUuRKp4V}+#{fKfVrCjuaMN.Cj0eoUQbLfm}+#{fKfVrCjuaMN.q4JPJQm76jQ}+#{fKfVrCjuaMN.Z4DNeSohplg}+#{fKfVrCjuaMN.HHHAwIEb9Ft}+#{fKfVrCjuaMN.m3LOv1HNDLH}+#{fKfVrCjuaMN.HN1tDQNkNoF}+#{fKfVrCjuaMN.nk03IW4jLNX}+#{vGQHYn9OSkw.DYKSUuRKp4V}+#{vGQHYn9OSkw.Cj0eoUQbLfm}+#{vGQHYn9OSkw.q4JPJQm76jQ}+#{vGQHYn9OSkw.Z4DNeSohplg}+#{vGQHYn9OSkw.HHHAwIEb9Ft}+#{vGQHYn9OSkw.m3LOv1HNDLH}+#{vGQHYn9OSkw.HN1tDQNkNoF}+#{vGQHYn9OSkw.nk03IW4jLNX}",
+   "numeratorDescription": "Teachers (D.2 count + Private qualification counts)",
+   "denominator": "1",
+   "denominatorDescription": "one",
+   "annualized": false,
+   "decimals": 0
+  },
+  {
+   "id": "XZEG3yT7WmJ",
+   "name": "ASC-GEN Teachers, male",
+   "shortName": "Teachers male",
+   "code": "ASC_GEN_TEACHERS_M",
+   "description": "Male teachers, all forms.",
+   "indicatorType": {
+    "id": "jEvXVGHRCsj"
+   },
+   "numerator": "#{ERcw4yZuSSd.GF8jMjRjocB}+#{ERcw4yZuSSd.J4rmGvAZO06}+#{ggYDJ86z4Bs.Cj0eoUQbLfm}+#{ggYDJ86z4Bs.Z4DNeSohplg}+#{ggYDJ86z4Bs.m3LOv1HNDLH}+#{ggYDJ86z4Bs.nk03IW4jLNX}+#{iszrhzuTq2q.Cj0eoUQbLfm}+#{iszrhzuTq2q.Z4DNeSohplg}+#{iszrhzuTq2q.m3LOv1HNDLH}+#{iszrhzuTq2q.nk03IW4jLNX}+#{Fl6dMGSdjzT.Cj0eoUQbLfm}+#{Fl6dMGSdjzT.Z4DNeSohplg}+#{Fl6dMGSdjzT.m3LOv1HNDLH}+#{Fl6dMGSdjzT.nk03IW4jLNX}+#{seReeULW7O6.Cj0eoUQbLfm}+#{seReeULW7O6.Z4DNeSohplg}+#{seReeULW7O6.m3LOv1HNDLH}+#{seReeULW7O6.nk03IW4jLNX}+#{wrCfnWCT3bI.Cj0eoUQbLfm}+#{wrCfnWCT3bI.Z4DNeSohplg}+#{wrCfnWCT3bI.m3LOv1HNDLH}+#{wrCfnWCT3bI.nk03IW4jLNX}+#{abTiCagoeSi.Cj0eoUQbLfm}+#{abTiCagoeSi.Z4DNeSohplg}+#{abTiCagoeSi.m3LOv1HNDLH}+#{abTiCagoeSi.nk03IW4jLNX}+#{qLmipPQWgit.Cj0eoUQbLfm}+#{qLmipPQWgit.Z4DNeSohplg}+#{qLmipPQWgit.m3LOv1HNDLH}+#{qLmipPQWgit.nk03IW4jLNX}+#{YUZI1lCI7U6.Cj0eoUQbLfm}+#{YUZI1lCI7U6.Z4DNeSohplg}+#{YUZI1lCI7U6.m3LOv1HNDLH}+#{YUZI1lCI7U6.nk03IW4jLNX}+#{aBcDq4RBe70.Cj0eoUQbLfm}+#{aBcDq4RBe70.Z4DNeSohplg}+#{aBcDq4RBe70.m3LOv1HNDLH}+#{aBcDq4RBe70.nk03IW4jLNX}+#{q30dio9AK68.Cj0eoUQbLfm}+#{q30dio9AK68.Z4DNeSohplg}+#{q30dio9AK68.m3LOv1HNDLH}+#{q30dio9AK68.nk03IW4jLNX}+#{mLd3iwpQ4Cr.Cj0eoUQbLfm}+#{mLd3iwpQ4Cr.Z4DNeSohplg}+#{mLd3iwpQ4Cr.m3LOv1HNDLH}+#{mLd3iwpQ4Cr.nk03IW4jLNX}+#{fKfVrCjuaMN.Cj0eoUQbLfm}+#{fKfVrCjuaMN.Z4DNeSohplg}+#{fKfVrCjuaMN.m3LOv1HNDLH}+#{fKfVrCjuaMN.nk03IW4jLNX}+#{vGQHYn9OSkw.Cj0eoUQbLfm}+#{vGQHYn9OSkw.Z4DNeSohplg}+#{vGQHYn9OSkw.m3LOv1HNDLH}+#{vGQHYn9OSkw.nk03IW4jLNX}",
+   "numeratorDescription": "Male teachers",
+   "denominator": "1",
+   "denominatorDescription": "one",
+   "annualized": false,
+   "decimals": 0
+  },
+  {
+   "id": "Exv6Kz1TXmJ",
+   "name": "ASC-GEN Teachers, female",
+   "shortName": "Teachers female",
+   "code": "ASC_GEN_TEACHERS_F",
+   "description": "Female teachers, all forms.",
+   "indicatorType": {
+    "id": "jEvXVGHRCsj"
+   },
+   "numerator": "#{ERcw4yZuSSd.uk8iRRfqijQ}+#{ERcw4yZuSSd.PYvBlCs4DQ8}+#{ggYDJ86z4Bs.DYKSUuRKp4V}+#{ggYDJ86z4Bs.q4JPJQm76jQ}+#{ggYDJ86z4Bs.HHHAwIEb9Ft}+#{ggYDJ86z4Bs.HN1tDQNkNoF}+#{iszrhzuTq2q.DYKSUuRKp4V}+#{iszrhzuTq2q.q4JPJQm76jQ}+#{iszrhzuTq2q.HHHAwIEb9Ft}+#{iszrhzuTq2q.HN1tDQNkNoF}+#{Fl6dMGSdjzT.DYKSUuRKp4V}+#{Fl6dMGSdjzT.q4JPJQm76jQ}+#{Fl6dMGSdjzT.HHHAwIEb9Ft}+#{Fl6dMGSdjzT.HN1tDQNkNoF}+#{seReeULW7O6.DYKSUuRKp4V}+#{seReeULW7O6.q4JPJQm76jQ}+#{seReeULW7O6.HHHAwIEb9Ft}+#{seReeULW7O6.HN1tDQNkNoF}+#{wrCfnWCT3bI.DYKSUuRKp4V}+#{wrCfnWCT3bI.q4JPJQm76jQ}+#{wrCfnWCT3bI.HHHAwIEb9Ft}+#{wrCfnWCT3bI.HN1tDQNkNoF}+#{abTiCagoeSi.DYKSUuRKp4V}+#{abTiCagoeSi.q4JPJQm76jQ}+#{abTiCagoeSi.HHHAwIEb9Ft}+#{abTiCagoeSi.HN1tDQNkNoF}+#{qLmipPQWgit.DYKSUuRKp4V}+#{qLmipPQWgit.q4JPJQm76jQ}+#{qLmipPQWgit.HHHAwIEb9Ft}+#{qLmipPQWgit.HN1tDQNkNoF}+#{YUZI1lCI7U6.DYKSUuRKp4V}+#{YUZI1lCI7U6.q4JPJQm76jQ}+#{YUZI1lCI7U6.HHHAwIEb9Ft}+#{YUZI1lCI7U6.HN1tDQNkNoF}+#{aBcDq4RBe70.DYKSUuRKp4V}+#{aBcDq4RBe70.q4JPJQm76jQ}+#{aBcDq4RBe70.HHHAwIEb9Ft}+#{aBcDq4RBe70.HN1tDQNkNoF}+#{q30dio9AK68.DYKSUuRKp4V}+#{q30dio9AK68.q4JPJQm76jQ}+#{q30dio9AK68.HHHAwIEb9Ft}+#{q30dio9AK68.HN1tDQNkNoF}+#{mLd3iwpQ4Cr.DYKSUuRKp4V}+#{mLd3iwpQ4Cr.q4JPJQm76jQ}+#{mLd3iwpQ4Cr.HHHAwIEb9Ft}+#{mLd3iwpQ4Cr.HN1tDQNkNoF}+#{fKfVrCjuaMN.DYKSUuRKp4V}+#{fKfVrCjuaMN.q4JPJQm76jQ}+#{fKfVrCjuaMN.HHHAwIEb9Ft}+#{fKfVrCjuaMN.HN1tDQNkNoF}+#{vGQHYn9OSkw.DYKSUuRKp4V}+#{vGQHYn9OSkw.q4JPJQm76jQ}+#{vGQHYn9OSkw.HHHAwIEb9Ft}+#{vGQHYn9OSkw.HN1tDQNkNoF}",
+   "numeratorDescription": "Female teachers",
+   "denominator": "1",
+   "denominatorDescription": "one",
+   "annualized": false,
+   "decimals": 0
+  },
+  {
+   "id": "eie1tIO5HtX",
+   "name": "ASC-GEN Pupil-teacher ratio (ratio)",
+   "shortName": "Pupil-teacher ratio",
+   "code": "ASC_GEN_PTR",
+   "description": "Pupils per teacher (whole school): total enrolment all levels / teachers.",
+   "indicatorType": {
+    "id": "jEvXVGHRCsj"
+   },
+   "numerator": "#{u8MSpa6e4tu}+#{KrjARNwUOFF}+#{w34HAnkMJDW}+#{PPWh2jFXBWV}+#{hXqrubrJPRr}+#{CADSef49FaO}+#{wPDF1OLjYM2}+#{meegE8oyjXY}+#{cFwJLHE4Dps}+#{jAcTIg5mOlx}+#{eBTbIITRm3H}+#{tno1y7kW71Z}+#{D2FfTq9m77w}+#{Qg9jKQ6EloS}+#{FFcdIMV8Mff}+#{GNZr8JEDK1o}+#{ZYUxhci2GJr}+#{bsqEkvwCRNw}+#{FBDmI9CFxDy}+#{GpUBgs01fVn}+#{eVvRPLqvUjE}+#{xviWUjTv0W7}+#{sJ83z0bd1NH}+#{gHQpD9Sf8mZ}+#{cvUyfDuLcQK}+#{DpHe6KOsGf8}+#{TLasvK4KJAO}+#{FK1cqfAhjf9}+#{BrJc41TPhGS}+#{Zjf7HpytGV2}+#{rkbfeYWzA63}+#{qV5djLlxhk2}+#{LItsHtx5A6B}+#{dnTyNijcRH1}+#{hpYA6Hhu0GF}+#{AqoSAqJXzdI}+#{g1MxeJzX1c3}+#{g3SbUJLyEsK}+#{pENhdbNXn7c}+#{TkY79n0ul2T}+#{Glh62nt0Tug}+#{m0kpv0qeB8K}+#{aRKx5RdYE0i}+#{lwojChWstF3}+#{dm1v7qTWQ9A}+#{RW3G8MLQLqE}",
+   "numeratorDescription": "Total enrolment, all levels",
+   "denominator": "#{ERcw4yZuSSd}+#{ggYDJ86z4Bs.DYKSUuRKp4V}+#{ggYDJ86z4Bs.Cj0eoUQbLfm}+#{ggYDJ86z4Bs.q4JPJQm76jQ}+#{ggYDJ86z4Bs.Z4DNeSohplg}+#{ggYDJ86z4Bs.HHHAwIEb9Ft}+#{ggYDJ86z4Bs.m3LOv1HNDLH}+#{ggYDJ86z4Bs.HN1tDQNkNoF}+#{ggYDJ86z4Bs.nk03IW4jLNX}+#{iszrhzuTq2q.DYKSUuRKp4V}+#{iszrhzuTq2q.Cj0eoUQbLfm}+#{iszrhzuTq2q.q4JPJQm76jQ}+#{iszrhzuTq2q.Z4DNeSohplg}+#{iszrhzuTq2q.HHHAwIEb9Ft}+#{iszrhzuTq2q.m3LOv1HNDLH}+#{iszrhzuTq2q.HN1tDQNkNoF}+#{iszrhzuTq2q.nk03IW4jLNX}+#{Fl6dMGSdjzT.DYKSUuRKp4V}+#{Fl6dMGSdjzT.Cj0eoUQbLfm}+#{Fl6dMGSdjzT.q4JPJQm76jQ}+#{Fl6dMGSdjzT.Z4DNeSohplg}+#{Fl6dMGSdjzT.HHHAwIEb9Ft}+#{Fl6dMGSdjzT.m3LOv1HNDLH}+#{Fl6dMGSdjzT.HN1tDQNkNoF}+#{Fl6dMGSdjzT.nk03IW4jLNX}+#{seReeULW7O6.DYKSUuRKp4V}+#{seReeULW7O6.Cj0eoUQbLfm}+#{seReeULW7O6.q4JPJQm76jQ}+#{seReeULW7O6.Z4DNeSohplg}+#{seReeULW7O6.HHHAwIEb9Ft}+#{seReeULW7O6.m3LOv1HNDLH}+#{seReeULW7O6.HN1tDQNkNoF}+#{seReeULW7O6.nk03IW4jLNX}+#{wrCfnWCT3bI.DYKSUuRKp4V}+#{wrCfnWCT3bI.Cj0eoUQbLfm}+#{wrCfnWCT3bI.q4JPJQm76jQ}+#{wrCfnWCT3bI.Z4DNeSohplg}+#{wrCfnWCT3bI.HHHAwIEb9Ft}+#{wrCfnWCT3bI.m3LOv1HNDLH}+#{wrCfnWCT3bI.HN1tDQNkNoF}+#{wrCfnWCT3bI.nk03IW4jLNX}+#{abTiCagoeSi.DYKSUuRKp4V}+#{abTiCagoeSi.Cj0eoUQbLfm}+#{abTiCagoeSi.q4JPJQm76jQ}+#{abTiCagoeSi.Z4DNeSohplg}+#{abTiCagoeSi.HHHAwIEb9Ft}+#{abTiCagoeSi.m3LOv1HNDLH}+#{abTiCagoeSi.HN1tDQNkNoF}+#{abTiCagoeSi.nk03IW4jLNX}+#{qLmipPQWgit.DYKSUuRKp4V}+#{qLmipPQWgit.Cj0eoUQbLfm}+#{qLmipPQWgit.q4JPJQm76jQ}+#{qLmipPQWgit.Z4DNeSohplg}+#{qLmipPQWgit.HHHAwIEb9Ft}+#{qLmipPQWgit.m3LOv1HNDLH}+#{qLmipPQWgit.HN1tDQNkNoF}+#{qLmipPQWgit.nk03IW4jLNX}+#{YUZI1lCI7U6.DYKSUuRKp4V}+#{YUZI1lCI7U6.Cj0eoUQbLfm}+#{YUZI1lCI7U6.q4JPJQm76jQ}+#{YUZI1lCI7U6.Z4DNeSohplg}+#{YUZI1lCI7U6.HHHAwIEb9Ft}+#{YUZI1lCI7U6.m3LOv1HNDLH}+#{YUZI1lCI7U6.HN1tDQNkNoF}+#{YUZI1lCI7U6.nk03IW4jLNX}+#{aBcDq4RBe70.DYKSUuRKp4V}+#{aBcDq4RBe70.Cj0eoUQbLfm}+#{aBcDq4RBe70.q4JPJQm76jQ}+#{aBcDq4RBe70.Z4DNeSohplg}+#{aBcDq4RBe70.HHHAwIEb9Ft}+#{aBcDq4RBe70.m3LOv1HNDLH}+#{aBcDq4RBe70.HN1tDQNkNoF}+#{aBcDq4RBe70.nk03IW4jLNX}+#{q30dio9AK68.DYKSUuRKp4V}+#{q30dio9AK68.Cj0eoUQbLfm}+#{q30dio9AK68.q4JPJQm76jQ}+#{q30dio9AK68.Z4DNeSohplg}+#{q30dio9AK68.HHHAwIEb9Ft}+#{q30dio9AK68.m3LOv1HNDLH}+#{q30dio9AK68.HN1tDQNkNoF}+#{q30dio9AK68.nk03IW4jLNX}+#{mLd3iwpQ4Cr.DYKSUuRKp4V}+#{mLd3iwpQ4Cr.Cj0eoUQbLfm}+#{mLd3iwpQ4Cr.q4JPJQm76jQ}+#{mLd3iwpQ4Cr.Z4DNeSohplg}+#{mLd3iwpQ4Cr.HHHAwIEb9Ft}+#{mLd3iwpQ4Cr.m3LOv1HNDLH}+#{mLd3iwpQ4Cr.HN1tDQNkNoF}+#{mLd3iwpQ4Cr.nk03IW4jLNX}+#{fKfVrCjuaMN.DYKSUuRKp4V}+#{fKfVrCjuaMN.Cj0eoUQbLfm}+#{fKfVrCjuaMN.q4JPJQm76jQ}+#{fKfVrCjuaMN.Z4DNeSohplg}+#{fKfVrCjuaMN.HHHAwIEb9Ft}+#{fKfVrCjuaMN.m3LOv1HNDLH}+#{fKfVrCjuaMN.HN1tDQNkNoF}+#{fKfVrCjuaMN.nk03IW4jLNX}+#{vGQHYn9OSkw.DYKSUuRKp4V}+#{vGQHYn9OSkw.Cj0eoUQbLfm}+#{vGQHYn9OSkw.q4JPJQm76jQ}+#{vGQHYn9OSkw.Z4DNeSohplg}+#{vGQHYn9OSkw.HHHAwIEb9Ft}+#{vGQHYn9OSkw.m3LOv1HNDLH}+#{vGQHYn9OSkw.HN1tDQNkNoF}+#{vGQHYn9OSkw.nk03IW4jLNX}",
+   "denominatorDescription": "Teachers",
+   "annualized": false,
+   "decimals": 1
+  },
+  {
+   "id": "bWPz06oFs5q",
+   "name": "ASC-GEN Non-teaching staff",
+   "shortName": "Non-teaching staff",
+   "code": "ASC_GEN_NONTEACH",
+   "description": "Non-teaching staff (D.1). Collected by the Pre-primary/Primary, JSS, SSS and Technical forms (not Private or ANFE).",
+   "indicatorType": {
+    "id": "jEvXVGHRCsj"
+   },
+   "numerator": "#{ShDsxoYbcAC}",
+   "numeratorDescription": "Non-teaching staff (D.1)",
+   "denominator": "1",
+   "denominatorDescription": "one",
+   "annualized": false,
+   "decimals": 0
+  },
+  {
+   "id": "cbeoGyJDnv5",
+   "name": "ASC-GEN Pupil-non-teaching staff ratio (ratio)",
+   "shortName": "Pupil-non-teaching staff ratio",
+   "code": "ASC_GEN_PNTR",
+   "description": "Pupils per non-teaching staff member (whole school).",
+   "indicatorType": {
+    "id": "jEvXVGHRCsj"
+   },
+   "numerator": "#{u8MSpa6e4tu}+#{KrjARNwUOFF}+#{w34HAnkMJDW}+#{PPWh2jFXBWV}+#{hXqrubrJPRr}+#{CADSef49FaO}+#{wPDF1OLjYM2}+#{meegE8oyjXY}+#{cFwJLHE4Dps}+#{jAcTIg5mOlx}+#{eBTbIITRm3H}+#{tno1y7kW71Z}+#{D2FfTq9m77w}+#{Qg9jKQ6EloS}+#{FFcdIMV8Mff}+#{GNZr8JEDK1o}+#{ZYUxhci2GJr}+#{bsqEkvwCRNw}+#{FBDmI9CFxDy}+#{GpUBgs01fVn}+#{eVvRPLqvUjE}+#{xviWUjTv0W7}+#{sJ83z0bd1NH}+#{gHQpD9Sf8mZ}+#{cvUyfDuLcQK}+#{DpHe6KOsGf8}+#{TLasvK4KJAO}+#{FK1cqfAhjf9}+#{BrJc41TPhGS}+#{Zjf7HpytGV2}+#{rkbfeYWzA63}+#{qV5djLlxhk2}+#{LItsHtx5A6B}+#{dnTyNijcRH1}+#{hpYA6Hhu0GF}+#{AqoSAqJXzdI}+#{g1MxeJzX1c3}+#{g3SbUJLyEsK}+#{pENhdbNXn7c}+#{TkY79n0ul2T}+#{Glh62nt0Tug}+#{m0kpv0qeB8K}+#{aRKx5RdYE0i}+#{lwojChWstF3}+#{dm1v7qTWQ9A}+#{RW3G8MLQLqE}",
+   "numeratorDescription": "Total enrolment, all levels",
+   "denominator": "#{ShDsxoYbcAC}",
+   "denominatorDescription": "Non-teaching staff (D.1)",
+   "annualized": false,
+   "decimals": 1
+  },
+  {
+   "id": "io4yQysi8jU",
+   "name": "ASC-GEN Boarding learners",
+   "shortName": "Boarding learners",
+   "code": "ASC_GEN_BOARDING",
+   "description": "Boarders, all forms: standard B.11 boarding (Pre-primary/Primary, JSS, SSS, Technical) plus the Private B.14 boarding item. NOTE: Private boarding DE NSuzmYEVsjY has aggregationType NONE and needs SUM to aggregate.",
+   "indicatorType": {
+    "id": "jEvXVGHRCsj"
+   },
+   "numerator": "#{m6dXaHr2TEF}+#{NSuzmYEVsjY}",
+   "numeratorDescription": "Boarders (B.11 + Private B.14)",
+   "denominator": "1",
+   "denominatorDescription": "one",
+   "annualized": false,
+   "decimals": 0
+  },
+  {
+   "id": "jox8QDbnBV3",
+   "name": "ASC-GEN Boarding learners (%)",
+   "shortName": "Boarding learners (%)",
+   "code": "ASC_GEN_BOARDING_PCT",
+   "description": "Boarders as a share of total enrolment (all levels).",
+   "indicatorType": {
+    "id": "D0J1oRr1ESx"
+   },
+   "numerator": "#{m6dXaHr2TEF}+#{NSuzmYEVsjY}",
+   "numeratorDescription": "Boarders",
+   "denominator": "#{u8MSpa6e4tu}+#{KrjARNwUOFF}+#{w34HAnkMJDW}+#{PPWh2jFXBWV}+#{hXqrubrJPRr}+#{CADSef49FaO}+#{wPDF1OLjYM2}+#{meegE8oyjXY}+#{cFwJLHE4Dps}+#{jAcTIg5mOlx}+#{eBTbIITRm3H}+#{tno1y7kW71Z}+#{D2FfTq9m77w}+#{Qg9jKQ6EloS}+#{FFcdIMV8Mff}+#{GNZr8JEDK1o}+#{ZYUxhci2GJr}+#{bsqEkvwCRNw}+#{FBDmI9CFxDy}+#{GpUBgs01fVn}+#{eVvRPLqvUjE}+#{xviWUjTv0W7}+#{sJ83z0bd1NH}+#{gHQpD9Sf8mZ}+#{cvUyfDuLcQK}+#{DpHe6KOsGf8}+#{TLasvK4KJAO}+#{FK1cqfAhjf9}+#{BrJc41TPhGS}+#{Zjf7HpytGV2}+#{rkbfeYWzA63}+#{qV5djLlxhk2}+#{LItsHtx5A6B}+#{dnTyNijcRH1}+#{hpYA6Hhu0GF}+#{AqoSAqJXzdI}+#{g1MxeJzX1c3}+#{g3SbUJLyEsK}+#{pENhdbNXn7c}+#{TkY79n0ul2T}+#{Glh62nt0Tug}+#{m0kpv0qeB8K}+#{aRKx5RdYE0i}+#{lwojChWstF3}+#{dm1v7qTWQ9A}+#{RW3G8MLQLqE}",
+   "denominatorDescription": "Total enrolment, all levels",
+   "annualized": false,
+   "decimals": 1
+  },
+  {
+   "id": "DvMfSq5pZSA",
+   "name": "ASC-GEN Usable classrooms (F.2)",
+   "shortName": "Usable classrooms",
+   "code": "ASC_GEN_CLASSROOMS",
+   "description": "Usable classrooms (F.2). Present on all six forms; the consistent cross-form classroom measure (the plain E.1 count is absent from Private/ANFE).",
+   "indicatorType": {
+    "id": "jEvXVGHRCsj"
+   },
+   "numerator": "#{aBqcjyRWnjv.BDXPvhUlGvb}+#{aBqcjyRWnjv.NdcXhvn1SU5}",
+   "numeratorDescription": "Usable classrooms (F.2)",
+   "denominator": "1",
+   "denominatorDescription": "one",
+   "annualized": false,
+   "decimals": 0
+  },
+  {
+   "id": "vDmeu4io2Fs",
+   "name": "ASC-GEN Usable toilets (F.2)",
+   "shortName": "Usable toilets",
+   "code": "ASC_GEN_TOILETS",
+   "description": "Usable toilets (F.2), all forms (useable option of both facility combos).",
+   "indicatorType": {
+    "id": "jEvXVGHRCsj"
+   },
+   "numerator": "#{Q7EhOe3hekY.BDXPvhUlGvb}+#{Q7EhOe3hekY.NdcXhvn1SU5}",
+   "numeratorDescription": "Usable toilets (F.2)",
+   "denominator": "1",
+   "denominatorDescription": "one",
+   "annualized": false,
+   "decimals": 0
+  },
+  {
+   "id": "uWkPykwyYn2",
+   "name": "ASC-GEN Pupil-usable toilet ratio (ratio)",
+   "shortName": "Pupil-usable toilet ratio",
+   "code": "ASC_GEN_PUPIL_TOILET",
+   "description": "Pupils per usable toilet (whole school).",
+   "indicatorType": {
+    "id": "jEvXVGHRCsj"
+   },
+   "numerator": "#{u8MSpa6e4tu}+#{KrjARNwUOFF}+#{w34HAnkMJDW}+#{PPWh2jFXBWV}+#{hXqrubrJPRr}+#{CADSef49FaO}+#{wPDF1OLjYM2}+#{meegE8oyjXY}+#{cFwJLHE4Dps}+#{jAcTIg5mOlx}+#{eBTbIITRm3H}+#{tno1y7kW71Z}+#{D2FfTq9m77w}+#{Qg9jKQ6EloS}+#{FFcdIMV8Mff}+#{GNZr8JEDK1o}+#{ZYUxhci2GJr}+#{bsqEkvwCRNw}+#{FBDmI9CFxDy}+#{GpUBgs01fVn}+#{eVvRPLqvUjE}+#{xviWUjTv0W7}+#{sJ83z0bd1NH}+#{gHQpD9Sf8mZ}+#{cvUyfDuLcQK}+#{DpHe6KOsGf8}+#{TLasvK4KJAO}+#{FK1cqfAhjf9}+#{BrJc41TPhGS}+#{Zjf7HpytGV2}+#{rkbfeYWzA63}+#{qV5djLlxhk2}+#{LItsHtx5A6B}+#{dnTyNijcRH1}+#{hpYA6Hhu0GF}+#{AqoSAqJXzdI}+#{g1MxeJzX1c3}+#{g3SbUJLyEsK}+#{pENhdbNXn7c}+#{TkY79n0ul2T}+#{Glh62nt0Tug}+#{m0kpv0qeB8K}+#{aRKx5RdYE0i}+#{lwojChWstF3}+#{dm1v7qTWQ9A}+#{RW3G8MLQLqE}",
+   "numeratorDescription": "Total enrolment, all levels",
+   "denominator": "#{Q7EhOe3hekY.BDXPvhUlGvb}+#{Q7EhOe3hekY.NdcXhvn1SU5}",
+   "denominatorDescription": "Usable toilets (F.2)",
+   "annualized": false,
+   "decimals": 1
+  },
+  {
+   "id": "DydalnMqg5w",
+   "name": "ASC-GEN Usable computers (F.2)",
+   "shortName": "Usable computers",
+   "code": "ASC_GEN_COMPUTERS",
+   "description": "Usable computers (F.2), all forms.",
+   "indicatorType": {
+    "id": "jEvXVGHRCsj"
+   },
+   "numerator": "#{WOEt1pnoLp7.BDXPvhUlGvb}+#{WOEt1pnoLp7.NdcXhvn1SU5}",
+   "numeratorDescription": "Usable computers (F.2)",
+   "denominator": "1",
+   "denominatorDescription": "one",
+   "annualized": false,
+   "decimals": 0
+  },
+  {
+   "id": "XhYKabiEAnj",
+   "name": "ASC-GEN Pupil-usable computer ratio (ratio)",
+   "shortName": "Pupil-usable computer ratio",
+   "code": "ASC_GEN_PUPIL_COMPUTER",
+   "description": "Pupils per usable computer (whole school).",
+   "indicatorType": {
+    "id": "jEvXVGHRCsj"
+   },
+   "numerator": "#{u8MSpa6e4tu}+#{KrjARNwUOFF}+#{w34HAnkMJDW}+#{PPWh2jFXBWV}+#{hXqrubrJPRr}+#{CADSef49FaO}+#{wPDF1OLjYM2}+#{meegE8oyjXY}+#{cFwJLHE4Dps}+#{jAcTIg5mOlx}+#{eBTbIITRm3H}+#{tno1y7kW71Z}+#{D2FfTq9m77w}+#{Qg9jKQ6EloS}+#{FFcdIMV8Mff}+#{GNZr8JEDK1o}+#{ZYUxhci2GJr}+#{bsqEkvwCRNw}+#{FBDmI9CFxDy}+#{GpUBgs01fVn}+#{eVvRPLqvUjE}+#{xviWUjTv0W7}+#{sJ83z0bd1NH}+#{gHQpD9Sf8mZ}+#{cvUyfDuLcQK}+#{DpHe6KOsGf8}+#{TLasvK4KJAO}+#{FK1cqfAhjf9}+#{BrJc41TPhGS}+#{Zjf7HpytGV2}+#{rkbfeYWzA63}+#{qV5djLlxhk2}+#{LItsHtx5A6B}+#{dnTyNijcRH1}+#{hpYA6Hhu0GF}+#{AqoSAqJXzdI}+#{g1MxeJzX1c3}+#{g3SbUJLyEsK}+#{pENhdbNXn7c}+#{TkY79n0ul2T}+#{Glh62nt0Tug}+#{m0kpv0qeB8K}+#{aRKx5RdYE0i}+#{lwojChWstF3}+#{dm1v7qTWQ9A}+#{RW3G8MLQLqE}",
+   "numeratorDescription": "Total enrolment, all levels",
+   "denominator": "#{WOEt1pnoLp7.BDXPvhUlGvb}+#{WOEt1pnoLp7.NdcXhvn1SU5}",
+   "denominatorDescription": "Usable computers (F.2)",
+   "annualized": false,
+   "decimals": 1
+  },
+  {
+   "id": "q9E9FifnCzE",
+   "name": "ASC-GEN Play rooms for ECE (E.3)",
+   "shortName": "Play rooms for ECE",
+   "code": "ASC_GEN_PLAYROOMS",
+   "description": "Play rooms for ECCD (E.3). Collected only by the Pre-primary & Primary form.",
+   "indicatorType": {
+    "id": "jEvXVGHRCsj"
+   },
+   "numerator": "#{TkjhsCd9zyt}",
+   "numeratorDescription": "Play rooms for ECCD (E.3)",
+   "denominator": "1",
+   "denominatorDescription": "one",
+   "annualized": false,
+   "decimals": 0
+  }
+ ]
+}

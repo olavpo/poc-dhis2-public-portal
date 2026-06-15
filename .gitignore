@@ -17,3 +17,10 @@ data/
 evidence/sources/anc/*.csv
 evidence/sources/anc/*.geojson
 evidence/static/anc.geojson
+
+# Brainstorming visual companion
+.superpowers/
+
+# Local Claude settings (not shared)
+.claude/
+evidence/package-lock.json
