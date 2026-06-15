@@ -29,7 +29,7 @@ foundation contract (extractor, build/deploy/serve, patch optimisations).
 | 3 | Geography | **Realistic Nigeria-shaped hierarchy:** Nation › States › LGAs › Schools, with synthetic admin **polygons** (choropleths) **and** school **points**. |
 | 4 | Interactivity | **Faithful, fully baked, 2024 only.** No live selector now; reserve a top-right slot for a future year/scope filter. |
 | 5 | Drill-down | **Federal → State → LGA**, top-right scope navigator that **navigates between baked per-OU pages**; page body **compares sub-units** (children table + choropleth). |
-| 6 | Metrics | **Mix of raw-count data elements and DHIS2 indicators** (matching the source metadata: several tiles reference `DATA_ELEMENT` directly, others `INDICATOR`). Ratios/coverage are indicators. Build the count data elements **plus one real indicator** end-to-end now (numerator/denominator → indicator); scale the remaining indicators by the same pattern later. |
+| 6 | Metrics | **Mix of raw-count data elements and DHIS2 indicators** (matching the source metadata: several tiles reference `DATA_ELEMENT` directly, others `INDICATOR`). Ratios/percentages are indicators. **Build the full set immediately** — all count data elements **and all indicators** the portal displays, each as a proper numerator/denominator DHIS2 indicator. (Definitions are authored synthetically since the real indicator formulas aren't supplied yet; they are replaced when real metadata arrives.) |
 | 7 | Indicator rule | Extract each indicator/value **at every level it is displayed** (Nation/State/LGA), read as-is — **never re-aggregate after calculation** (foundation hard rule). |
 | 8 | School type | Disaggregate by **Public / Private / Total**. |
 | 9 | Visual style | **Apache Superset look** for the viz (Inter font, white chart cards, Big-Number tiles + trendline, ECharts gauge, Superset categorical palette, data table with in-cell bars), under the green DNEMIS portal chrome. |
@@ -46,7 +46,7 @@ as a blank instance to load synthetic metadata + data into.
 
 ```
 [0] scripts/asc-synth/        Node generator (NEW): builds synthetic DHIS2 metadata
-    (synthetic data, one-off)  (Nigeria hierarchy + geometry, data elements, 1 indicator,
+    (synthetic data, one-off)  (Nigeria hierarchy + geometry, all data elements + indicators,
                                school-type disagg, 2024 data values) and IMPORTS it into
                                agent-asc-ind via the DHIS2 metadata + dataValueSets API,
                                then triggers analytics. Idempotent; re-runnable.
@@ -70,7 +70,7 @@ are unchanged.
 
 The user wants `agent-asc-ind` as the example instance and wants indicators computed **by
 DHIS2** at each level (decision 7). So we let DHIS2 own aggregation: import data elements +
-the indicator definition + dummy `dataValueSets`, run analytics, and extract the
+the indicator definitions + dummy `dataValueSets`, run analytics, and extract the
 already-correctly-aggregated values. This exercises the real foundation path end-to-end and
 proves the swap-in-real-data story.
 
@@ -86,16 +86,35 @@ proves the swap-in-real-data story.
   child polygons nest in their parent; school **points** scattered within their LGA polygon.
   Written as `ou.geojson` (polygons keyed by OU id; points via `lng`/`lat` in `ou.csv`).
   Real Nigeria admin GeoJSON can replace this later without page changes.
-- **Data elements (raw counts, 2024 yearly), per school, by school-type category (Public/
-  Private):** schools reported, enrolment (by sex), teachers, usable classrooms, usable
-  toilets, special-needs learners, infrastructure-usable flags, reporting (for reporting
-  rate). Counts roll up additively via DHIS2.
-- **Indicator built now (the one real one):** **Pupil–Teacher Ratio** = `enrolment /
-  teachers` (factor 1), as a DHIS2 indicator so it aggregates correctly at every level.
-  Demonstrates the numerator/denominator pattern; the other ratios + coverage indicators
-  follow the same recipe later.
-- **Values:** plausible ranges, varied per OU and school type, deterministic (seeded, no
-  RNG that breaks re-runs) so re-imports are stable.
+- **Data elements (raw counts, 2024 yearly), reported per school, disaggregated by a
+  school-type category `{Public, Private}`** and modelled per **education level** where the
+  ASC tables split them (`Pre-Primary`, `Primary`, `JSS`). Counts roll up additively via
+  DHIS2:
+  - Schools reported · Schools expected (for reporting rate)
+  - Enrolment — Pre-Primary, Primary, JSS (also split by **sex** for the "learners by sex" tile)
+  - Teachers — Pre-Prim/Primary, JSS
+  - Usable classrooms — Pre-Prim/Primary, JSS · Total classrooms (for usable-infrastructure %)
+  - Usable toilets — Pre-Prim/Primary, JSS · Total toilets
+  - Special-needs learners; school-classification category (for "schools by classification %")
+- **Indicators (ALL built now)** — each a proper DHIS2 indicator (numerator/denominator,
+  factor as noted) so DHIS2 computes the correct value at **every** level (Nation/State/LGA):
+  | Indicator | Numerator ÷ Denominator | Factor | Source tile |
+  |---|---|---|---|
+  | Pupil–Teacher Ratio (Pre-Prim/Primary) | enrolment(pre-prim+primary) ÷ teachers(pre-prim/primary) | 1 | Table 1.1 |
+  | Pupil–Teacher Ratio (JSS) | enrolment(JSS) ÷ teachers(JSS) | 1 | Table 1.2 |
+  | Pupil–Classroom Ratio (Pre-Prim/Primary) | enrolment(pre-prim+primary) ÷ usable classrooms | 1 | Table 1.1 / "Learners per classroom" |
+  | Pupil–Classroom Ratio (JSS) | enrolment(JSS) ÷ usable classrooms(JSS) | 1 | Table 1.2 |
+  | Pupil–Toilet Ratio (Pre-Prim/Primary) | enrolment(pre-prim+primary) ÷ usable toilets | 1 | Table 1.1 |
+  | Pupil–Toilet Ratio (JSS) | enrolment(JSS) ÷ usable toilets(JSS) | 1 | Table 1.2 |
+  | Reporting Rate (%) | schools reported ÷ schools expected | 100 | Gauge + "Reporting Rate" |
+  | Usable Infrastructure (%) | usable classrooms+toilets ÷ total classrooms+toilets | 100 | "Usable infrastructure (%)" |
+
+  "Schools by classification (%)" is a **category breakdown** of the school-count data
+  element (not a ratio indicator); "Total Schools / Total learners / Total teachers" remain
+  raw counts. This indicator list is **authored synthetically now** and is the same set the
+  portal renders; real definitions replace them later 1-for-1.
+- **Values:** plausible ranges, varied per OU and school type, deterministic (seeded — no
+  `Math.random`; values derived from OU id/level) so re-imports are stable.
 
 ## Page architecture
 
@@ -130,16 +149,16 @@ proves the swap-in-real-data story.
 
 ## Phasing (incremental, verifiable)
 
-1. **Pipeline spike:** generator creates the Nigeria hierarchy + geometry + the count data
-   elements + the **one** Pupil–Teacher Ratio indicator + 2024 dummy values; import into
+1. **Pipeline:** generator creates the Nigeria hierarchy + geometry + **all** count data
+   elements + **all** indicators (table above) + 2024 dummy values; import into
    `agent-asc-ind`; run analytics; `asc.yaml` extract → CSVs + geojson; `npm run sources`.
-   Verify: extracted CSVs contain Nation/State/LGA rows; the indicator value differs per level
-   and is **not** a SQL re-aggregation.
-2. **Federal page** baked with KPIs, one map, the compare-states table — themed Superset.
+   Verify: extracted CSVs contain Nation/State/LGA rows for every data element and indicator;
+   each ratio indicator value differs per level and is **not** a SQL re-aggregation.
+2. **Federal page** baked with all KPIs, maps, the dashboard charts, and the compare-states
+   table (both Pre-Prim/Primary and JSS tabs) — themed Superset.
 3. **Drill-down**: generate state + LGA pages from the template; wire scope navigator,
    breadcrumb, child links, choropleth deep-links. Build (all links resolve).
-4. **Fill in** remaining dashboard tiles + the second (JSS) table tab.
-5. **Deploy + serve**; visual check against the approved mockup.
+4. **Deploy + serve**; visual check against the approved mockup.
 
 ## Non-goals (YAGNI)
 
@@ -148,8 +167,9 @@ proves the swap-in-real-data story.
 - No real Nigeria boundary data, no real ASC values (synthetic until provided).
 - No changes to the generic foundation contract beyond adding the ASC source/pages/theme and
   the `asc.yaml` extractor config + the throwaway synthetic generator.
-- Building **all** indicators now — exactly one is wired end-to-end; the rest are a documented
-  repeat of the same pattern.
+- **Real** indicator formulas — the full indicator set is built now, but with **synthetic
+  definitions** (the real numerator/denominator expressions aren't supplied yet); they are
+  swapped in 1-for-1 when provided.
 
 ## Verification
 
