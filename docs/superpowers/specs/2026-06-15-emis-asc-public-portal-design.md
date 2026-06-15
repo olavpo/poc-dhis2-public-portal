@@ -27,12 +27,12 @@ foundation contract (extractor, build/deploy/serve, patch optimisations).
 |---|---|---|
 | 1 | Portal shape | **One-page ASC portal** — DNEMIS module links across the top, ASC dashboard below. Not a multi-module shell. |
 | 2 | Data source | **Real metadata + indicators (already in the instance), synthetic geography + values.** The instance already holds the real ASC indicators, their data elements, and indicator types. We do **not** author indicator definitions — we reuse them; we only generate the org-unit hierarchy + geometry and dummy data values, then extract. Swap in real geography + values later. |
-| 3 | Geography | **Realistic Nigeria-shaped hierarchy:** Nation › States › LGAs › Schools, with synthetic admin **polygons** (choropleths) **and** school **points**. |
+| 3 | Geography | **LGA is the deepest level shown.** Realistic Nigeria-shaped hierarchy Nation › States › LGAs, rendered as synthetic admin **polygons** (choropleths only — no point maps). **No ward/school data is included** in the portal or the extract. Schools exist in the instance **only as invisible data-bearing leaves** (they carry dummy values + the Public/Private classification so it can aggregate up); they are never shown, paged, mapped, or extracted. |
 | 4 | Interactivity | **Faithful, fully baked, 2024 only.** No live selector now; reserve a top-right slot for a future year/scope filter. |
-| 5 | Drill-down | **Federal → State → LGA**, top-right scope navigator that **navigates between baked per-OU pages**; page body **compares sub-units** (children table + choropleth). |
+| 5 | Drill-down | **Federal → State → LGA**, top-right scope navigator that **navigates between baked per-OU pages**. Federal/State pages **compare sub-units** (children choropleth + table). **The LGA page is a leaf** — it shows the LGA's own figures (education-level + ownership breakdown), no child table/map. |
 | 6 | Metrics | **Use the real 67 ASC indicators** (`school_list_indicators_BY_LEVEL.metadata.json`, all present in the instance) — by education level **PREPRY/PRY/JSS/SSS/ANFE/GEN** (enrolment, by sex, female %, pupil-stream/pupil-teacher/pupil-toilet/pupil-computer ratios, special needs, orphans, dropout, teachers, classrooms, toilets, etc.). **All built immediately** (they already exist). Indicator types: `jEvXVGHRCsj` (Number, ×1, 48 inds) and `D0J1oRr1ESx` (Percentage, ×100, 19 inds). |
 | 7 | Indicator rule | Extract each indicator/value **at every level it is displayed** (Nation/State/LGA), read as-is — **never re-aggregate after calculation** (foundation hard rule). |
-| 8 | School type | **Public / Private / Total** via the existing **"Ownership" org-unit group set** (Public/Private groups). Generator assigns each synthetic school to a group; extractor pulls Ownership as a group-set disaggregation. |
+| 8 | School type | **Public / Private / Total** via the existing **"Ownership" org-unit group set** (Public/Private groups), which classifies the **invisible school leaves**. The extractor pulls Ownership as a group-set disaggregation at levels 1–3, so the Public/Private split appears **per LGA/State/Nation** without ever exposing a school. (This is the reason schools exist in the instance at all.) |
 | 9 | Visual style | **Apache Superset look** for the viz (Inter font, white chart cards, Big-Number tiles + trendline, ECharts gauge, Superset categorical palette, data table with in-cell bars), under the green DNEMIS portal chrome. |
 | 10 | Example instance | **`agent-asc-ind`** (DHIS2 broker instance). Already holds the real ASC indicators (780 indicators incl. the 67), data elements (1023 incl. the 108 referenced), indicator types, and real 2023/2024 values — but **only on a 6-OU fixture, with no geometry and no real Nigeria hierarchy**. We add the hierarchy + geometry + dummy values on top, then extract. |
 
@@ -90,18 +90,18 @@ This exercises the real foundation path end-to-end and proves the swap-in-real-d
 ## Synthetic geography & data
 
 - **Hierarchy (exact, deterministic):** Nation (1) › **6 States** (2) › **4 LGAs** each (3)
-  › **12 Schools** each (4) = 1 nation + 6 states + 24 LGAs + 288 schools. Bounded so per-OU
-  pages prerender cheaply: **31 baked pages** (1 federal + 6 state + 24 LGA). School pages are
-  out of scope — LGA is the deepest page; schools appear as the LGA page's child rows/points.
-  (Counts are fixed, not approximate, so prerender-completeness is unambiguous.)
-- **Geometry:** generated synthetically (no external boundary download): a tessellation of
-  non-overlapping polygons over a Nigeria-like bounding box, partitioned Nation→State→LGA so
-  child polygons nest in their parent; school **points** scattered within their LGA polygon.
-  **Every level gets geometry, including the national root** (a country polygon) and every
-  state — otherwise the extractor's geoFeatures merge silently drops geometry-less units and
-  the Federal/State choropleths break (CLAUDE.md gotcha).
-  Written as `ou.geojson` (polygons keyed by OU id; points via `lng`/`lat` in `ou.csv`).
-  Real Nigeria admin GeoJSON can replace this later without page changes.
+  › **12 Schools** each (4) = 1 nation + 6 states + 24 LGAs + 288 schools. The **schools are
+  data-entry leaves only** — they carry the dummy values + ownership classification and are
+  **never shown, paged, mapped, or extracted**. Pages: **31 baked pages** (1 federal + 6
+  state + 24 LGA); LGA is the deepest page (a leaf). (Counts fixed, not approximate.)
+- **Geometry (levels 1–3 only):** generated synthetically (no external boundary download): a
+  tessellation of nested polygons over a Nigeria-like bounding box, partitioned
+  Nation→State→LGA so child polygons nest in their parent. **Every shown level gets a polygon,
+  including the national root** and every state/LGA — else the extractor's geoFeatures merge
+  silently drops geometry-less units and choropleths break (CLAUDE.md gotcha). **Schools get
+  no geometry** (not mapped). Written as `ou.geojson` (polygons keyed by OU id); the portal
+  uses **choropleths only — no point maps**. Real Nigeria admin GeoJSON can replace this later
+  without page changes.
 - **Metrics = the real metadata (reused, not authored).** The 67 indicators and their 108
   data elements already exist in the instance. The generator does **not** create or modify
   any data element or indicator. It queries each DE's **category combo → category option
@@ -123,19 +123,20 @@ This exercises the real foundation path end-to-end and proves the swap-in-real-d
 
 ## Page architecture
 
-- `evidence/pages/asc/index.md` — **Federal overview** (the approved layout): KPI Big-Number
-  tiles + reporting-rate gauge; two maps (learners/teachers by location); the dashboard
-  charts (learners by sex & school type, infrastructure %, etc.); **Compare sub-units**
-  (states) choropleth + indicator table (tabs: Pre-Prim/Primary ↔ JSS), each state row
-  linking to its page.
-- One **generated `.md` per state** (e.g. `asc/state-<id>.md`) — **same shape**, scoped to
-  the state; child table/choropleth = its LGAs, linking to LGA pages.
-- One **generated `.md` per LGA** (e.g. `asc/lga-<id>.md`) — same shape, scoped to the LGA;
-  children = its schools (table rows + map points; no per-school page).
-- **Child scoping uses `parent = <currentOU>` (direct children only)** — not path matching —
-  so the drill-down does not depend on the `ou.csv.path` convention. (The plan should still
-  confirm whether `ou.csv.path` is self-inclusive or ancestor-only before using any path-based
-  query, since the README and CLAUDE.md describe it differently.)
+- `evidence/pages/index.md` — **Federal overview** (the approved layout): KPI Big-Number
+  tiles + reporting-rate gauge; the dashboard charts; a **states choropleth** + **Compare
+  sub-units** indicator table (tabs: Pre-Prim/Primary ↔ JSS, columns split Public/Private/
+  Total), each state row linking to its page.
+- One **generated `.md` per state** (`asc/state-<id>.md`) — **same shape**, scoped to the
+  state; children choropleth + compare table = its LGAs, linking to LGA pages. (This is the
+  "indicators by LGA" view from the screenshots.)
+- One **generated `.md` per LGA** (`asc/lga-<id>.md`) — **leaf page**: the LGA's own KPIs +
+  an **education-level breakdown** table (PREPRY/PRY/JSS/SSS/ANFE rows × Public/Private/Total)
+  and its choropleth highlight. **No child table or map** (nothing below LGA).
+- **Child scoping uses `parent_id = '<currentOU>'` (direct children only)** — not path
+  matching — so the drill-down does not depend on the `ou.csv.path` convention. (The plan
+  should still confirm whether `ou.csv.path` is self-inclusive or ancestor-only before using
+  any path-based query, since the README and CLAUDE.md describe it differently.)
 - **Scope navigator + breadcrumb** (top-right / under title) = links between these baked
   pages. **Reserved (disabled) year/scope filter** slot for the future engine-driven version.
 - **Generation of per-OU pages:** authored as a small set of Evidence **templated pages**
@@ -173,7 +174,9 @@ This exercises the real foundation path end-to-end and proves the swap-in-real-d
 ## Non-goals (YAGNI)
 
 - No live year/scope **selector** yet (engine deferred); only a reserved layout slot.
-- No per-**school** pages (schools are leaf rows/points on the LGA page).
+- **No data below LGA anywhere in the portal or extract** — no ward/school pages, rows,
+  points, or geometry. Schools exist solely as hidden in-instance data leaves for the
+  Public/Private aggregation. No point maps (choropleths only).
 - No real Nigeria boundary data, no real ASC values (geometry + values synthetic until
   provided). Indicator/data-element **definitions are real** (reused from the instance).
 - No authoring or editing of data elements / indicators / indicator types — reuse as-is.
@@ -189,6 +192,8 @@ This exercises the real foundation path end-to-end and proves the swap-in-real-d
   Pupil-teacher ratio** at **Nation** ≠ the unweighted mean of the **State** rows — proving
   the value was aggregated by DHIS2 from numerator/denominator at each level, not re-averaged
   in SQL.
+- **No sub-LGA leakage:** `ou.csv` and `fact.csv` contain **no rows below level 3** (schools
+  must not appear in any extracted file); choropleths reference only L1–3 polygons.
 - Final: `npm run deploy && npm run serve`; the Federal page and a drilled-in LGA page render
   and match the approved Superset mockup; maps + deep-links work; no DuckDB-WASM engine
   downloaded on baked pages.
