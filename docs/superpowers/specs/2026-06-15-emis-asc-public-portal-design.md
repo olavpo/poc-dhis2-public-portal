@@ -29,7 +29,7 @@ foundation contract (extractor, build/deploy/serve, patch optimisations).
 | 3 | Geography | **Realistic Nigeria-shaped hierarchy:** Nation › States › LGAs › Schools, with synthetic admin **polygons** (choropleths) **and** school **points**. |
 | 4 | Interactivity | **Faithful, fully baked, 2024 only.** No live selector now; reserve a top-right slot for a future year/scope filter. |
 | 5 | Drill-down | **Federal → State → LGA**, top-right scope navigator that **navigates between baked per-OU pages**; page body **compares sub-units** (children table + choropleth). |
-| 6 | Metrics | **All metrics are DHIS2 indicators.** Build **one real indicator** end-to-end now (numerator/denominator data elements → indicator); scale the rest by the same pattern later. |
+| 6 | Metrics | **Mix of raw-count data elements and DHIS2 indicators** (matching the source metadata: several tiles reference `DATA_ELEMENT` directly, others `INDICATOR`). Ratios/coverage are indicators. Build the count data elements **plus one real indicator** end-to-end now (numerator/denominator → indicator); scale the remaining indicators by the same pattern later. |
 | 7 | Indicator rule | Extract each indicator/value **at every level it is displayed** (Nation/State/LGA), read as-is — **never re-aggregate after calculation** (foundation hard rule). |
 | 8 | School type | Disaggregate by **Public / Private / Total**. |
 | 9 | Visual style | **Apache Superset look** for the viz (Inter font, white chart cards, Big-Number tiles + trendline, ECharts gauge, Superset categorical palette, data table with in-cell bars), under the green DNEMIS portal chrome. |
@@ -76,10 +76,11 @@ proves the swap-in-real-data story.
 
 ## Synthetic geography & data
 
-- **Hierarchy:** Nation (1) › ~6 **States** (2) › ~4 **LGAs** each (3) › ~12–15 **Schools**
-  each (4). ≈ 6 states, ≈ 24 LGAs, ≈ 300+ schools. Bounded so per-OU pages prerender cheaply
-  (~31 baked pages: 1 federal + 6 state + 24 LGA; school pages out of scope — LGA is the
-  deepest page, schools appear as the LGA page's child rows/points).
+- **Hierarchy (exact, deterministic):** Nation (1) › **6 States** (2) › **4 LGAs** each (3)
+  › **12 Schools** each (4) = 1 nation + 6 states + 24 LGAs + 288 schools. Bounded so per-OU
+  pages prerender cheaply: **31 baked pages** (1 federal + 6 state + 24 LGA). School pages are
+  out of scope — LGA is the deepest page; schools appear as the LGA page's child rows/points.
+  (Counts are fixed, not approximate, so prerender-completeness is unambiguous.)
 - **Geometry:** generated synthetically (no external boundary download): a tessellation of
   non-overlapping polygons over a Nigeria-like bounding box, partitioned Nation→State→LGA so
   child polygons nest in their parent; school **points** scattered within their LGA polygon.
@@ -155,8 +156,9 @@ proves the swap-in-real-data story.
 - Extractor unit tests already cover the generic path; add a fixture for the ASC config shape.
 - Build must complete with **no dangling internal links** (all state/LGA pages generated
   first).
-- Indicator correctness: spot-check that the Pupil–Teacher Ratio at Nation ≠ mean of State
-  values (proves DHIS2-side aggregation, not SQL re-aggregation).
+- Indicator correctness (canonical test): in the extracted `fact.csv`, the Pupil–Teacher
+  Ratio **Nation** row ≠ the unweighted mean of the **State** rows — proving the value was
+  aggregated by DHIS2 from numerator/denominator at each level, not re-averaged in SQL.
 - Final: `npm run deploy && npm run serve`; the Federal page and a drilled-in LGA page render
   and match the approved Superset mockup; maps + deep-links work; no DuckDB-WASM engine
   downloaded on baked pages.
