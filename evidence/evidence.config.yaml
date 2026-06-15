@@ -4,41 +4,43 @@ appearance:
 
 theme:
   colorPalettes:
+    # Apache Superset default categorical palette (cyan-led).
     default:
       light:
-        - "#236aa4"
-        - "#45a1bf"
-        - "#a5cdee"
-        - "#8dacbf"
-        - "#85c7c6"
-        - "#d2c6ac"
-        - "#f4b548"
-        - "#8f3d56"
-        - "#71b9f4"
-        - "#46a485"
+        - "#1FA8C9"
+        - "#454E7C"
+        - "#5AC189"
+        - "#FF7F44"
+        - "#E04355"
+        - "#FCC700"
+        - "#A868B7"
+        - "#3CCCCB"
+        - "#A38F79"
+        - "#8FD3E4"
       dark:
-        - "#236aa4"
-        - "#45a1bf"
-        - "#a5cdee"
-        - "#8dacbf"
-        - "#85c7c6"
-        - "#d2c6ac"
-        - "#f4b548"
-        - "#8f3d56"
-        - "#71b9f4"
-        - "#46a485"
+        - "#1FA8C9"
+        - "#454E7C"
+        - "#5AC189"
+        - "#FF7F44"
+        - "#E04355"
+        - "#FCC700"
+        - "#A868B7"
+        - "#3CCCCB"
+        - "#A38F79"
+        - "#8FD3E4"
   colorScales:
+    # Superset-ish sequential cyan for choropleths.
     default:
       light:
-        - "#ADD8E6"
-        - "#00008B"
+        - "#E6F4F8"
+        - "#176F87"
       dark:
-        - "#ADD8E6"
-        - "#00008B"
+        - "#E6F4F8"
+        - "#176F87"
   colors:
     primary:
-      light: "#2563eb"
-      dark: "#3b82f6"
+      light: "#1FA8C9"
+      dark: "#1FA8C9"
     accent:
       light: "#c2410c"
       dark: "#fdba74"
