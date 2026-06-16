@@ -1,11 +1,13 @@
 <script>
-	// Scope navigator: breadcrumb + cascading State / LGA selectors that navigate between
-	// baked pages (option value = target URL). No query() — pure navigation.
+	// Scope navigator: breadcrumb + always-visible, searchable State / LGA selectors that
+	// navigate between baked pages. LGA is disabled until a state is selected. No query().
 	export let title = '';
 	export let crumbs = [];      // [{name, link}] — current last (link null)
-	export let selectors = [];   // [{label, value (current url|''), options:[{name, link}]}]
-	export let year = '2024';
-	function go(e) { const v = e.target.value; if (v) window.location.assign(v); }
+	export let selectors = [];   // [{label, currentName, disabled, options:[{name, link}]}]
+	function pick(e, options) {
+		const o = options.find((o) => o.name === e.target.value);
+		if (o && o.link) window.location.assign(o.link);
+	}
 </script>
 
 <div class="subbar">
@@ -16,15 +18,20 @@
 		</div>
 	</div>
 	<div class="controls">
-		{#each selectors as s}
-			<label class="sel">
+		{#each selectors as s, i}
+			<label class="sel" class:disabled={s.disabled}>
 				<span class="lbl">{s.label}</span>
-				<select on:change={go}>
-					{#each s.options as o}<option value={o.link} selected={o.link === s.value}>{o.name}</option>{/each}
-				</select>
+				<input
+					list={'scopedl-' + i}
+					value={s.currentName}
+					placeholder={s.disabled ? 'select a state first' : 'type to search…'}
+					disabled={s.disabled}
+					on:change={(e) => pick(e, s.options)} />
+				<datalist id={'scopedl-' + i}>
+					{#each s.options as o}<option value={o.name}></option>{/each}
+				</datalist>
 			</label>
 		{/each}
-		<span class="pill year" title="Year filter coming soon">{year} (future)</span>
 	</div>
 </div>
 
@@ -37,7 +44,9 @@
 	.controls { display: flex; gap: 8px; align-items: flex-end; flex-wrap: wrap; }
 	.sel { display: flex; flex-direction: column; gap: 2px; font-size: 10.5px; color: #6b7872; }
 	.sel .lbl { text-transform: uppercase; letter-spacing: .6px; font-weight: 600; }
-	.sel select { font-size: 12.5px; padding: 6px 9px; border: 1px solid #bfe0cd; border-radius: 7px; background: #eaf5ee; color: #0a3d2c; font-weight: 600; min-width: 150px; }
-	.pill.year { align-self: flex-end; font-size: 12px; padding: 7px 11px; border-radius: 7px; background: #fff; border: 1px dashed #cdd3cf; color: #aab3ad; font-weight: 500; }
-	:global(.dark) .sel select { background: #14321f; border-color: #1f5b38; color: #a7f3c8; }
+	.sel input { font-size: 12.5px; padding: 6px 9px; border: 1px solid #bfe0cd; border-radius: 7px; background: #eaf5ee; color: #0a3d2c; font-weight: 600; min-width: 170px; }
+	.sel input::placeholder { color: #8fb3a0; font-weight: 400; }
+	.sel.disabled input { background: #f3f4f6; border-color: #e0e0e0; color: #aab3ad; cursor: not-allowed; }
+	:global(.dark) .sel input { background: #14321f; border-color: #1f5b38; color: #a7f3c8; }
+	:global(.dark) .sel.disabled input { background: #27272a; border-color: #3f3f46; }
 </style>

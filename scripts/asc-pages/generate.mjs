@@ -22,11 +22,13 @@ const linkFor = (o) => (o.id === ROOT ? '/' : `/asc/${o.level === '2' ? 'state' 
 const childrenOf = (id) => ou.filter((o) => o.parent_id === id).sort((a, b) => a.name.localeCompare(b.name));
 
 const states = childrenOf(ROOT).map((s) => ({ name: s.name, link: linkFor(s) }));
-const stateSelector = (currentLink) => ({ label: 'State', value: currentLink, options: [{ name: 'Nigeria (all states)', link: '/' }, ...states] });
-const lgaSelector = (stateId, currentLink) => ({
-  label: 'LGA', value: currentLink,
-  options: [{ name: 'Select an LGA…', link: '' }, ...childrenOf(stateId).map((l) => ({ name: l.name, link: linkFor(l) }))],
-});
+const stateOptions = [{ name: 'Nigeria (all states)', link: '/' }, ...states];
+const stateSelector = (currentName) => ({ label: 'State', currentName, disabled: false, options: stateOptions });
+// LGA selector: disabled (empty) until a state is chosen; otherwise that state's LGAs.
+const lgaSelector = (stateId, currentName) =>
+  stateId
+    ? { label: 'LGA', currentName, disabled: false, options: childrenOf(stateId).map((l) => ({ name: l.name, link: linkFor(l) })) }
+    : { label: 'LGA', currentName: '', disabled: true, options: [] };
 
 const crumbsOf = (o) => {
   const chain = []; let c = o;
@@ -42,16 +44,16 @@ for (const o of ou) {
   if (!inOurTree(o)) continue;
   const crumbs = crumbsOf(o);
   if (o.level === '1') {
-    const selectors = [stateSelector('/')];
+    const selectors = [stateSelector(''), lgaSelector(null, '')];
     writeFileSync('evidence/pages/index.md', page({ ou: o, crumbs, selectors, leaf: false, childLevel: 'State', childLinkPrefix: '/asc/state-' }));
     n++;
   } else if (o.level === '2') {
-    const selectors = [stateSelector(linkFor(o)), lgaSelector(o.id, '')];
+    const selectors = [stateSelector(o.name), lgaSelector(o.id, '')];
     writeFileSync(`evidence/pages/asc/state-${o.id}.md`, page({ ou: o, crumbs, selectors, leaf: false, childLevel: 'LGA', childLinkPrefix: '/asc/lga-' }));
     n++;
   } else if (o.level === '3') {
     const parent = byId[o.parent_id];
-    const selectors = [stateSelector(linkFor(parent)), lgaSelector(parent.id, linkFor(o))];
+    const selectors = [stateSelector(parent.name), lgaSelector(parent.id, o.name)];
     writeFileSync(`evidence/pages/asc/lga-${o.id}.md`, page({ ou: o, crumbs, selectors, leaf: true }));
     n++;
   }

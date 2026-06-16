@@ -93,12 +93,12 @@ const DNEMIS_NAV = `<div slot="content">
 		<div class="dnemis-header">
 			<div class="dnemis-brand"><span class="crest">🇳🇬</span><div><div class="dt">DNEMIS</div><div class="ds">Enhancing Education for a Brighter Future</div></div></div>
 			<nav class="dnemis-nav">
-				<a class="mod active" href="/">📊 Annual School Census</a>
-				<a class="mod" href="https://nlin.education.gov.ng/dhis" target="_blank" rel="noopener">🎓 Learner Registry</a>
-				<a class="mod" href="https://sites.google.com/view/nemisknowledgebase/" target="_blank" rel="noopener">📚 Knowledge Base</a>
-				<a class="mod" href="https://asc.education.gov.ng" target="_blank" rel="noopener">🛡️ Safe Schools</a>
-				<a class="mod" href="https://collect.ncaoosce.gov.ng" target="_blank" rel="noopener">🛡️ NCAOOSCE</a>
-				<a class="mod" href="https://nimebss.vercel.app" target="_blank" rel="noopener">🛡️ School Grading</a>
+				<a class="mod active" href="/"><i class="fa-solid fa-chart-column"></i>Annual School Census</a>
+				<a class="mod" href="https://nlin.education.gov.ng/dhis" target="_blank" rel="noopener"><i class="fa-solid fa-graduation-cap"></i>Learner Registry</a>
+				<a class="mod" href="https://sites.google.com/view/nemisknowledgebase/" target="_blank" rel="noopener"><i class="fa-solid fa-book-open"></i>Knowledge Base</a>
+				<a class="mod" href="https://asc.education.gov.ng" target="_blank" rel="noopener"><i class="fa-solid fa-shield-halved"></i>Safe Schools</a>
+				<a class="mod" href="https://collect.ncaoosce.gov.ng" target="_blank" rel="noopener"><i class="fa-solid fa-people-roof"></i>NCAOOSCE</a>
+				<a class="mod" href="https://nimebss.vercel.app" target="_blank" rel="noopener"><i class="fa-solid fa-ranking-star"></i>School Grading</a>
 			</nav>
 		</div>
 		<slot />
@@ -116,6 +116,7 @@ const DNEMIS_STYLE = `</EvidenceDefaultLayout>
 <svelte:head>
 	<link rel="preconnect" href="https://fonts.googleapis.com" />
 	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
 </svelte:head>
 
 <style>
@@ -126,7 +127,8 @@ const DNEMIS_STYLE = `</EvidenceDefaultLayout>
 	.dt { font-weight: 800; font-size: 20px; letter-spacing: .5px; }
 	.ds { font-size: 11px; opacity: .82; font-weight: 300; }
 	.dnemis-nav { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; }
-	.mod { background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.14); border-radius: 8px; padding: 10px 8px; text-align: center; font-size: 12px; font-weight: 500; color: #fff; text-decoration: none; line-height: 1.3; transition: background .15s; }
+	.mod { background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.14); border-radius: 8px; padding: 12px 8px; text-align: center; font-size: 12px; font-weight: 500; color: #fff; text-decoration: none; line-height: 1.3; transition: background .15s; }
+	.mod i { display: block; font-size: 18px; margin-bottom: 6px; opacity: .9; }
 	.mod.active { background: #1a9c5b; border-color: #1a9c5b; font-weight: 700; }
 	.mod:hover { background: rgba(255,255,255,.18); }
 	@media (max-width: 700px) { .dnemis-nav { grid-template-columns: repeat(2, 1fr); } }
