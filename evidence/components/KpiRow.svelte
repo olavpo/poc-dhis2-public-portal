@@ -3,6 +3,7 @@
 	// baked in as props (Total from fact; Public/Private from the Ownership group-set cut);
 	// switching is client-side only — no query(), pages stay engine-free.
 	import SupersetBigNumber from './SupersetBigNumber.svelte';
+	import OrgSearch from './OrgSearch.svelte';
 
 	export let total = [];   // [{dx, value}]
 	export let pub = [];     // [{dx, category_name, value}] Public rows
@@ -24,10 +25,13 @@
 	$: shown = kpis.map((k) => ({ title: k.title, icon: k.icon || '', fmt: FMT[k.fmt] || FMT.int, data: rows.filter((r) => r.dx === k.dx) }));
 </script>
 
-<div class="ownbar">
-	<span class="lbl">School ownership</span>
-	<div class="seg">
-		{#each MODES as m}<button class:on={mode === m.k} on:click={() => (mode = m.k)}>{m.label}</button>{/each}
+<div class="controlbar">
+	<OrgSearch />
+	<div class="own">
+		<span class="lbl">School ownership</span>
+		<div class="seg">
+			{#each MODES as m}<button class:on={mode === m.k} on:click={() => (mode = m.k)}>{m.label}</button>{/each}
+		</div>
 	</div>
 </div>
 
@@ -38,10 +42,11 @@
 </div>
 
 <style>
-	.ownbar { display: flex; align-items: center; gap: 10px; margin: 0 0 10px; }
-	.ownbar .lbl { font-size: 10.5px; text-transform: uppercase; letter-spacing: .6px; font-weight: 600; color: #6b7872; }
-	.seg { display: inline-flex; border: 1px solid #d7dee2; border-radius: 8px; overflow: hidden; }
-	.seg button { border: none; background: #fff; padding: 6px 14px; font-size: 12px; font-weight: 600; color: #5a6b73; cursor: pointer; border-right: 1px solid #e7ecee; }
+	.controlbar { display: flex; align-items: flex-end; gap: 18px; flex-wrap: wrap; margin: 0 0 12px; }
+	.own { display: flex; flex-direction: column; gap: 3px; }
+	.own .lbl { font-size: 10.5px; text-transform: uppercase; letter-spacing: .6px; font-weight: 700; color: #6b7872; }
+	.seg { display: inline-flex; height: 34px; border: 1px solid #d7dee2; border-radius: 8px; overflow: hidden; }
+	.seg button { border: none; background: #fff; padding: 0 16px; font-size: 12.5px; font-weight: 600; color: #5a6b73; cursor: pointer; border-right: 1px solid #e7ecee; }
 	.seg button:last-child { border-right: none; }
 	.seg button.on { background: #1a9c5b; color: #fff; }
 	.kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }

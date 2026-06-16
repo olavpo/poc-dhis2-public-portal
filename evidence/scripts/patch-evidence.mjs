@@ -86,20 +86,12 @@ patch(
   'layout: full width + no Evidence header/sidebar/TOC (DNEMIS bar is the chrome)',
 );
 
-// DNEMIS module nav: a prominent green header with the six emis.education.gov.ng module
-// links (ASC active, the rest external) injected at the top of the content slot on every
-// page. Static markup — no props, no engine.
+// DNEMIS header: a slim green title bar (crest + "Education Statistics") injected at the top
+// of the content slot on every page. No module-link buttons. Static markup — no props.
 const DNEMIS_NAV = `<div slot="content">
 		<div class="dnemis-header">
-			<div class="dnemis-brand"><span class="crest"><i class="fa-solid fa-landmark"></i></span><div><div class="dt">DNEMIS</div><div class="ds">Enhancing Education for a Brighter Future</div></div></div>
-			<nav class="dnemis-nav">
-				<a class="mod active" href="/"><i class="fa-solid fa-chart-column"></i>Annual School Census</a>
-				<a class="mod" href="https://nlin.education.gov.ng/dhis" target="_blank" rel="noopener"><i class="fa-solid fa-graduation-cap"></i>Learner Registry</a>
-				<a class="mod" href="https://sites.google.com/view/nemisknowledgebase/" target="_blank" rel="noopener"><i class="fa-solid fa-book-open"></i>Knowledge Base</a>
-				<a class="mod" href="https://asc.education.gov.ng" target="_blank" rel="noopener"><i class="fa-solid fa-shield-halved"></i>Safe Schools</a>
-				<a class="mod" href="https://collect.ncaoosce.gov.ng" target="_blank" rel="noopener"><i class="fa-solid fa-people-roof"></i>NCAOOSCE</a>
-				<a class="mod" href="https://nimebss.vercel.app" target="_blank" rel="noopener"><i class="fa-solid fa-ranking-star"></i>School Grading</a>
-			</nav>
+			<span class="crest"><i class="fa-solid fa-landmark"></i></span>
+			<div><div class="dt">Education Statistics</div><div class="ds">DNEMIS · Federal Ministry of Education, Nigeria</div></div>
 		</div>
 		<slot />
 	</div>`;
@@ -121,17 +113,14 @@ const DNEMIS_STYLE = `</EvidenceDefaultLayout>
 
 <style>
 	:global(body) { font-family: 'Inter', system-ui, -apple-system, sans-serif; }
-	.dnemis-header { background: linear-gradient(135deg, #0a3d2c, #0e5638); color: #fff; padding: 16px 20px; border-radius: 10px; margin: 0 0 18px; }
-	.dnemis-brand { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
-	.crest { font-size: 22px; width: 42px; height: 42px; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #2fae6e, #0a3d2c); display: flex; align-items: center; justify-content: center; border: 2px solid rgba(255,255,255,.35); }
-	.dt { font-weight: 800; font-size: 20px; letter-spacing: .5px; }
+	/* Hide Evidence's auto page-title H1 — the portal title lives in the green header and the
+	   current org unit is shown by the breadcrumb, so the frontmatter title (browser tab only)
+	   shouldn't repeat as a heading. */
+	:global(h1.title) { display: none; }
+	.dnemis-header { background: linear-gradient(135deg, #0a3d2c, #0e5638); color: #fff; padding: 10px 16px; border-radius: 10px; margin: 0 0 16px; display: flex; align-items: center; gap: 12px; }
+	.crest { font-size: 18px; width: 36px; height: 36px; flex: none; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #2fae6e, #0a3d2c); display: flex; align-items: center; justify-content: center; border: 2px solid rgba(255,255,255,.35); }
+	.dt { font-weight: 800; font-size: 18px; letter-spacing: .4px; line-height: 1.1; }
 	.ds { font-size: 11px; opacity: .82; font-weight: 300; }
-	.dnemis-nav { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; }
-	.mod { background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.14); border-radius: 8px; padding: 12px 8px; text-align: center; font-size: 12px; font-weight: 500; color: #fff; text-decoration: none; line-height: 1.3; transition: background .15s; }
-	.mod i { display: block; font-size: 18px; margin-bottom: 6px; opacity: .9; }
-	.mod.active { background: #1a9c5b; border-color: #1a9c5b; font-weight: 700; }
-	.mod:hover { background: rgba(255,255,255,.18); }
-	@media (max-width: 700px) { .dnemis-nav { grid-template-columns: repeat(2, 1fr); } }
 </style>`;
 patch(
   'src/pages/+layout.svelte',

@@ -28,10 +28,24 @@ const SEX_LEVEL_WHENS = LEVELS.map((lv, i) => `when '${lv.boys}' then '${i + 1} 
 const SEX_SEX_WHENS = LEVELS.map((lv) => `when '${lv.boys}' then 'Boys' when '${lv.girls}' then 'Girls'`).join(' ');
 const SEX_IDS = LEVELS.flatMap((lv) => [`'${lv.boys}'`, `'${lv.girls}'`]).join(',');
 
-function head(ou, crumbs, selectors) {
+// Benchmark indicators (all GEN, all extracted) for the unit-vs-Federal comparison table.
+// (learner-classroom and usable-toilet-% have no matching indicator in the metadata.)
+const BENCH = [
+  { dx: 'eie1tIO5HtX', label: 'Pupil–teacher ratio', fmt: 'ratio' },
+  { dx: 'uWkPykwyYn2', label: 'Pupil–toilet ratio', fmt: 'ratio' },
+  { dx: 'XhYKabiEAnj', label: 'Pupil–computer ratio', fmt: 'ratio' },
+  { dx: 'cbeoGyJDnv5', label: 'Pupil–non-teaching-staff ratio', fmt: 'ratio' },
+  { dx: 'Nc9bgbCb6eO', label: 'Female learners (%)', fmt: 'pct' },
+];
+
+function head(ou, crumbs, federalId, unitLabel) {
   const dxList = `'${I.enrol}','${I.teachers}','${I.ptr}','${I.female}'`;
+  const benchOrd = BENCH.map((b, i) => `when '${b.dx}' then ${i + 1}`).join(' ');
+  const benchLbl = BENCH.map((b) => `when '${b.dx}' then '${b.label}'`).join(' ');
+  const benchFmt = BENCH.map((b) => `when '${b.dx}' then '${b.fmt}'`).join(' ');
+  const benchIds = BENCH.map((b) => `'${b.dx}'`).join(',');
   return `---
-title: Annual School Census
+title: ${ou.name}
 ---
 
 \`\`\`sql kpis_total
@@ -49,7 +63,19 @@ select dx, value from census.fact_ownership
 where ou = '${ou.id}' and periodType = 'YEARLY' and pe = '2025' and category_name like 'Private%' and dx in (${dxList})
 \`\`\`
 
-<ScopeNav crumbs={${JSON.stringify(crumbs)}} selectors={${JSON.stringify(selectors)}} />
+\`\`\`sql benchmark
+select
+  case dx ${benchOrd} end as ord,
+  case dx ${benchLbl} end as indicator,
+  case dx ${benchFmt} end as fmt,
+  max(case when ou = '${ou.id}' then value end) as unit,
+  max(case when ou = '${federalId}' then value end) as federal
+from census.fact
+where ou in ('${ou.id}', '${federalId}') and periodType = 'YEARLY' and pe = '2025' and dx in (${benchIds})
+group by dx, ord, indicator, fmt order by ord
+\`\`\`
+
+<ScopeNav crumbs={${JSON.stringify(crumbs)}} />
 
 <KpiRow total={kpis_total} pub={kpis_public} priv={kpis_private}
   kpis={[
@@ -58,6 +84,10 @@ where ou = '${ou.id}' and periodType = 'YEARLY' and pe = '2025' and category_nam
     {dx:'${I.ptr}',title:'Pupil–teacher ratio',fmt:'ratio',icon:'fa-solid fa-scale-balanced'},
     {dx:'${I.female}',title:'Female learners (%)',fmt:'pct',icon:'fa-solid fa-venus'}
   ]} />
+
+## Key indicators vs Federal
+
+<Benchmark rows={benchmark} unitLabel="${unitLabel}" />
 `;
 }
 
@@ -86,15 +116,15 @@ where ou = '${ou.id}' and dx = '${I.enrol}' and periodType = 'YEARLY' and pe = '
 \`\`\`
 ${withMap ? `
 \`\`\`sql children_map
-select o.id, o.name, f.value, '${childLinkPrefix}' || o.id as link
+select o.id, o.name, f.value as learners, '${childLinkPrefix}' || o.id as link
 from census.fact f join census.ou o on f.ou = o.id
-where o.parent_id = '${ou.id}' and f.dx = '${I.ptr}' and f.periodType = 'YEARLY' and f.pe = '2025'
+where o.parent_id = '${ou.id}' and f.dx = '${I.enrol}' and f.periodType = 'YEARLY' and f.pe = '2025'
 \`\`\`
 ` : ''}
 ## Charts
 
 <Grid cols=2>
-${withMap ? `  <AreaMap data={children_map} geoJsonUrl="${geoUrl}" geoId="id" areaCol="id" value="value" link="link" title="Tap a sub-unit to drill down · pupil–teacher ratio" tooltip={[{id:'name',showColumnTitles:false},{id:'value',fmt:'num1'}]} height={300} />\n` : ''}  <BarChart data={enrol_by_level} x=level y=enrolment title="Enrolment by education level" swapXY=true />
+${withMap ? `  <AreaMap data={children_map} geoJsonUrl="${geoUrl}" geoId="id" areaCol="id" value="learners" link="link" title="Learners by sub-unit · tap to drill down" tooltip={[{id:'name',showColumnTitles:false},{id:'learners',fmt:'#,##0'}]} height={300} />\n` : ''}  <BarChart data={enrol_by_level} x=level y=enrolment title="Enrolment by education level" swapXY=true />
   <BarChart data={sex_by_level} x=level y=learners series=sex type=grouped title="Learners by sex & level" swapXY=true />
   <OwnershipDonut data={ownership_enrol} />
 </Grid>
@@ -140,6 +170,6 @@ _This is the lowest level of detail in the portal — no ward- or school-level d
 `;
 }
 
-export function page({ ou, crumbs, selectors, leaf, childLevel, childLinkPrefix, geoUrl }) {
-  return head(ou, crumbs, selectors) + (leaf ? leafSection(ou) : branchSection(ou, childLevel, childLinkPrefix, geoUrl));
+export function page({ ou, crumbs, leaf, childLevel, childLinkPrefix, geoUrl, federalId, unitLabel }) {
+  return head(ou, crumbs, federalId, unitLabel) + (leaf ? leafSection(ou) : branchSection(ou, childLevel, childLinkPrefix, geoUrl));
 }
