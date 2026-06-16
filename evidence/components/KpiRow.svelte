@@ -21,7 +21,7 @@
 	const MODES = [{ k: 'total', label: 'Total' }, { k: 'public', label: 'Public' }, { k: 'private', label: 'Private' }];
 	$: rows = mode === 'public' ? pub : mode === 'private' ? priv : total;
 	// reactive (recomputes on mode change) — a plain function call wouldn't re-run per tile
-	$: shown = kpis.map((k) => ({ title: k.title, fmt: FMT[k.fmt] || FMT.int, data: rows.filter((r) => r.dx === k.dx) }));
+	$: shown = kpis.map((k) => ({ title: k.title, icon: k.icon || '', fmt: FMT[k.fmt] || FMT.int, data: rows.filter((r) => r.dx === k.dx) }));
 </script>
 
 <div class="ownbar">
@@ -33,7 +33,7 @@
 
 <div class="kpis">
 	{#each shown as k}
-		<SupersetBigNumber title={k.title} data={k.data} value="value" fmt={k.fmt} />
+		<SupersetBigNumber title={k.title} icon={k.icon} data={k.data} value="value" fmt={k.fmt} />
 	{/each}
 </div>
 
@@ -43,9 +43,10 @@
 	.seg { display: inline-flex; border: 1px solid #d7dee2; border-radius: 8px; overflow: hidden; }
 	.seg button { border: none; background: #fff; padding: 6px 14px; font-size: 12px; font-weight: 600; color: #5a6b73; cursor: pointer; border-right: 1px solid #e7ecee; }
 	.seg button:last-child { border-right: none; }
-	.seg button.on { background: #1FA8C9; color: #fff; }
+	.seg button.on { background: #1a9c5b; color: #fff; }
 	.kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
-	@media (max-width: 800px) { .kpis { grid-template-columns: repeat(2, 1fr); } }
+	@media (max-width: 820px) { .kpis { grid-template-columns: repeat(2, 1fr); } }
+	@media (max-width: 480px) { .kpis { grid-template-columns: 1fr; } }
 	:global(.dark) .seg button { background: #18181b; color: #a1a1aa; border-color: #3f3f46; }
-	:global(.dark) .seg button.on { background: #1FA8C9; color: #fff; }
+	:global(.dark) .seg button.on { background: #1a9c5b; color: #fff; }
 </style>
