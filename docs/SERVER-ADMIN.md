@@ -30,7 +30,7 @@ Extract it to your web root, e.g. `/var/www/asc-portal`.
 
 | Need | Why |
 |---|---|
-| Serve **precompressed `.br` / `.gz`** when present | Assets ship pre-Brotli/Gzip'd (e.g. the 33 MB DuckDB engine → 5.6 MB). Don't re-compress on the fly. |
+| Serve **precompressed `.gz`** (and `.br` if available) | Assets ship pre-Gzip'd **and** pre-Brotli'd. `gzip_static on;` alone is enough (e.g. the 33 MB DuckDB engine → 7.3 MB gzip / 5.6 MB brotli). Don't re-compress on the fly. |
 | **SPA fallback to `/200.html`** | Safety net for any deep link the prerender didn't emit. |
 | Correct **`application/wasm`** MIME for `.wasm` | The engine binary must load with the right type. |
 | **HTTP range requests** | Standard; on by default in nginx/Apache. |
@@ -51,9 +51,10 @@ server {
 
     # ssl_certificate ... ; ssl_certificate_key ... ;   # your TLS certs
 
-    # Serve the precompressed copies that ship with the build
-    brotli_static on;        # requires ngx_brotli; if unavailable, omit this line
-    gzip_static on;
+    # Serve the precompressed copies that ship with the build.
+    # The build ships BOTH .gz and .br for every asset, so gzip alone is fully sufficient:
+    gzip_static on;          # serves the .gz copies (no on-the-fly compression needed)
+    # brotli_static on;      # optional — only if your nginx has the ngx_brotli module
 
     # Correct MIME for the WASM engine
     types { application/wasm wasm; }
@@ -101,7 +102,7 @@ FallbackResource /200.html
 ```bash
 curl -I https://asc.example.gov.ng/                       # 200, text/html
 curl -I https://asc.example.gov.ng/asc.geojson            # 200
-curl -s -H 'Accept-Encoding: br' -I https://asc.example.gov.ng/_app/immutable/assets/*.wasm | grep -i content-encoding   # br
+curl -s -H 'Accept-Encoding: gzip' -I "https://asc.example.gov.ng/_app/immutable/assets/<engine>.wasm" | grep -i content-encoding   # gzip
 ```
 
 Then open the site: the green DNEMIS bar with module links, KPI cards, a State map, and a
