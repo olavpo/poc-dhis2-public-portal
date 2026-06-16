@@ -13,7 +13,7 @@ evidence/sources/**/*.duckdb
 # Local extract / data output
 data/
 
-# DHIS2 extractor output (regenerate with `npm run extract:anc`)
+# DHIS2 extractor output (regenerate with `npm run extract:anc` / `extract:asc`)
 evidence/sources/anc/*.csv
 evidence/sources/anc/*.geojson
 evidence/static/anc.geojson
@@ -34,3 +34,4 @@ evidence/package-lock.json
 
 # Packaged site artifact (rebuild with npm run build && deploy)
 *.tar.gz
+*.zip
