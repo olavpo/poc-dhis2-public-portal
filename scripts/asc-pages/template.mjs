@@ -22,29 +22,35 @@ const LEVELS = [
 ];
 
 function head(ou, crumbs, selectors) {
+  const dxList = `'${I.enrol}','${I.teachers}','${I.ptr}','${I.female}'`;
   return `---
-title: ${ou.name} — Annual School Census
+title: Annual School Census
 ---
 
-\`\`\`sql kpis
+\`\`\`sql kpis_total
 select dx, value from census.fact
-where ou = '${ou.id}' and periodType = 'YEARLY' and pe = '2024'
-  and dx in ('${I.enrol}','${I.teachers}','${I.ptr}','${I.female}')
+where ou = '${ou.id}' and periodType = 'YEARLY' and pe = '2024' and dx in (${dxList})
 \`\`\`
 
-\`\`\`sql enrol_trend
-select pe, value from census.fact
-where ou = '${ou.id}' and dx = '${I.enrol}' and periodType = 'YEARLY' order by pe
+\`\`\`sql kpis_public
+select dx, value from census.fact_ownership
+where ou = '${ou.id}' and periodType = 'YEARLY' and pe = '2024' and category_name like 'Public%' and dx in (${dxList})
 \`\`\`
 
-<ScopeNav title="${ou.name}" crumbs={${JSON.stringify(crumbs)}} selectors={${JSON.stringify(selectors)}} />
+\`\`\`sql kpis_private
+select dx, value from census.fact_ownership
+where ou = '${ou.id}' and periodType = 'YEARLY' and pe = '2024' and category_name like 'Private%' and dx in (${dxList})
+\`\`\`
 
-<Grid cols=4>
-  <SupersetBigNumber title="Total learners" data={kpis.filter(r=>r.dx==='${I.enrol}')} value=value trend={enrol_trend.map(r=>r.value)} />
-  <SupersetBigNumber title="Teachers" data={kpis.filter(r=>r.dx==='${I.teachers}')} value=value />
-  <SupersetBigNumber title="Pupil–teacher ratio" data={kpis.filter(r=>r.dx==='${I.ptr}')} value=value fmt={v=>Number(v).toFixed(1)} />
-  <SupersetBigNumber title="Female learners (%)" data={kpis.filter(r=>r.dx==='${I.female}')} value=value fmt={v=>Number(v).toFixed(1)+'%'} />
-</Grid>
+<ScopeNav crumbs={${JSON.stringify(crumbs)}} selectors={${JSON.stringify(selectors)}} />
+
+<KpiRow total={kpis_total} pub={kpis_public} priv={kpis_private}
+  kpis={[
+    {dx:'${I.enrol}',title:'Total learners',fmt:'int'},
+    {dx:'${I.teachers}',title:'Teachers',fmt:'int'},
+    {dx:'${I.ptr}',title:'Pupil–teacher ratio',fmt:'ratio'},
+    {dx:'${I.female}',title:'Female learners (%)',fmt:'pct'}
+  ]} />
 `;
 }
 

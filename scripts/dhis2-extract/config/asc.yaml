@@ -10,5 +10,7 @@ periods:
 disaggregations:
   - dim: OwnSetTst01          # "Ownership (test)" org-unit group set (Public / Private)
     slug: ownership
-    dx: [jwjKmtVK2wj, Dw7f4gs9RcS, eie1tIO5HtX, DiEriq7urPG, d8qCE7aPWtD, wDf8ZOwWgib]
+    # the 4 GEN KPI indicators (enrolment, teachers, pupil-teacher ratio, female %) —
+    # the KPI row offers a Total/Public/Private toggle off this cut.
+    dx: [jwjKmtVK2wj, Dw7f4gs9RcS, eie1tIO5HtX, Nc9bgbCb6eO]
     ouLevels: [1, 2, 3]
