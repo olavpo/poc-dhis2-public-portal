@@ -4,43 +4,39 @@ appearance:
 
 theme:
   colorPalettes:
-    # Apache Superset default categorical palette (cyan-led).
+    # Nigeria-green-anchored categorical palette (matches the DNEMIS chrome).
     default:
       light:
-        - "#1FA8C9"
-        - "#454E7C"
-        - "#5AC189"
-        - "#FF7F44"
-        - "#E04355"
-        - "#FCC700"
-        - "#A868B7"
-        - "#3CCCCB"
-        - "#A38F79"
-        - "#8FD3E4"
+        - "#1a9c5b"
+        - "#f4a261"
+        - "#2a6f97"
+        - "#e76f51"
+        - "#8a5a83"
+        - "#e9c46a"
+        - "#0e7c4a"
+        - "#7fc99b"
       dark:
-        - "#1FA8C9"
-        - "#454E7C"
-        - "#5AC189"
-        - "#FF7F44"
-        - "#E04355"
-        - "#FCC700"
-        - "#A868B7"
-        - "#3CCCCB"
-        - "#A38F79"
-        - "#8FD3E4"
+        - "#1a9c5b"
+        - "#f4a261"
+        - "#2a6f97"
+        - "#e76f51"
+        - "#8a5a83"
+        - "#e9c46a"
+        - "#0e7c4a"
+        - "#7fc99b"
   colorScales:
-    # Superset-ish sequential cyan for choropleths.
+    # Green sequential scale for choropleths.
     default:
       light:
-        - "#E6F4F8"
-        - "#176F87"
+        - "#e6f4ec"
+        - "#0a3d2c"
       dark:
-        - "#E6F4F8"
-        - "#176F87"
+        - "#e6f4ec"
+        - "#0a3d2c"
   colors:
     primary:
-      light: "#1FA8C9"
-      dark: "#1FA8C9"
+      light: "#1a9c5b"
+      dark: "#1a9c5b"
     accent:
       light: "#c2410c"
       dark: "#fdba74"
