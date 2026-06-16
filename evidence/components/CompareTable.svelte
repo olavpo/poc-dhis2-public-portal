@@ -1,20 +1,18 @@
 <script>
-	// Presentational compare table (Superset look) with Pre-Prim/Primary ↔ JSS tabs,
-	// in-cell bars, and child-linking first column. Data is baked in as props; no query().
-	export let preprimary = [];   // rows: {ou_name, link, ...metric cols}
-	export let jss = [];
-	export let columns = [];      // [{key, label, bar?}]
-	export let linkCol = 'link';  // url column for the first cell
-	let tab = 'pre';
-	$: rows = tab === 'pre' ? preprimary : jss;
+	// Presentational compare table (Superset look) with one tab per education level,
+	// in-cell bars, and a child-linking first column. Baked data via props; no query().
+	export let tabs = [];        // [{label, rows:[{ou_name, link, ...metric cols}]}]
+	export let columns = [];     // [{key, label, bar?}]
+	export let linkCol = 'link'; // url column for the first cell
+	let active = 0;
+	$: rows = tabs[active]?.rows ?? [];
 	$: barMax = (k) => Math.max(1, ...rows.map((r) => Number(r[k]) || 0));
 	const num = (v) => (v == null ? '' : Number(v).toLocaleString('en-US', { maximumFractionDigits: 1 }));
 </script>
 
 <div class="wrap">
 	<div class="tabs">
-		<button class:on={tab === 'pre'} on:click={() => (tab = 'pre')}>Pre-Primary / Primary</button>
-		<button class:on={tab === 'jss'} on:click={() => (tab = 'jss')}>Junior Secondary</button>
+		{#each tabs as t, i}<button class:on={i === active} on:click={() => (active = i)}>{t.label}</button>{/each}
 	</div>
 	<table>
 		<thead><tr><th>Org unit</th>{#each columns as c}<th>{c.label}</th>{/each}</tr></thead>
@@ -32,6 +30,7 @@
 </div>
 
 <style>
+	.tabs { display: flex; flex-wrap: wrap; gap: 2px; }
 	.tabs button { font-size: 12px; padding: 8px 14px; border: none; background: none; font-weight: 600; color: #879399; border-bottom: 2px solid transparent; cursor: pointer; }
 	.tabs button.on { color: #1FA8C9; border-bottom-color: #1FA8C9; }
 	table { width: 100%; border-collapse: collapse; font-size: 11.5px; }

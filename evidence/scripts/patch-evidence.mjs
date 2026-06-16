@@ -82,8 +82,8 @@ patch(
 patch(
   'src/pages/+layout.svelte',
   '<EvidenceDefaultLayout {data}>',
-  '<EvidenceDefaultLayout {data} fullWidth={true} builtWithEvidence={false} lightLogo={"/dhis2-logo.svg"} darkLogo={"/dhis2-logo-dark.svg"}>',
-  'layout: full width + DHIS2 logo + no Evidence footer',
+  '<EvidenceDefaultLayout {data} fullWidth={true} hideHeader={true} hideSidebar={true} hideTOC={true} hideBreadcrumbs={true} builtWithEvidence={false}>',
+  'layout: full width + no Evidence header/sidebar/TOC (DNEMIS bar is the chrome)',
 );
 
 // DNEMIS module nav: a prominent green header with the six emis.education.gov.ng module
