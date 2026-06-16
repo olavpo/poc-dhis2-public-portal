@@ -1,14 +1,14 @@
-# Annual School Census extract from agent-asc-ind. Real by-level ASC indicators over a
-# synthetic Nigeria geography (Nation/State/LGA) with dummy 2023/2024 values; schools are
-# invisible data leaves and are NOT extracted (ouLevels stops at 3). Auth via env
-# DHIS2_USERNAME / DHIS2_PASSWORD.
-baseUrl: http://dhis2-agent-asc-ind:8080
+# Annual School Census extract from agent-emis-ng — the real Nigeria EMIS instance:
+# real metadata + test data + boundary geometry to LGA (Federal=1 / State=2 / LGA=3;
+# Ward/School below are NOT extracted, ouLevels stops at 3). Reference year 2025 (the
+# year the test data covers). Auth via env DHIS2_USERNAME / DHIS2_PASSWORD.
+baseUrl: http://dhis2-agent-emis-ng:8080
 dx: [DiEriq7urPG,L7wp6IPJGhV,NnvopxD62MT,QZl1LOTpSat,i8mFzOkO9Wi,Rszp9Ippq5N,pc4DSr5MyOC,Sydf7CTCFuC,Qsgrw7qe8cC,d8qCE7aPWtD,yjH9LAuAMrk,Qwjg1QG0Hws,JH1hYfoV2hb,uNvBLdtslJ5,Mmn0SEDyzOC,DANh9bP86R9,uXpZ0iaeH4P,QETjPTty02O,aX6SpmH2icc,zGdBeuyjOeQ,wDf8ZOwWgib,gAfSf7sfxib,uSfibhbGRT1,nghVrzkls6X,Yf6K5jD4oED,bCMrPV3785Y,eLOZ1cSBHJM,AoOq7RrHxMr,CEgyg6JJbNv,IYNEmLyFgbe,i8dMJSyq5hO,vZA5RaodnuH,jWEK2IgsZXZ,Y8uv3HrDDcF,X4cRpKnxayU,Bp8XVbKSqVX,yVJPz2WzrgH,AtbaZYTP7Xl,g1ozV2n8G88,kxJmBoDtD9t,VzPMQzTjenn,dRBLKPEMR80,mHzRpEIsf3n,kitIA5LU69N,jRh7NbBDdJI,GSJ3jeCZNsD,VAnbcYjaaZ4,lBfQKjSIx0P,nK3E5siSgHS,jwjKmtVK2wj,zKAZUEGYL52,HxRedgvSK2M,Nc9bgbCb6eO,Dw7f4gs9RcS,XZEG3yT7WmJ,Exv6Kz1TXmJ,eie1tIO5HtX,bWPz06oFs5q,cbeoGyJDnv5,io4yQysi8jU,jox8QDbnBV3,DvMfSq5pZSA,vDmeu4io2Fs,uWkPykwyYn2,DydalnMqg5w,XhYKabiEAnj,q9E9FifnCzE]
 ouLevels: [1, 2, 3]
 periods:
-  list: ['2023', '2024']
+  list: ['2025']
 disaggregations:
-  - dim: OwnSetTst01          # "Ownership (test)" org-unit group set (Public / Private)
+  - dim: gAmNV64G0pZ          # "Ownership Public/Private" org-unit group set
     slug: ownership
     # the 4 GEN KPI indicators (enrolment, teachers, pupil-teacher ratio, female %) —
     # the KPI row offers a Total/Public/Private toggle off this cut.

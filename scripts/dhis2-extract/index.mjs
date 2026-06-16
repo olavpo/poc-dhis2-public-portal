@@ -24,7 +24,7 @@ async function main() {
   // --- primary fact ---
   const periods = expandPeriods(cfg.periods);
   const factResponses = [];
-  for (const chunk of chunkPeriods(periods)) factResponses.push(await client.analytics(cfg.dx, cfg.ouLevels, chunk));
+  for (const chunk of chunkPeriods(periods)) factResponses.push(...await client.analyticsChunked(cfg.dx, cfg.ouLevels, chunk));
   const factRows = factResponses.flatMap(analyticsToFactRows);
   writeFileSync(join(outDir, 'fact.csv'), toCsv(factRows, ['dx', 'ou', 'pe', 'periodType', 'value']));
   console.log(`fact.csv: ${factRows.length} rows`);
@@ -32,7 +32,7 @@ async function main() {
   // --- disaggregation cuts ---
   for (const d of cfg.disaggregations) {
     const resps = [];
-    for (const chunk of chunkPeriods(periods)) resps.push(await client.analytics(d.dx, d.ouLevels, chunk, d.dim));
+    for (const chunk of chunkPeriods(periods)) resps.push(...await client.analyticsChunked(d.dx, d.ouLevels, chunk, d.dim));
     const rows = resps.flatMap((r) => analyticsToDisaggRows(r, d.dim));
     writeFileSync(join(outDir, `fact_${d.slug}.csv`),
       toCsv(rows, ['dx', 'ou', 'pe', 'periodType', 'category_id', 'category_name', 'value']));

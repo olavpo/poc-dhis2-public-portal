@@ -36,17 +36,17 @@ title: Annual School Census
 
 \`\`\`sql kpis_total
 select dx, value from census.fact
-where ou = '${ou.id}' and periodType = 'YEARLY' and pe = '2024' and dx in (${dxList})
+where ou = '${ou.id}' and periodType = 'YEARLY' and pe = '2025' and dx in (${dxList})
 \`\`\`
 
 \`\`\`sql kpis_public
 select dx, value from census.fact_ownership
-where ou = '${ou.id}' and periodType = 'YEARLY' and pe = '2024' and category_name like 'Public%' and dx in (${dxList})
+where ou = '${ou.id}' and periodType = 'YEARLY' and pe = '2025' and category_name like 'Public%' and dx in (${dxList})
 \`\`\`
 
 \`\`\`sql kpis_private
 select dx, value from census.fact_ownership
-where ou = '${ou.id}' and periodType = 'YEARLY' and pe = '2024' and category_name like 'Private%' and dx in (${dxList})
+where ou = '${ou.id}' and periodType = 'YEARLY' and pe = '2025' and category_name like 'Private%' and dx in (${dxList})
 \`\`\`
 
 <ScopeNav crumbs={${JSON.stringify(crumbs)}} selectors={${JSON.stringify(selectors)}} />
@@ -63,12 +63,12 @@ where ou = '${ou.id}' and periodType = 'YEARLY' and pe = '2024' and category_nam
 
 // Charts + (optionally) the children choropleth, in a responsive 2-col grid. The sql blocks
 // are emitted BEFORE the <Grid> (mdsvex gotcha). withMap is true on branch pages only.
-function chartsSection(ou, withMap, geoUrl) {
+function chartsSection(ou, withMap, geoUrl, childLinkPrefix) {
   return `
 \`\`\`sql enrol_by_level
 select case f.dx ${ENROL_WHENS} end as level, f.value as enrolment
 from census.fact f
-where f.ou = '${ou.id}' and f.periodType = 'YEARLY' and f.pe = '2024' and f.dx in (${ENROL_IDS})
+where f.ou = '${ou.id}' and f.periodType = 'YEARLY' and f.pe = '2025' and f.dx in (${ENROL_IDS})
 order by level
 \`\`\`
 
@@ -76,25 +76,25 @@ order by level
 select case f.dx ${SEX_LEVEL_WHENS} end as level,
        case f.dx ${SEX_SEX_WHENS} end as sex, f.value as learners
 from census.fact f
-where f.ou = '${ou.id}' and f.periodType = 'YEARLY' and f.pe = '2024' and f.dx in (${SEX_IDS})
+where f.ou = '${ou.id}' and f.periodType = 'YEARLY' and f.pe = '2025' and f.dx in (${SEX_IDS})
 order by level, sex
 \`\`\`
 
 \`\`\`sql ownership_enrol
 select category_name, value from census.fact_ownership
-where ou = '${ou.id}' and dx = '${I.enrol}' and periodType = 'YEARLY' and pe = '2024'
+where ou = '${ou.id}' and dx = '${I.enrol}' and periodType = 'YEARLY' and pe = '2025'
 \`\`\`
 ${withMap ? `
 \`\`\`sql children_map
-select o.id, o.name, f.value
+select o.id, o.name, f.value, '${childLinkPrefix}' || o.id as link
 from census.fact f join census.ou o on f.ou = o.id
-where o.parent_id = '${ou.id}' and f.dx = '${I.ptr}' and f.periodType = 'YEARLY' and f.pe = '2024'
+where o.parent_id = '${ou.id}' and f.dx = '${I.ptr}' and f.periodType = 'YEARLY' and f.pe = '2025'
 \`\`\`
 ` : ''}
 ## Charts
 
 <Grid cols=2>
-${withMap ? `  <AreaMap data={children_map} geoJsonUrl="${geoUrl}" geoId="id" areaCol="id" value="value" title="Pupil–teacher ratio by sub-unit" tooltip={[{id:'name',showColumnTitles:false},{id:'value',fmt:'num1'}]} height={260} />\n` : ''}  <BarChart data={enrol_by_level} x=level y=enrolment title="Enrolment by education level" swapXY=true />
+${withMap ? `  <AreaMap data={children_map} geoJsonUrl="${geoUrl}" geoId="id" areaCol="id" value="value" link="link" title="Tap a sub-unit to drill down · pupil–teacher ratio" tooltip={[{id:'name',showColumnTitles:false},{id:'value',fmt:'num1'}]} height={300} />\n` : ''}  <BarChart data={enrol_by_level} x=level y=enrolment title="Enrolment by education level" swapXY=true />
   <BarChart data={sex_by_level} x=level y=learners series=sex type=grouped title="Learners by sex & level" swapXY=true />
   <OwnershipDonut data={ownership_enrol} />
 </Grid>
@@ -110,12 +110,12 @@ select o.name as ou_name, '${childLinkPrefix}' || o.id as link,
   max(case when f.dx='${lv.female}' then f.value end) as female,
   max(case when f.dx='${lv.stream}' then f.value end) as stream,
   max(case when f.dx='${lv.special}' then f.value end) as special
-from census.ou o left join census.fact f on f.ou = o.id and f.periodType = 'YEARLY' and f.pe = '2024'
+from census.ou o left join census.fact f on f.ou = o.id and f.periodType = 'YEARLY' and f.pe = '2025'
 where o.parent_id = '${ou.id}' group by o.name, o.id order by o.name
 \`\`\`
 `;
   const tabs = LEVELS.map((lv) => `{label:'${lv.label}',rows:lvl_${lv.key}}`).join(',');
-  return chartsSection(ou, true, geoUrl) + `
+  return chartsSection(ou, true, geoUrl, childLinkPrefix) + `
 ${LEVELS.map(levelQuery).join('')}
 ## Indicators by ${childLevel} — by education level
 
@@ -133,7 +133,7 @@ function leafSection(ou) {
 
 <DataTable data={enrol_by_level}>
   <Column id=level title="Education level" />
-  <Column id=enrolment title="Enrolment (2024)" fmt="#,##0" />
+  <Column id=enrolment title="Enrolment (2025)" fmt="#,##0" />
 </DataTable>
 
 _This is the lowest level of detail in the portal — no ward- or school-level data._

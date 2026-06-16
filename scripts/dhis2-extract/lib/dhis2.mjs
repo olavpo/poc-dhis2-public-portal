@@ -13,9 +13,24 @@ export function makeClient({ baseUrl, username, password }) {
     (extraDim ? `&dimension=${extraDim}:` : '') +
     `&skipMeta=false&displayProperty=NAME&paging=false`;
 
+  // Cell-aware chunking: a single analytics request returns dx × ou cells, and large
+  // instances cap that (DHIS2 returns 409 past ANALYTICS_MAX_LIMIT). Split into one call
+  // per ou-level and per dx-group so each stays small, and merge the responses.
+  const DX_CHUNK = 20;
+  async function analyticsChunked(dx, ouLevels, periods, extraDim) {
+    const responses = [];
+    for (const level of ouLevels) {
+      for (let i = 0; i < dx.length; i += DX_CHUNK) {
+        responses.push(await getJson(dimsURL(dx.slice(i, i + DX_CHUNK), [level], periods, extraDim)));
+      }
+    }
+    return responses;
+  }
+
   return {
     getJson,
     analytics: (dx, ouLevels, periods, extraDim) => getJson(dimsURL(dx, ouLevels, periods, extraDim)),
+    analyticsChunked,
     geoFeatures: (level) => getJson(`/api/geoFeatures.json?ou=ou:LEVEL-${level}`),
     // Full org-unit hierarchy (incl. geometry-less units like the national root) for the dimension table.
     organisationUnits: (levels) =>

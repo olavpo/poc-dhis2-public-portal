@@ -1,11 +1,9 @@
 // scripts/asc-pages/generate.mjs
-// Writes one baked Evidence page per org unit in OUR synthetic subtree (rooted at ROOT),
-// from the shared template: federal index.md + per-state + per-LGA pages. Skips the old
-// fixture OUs (different root). Builds breadcrumb + cascading State/LGA nav selectors.
+// Writes one baked Evidence page per org unit (Federal=1 / State=2 / LGA=3), from the
+// shared template: federal index.md + per-state + per-LGA pages. Builds breadcrumb +
+// cascading State/LGA nav selectors and per-scope geojson. Root is derived from the data.
 import { readFileSync, writeFileSync, mkdirSync, rmSync } from 'node:fs';
 import { page } from './template.mjs';
-
-const ROOT = 'XCFhsuWEBdu'; // synthetic Nigeria (Federal) root — see scripts/asc-synth
 
 // Tiny CSV reader — ou.csv has no embedded commas/quotes (ids, names, ints). No new dep.
 function readCsv(path) {
@@ -16,6 +14,7 @@ function readCsv(path) {
 
 const ou = readCsv('evidence/sources/census/ou.csv');
 const byId = Object.fromEntries(ou.map((o) => [o.id, o]));
+const ROOT = ou.find((o) => o.level === '1').id; // the single Federal root, from the data
 
 const inOurTree = (o) => { let c = o; while (c) { if (c.id === ROOT) return true; c = c.parent_id ? byId[c.parent_id] : null; } return false; };
 const linkFor = (o) => (o.id === ROOT ? '/' : `/asc/${o.level === '2' ? 'state' : 'lga'}-${o.id}`);
