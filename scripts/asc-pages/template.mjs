@@ -63,7 +63,7 @@ where ou = '${ou.id}' and periodType = 'YEARLY' and pe = '2024' and category_nam
 
 // Charts + (optionally) the children choropleth, in a responsive 2-col grid. The sql blocks
 // are emitted BEFORE the <Grid> (mdsvex gotcha). withMap is true on branch pages only.
-function chartsSection(ou, withMap) {
+function chartsSection(ou, withMap, geoUrl) {
   return `
 \`\`\`sql enrol_by_level
 select case f.dx ${ENROL_WHENS} end as level, f.value as enrolment
@@ -94,7 +94,7 @@ where o.parent_id = '${ou.id}' and f.dx = '${I.ptr}' and f.periodType = 'YEARLY'
 ## Charts
 
 <Grid cols=2>
-${withMap ? `  <AreaMap data={children_map} geoJsonUrl="/asc.geojson" geoId="id" areaCol="id" value="value" title="Pupil–teacher ratio by sub-unit" tooltip={[{id:'name',showColumnTitles:false},{id:'value',fmt:'num1'}]} height={260} />\n` : ''}  <BarChart data={enrol_by_level} x=level y=enrolment title="Enrolment by education level" swapXY=true />
+${withMap ? `  <AreaMap data={children_map} geoJsonUrl="${geoUrl}" geoId="id" areaCol="id" value="value" title="Pupil–teacher ratio by sub-unit" tooltip={[{id:'name',showColumnTitles:false},{id:'value',fmt:'num1'}]} height={260} />\n` : ''}  <BarChart data={enrol_by_level} x=level y=enrolment title="Enrolment by education level" swapXY=true />
   <BarChart data={sex_by_level} x=level y=learners series=sex type=grouped title="Learners by sex & level" swapXY=true />
   <OwnershipDonut data={ownership_enrol} />
 </Grid>
@@ -102,7 +102,7 @@ ${withMap ? `  <AreaMap data={children_map} geoJsonUrl="/asc.geojson" geoId="id"
 }
 
 // Federal / State: charts + map, then a tab-per-level compare table (children link down).
-function branchSection(ou, childLevel, childLinkPrefix) {
+function branchSection(ou, childLevel, childLinkPrefix, geoUrl) {
   const levelQuery = (lv) => `
 \`\`\`sql lvl_${lv.key}
 select o.name as ou_name, '${childLinkPrefix}' || o.id as link,
@@ -115,7 +115,7 @@ where o.parent_id = '${ou.id}' group by o.name, o.id order by o.name
 \`\`\`
 `;
   const tabs = LEVELS.map((lv) => `{label:'${lv.label}',rows:lvl_${lv.key}}`).join(',');
-  return chartsSection(ou, true) + `
+  return chartsSection(ou, true, geoUrl) + `
 ${LEVELS.map(levelQuery).join('')}
 ## Indicators by ${childLevel} — by education level
 
@@ -140,6 +140,6 @@ _This is the lowest level of detail in the portal — no ward- or school-level d
 `;
 }
 
-export function page({ ou, crumbs, selectors, leaf, childLevel, childLinkPrefix }) {
-  return head(ou, crumbs, selectors) + (leaf ? leafSection(ou) : branchSection(ou, childLevel, childLinkPrefix));
+export function page({ ou, crumbs, selectors, leaf, childLevel, childLinkPrefix, geoUrl }) {
+  return head(ou, crumbs, selectors) + (leaf ? leafSection(ou) : branchSection(ou, childLevel, childLinkPrefix, geoUrl));
 }

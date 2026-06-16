@@ -36,6 +36,22 @@ const crumbsOf = (o) => {
   return chain.map((u, i) => ({ name: u.name, link: i === chain.length - 1 ? null : linkFor(u) }));
 };
 
+// Split the combined ou.geojson into per-scope boundary files so a page never downloads
+// more geometry than it draws: the federal page loads only states; each state page loads
+// only its own LGAs. (At real scale — 774 LGAs — this is the difference between a few KB
+// per page and a multi-MB file on every page. See AGENTS.md / SERVER-ADMIN notes.)
+const geo = JSON.parse(readFileSync('evidence/sources/census/ou.geojson', 'utf8'));
+const feats = geo.features;
+const fc = (features) => JSON.stringify({ type: 'FeatureCollection', features });
+rmSync('evidence/static/asc', { recursive: true, force: true });
+mkdirSync('evidence/static/asc', { recursive: true });
+writeFileSync('evidence/static/asc/states.geojson', fc(feats.filter((f) => f.properties.level === 2)));
+for (const st of childrenOf(ROOT)) {
+  writeFileSync(`evidence/static/asc/lgas-${st.id}.geojson`,
+    fc(feats.filter((f) => f.properties.level === 3 && f.properties.parent_id === st.id)));
+}
+console.log(`[asc-pages] wrote per-scope geojson: states + ${childrenOf(ROOT).length} state LGA files`);
+
 rmSync('evidence/pages/asc', { recursive: true, force: true });
 mkdirSync('evidence/pages/asc', { recursive: true });
 
@@ -45,11 +61,11 @@ for (const o of ou) {
   const crumbs = crumbsOf(o);
   if (o.level === '1') {
     const selectors = [stateSelector(''), lgaSelector(null, '')];
-    writeFileSync('evidence/pages/index.md', page({ ou: o, crumbs, selectors, leaf: false, childLevel: 'State', childLinkPrefix: '/asc/state-' }));
+    writeFileSync('evidence/pages/index.md', page({ ou: o, crumbs, selectors, leaf: false, childLevel: 'State', childLinkPrefix: '/asc/state-', geoUrl: '/asc/states.geojson' }));
     n++;
   } else if (o.level === '2') {
     const selectors = [stateSelector(o.name), lgaSelector(o.id, '')];
-    writeFileSync(`evidence/pages/asc/state-${o.id}.md`, page({ ou: o, crumbs, selectors, leaf: false, childLevel: 'LGA', childLinkPrefix: '/asc/lga-' }));
+    writeFileSync(`evidence/pages/asc/state-${o.id}.md`, page({ ou: o, crumbs, selectors, leaf: false, childLevel: 'LGA', childLinkPrefix: '/asc/lga-', geoUrl: `/asc/lgas-${o.id}.geojson` }));
     n++;
   } else if (o.level === '3') {
     const parent = byId[o.parent_id];
