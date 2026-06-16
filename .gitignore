@@ -31,3 +31,6 @@ evidence/pages/asc/
 # Local Claude settings (not shared)
 .claude/
 evidence/package-lock.json
+
+# Packaged site artifact (rebuild with npm run build && deploy)
+*.tar.gz
