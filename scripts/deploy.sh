@@ -30,7 +30,9 @@ ln -sfn "$DEST" "$ROOT/current"
 echo "Deployed build $TS → current/"
 
 # Prune all but the newest $KEEP build directories.
-mapfile -t OLD < <(ls -1dt "$BUILDS_DIR"/*/ 2>/dev/null | tail -n +"$((KEEP + 1))")
+# (portable — macOS ships bash 3.2, which has no `mapfile`)
+OLD=()
+while IFS= read -r d; do OLD+=("$d"); done < <(ls -1dt "$BUILDS_DIR"/*/ 2>/dev/null | tail -n +"$((KEEP + 1))")
 if [ "${#OLD[@]}" -gt 0 ]; then
   rm -rf "${OLD[@]}"
   echo "Pruned ${#OLD[@]} old build(s); kept newest $KEEP."
