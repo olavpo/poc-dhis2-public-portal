@@ -21,7 +21,7 @@ change to the data pipeline, the baked/no-engine guarantee, or the no-data-below
 | 3 | **Reworked KPI cards:** left green accent bar, a Font Awesome icon, label, big value. **No delta/target chips** (no historical/target data available now). Keep the **Total / Public / Private** ownership toggle (green active). |
 | 4 | **Add charts** (all from already-extracted indicators, baked): (a) **Enrolment by education level** (bar: Pre-Primary/Primary/JSS/SSS/ANFE); (b) **Learners by sex & level** (grouped bar: girls/boys per level); (c) **Public vs Private enrolment** (donut, from the Ownership cut). |
 | 5 | **Keep the map at half-width.** The children pupil-teacher-ratio choropleth moves from full-width into the half-width charts grid, with a green sequential legend. (Leaf LGA pages have no children → no choropleth.) |
-| 6 | **Responsive, mobile-suitable:** KPI cards 4→2→1, charts grid 2→1, nav 6→2 columns, wide tables scroll horizontally. Only requirement is a usable layout at phone widths. |
+| 6 | **Responsive, mobile-suitable:** at **≤820 px** KPI cards go 4→2 and the charts grid 2→1 (follow `KpiRow`'s existing 800–820 px precedent); nav 6→2; very small phones (~≤480 px) may drop KPI cards to 1 col. Wide tables scroll horizontally. Only requirement is a usable layout at phone widths. |
 | 7 | **Restyle existing visuals** (compare table + map) to the green palette. |
 
 ## Scope of change (files)
@@ -35,7 +35,7 @@ already in `fact.csv` / `fact_ownership.csv`).
 - `evidence/components/KpiRow.svelte` — pass an `icon` per KPI (string FA class, like `fmt`).
 - New `evidence/components/` charts where Evidence's built-ins don't fit:
   - **Enrolment by level** and **Learners by sex** → Evidence built-in `<BarChart>` (baked) — no new component, just markup + queries.
-  - **Public vs Private donut** → a small `OwnershipDonut.svelte` (presentational, baked data prop) **or** Evidence `<ECharts>` pie config inline. Chosen: inline `<ECharts>` (no new file) unless styling needs a component.
+  - **Public vs Private donut** → Evidence `<ECharts>` pie config. **Gotcha:** like ```` ```sql ```` blocks, a raw `<ECharts>` island must NOT sit inside a `<Grid>` cell — wrap it in a tiny `OwnershipDonut.svelte` component so it lands cleanly as a grid cell. Chosen: **`OwnershipDonut.svelte`** (presentational, baked data prop).
 - `scripts/asc-pages/template.mjs` — add the chart queries + markup; arrange map + charts in a responsive 2-col grid (Evidence `<Grid cols=2>`); pass `icon` in the KPI config.
 - Responsive CSS lives in the component `<style>` blocks + the layout (already has nav breakpoints); ensure the compare table wraps in a horizontal-scroll container (per CLAUDE.md, charts/tables can't scroll internally — use a `.svelte` scroll wrapper, not a raw-HTML `<div>` around an Evidence component).
 
