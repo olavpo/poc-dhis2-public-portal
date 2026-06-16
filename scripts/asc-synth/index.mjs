@@ -16,7 +16,7 @@ const LEVELS = [
   { level: 4, name: 'School' },
 ];
 const PERIODS = ['2023', '2024'];
-const INDICATORS_FILE = 'emis-public-portal-input/school_list_indicators_BY_LEVEL.metadata.json';
+const INDICATORS_FILE = 'docs/emis-public-portal-input/school_list_indicators_BY_LEVEL.metadata.json';
 const log = (...a) => console.log('[asc-synth]', ...a);
 
 async function main() {
