@@ -91,7 +91,7 @@ patch(
 // page. Static markup — no props, no engine.
 const DNEMIS_NAV = `<div slot="content">
 		<div class="dnemis-header">
-			<div class="dnemis-brand"><span class="crest">🇳🇬</span><div><div class="dt">DNEMIS</div><div class="ds">Enhancing Education for a Brighter Future</div></div></div>
+			<div class="dnemis-brand"><span class="crest"><i class="fa-solid fa-landmark"></i></span><div><div class="dt">DNEMIS</div><div class="ds">Enhancing Education for a Brighter Future</div></div></div>
 			<nav class="dnemis-nav">
 				<a class="mod active" href="/"><i class="fa-solid fa-chart-column"></i>Annual School Census</a>
 				<a class="mod" href="https://nlin.education.gov.ng/dhis" target="_blank" rel="noopener"><i class="fa-solid fa-graduation-cap"></i>Learner Registry</a>
