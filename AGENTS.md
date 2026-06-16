@@ -124,6 +124,19 @@ cost an hour the first time; none throw an obvious error.
 - **DuckDB types empty CSV cells.** A numeric column with blanks (e.g. `lng`/`lat` for
   non-point org units) is typed `DOUBLE`, blanks → `NULL`. Filter with `is not null`, not
   `<> ''` (which errors: "Could not convert string '' to DOUBLE").
+- **Functions can't pass through an mdsvex *array* prop.** `kpis={[{fmt: v => …}]}` silently
+  fails to compile (the component renders stale/SSR values, often with a console
+  `f[1] is not a function`). Pass **string keys** in the array and map them to functions
+  *inside* the component. A single-attribute function prop (`fmt={v => …}`) is fine.
+- **Keep pages baked — presentational components only.** A query with no `${inputs.x}` is
+  executed at build and its result baked into the page; a component that calls `query()` boots
+  the ~6 MB DuckDB-WASM engine. For baked pages, pass the baked query result to the component
+  as a **prop** and never call `query()`; interactive toggles/tabs over already-baked data
+  stay engine-free. Verify with a network capture — a baked page fetches **0** `.wasm`.
+- **Wrap scroll containers / raw `<ECharts>` in a `.svelte` component, not a raw `<div>`.**
+  e.g. a one-line `ScrollX.svelte` (`<div class="scrollx"><slot/></div>` + `overflow-x:auto`)
+  makes a wide table scroll on mobile; a raw-HTML wrapper won't compile its slotted components
+  (see the no-raw-HTML rule above).
 
 **Extractor / DHIS2**
 
@@ -155,6 +168,13 @@ cost an hour the first time; none throw an obvious error.
   Aim the config's `periods.range` at that window; older years return zero rows.
 - **`curl` needs `-g`** for DHIS2's `[...]` field syntax (URL-globbing off). Node `fetch`
   is unaffected.
+- **Writing test data back into a DHIS2 instance** (if you seed an instance instead of
+  pulling a public demo): import `dataValueSets` with `?force=true` to bypass dataset
+  input-period / expiry locks (`E7644`); the importing user must hold the target org units in
+  **both** `organisationUnits` (data capture — else `E7617`) **and**
+  `dataViewOrganisationUnits` (analytics view — else `E7120`); and `dataValueSets` returns
+  **HTTP 409 with `status: WARNING`** on *partial* success — treat it as non-fatal and read
+  `importCount`, don't throw.
 
 **Build / serve**
 
@@ -169,6 +189,17 @@ cost an hour the first time; none throw an obvious error.
 - **Layout/branding live in `patch-evidence.mjs`.** The template's `+layout.svelte` is
   regenerated each build, so full-width / logo / footer changes are applied there as
   idempotent patches to the stock `<EvidenceDefaultLayout>` props.
+- **Don't name a source a SQL reserved word.** A source dir `evidence/sources/asc/` becomes
+  the DuckDB schema `asc`, and `asc.fact` fails to parse (ASC/DESC keyword). Use a safe name
+  (`census`, `data`, …); URLs and filenames can still say "asc".
+- **Stale cache when a component edit "doesn't take".** Clear it:
+  `rm -rf evidence/.evidence/template/.svelte-kit evidence/node_modules/.vite`, then rebuild.
+  Also `evidence build` leaves old content-hashed chunks in `evidence/build/` — the live page
+  references the newest, but stale chunks linger; **wipe `evidence/build` before a clean
+  rebuild or a "no X in the output" audit**.
+- **Builds are memory-heavy** (and in the sandbox share host RAM with sibling containers). An
+  OOM shows as `Killed` / exit 137. Raise the heap (`NODE_OPTIONS=--max-old-space-size=4096`)
+  and/or stop other containers — the build reads local files and needs **no** live DHIS2.
 
 ## Connecting DHIS2 data
 
