@@ -18,7 +18,7 @@
 - **Everything stays baked:** all queries use a literal OU id + `pe='2024'`, no `${inputs}`. Components are presentational (props only, no `query()`).
 - **mdsvex gotchas (CLAUDE.md):** ```` ```sql ```` blocks and raw `<ECharts>` islands must stay OUTSIDE `<Grid>` cells — put charts in `<Grid>` only as components or Evidence chart tags; wrap any raw ECharts/scroll container in a `.svelte` component. **Functions can't be passed through an mdsvex array prop** — pass strings (the `icon` prop is a string FA class, exactly like `fmt`).
 - **No live preview during build** — the visual companion holds port 49242. To screenshot, stop the companion or just run the portal server after deploy.
-- Verify with: `npm test` (39 tests stay green), a build, and the greps/screenshots in the final task.
+- Verify with: `npm test` (all tests stay green), a build, and the greps/screenshots in the final task.
 
 ## File structure
 
@@ -82,7 +82,7 @@ git commit -m "feat(theme): Nigeria-green chart palette + choropleth scale"
 
 - [ ] **Step 1:** In `patch-evidence.mjs`, in `DNEMIS_NAV`, replace `<span class="crest">🇳🇬</span>` with `<span class="crest"><i class="fa-solid fa-landmark"></i></span>`.
 
-- [ ] **Step 2:** In `DNEMIS_STYLE`, the `.crest` rule already centers content; ensure it sizes the icon: append to `.crest` `font-size: 18px;` is fine (icon inherits). No other change.
+- [ ] **Step 2:** No CSS change needed — the existing `.crest` rule (centered flex, `font-size: 22px`) sizes the inherited Font Awesome icon fine.
 
 - [ ] **Step 3: Reset + re-patch the live layout so it regenerates from the updated patch** (the patch is idempotent via `to`-match; the live file must contain the new string):
 
@@ -349,7 +349,7 @@ git commit -m "feat(pages): KPI icons, green charts grid (bar/sex/donut) + half-
 
 ## Task 7: Build, deploy, verify
 
-- [ ] **Step 1: Tests still green** — `npm test` → 39 passed.
+- [ ] **Step 1: Tests still green** — `npm test` → all green (currently 39).
 
 - [ ] **Step 2: Build + deploy** (stop sibling instances first if memory is tight):
 
@@ -379,4 +379,4 @@ Expected: `no emoji in build` (ignore the wasm binary).
 - KPI cards: FA icon + green accent, no sparkline/deltas; ownership toggle works (Total/Public/Private switches values) and is green.
 - Three new charts render from baked data on federal/state pages; leaf LGA pages show the charts minus the children map.
 - Responsive at ~375px (cards ≤2, charts 1-col, nav ≤2, table scrolls).
-- 39 tests green; build + deploy succeed; 0 DuckDB-WASM requests on load.
+- All tests green; build + deploy succeed; 0 DuckDB-WASM requests on load.
