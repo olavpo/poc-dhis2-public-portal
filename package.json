@@ -12,16 +12,17 @@
     "dev": "npm --prefix evidence run dev",
     "deploy": "bash scripts/deploy.sh",
     "serve": "bash scripts/serve.sh",
-    "extract:anc": "node scripts/dhis2-extract/index.mjs --config scripts/dhis2-extract/config/anc.yaml --out evidence/sources/anc && mkdir -p evidence/static && cp evidence/sources/anc/ou.geojson evidence/static/anc.geojson",
     "synth:asc": "node scripts/asc-synth/index.mjs",
     "extract:asc": "node scripts/dhis2-extract/index.mjs --config scripts/dhis2-extract/config/asc.yaml --out evidence/sources/census",
     "pages:asc": "node scripts/asc-pages/generate.mjs",
     "test": "vitest run"
   },
-  "dependencies": { "yaml": "^2.5.0" },
+  "dependencies": {
+    "yaml": "^2.5.0"
+  },
   "devDependencies": {
     "tsx": "^4.19.2",
     "typescript": "^5.6.3",
-    "vitest": "^2.1.8"
+    "vitest": "^4.1.9"
   }
 }
