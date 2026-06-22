@@ -75,35 +75,36 @@ patch(
   'lazy duckdb init',
 );
 
-// Layout + branding: pass props to the stock <EvidenceDefaultLayout>. fullWidth makes the
-// content use the available width (so a single element fills the row and the responsive
-// grids spread out); the logo props swap the Evidence wordmark for the DHIS2 mark
-// (light/dark variants from evidence/static); builtWithEvidence={false} hides the footer.
-patch(
-  'src/pages/+layout.svelte',
-  '<EvidenceDefaultLayout {data}>',
-  '<EvidenceDefaultLayout {data} fullWidth={true} hideHeader={true} hideSidebar={true} hideTOC={true} hideBreadcrumbs={true} builtWithEvidence={false}>',
-  'layout: full width + no Evidence header/sidebar/TOC (DNEMIS bar is the chrome)',
-);
+// Layout + branding + DNEMIS header. The layout is fully under our control, so instead of
+// fragile anchor patches (which break the moment the injected markup changes) we WRITE the
+// whole +layout.svelte deterministically — idempotent regardless of its prior state:
+//   • <EvidenceDefaultLayout> props: full width, no Evidence header/sidebar/TOC/footer (the
+//     DNEMIS green bar is the only chrome).
+//   • DNEMIS header: coat of arms + full title "Digital National Education Management
+//     Information System (DNEMIS)" + a Print button (Evidence's built-in export-beforeprint/
+//     window.print()/export-afterprint, so charts/maps render correctly for paper).
+//   • Inter + Font Awesome, h1.title hidden, and an @media print rule that drops the print
+//     button and the interactive control bar.
+const LAYOUT = `<script>
+	import '@evidence-dev/tailwind/fonts.css';
+	import '../app.css';
+	import { EvidenceDefaultLayout } from '@evidence-dev/core-components';
+	export let data;
+</script>
 
-// DNEMIS header: a slim green title bar (crest + "Education Statistics") injected at the top
-// of the content slot on every page. No module-link buttons. Static markup — no props.
-const DNEMIS_NAV = `<div slot="content">
+<EvidenceDefaultLayout {data} fullWidth={true} hideHeader={true} hideSidebar={true} hideTOC={true} hideBreadcrumbs={true} builtWithEvidence={false}>
+	<div slot="content">
 		<div class="dnemis-header">
-			<span class="crest"><i class="fa-solid fa-landmark"></i></span>
-			<div><div class="dt">Education Statistics</div><div class="ds">DNEMIS · Federal Ministry of Education, Nigeria</div></div>
+			<span class="crest"><img src="/coat_of_arms.png" alt="Nigerian Coat of Arms" /></span>
+			<div><div class="dt">Education Statistics</div><div class="ds">Nigeria Federal Ministry of Education | Digital National Education Management Information System</div></div>
+			<button class="printbtn" type="button" title="Download this page as PDF"
+				on:click={() => { window.dispatchEvent(new Event('export-beforeprint')); setTimeout(() => window.print(), 0); setTimeout(() => window.dispatchEvent(new Event('export-afterprint')), 0); }}>
+				<i class="fa-solid fa-download"></i><span>Download PDF</span>
+			</button>
 		</div>
 		<slot />
-	</div>`;
-patch(
-  'src/pages/+layout.svelte',
-  '<slot slot="content" />',
-  DNEMIS_NAV,
-  'DNEMIS module nav',
-);
-
-// Inter font (global) + the DNEMIS header styles. Appended after the layout markup.
-const DNEMIS_STYLE = `</EvidenceDefaultLayout>
+	</div>
+</EvidenceDefaultLayout>
 
 <svelte:head>
 	<link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -114,19 +115,34 @@ const DNEMIS_STYLE = `</EvidenceDefaultLayout>
 <style>
 	:global(body) { font-family: 'Inter', system-ui, -apple-system, sans-serif; }
 	/* Hide Evidence's auto page-title H1 — the portal title lives in the green header and the
-	   current org unit is shown by the breadcrumb, so the frontmatter title (browser tab only)
-	   shouldn't repeat as a heading. */
+	   current org unit is shown by the breadcrumb. */
 	:global(h1.title) { display: none; }
 	.dnemis-header { background: linear-gradient(135deg, #0a3d2c, #0e5638); color: #fff; padding: 10px 16px; border-radius: 10px; margin: 0 0 16px; display: flex; align-items: center; gap: 12px; }
-	.crest { font-size: 18px; width: 36px; height: 36px; flex: none; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #2fae6e, #0a3d2c); display: flex; align-items: center; justify-content: center; border: 2px solid rgba(255,255,255,.35); }
-	.dt { font-weight: 800; font-size: 18px; letter-spacing: .4px; line-height: 1.1; }
-	.ds { font-size: 11px; opacity: .82; font-weight: 300; }
-</style>`;
-patch(
-  'src/pages/+layout.svelte',
-  '</EvidenceDefaultLayout>',
-  DNEMIS_STYLE,
-  'DNEMIS header styles + Inter font',
-);
+	.crest { width: 44px; height: 44px; flex: none; border-radius: 8px; background: #fff; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(255,255,255,.5); padding: 3px; }
+	.crest img { max-width: 100%; max-height: 100%; object-fit: contain; display: block; }
+	.dt { font-weight: 800; font-size: 19px; letter-spacing: .3px; line-height: 1.1; }
+	.ds { font-size: 11px; opacity: .82; font-weight: 300; margin-top: 2px; }
+	.printbtn { margin-left: auto; flex: none; display: inline-flex; align-items: center; gap: 7px; height: 34px; padding: 0 14px; border: 1px solid rgba(255,255,255,.4); border-radius: 8px; background: rgba(255,255,255,.12); color: #fff; font-size: 12.5px; font-weight: 600; cursor: pointer; }
+	.printbtn:hover { background: rgba(255,255,255,.22); }
+	@media (max-width: 560px) { .dt { font-size: 14px; } .printbtn span { display: none; } }
+	@media print {
+		.printbtn { display: none !important; }
+		:global(.controlbar) { display: none !important; }
+		.dnemis-header { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+		/* Don't split a chart / KPI card / table / donut across a page boundary, and keep a
+		   heading with the block that follows it. */
+		:global(canvas), :global(table), :global(.kpi), :global(.cell), :global(.block),
+		:global([class*='chart']), :global(.markdown li) { break-inside: avoid; }
+		:global(h1), :global(h2), :global(h3) { break-after: avoid; }
+	}
+</style>
+`;
+const layoutPath = resolve(TPL, 'src/pages/+layout.svelte');
+if (readFileSync(layoutPath, 'utf8') === LAYOUT) {
+  console.log('  [skip] layout (DNEMIS header) already current');
+} else {
+  writeFileSync(layoutPath, LAYOUT);
+  console.log('  [ok]   layout (DNEMIS header: arms + full title + print button) written');
+}
 
-console.log('Evidence template patched (adapter fallback + lazy DuckDB init + DHIS2 branding + DNEMIS nav).');
+console.log('Evidence template patched (adapter fallback + lazy DuckDB init + DNEMIS branding).');
