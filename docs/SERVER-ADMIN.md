@@ -31,9 +31,10 @@ Extract it to your web root, e.g. `/var/www/asc-portal`.
 | Need | Why |
 |---|---|
 | Serve **precompressed `.gz`** (and `.br` if available) | Assets ship pre-Gzip'd **and** pre-Brotli'd. `gzip_static on;` alone is enough (e.g. the 33 MB DuckDB engine → 7.3 MB gzip / 5.6 MB brotli). Don't re-compress on the fly. |
-| **SPA fallback to `/200.html`** | Safety net for any deep link the prerender didn't emit. |
-| Correct **`application/wasm`** MIME for `.wasm` | The engine binary must load with the right type. |
-| **HTTP range requests** | Standard; on by default in nginx/Apache. |
+| **SPA fallback to `/200.html`** (required) | Federal + State pages are pre-baked HTML, but **LGA pages (`/asc/lga/<id>`) are client-rendered on demand** — the server must serve `200.html` for those (and any deep link), or LGAs 404. `try_files … /200.html;` (see §3). |
+| Correct **`application/wasm`** MIME for `.wasm` | The engine binary must load with the right type. LGA pages load the DuckDB-WASM engine (~6 MB, cached) and query the bundled Parquet in-browser; Federal/State don't. |
+| **HTTP range requests** | Standard; on by default in nginx/Apache. Needed for the LGA Parquet reads. |
+| Clients can reach **`extensions.duckdb.org`** | One-time, cached. DuckDB-WASM autoloads its Parquet/httpfs extensions there when an LGA page first runs a query. (Federal/State are baked, so they don't need it.) |
 | Served at the **domain root** (`https://host/`) | Internal links and `/asc.geojson` are root-absolute. Hosting under a sub-path (`/portal/`) requires a rebuild with a configured base path — ask the dev team. |
 
 No special runtime, no open ports beyond your web server, no outbound calls from the server.
