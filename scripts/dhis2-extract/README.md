@@ -10,8 +10,8 @@ you want fresh data), it materialises files on disk, and the rest of the pipelin
 
 The worked example on this branch is the **Nigeria Annual School Census** (`config/asc.yaml`),
 wired to the `extract:asc` npm script. It pulls Education indicators for org-unit levels
-1–3 (Federal / State / LGA) plus an Ownership (Public/Private) disaggregation, into
-`evidence/sources/census/`.
+1–3 (Federal / State / LGA) plus Ownership (Public/Private) and School-Type disaggregations
+(including a School-Type × Ownership cross-cut), into `evidence/sources/census/`.
 
 ## Authentication
 
@@ -55,14 +55,24 @@ disaggregations:                                    # optional (default [])
     slug: ownership          # → output file fact_<slug>.csv
     dx: [jwjKmtVK2wj, ...]   # subset of dx to disaggregate
     ouLevels: [1, 2, 3]      # levels for this cut (default [1])
+  - dims: [rtQk5MWCxyR, gAmNV64G0pZ]   # cross-cut TWO+ group sets (e.g. School Type × Ownership)
+    slug: typeown            # → fact_typeown.csv with cat1_* / cat2_* columns (one pair per dim)
+    dx: [jwjKmtVK2wj, ...]
+    ouLevels: [1, 2]
 ```
+
+Use `dim:` for a single dimension (output has `category_id` / `category_name`); use
+`dims: [a, b, …]` to cross-cut several at once (output has `cat1_id`/`cat1_name`,
+`cat2_id`/`cat2_name`, … one pair per dimension, in order). A marginal single-dimension cut
+(`dim:`) is **not** the same as a sum over a cross-cut — extract whichever a view needs
+directly (rates can't be summed across a dimension).
 
 ## Outputs (written to `--out`)
 
 | File | Columns |
 |---|---|
 | `fact.csv` | `dx, ou, pe, periodType, value` |
-| `fact_<slug>.csv` (one per disaggregation) | `dx, ou, pe, periodType, category_id, category_name, value` |
+| `fact_<slug>.csv` (one per disaggregation) | single `dim`: `dx, ou, pe, periodType, category_id, category_name, value`; multi `dims`: `…, cat1_id, cat1_name, cat2_id, cat2_name, …, value` |
 | `ou.csv` | `id, name, level, parent_id, parent_name, path, ty, lng, lat` |
 | `ou.geojson` | GeoJSON `FeatureCollection` (point facilities + polygon areas); properties `id, name, level, parent_id` |
 | `dx.csv` | `id, name` (resolved indicator names from analytics metaData) |

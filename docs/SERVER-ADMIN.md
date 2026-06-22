@@ -114,10 +114,15 @@ pages download **no** DuckDB engine — only a few hundred KB per page.
 
 ## 5. What it does NOT need
 
-- **No database, no DHIS2 access, no Node.js** at runtime. It's files.
-- **No `extensions.duckdb.org`** at runtime — the pages are fully pre-computed and never
-  start the in-browser query engine. (That dependency would only appear if a future version
-  added live client-side querying.)
+- **No database, no DHIS2 access, no Node.js, no open ports** beyond your web server, and
+  **no outbound calls from the server itself**. It's files.
+- **Federal + State pages need nothing external** — they are fully pre-computed and never
+  start the in-browser query engine.
+- The **only** external dependency at runtime is `extensions.duckdb.org`, and only for
+  **LGA pages** (which query in-browser) — see §2. It loads once in the *visitor's* browser,
+  is cached, and is never contacted by your server. If your audience can't reach it, LGA
+  drill-downs won't load (Federal/State still work); ask the dev team for an LGA build that
+  pre-bundles the extensions.
 
 ## 6. Two optional CDNs (cosmetic, loaded by the visitor's browser)
 

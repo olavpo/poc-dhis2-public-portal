@@ -1,94 +1,92 @@
-# DHIS2 Public Portal — generic foundation
+# DNEMIS — Education Statistics Public Portal (Nigeria ASC)
 
-> ⚠️ **Proof of concept — not production-ready.** This is a demonstration / reference
-> implementation to explore the approach. It has **not** been hardened, performance-tested
-> at scale, accessibility-audited, or security-reviewed for production. Use it as a starting
-> point and learning resource, not as-is in production.
+> ⚠️ **Proof of concept — not production-ready.** A demonstration / reference implementation
+> to explore the approach. It has **not** been hardened, performance-tested at scale,
+> accessibility-audited, or security-reviewed for production. Use it as a starting point and
+> learning resource, not as-is in production.
 
-A reusable, **static** public-portal foundation for DHIS2 analytics data, built with
-[Evidence](https://evidence.dev) over DuckDB-WASM. No database, no app server — the
-site is prerendered to static files and served by any static host.
+The **static public portal** for Nigeria's **Annual School Census (ASC)** — the "Education
+Statistics" site of the Federal Ministry of Education's **Digital National Education
+Management Information System (DNEMIS)**. Built with [Evidence](https://evidence.dev) over
+DuckDB-WASM: no database, no app server, **no live DHIS2 at runtime** — the site is
+prerendered to static files and served by any static host.
 
-`master` is the reusable, **domain-agnostic** foundation: the build/deploy/serve pipeline,
-asset precompression, a range-capable static server (nginx stand-in), build-time Evidence
-optimisations, and a generic, config-driven **DHIS2 extractor**. Point it at any DHIS2
-program, indicators, and org-unit hierarchy to build your own portal.
+It is built on a reusable, domain-agnostic **DHIS2 public-portal foundation** (the `master`
+branch): the build/deploy/serve pipeline, asset precompression, a range-capable static server
+(nginx stand-in), build-time Evidence optimisations, a config-driven **DHIS2 extractor**, and
+a **page generator** that emits one page per org unit. This branch (`emis-pp`) wires all of
+that to the real Nigeria EMIS instance.
 
-It ships with **one worked example to copy from** — an **Antenatal Care** portal (`/anc`)
-extracted from the **public DHIS2 Sierra Leone demo server** (`play.im.dhis2.org`),
-replicating dashboard `nghVC4wtyzi`. The ANC content is purely illustrative; the project is
-**not** ANC-specific — swap in your own config, sources, and pages. The example spans the
-full **baked ↔ engine** spectrum:
+The portal covers org-unit levels **Federal / State / LGA**, reference year **2025**, with
+**Ownership (Public/Private)** and **School Type** breakdowns, and spans the full
+**baked ↔ engine** spectrum:
 
-- **`/anc`** — baked national overview; pure static HTML, no SQL engine downloaded.
-- **`/anc/dashboard`** — the 11-item dashboard replica; a root-org-unit + reference-year
-  selector re-computes every chart and map client-side in DuckDB-WASM.
-- **`/anc/profile`** — on-demand org-unit profile drill-down (queried live in-browser,
-  deep-linkable).
+- **`/asc`** (Federal, site root) and **`/asc/state-<id>`** — fully **baked** static HTML; a
+  Total/Public/Private toggle drives every KPI, chart, map and the "Indicators by …" compare
+  table client-side over already-baked data, with **no SQL engine downloaded**.
+- **`/asc/lga/<id>`** — **client-rendered on demand** via one dynamic route; the page boots
+  DuckDB-WASM in the browser and queries the bundled Parquet (one-time, cached).
 
-📖 **Want to build your own?** Read the **[User Manual](docs/USER-MANUAL.md)** — a
-task-oriented walkthrough of the whole pipeline (extract → source → pages → deploy),
-plus `AGENTS.md` for the architecture and the hard-won gotchas list.
+📖 See **[`AGENTS.md`](AGENTS.md)** for the architecture, the build pipeline and the hard-won
+gotchas; **[`docs/SERVER-ADMIN.md`](docs/SERVER-ADMIN.md)** for hosting; and
+**[`docs/USER-MANUAL.md`](docs/USER-MANUAL.md)** for a task-oriented walkthrough.
 
-## ANC reference example
-
-```bash
-# 1. Extract from a live DHIS2 instance (public demo: admin/district).
-DHIS2_USERNAME=admin DHIS2_PASSWORD=district npm run extract:anc
-# 2. Ingest → parquet, build, deploy, serve.
-npm run sources && npm run build && npm run deploy && npm run serve
-```
-
-The extractor (`scripts/dhis2-extract/`) is generic and config-driven — point
-`config/anc.yaml` (or your own) at any DHIS2 instance. See its `README.md`.
-
-## Pipeline
-
-```
-evidence/sources/   ──►  npm run sources  ──►  Parquet + manifest (stock evidence sources)
- (your datasources)
-        │
-Evidence (Vite)     ──►  npm run build    ──►  prerendered static site in evidence/build
-        │
-scripts/deploy.sh   ──►  builds/<timestamp>/ + atomic `current` symlink flip
-scripts/serve.sh    ──►  serves current/ on $SANDBOX_HOST_PORT (nginx stand-in)
-```
-
-## Quick start
+## Build & run
 
 ```bash
 npm install                       # root tooling
 npm --prefix evidence install     # Evidence + DuckDB (one-time)
 
+# Refresh the data from the live instance (token preferred; or DHIS2_USERNAME/PASSWORD):
+D2_TOKEN="d2pat_xxxx" npm run extract:asc
+
+# One-shot build → deploy → serve (16 GB heap; --sources also rebuilds parquet first):
+./scripts/release.sh --sources
+# then browse http://localhost:$SANDBOX_HOST_PORT
+```
+
+Or step by step:
+
+```bash
 npm run dev                       # live-reload dev server
-# or the full static pipeline:
-npm run sources                   # ingest datasources → Parquet + manifest
-npm run build                     # prerender → evidence/build
+# full static pipeline:
+npm run sources                   # ingest evidence/sources/census → Parquet + manifest
+npm run build                     # patch + generate pages (pages:asc) + prerender → evidence/build
 npm run deploy                    # versioned dir + flip `current` symlink
 npm run serve                     # serve on http://localhost:$SANDBOX_HOST_PORT
 ```
 
-## Add your portal
+## Pipeline
 
-1. **Datasource** — create `evidence/sources/<name>/` with a `connection.yaml`
-   (`type: csv`, `type: duckdb`, …) and your files/queries. For DHIS2, use the bundled
-   `scripts/dhis2-extract/` extractor, point a DuckDB source at an analytics-API extract,
-   or drop pre-extracted CSV/Parquet files.
-2. **Pages** — add Markdown + SQL under `evidence/pages/`. Queries with no reactive
-   input are baked at build (no client engine); queries referencing `${inputs.x}` run
-   client-side in DuckDB-WASM on demand.
-3. `npm run sources && npm run build && npm run deploy`.
+```
+DHIS2 instance      ──►  extract:asc       ──►  evidence/sources/census/*.csv + ou.geojson
+        │
+evidence/sources/   ──►  npm run sources   ──►  Parquet + manifest (stock evidence sources)
+        │
+scripts/asc-pages/  ──►  pages:asc         ──►  evidence/pages/asc/** (run by `build`)
+        │
+Evidence (Vite)     ──►  npm run build     ──►  prerendered static site in evidence/build
+        │
+scripts/deploy.sh   ──►  builds/<timestamp>/ + atomic `current` symlink flip
+scripts/serve.sh    ──►  serves current/ on $SANDBOX_HOST_PORT (nginx stand-in)
+```
 
-The **[User Manual](docs/USER-MANUAL.md)** walks through each step in detail, including
-adapting the extractor to your own DHIS2 instance and replicating an existing dashboard.
+## Where things live
+
+- **`scripts/dhis2-extract/`** — generic, config-driven DHIS2 analytics extractor;
+  `config/asc.yaml` is the ASC config. See its `README.md`.
+- **`scripts/asc-pages/`** — page generator (`generate.mjs` + `template.mjs`): the entire
+  dashboard is authored once in the template and emitted per org unit.
+- **`evidence/sources/census/`** — the ASC CSV datasource (generated; gitignored).
+- **`evidence/components/`** — custom Svelte components (ownership toggle, compare table,
+  benchmark, KPI/reporting tiles, org-unit profile).
+- **`evidence/scripts/patch-evidence.mjs`** — build-time template patches + DNEMIS branding
+  (coat-of-arms header, "Download PDF", print CSS).
+- **`docs/`** — server-admin guide, user manual, plans/specs.
 
 ## Environment requirement
 
-The build is **stock Evidence** — stock `evidence sources` and stock prerendering, no
-shims. The single requirement is that **`extensions.duckdb.org` is reachable** (DuckDB-WASM
-autoloads its Parquet/httpfs extensions there at build and runtime, once, then caches).
-
-`evidence/scripts/patch-evidence.mjs` applies idempotent build-time tweaks to the stock
-template: an adapter fallback page, lazy DuckDB-WASM init (so baked pages never download
-the engine), and the layout/branding (full-width, DHIS2 logo, no Evidence footer). See
-`AGENTS.md` for the full guide and conventions, and `docs/USER-MANUAL.md` for the how-to.
+The build is **stock Evidence** — no shims. The one requirement is that
+**`extensions.duckdb.org` is reachable**: at **build time** always (DuckDB-WASM autoloads its
+Parquet/httpfs extensions there), and at **runtime for LGA pages only** (they query
+in-browser). Federal/State pages are baked and need it at build time only.

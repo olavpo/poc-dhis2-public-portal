@@ -1,58 +1,80 @@
-# AGENTS.md — DHIS2 Public Portal (generic foundation)
+# AGENTS.md — DNEMIS Education Statistics Public Portal (Nigeria ASC)
 
 Guidance for AI agents (and humans) working in this repo.
 
 ## What this is
 
-A generic, reusable, **domain-agnostic** static public-portal foundation for DHIS2
-analytics data, built with [Evidence](https://evidence.dev) over DuckDB-WASM — no database,
-no app server. `master` provides the build/deploy/serve pipeline, the build-time Evidence
-optimisations, and a generic config-driven **DHIS2 extractor** (`scripts/dhis2-extract/`).
-Point it at any DHIS2 program/indicators/org-unit hierarchy and build your own portal.
+A **static public portal** for Nigeria's **Annual School Census (ASC)** — the "Education
+Statistics" site of the Federal Ministry of Education's **Digital National Education
+Management Information System (DNEMIS)**. Built with [Evidence](https://evidence.dev) over
+DuckDB-WASM: no database, no app server, no live DHIS2 at runtime — the whole site is
+prerendered to static files.
 
-It ships with **one worked example to copy from**: an Antenatal Care portal (`/anc`)
-extracted from the **public DHIS2 Sierra Leone demo server** (`play.im.dhis2.org`),
-replicating dashboard `nghVC4wtyzi`. **ANC is illustrative, not the point** — the repo is
-not ANC-specific or Sierra-Leone-specific; swap in your own config, sources, and pages. The
-example spans the full **baked ↔ engine** spectrum:
-- **`/anc`** — baked national overview (no client engine downloaded).
-- **`/anc/dashboard`** — the 11-item dashboard replica; selectable root org unit + reference
-  year drive every chart/map client-side in DuckDB-WASM.
-- **`/anc/profile`** — on-demand org-unit profile drill-down (local-parquet, deep-linkable).
+It is built on a generic, reusable **DHIS2 public-portal foundation** (the `master` branch):
+the build/deploy/serve pipeline, build-time Evidence optimisations, a config-driven **DHIS2
+extractor** (`scripts/dhis2-extract/`), and a **page generator** (`scripts/asc-pages/`) that
+emits one page per org unit from a shared template. This branch (`emis-pp`) points all of
+that at the real Nigeria EMIS instance and ships the DNEMIS dashboard.
+
+Data is the ASC extract for **org-unit levels 1–3 (Federal / State / LGA)**, reference year
+**2025**, with **Ownership (Public/Private)** and **School Type** disaggregations. The portal
+spans the full **baked ↔ engine** spectrum:
+- **Federal (`/asc`, the site root) + each State (`/asc/state-<id>`)** — fully **baked**
+  pages (no client engine downloaded): KPI row, reporting/completeness, vs-State-&-Federal
+  benchmark, charts/maps, donuts, and the per-school-type × ownership "Indicators by …"
+  compare table. A Total/Public/Private toggle drives every element client-side over
+  already-baked data (no engine — see the baked-toggle pattern below).
+- **LGA (`/asc/lga/<id>`)** — **client-rendered on demand** via a single dynamic route; the
+  page boots DuckDB-WASM in the browser and queries the bundled Parquet. (See "Baked vs.
+  engine" for why LGAs are not baked.)
 
 ## Pipeline & commands
 
 ```
-evidence/sources/   →  Parquet + manifest in                       [npm run sources]
- (your datasources)    evidence/.evidence/template/static/data       (stock evidence sources)
+DHIS2 instance  ─[extract:asc]→  evidence/sources/census/*.csv + ou.geojson
         │
-Evidence (vite)     →  prerendered static site in evidence/build   [npm run build]
+evidence/sources/census/  ─[npm run sources]→  Parquet + manifest (stock evidence sources)
         │
-deploy.sh           →  builds/<ts>/ + atomic `current` symlink     [npm run deploy]
-serve.sh / serve.mjs →  static server on $SANDBOX_HOST_PORT         [npm run serve]
+scripts/asc-pages/  ─[pages:asc]→  evidence/pages/asc/** + evidence/static/asc/*.geojson
+        │
+Evidence (vite)  ─[npm run build]→  prerendered static site in evidence/build
+        │
+deploy.sh  →  builds/<ts>/ + atomic `current` symlink   serve.mjs  →  static server
 ```
 
-- `npm run dev` — Evidence dev server (live reload).
-- `npm run build` — patch the template (idempotent) then prerender.
-- `npm run extract:anc` — (re)build the ANC datasource from a live DHIS2 instance.
-  Needs `DHIS2_USERNAME`/`DHIS2_PASSWORD` in env (the public play demo uses `admin`/`district`).
-  Writes tidy CSVs to `evidence/sources/anc/` + `evidence/static/anc.geojson`, then run
-  `npm run sources`. See `scripts/dhis2-extract/README.md`.
+- `./scripts/release.sh` — **the one-shot build → deploy → serve** (hands Node a 16 GB heap
+  for the prerender). `--sources` also rebuilds the DuckDB parquet first (after re-extracting);
+  `--no-serve` stops after deploy. Override heap with `NODE_HEAP_MB=…`.
+- `npm run build` — `patch` (idempotent template patch) → `pages:asc` (generate pages) →
+  stock Evidence prerender. `npm run dev` — Evidence dev server (live reload).
+- `npm run extract:asc` — (re)build the `census` datasource from the live instance. Auth from
+  env: **`D2_TOKEN=…` (personal access token, preferred)** or `DHIS2_USERNAME`/`DHIS2_PASSWORD`.
+  Writes tidy CSVs to `evidence/sources/census/` + `ou.geojson`; then run `npm run sources`
+  (or `release.sh --sources`). See `scripts/dhis2-extract/README.md`.
+- `npm run pages:asc` — regenerate the per-org-unit pages from `scripts/asc-pages/template.mjs`
+  (run automatically by `npm run build`). `ASC_MAX_STATES` / `ASC_MAX_LGAS` cap the count for a
+  fast local build.
+- `npm run synth:asc` — one-off: seed a DHIS2 instance with a **synthetic** Nigeria geography +
+  deterministic dummy dataValues for the real ASC data elements (used to stand up a test
+  instance; not part of the normal build).
 - Browse a deploy at `http://localhost:$SANDBOX_HOST_PORT`.
 
 ## Layout
 
 | Path | Responsibility |
 |---|---|
-| `scripts/dhis2-extract/` | **Generic, config-driven DHIS2 analytics extractor** (Node). `config/anc.yaml` is the worked example; see its `README.md`. |
-| `evidence/sources/anc/` | The ANC CSV datasource (`connection.yaml`); CSVs are generated by the extractor (gitignored). Add your own sources alongside. |
-| `evidence/pages/` | Dashboards (Markdown + SQL). `index.md` landing page; `anc/` is the ANC reference example (overview, dashboard, profile). |
-| `evidence/components/` | Custom Svelte components (`OrgUnitProfile.svelte` powers the profile deep link). |
-| `evidence/scripts/patch-evidence.mjs` | Idempotent build-time optimisations (adapter fallback + lazy DuckDB init). |
+| `scripts/dhis2-extract/` | **Generic, config-driven DHIS2 analytics extractor** (Node). `config/asc.yaml` is the ASC config; see its `README.md`. |
+| `scripts/asc-pages/` | **Page generator**: `generate.mjs` walks `ou.csv` and writes one page per org unit from `template.mjs` (the whole dashboard lives here). |
+| `scripts/asc-synth/` | One-off synthetic-data seeder for a test DHIS2 instance. |
+| `evidence/sources/census/` | The ASC CSV datasource (`connection.yaml`, `name: census`); CSVs generated by the extractor (gitignored). |
+| `evidence/pages/` | `index.md` + generated `asc/` pages (Federal/State baked; `asc/lga/[id].md` dynamic, `asc/lga/+layout.js` sets `prerender = false`). |
+| `evidence/components/` | Custom Svelte components: `OwnershipSelect` + `ownership.js` (Total/Public/Private store), `CompareTable`, `Benchmark`, `ReportStats`, `KpiRow`, `ScrollX`, `OrgUnitProfile`. |
+| `evidence/scripts/patch-evidence.mjs` | Idempotent build-time patches: adapter `fallback: '200.html'`, lazy DuckDB init, **and the DNEMIS branding** (coat-of-arms header, "Download PDF" button, print CSS) written into `+layout.svelte`. |
 | `evidence/evidence.config.yaml` | Theme/appearance + datasource plugins (CSV + DuckDB). |
+| `scripts/release.sh` | Build → deploy → serve (16 GB heap). |
 | `scripts/deploy.sh`, `scripts/serve.mjs` | Atomic versioned deploy + range-capable static server. |
 | `scripts/precompress.mjs` | Writes `.br`/`.gz` for JS/CSS/HTML/**wasm**/**geojson** (run by `deploy.sh`). |
-| `docs/` | Reference architecture + design/plan/spec docs. |
+| `docs/` | `SERVER-ADMIN.md` (hosting), `USER-MANUAL.md`, plans/specs/feedback. |
 
 ## Baked vs. engine (the key decision when authoring pages)
 
@@ -61,25 +83,31 @@ Evidence decides per query, by whether the SQL references a reactive input:
 - **Baked at build** — a query with no `${inputs.x}` is executed at build time and its
   result is written into the page HTML + a `.arrow` file. The client renders it
   **without downloading the DuckDB-WASM engine**. Use this for everything you can.
-- **Client-side (engine)** — a query that references `${inputs.x}` (from a `<Dropdown>`
-  etc.), a custom component calling `query()`, or data loaded on demand, runs in
-  DuckDB-WASM in the browser. The engine (~6 MB compressed) loads lazily on the first
-  such query (see the lazy-init patch), so only pages that need it pay for it.
+- **Client-side (engine)** — a query that references `${inputs.x}` / `${params.id}`, a custom
+  component calling `query()`, or data loaded on demand, runs in DuckDB-WASM in the browser.
+  The engine (~6 MB compressed) loads lazily on the first such query (see the lazy-init patch),
+  so only pages that need it pay for it.
 
-Rule of thumb: prefer baked pages; reach for client-side only for interactive filters,
-very large drill-down tiers loaded on demand, or genuinely dynamic views.
+In this portal: **Federal + State pages are baked**; the Total/Public/Private toggle is
+engine-free because it just selects among baked query results in a Svelte store (see the
+baked-toggle gotcha). **LGA pages are client-rendered** through a single dynamic route
+(`asc/lga/[id].md`, `${params.id}`). That is deliberate: baking a page per LGA (~770 of them,
+each with server-rendered ECharts) made the prerender **compile ~812 route modules** and
+OOM even at 16 GB. One dynamic route compiles to ~39 modules and builds comfortably; the
+trade-off is LGA pages load the engine in the browser (one-time, cached) and need a
+`200.html` fallback + `extensions.duckdb.org` at runtime. State pages (37) bake fine.
 
 ## Environment requirement (IMPORTANT)
 
-**`extensions.duckdb.org` must be reachable** (allowlisted in the sandbox firewall).
-DuckDB-WASM autoloads its Parquet/httpfs extensions from there — needed at **build
-time** (`evidence sources` and the Node-side prerender read Parquet) and at **runtime**
-(browser). One-time, cached. This is the only sandbox requirement; the build is
-**stock `evidence sources` + stock prerendering**, no shims.
+**`extensions.duckdb.org` must be reachable** — at **build time** always (`evidence sources`
+and the Node-side prerender read Parquet) and at **runtime for LGA pages** (the browser
+autoloads DuckDB-WASM's Parquet/httpfs extensions there when an LGA page first queries).
+Federal/State are baked and need it at build only. One-time, cached. The build is **stock
+`evidence sources` + stock prerendering**, no shims.
 
-`patch-evidence.mjs` applies only two build-time *optimisations* (not workarounds):
-an adapter-static `fallback: '200.html'` safety net, and **lazy DuckDB-WASM init** so
-baked pages never download the engine. See that file's header.
+`patch-evidence.mjs` applies build-time *optimisations* (not workarounds) plus branding: an
+adapter-static `fallback: '200.html'` safety net, **lazy DuckDB-WASM init** so baked pages
+never download the engine, and the DNEMIS header/print layout. See that file's header.
 
 ## Conventions & gotchas
 
@@ -95,7 +123,7 @@ cost an hour the first time; none throw an obvious error.
 - **No raw-HTML wrappers around components.** mdsvex won't compile a component (or
   `{#each}`/`{expr}`) inside a raw-HTML island — e.g. `<div style="overflow:auto"><BarChart/></div>`
   silently fails. Use the `<Grid>` component for layout, or a `.svelte` component for
-  anything custom (scroll containers, loops, DOM work).
+  anything custom (scroll containers, loops, DOM work — e.g. `ScrollX.svelte`).
 - **Input-driven queries hang until their input initialises.** Evidence defers any query
   referencing `${inputs.x}` until `inputs.x` has a value; if it never gets one the chart
   sits in a grey "loading" skeleton forever, with **no error**. Two ways a `<Dropdown>`
@@ -108,7 +136,7 @@ cost an hour the first time; none throw an obvious error.
   and a `{inputs.x.value}` expression prints the live value.
 - **Every fact query must filter `periodType`.** `fact.csv` holds monthly, quarterly AND
   yearly rows at once; an unfiltered query triple-counts. Resolve relative windows in SQL
-  against the `pe` table (see `pages/anc/dashboard.md`).
+  against the `pe` table (see the period logic in `scripts/asc-pages/template.mjs`).
 - **Descendant-or-self org-unit scoping:** `ou.path` is the DHIS2 self-inclusive path
   (`/root/.../self`). Match on `/`-segment boundaries: `('/' || o.path || '/') like '%/' || root || '/%'`.
 - **Custom components must query via `$page.data.__db.query`, not the raw client-duckdb
@@ -117,9 +145,9 @@ cost an hour the first time; none throw an obvious error.
   get **"Timeout while initializing database"**. Also gate component query/`$page.url`
   access behind `onMount` — `$page.url.searchParams` throws during prerender, and the
   engine only exists in the browser. (See `components/OrgUnitProfile.svelte`.)
-- **Charts can't scroll internally.** A category chart with hundreds of rows (e.g. 152
-  chiefdoms) grows unbounded and stretches the page. Render it as a raw `<ECharts>` with a
-  fixed `height` and a `dataZoom` slider on the category axis. Match a neighbouring Evidence
+- **Charts can't scroll internally.** A category chart with hundreds of rows (e.g. all LGAs)
+  grows unbounded and stretches the page. Render it as a raw `<ECharts>` with a fixed
+  `height` and a `dataZoom` slider on the category axis. Match a neighbouring Evidence
   chart's height with its `chartAreaHeight` prop (total ≈ chartAreaHeight + ~95px chrome).
 - **DuckDB types empty CSV cells.** A numeric column with blanks (e.g. `lng`/`lat` for
   non-point org units) is typed `DOUBLE`, blanks → `NULL`. Filter with `is not null`, not
@@ -128,93 +156,103 @@ cost an hour the first time; none throw an obvious error.
   fails to compile (the component renders stale/SSR values, often with a console
   `f[1] is not a function`). Pass **string keys** in the array and map them to functions
   *inside* the component. A single-attribute function prop (`fmt={v => …}`) is fine.
-- **Keep pages baked — presentational components only.** A query with no `${inputs.x}` is
-  executed at build and its result baked into the page; a component that calls `query()` boots
-  the ~6 MB DuckDB-WASM engine. For baked pages, pass the baked query result to the component
-  as a **prop** and never call `query()`; interactive toggles/tabs over already-baked data
-  stay engine-free. Verify with a network capture — a baked page fetches **0** `.wasm`.
+- **Keep pages baked — the Total/Public/Private toggle is engine-free.** A query with no
+  `${inputs.x}` is baked into the page; a component that calls `query()` boots the ~6 MB
+  engine. The ownership toggle works **without an engine**: the template bakes a separate
+  query per mode (`*_total` / `*_public` / `*_private`), and `OwnershipSelect`/`CompareTable`
+  pick which baked result to show from the shared `ownership.js` store. Pass baked results to
+  components as **props**; never call `query()` on a baked page. (One subtlety: `AreaMap`
+  *subscribes to and `.fetch()`es* its `data`, so it needs a real Evidence **query object** —
+  `OwnershipSelect` selects among three real baked query objects, not filtered arrays.) Verify
+  with a network capture: a baked page fetches **0** `.wasm`.
 - **Wrap scroll containers / raw `<ECharts>` in a `.svelte` component, not a raw `<div>`.**
-  e.g. a one-line `ScrollX.svelte` (`<div class="scrollx"><slot/></div>` + `overflow-x:auto`)
-  makes a wide table scroll on mobile; a raw-HTML wrapper won't compile its slotted components
-  (see the no-raw-HTML rule above).
+  e.g. `ScrollX.svelte` makes the wide compare table scroll on mobile; a raw-HTML wrapper
+  won't compile its slotted components (see the no-raw-HTML rule above).
 
 **Extractor / DHIS2**
 
 - **Let DHIS2 aggregate indicators; never re-aggregate them *after* extraction.** A `dx` is
-  either a **data element** (raw measured value, e.g. counts like "ANC 1st visit") or an
-  **indicator** (a calculated rate/ratio/percentage, e.g. "ANC 1 Coverage" = visits ÷ target
-  × 100). The analytics API returns each value **already correctly aggregated for the exact
-  `ou`/`pe` you request** — *trust that*. The extractor pulls every level and granularity
-  (the ANC config: levels 1–4 × monthly/quarterly/yearly), so the correctly-aggregated
-  national, quarterly, yearly, … values are all in `fact.csv` already.
-  - **In your pages, query the row at the level you want** (national coverage, a given
-    quarter, the year) — don't compute it from finer data.
-  - **Do NOT re-aggregate an indicator in SQL:** never `avg()`/`sum()` monthly coverages
-    into a quarter, or district coverages into a national figure. Rates aren't additive, and
-    equal-weight averaging ignores denominators. (Summing is nonsense — 4 quarters of ~120%
-    → 480%; averaging is a biased approximation.) The ANC dashboard shows each coverage at a
-    single DHIS2-supplied `ou`/`pe` (latest quarter, reference year) for this reason.
+  either a **data element** (raw measured value, e.g. a count like "learner enrolment") or an
+  **indicator** (a calculated rate/ratio, e.g. "pupil-teacher ratio" or a reporting-completeness
+  %). The analytics API returns each value **already correctly aggregated for the exact
+  `ou`/`pe` you request** — *trust that*. The extractor pulls every level requested, so the
+  correctly-aggregated Federal, State and LGA values are all in `fact.csv` already.
+  - **In your pages, query the row at the level you want** — don't compute it from finer data.
+  - **Do NOT re-aggregate an indicator in SQL:** never `avg()`/`sum()` State ratios into a
+    national figure. Rates aren't additive, and equal-weight averaging ignores denominators.
+    The dashboard shows each rate at a single DHIS2-supplied `ou`/`pe` for this reason.
   - **Data elements (raw counts) *can* be aggregated post-extraction** (subject to their
-    aggregation type) — the visit-count charts legitimately `sum()` across facility-type
-    categories. If you need a rate at a level you didn't extract, pull its numerator +
-    denominator data elements and compute `sum(num)/sum(den)` yourself.
+    aggregation type) — e.g. summing enrolment across school-type categories is legitimate. If
+    you need a rate at a level/cut you didn't extract, pull its numerator + denominator data
+    elements and compute `sum(num)/sum(den)` yourself.
+  - **Ratios can't be summed across a disaggregation either.** For a per-school-type rate at
+    Total ownership you need the *marginal* cut (`fact_schooltype`), not a sum of the
+    type×ownership cells. The config extracts the cuts each view actually needs.
   - Tell the two apart via `/api/indicators` vs `/api/dataElements`, or `dimensionItemType`
     on a visualization's dimension items.
 - **Hierarchy from `/api/organisationUnits`, geometry from `/api/geoFeatures`.** geoFeatures
-  silently omits units without geometry (the national root has none in the SL demo), so
-  using it for the hierarchy drops the root and breaks every root-OU selector. The extractor
-  sources `ou.csv` from organisationUnits and left-joins geometry by id.
-- **The play demo only has recent data** (≈ current ± 1 year relative to its server clock).
-  Aim the config's `periods.range` at that window; older years return zero rows.
+  silently omits units without geometry (the national root often has none), so using it for
+  the hierarchy drops the root and breaks every root-OU selector. The extractor sources
+  `ou.csv` from organisationUnits and left-joins geometry by id.
+- **The instance's test data covers a specific window** (ASC reference year **2025**). Aim
+  the config's `periods` there; other years return zero rows.
+- **Some dx 500 at deep levels.** Deep-level (LGA) calls — especially with an org-unit-group-set
+  disaggregation — can 500 on individual indicators; the extractor **bisects and skips** the
+  offending dx (logged `[skip]`) rather than aborting. Lower `DX_CHUNK` or restrict a cut's
+  `ouLevels` if the server is sensitive, and make sure analytics tables are freshly generated.
 - **`curl` needs `-g`** for DHIS2's `[...]` field syntax (URL-globbing off). Node `fetch`
   is unaffected.
-- **Writing test data back into a DHIS2 instance** (if you seed an instance instead of
-  pulling a public demo): import `dataValueSets` with `?force=true` to bypass dataset
-  input-period / expiry locks (`E7644`); the importing user must hold the target org units in
-  **both** `organisationUnits` (data capture — else `E7617`) **and**
-  `dataViewOrganisationUnits` (analytics view — else `E7120`); and `dataValueSets` returns
-  **HTTP 409 with `status: WARNING`** on *partial* success — treat it as non-fatal and read
-  `importCount`, don't throw.
+- **Writing test data back into a DHIS2 instance** (the synth seeder does this): import
+  `dataValueSets` with `?force=true` to bypass dataset input-period / expiry locks (`E7644`);
+  the importing user must hold the target org units in **both** `organisationUnits` (data
+  capture — else `E7617`) **and** `dataViewOrganisationUnits` (analytics view — else `E7120`);
+  and `dataValueSets` returns **HTTP 409 with `status: WARNING`** on *partial* success — treat
+  it as non-fatal and read `importCount`, don't throw.
 
 **Build / serve**
 
 - **Author all cross-linked pages before building.** SvelteKit prerender fails on an
-  internal link whose target page doesn't exist yet. Build once, after the pages it links to.
+  internal link whose target page doesn't exist yet — *unless* the target route is
+  `prerender = false` (the LGA route). Run `pages:asc` before the prerender (the `build`
+  script does this for you).
+- **LGA pages must stay `prerender = false`.** `asc/lga/+layout.js` sets it. SvelteKit throws
+  if a `prerender = true` route is reached but not prerendered; and baking every LGA OOMs the
+  compile (see "Baked vs. engine"). Keep LGAs on the single dynamic route.
 - **Assets are precompressed.** `scripts/precompress.mjs` (run by `deploy.sh`) writes
   `.br`/`.gz` for JS/CSS/HTML/**wasm**/**geojson**; `serve.mjs` serves them (nginx
   `brotli_static` parity). Without it the DuckDB-WASM engine ships ~33 MB uncompressed.
 - **Build/serve in the background and poll the log** — foreground `sleep` is blocked in the
   sandbox, and builds take a few minutes. Serve range-capably with `serve.mjs` (plain
   `python -m http.server` drops the DuckDB-WASM range requests under load).
-- **Layout/branding live in `patch-evidence.mjs`.** The template's `+layout.svelte` is
-  regenerated each build, so full-width / logo / footer changes are applied there as
-  idempotent patches to the stock `<EvidenceDefaultLayout>` props.
+- **Layout/branding/print live in `patch-evidence.mjs`.** The template's `+layout.svelte` is
+  regenerated each build, so the coat-of-arms header, "Download PDF" button and `@media print`
+  rules are written there deterministically (whole-file write, idempotent) — not anchor patches.
 - **Don't name a source a SQL reserved word.** A source dir `evidence/sources/asc/` becomes
-  the DuckDB schema `asc`, and `asc.fact` fails to parse (ASC/DESC keyword). Use a safe name
-  (`census`, `data`, …); URLs and filenames can still say "asc".
+  the DuckDB schema `asc`, and `asc.fact` fails to parse (ASC/DESC keyword). This is why the
+  source is named **`census`**; URLs and filenames can still say "asc".
 - **Stale cache when a component edit "doesn't take".** Clear it:
   `rm -rf evidence/.evidence/template/.svelte-kit evidence/node_modules/.vite`, then rebuild.
-  Also `evidence build` leaves old content-hashed chunks in `evidence/build/` — the live page
-  references the newest, but stale chunks linger; **wipe `evidence/build` before a clean
-  rebuild or a "no X in the output" audit**.
+  Also `evidence build` leaves old content-hashed chunks in `evidence/build/`; **wipe
+  `evidence/build` before a clean rebuild or a "no X in the output" audit**. (`release.sh`
+  pre-cleans `.evidence/template/src` + caches — `evidence build`'s template populate can
+  throw `ENOTEMPTY` on Node ≥22/24 otherwise.)
 - **Builds are memory-heavy** (and in the sandbox share host RAM with sibling containers). An
-  OOM shows as `Killed` / exit 137. Raise the heap (`NODE_OPTIONS=--max-old-space-size=4096`)
-  and/or stop other containers — the build reads local files and needs **no** live DHIS2.
+  OOM shows as `Killed` / exit 137. `release.sh` uses a 16 GB heap; the build reads local
+  files and needs **no** live DHIS2.
 
 ## Connecting DHIS2 data
 
-The bundled **extractor** (`scripts/dhis2-extract/`) is the recommended path: a YAML
-config lists indicators, org-unit levels, a period range, and optional group-set
-disaggregations; it pulls a *superset* analytics extract and writes tidy CSVs
-(`fact.csv`, `fact_<slug>.csv`, `ou.csv`, `dx.csv`, `pe.csv`) + `ou.geojson`. The org-unit
-**hierarchy comes from `/api/organisationUnits`** (complete, incl. geometry-less units)
-and **geometry from `/api/geoFeatures`**, merged by id — don't source the hierarchy from
-geoFeatures (it omits the national root). `ou.csv.path` is the DHIS2 self-inclusive path,
-so descendant-or-self scoping is `('/' || path || '/') like '%/' || root || '/%'`.
+The **extractor** (`scripts/dhis2-extract/`) is the path: a YAML config lists indicators,
+org-unit levels, periods, and optional group-set disaggregations (single `dim:` or a
+multi-group-set `dims: [...]` cross-cut); it pulls a *superset* analytics extract and writes
+tidy CSVs (`fact.csv`, `fact_<slug>.csv`, `ou.csv`, `dx.csv`, `pe.csv`) + `ou.geojson` into
+`evidence/sources/census/`. The org-unit **hierarchy comes from `/api/organisationUnits`**
+(complete, incl. geometry-less units) and **geometry from `/api/geoFeatures`**, merged by id.
+`ou.csv.path` is the DHIS2 self-inclusive path, so descendant-or-self scoping is
+`('/' || path || '/') like '%/' || root || '/%'`.
 
-You can also drop pre-extracted CSV/Parquet under a source dir, or point the
-`@evidence-dev/duckdb` connector at a file/extract directly.
-
-The sandbox allowlists `dhis2.org` and `play.im.dhis2.org` (the public demo this example
-uses), and a sibling `dhis2` dev container is reachable by name on `dev-net`
-(`http://dhis2:8080/api/...`) for live-extract experiments.
+The `asc.yaml` `baseUrl` targets the Nigeria EMIS instance
+(`trainingdb.dhis2nigeria.org.ng/dev`); override per-run with `D2_BASE_URL`. The sandbox
+firewall allows `dhis2.org`, and a sibling `agent-emis-ng` dev container is reachable by name
+on `dev-net` for live-extract experiments. You can also drop pre-extracted CSV/Parquet under a
+source dir, or point the `@evidence-dev/duckdb` connector at a file/extract directly.
