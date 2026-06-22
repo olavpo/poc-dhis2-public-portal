@@ -131,9 +131,12 @@ const LAYOUT = `<script>
 		.dnemis-header { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 		/* Don't split a chart / KPI card / table / donut across a page boundary, and keep a
 		   heading with the block that follows it. */
-		:global(canvas), :global(table), :global(.kpi), :global(.cell), :global(.block),
-		:global([class*='chart']), :global(.markdown li) { break-inside: avoid; }
+		:global(canvas), :global(.kpi), :global(.cell), :global(.block),
+		:global([class*='chart']) { break-inside: avoid; }
+		/* tables must flow across pages (thead repeats) — don't avoid-break them, or a long
+		   table jumps to the next page leaving a blank gap under its heading. */
 		:global(h1), :global(h2), :global(h3) { break-after: avoid; }
+		:global(thead) { display: table-header-group; }
 	}
 </style>
 `;
