@@ -2,15 +2,52 @@
 # real metadata + test data + boundary geometry to LGA (Federal=1 / State=2 / LGA=3;
 # Ward/School below are NOT extracted, ouLevels stops at 3). Reference year 2025 (the
 # year the test data covers). Auth via env DHIS2_USERNAME / DHIS2_PASSWORD.
-baseUrl: http://dhis2-agent-emis-ng:8080
-dx: [DiEriq7urPG,L7wp6IPJGhV,NnvopxD62MT,QZl1LOTpSat,i8mFzOkO9Wi,Rszp9Ippq5N,pc4DSr5MyOC,Sydf7CTCFuC,Qsgrw7qe8cC,d8qCE7aPWtD,yjH9LAuAMrk,Qwjg1QG0Hws,JH1hYfoV2hb,uNvBLdtslJ5,Mmn0SEDyzOC,DANh9bP86R9,uXpZ0iaeH4P,QETjPTty02O,aX6SpmH2icc,zGdBeuyjOeQ,wDf8ZOwWgib,gAfSf7sfxib,uSfibhbGRT1,nghVrzkls6X,Yf6K5jD4oED,bCMrPV3785Y,eLOZ1cSBHJM,AoOq7RrHxMr,CEgyg6JJbNv,IYNEmLyFgbe,i8dMJSyq5hO,vZA5RaodnuH,jWEK2IgsZXZ,Y8uv3HrDDcF,X4cRpKnxayU,Bp8XVbKSqVX,yVJPz2WzrgH,AtbaZYTP7Xl,g1ozV2n8G88,kxJmBoDtD9t,VzPMQzTjenn,dRBLKPEMR80,mHzRpEIsf3n,kitIA5LU69N,jRh7NbBDdJI,GSJ3jeCZNsD,VAnbcYjaaZ4,lBfQKjSIx0P,nK3E5siSgHS,jwjKmtVK2wj,zKAZUEGYL52,HxRedgvSK2M,Nc9bgbCb6eO,Dw7f4gs9RcS,XZEG3yT7WmJ,Exv6Kz1TXmJ,eie1tIO5HtX,bWPz06oFs5q,cbeoGyJDnv5,io4yQysi8jU,jox8QDbnBV3,DvMfSq5pZSA,vDmeu4io2Fs,uWkPykwyYn2,DydalnMqg5w,XhYKabiEAnj,q9E9FifnCzE]
+baseUrl: https://trainingdb.dhis2nigeria.org.ng/dev
+dx: [DiEriq7urPG,L7wp6IPJGhV,NnvopxD62MT,QZl1LOTpSat,i8mFzOkO9Wi,Rszp9Ippq5N,pc4DSr5MyOC,Sydf7CTCFuC,Qsgrw7qe8cC,d8qCE7aPWtD,yjH9LAuAMrk,Qwjg1QG0Hws,JH1hYfoV2hb,uNvBLdtslJ5,Mmn0SEDyzOC,DANh9bP86R9,uXpZ0iaeH4P,QETjPTty02O,aX6SpmH2icc,zGdBeuyjOeQ,wDf8ZOwWgib,gAfSf7sfxib,uSfibhbGRT1,nghVrzkls6X,Yf6K5jD4oED,bCMrPV3785Y,eLOZ1cSBHJM,AoOq7RrHxMr,CEgyg6JJbNv,IYNEmLyFgbe,i8dMJSyq5hO,vZA5RaodnuH,jWEK2IgsZXZ,Y8uv3HrDDcF,X4cRpKnxayU,Bp8XVbKSqVX,yVJPz2WzrgH,AtbaZYTP7Xl,g1ozV2n8G88,kxJmBoDtD9t,VzPMQzTjenn,dRBLKPEMR80,mHzRpEIsf3n,kitIA5LU69N,jRh7NbBDdJI,GSJ3jeCZNsD,VAnbcYjaaZ4,lBfQKjSIx0P,nK3E5siSgHS,jwjKmtVK2wj,zKAZUEGYL52,HxRedgvSK2M,Nc9bgbCb6eO,Dw7f4gs9RcS,XZEG3yT7WmJ,Exv6Kz1TXmJ,eie1tIO5HtX,bWPz06oFs5q,cbeoGyJDnv5,io4yQysi8jU,jox8QDbnBV3,DvMfSq5pZSA,vDmeu4io2Fs,uWkPykwyYn2,DydalnMqg5w,XhYKabiEAnj,q9E9FifnCzE,
+  wVjDYI2HuQb,v31dkf4PhmH,CKMgwHERBfg,I8JeN23lKHn,tuku316VSXL,uDBB1WrCkST,BXTUMWSq4zQ,U8ytqWQMFwD,
+  QLfdf8Jd9dc,Yr6FePoHpHP,OTZHZUXsMeN,zH11dcmH2Pg,SYwA4fNOprM,Jx7wWJI1WpR,
+  dh9fliYibms,S2cH9F1T7MU,jZtYw0T5xJl,jSbbKIsSvK3,stoCrMx0ED1,q5mnwKasEpF,
+  zrzIn10PQjq,oOHHjng0014,PbzDc38hOsx,ABJrmFcIpT3,
+  u4ogrV7WUcz,j3cxHeBhZ4m,STJaOAJl6eG]
+# Last row = ASC-STC (Science/Technical/Vocational) enrolment + boys/girls, for the Tech/Voc
+# category in the level breakdowns.
+# Appended MD (Minister's Dashboard) indicators: row 1 = school counts by type
+# (Primary/IQS/JSS/SSS/Tech-Voc/Private/Public/Total); rows 2–3 = actual (submitted) and
+# expected reports for the 6 census forms (reporting/completeness is derived in SQL).
 ouLevels: [1, 2, 3]
 periods:
   list: ['2025']
 disaggregations:
   - dim: gAmNV64G0pZ          # "Ownership Public/Private" org-unit group set
     slug: ownership
-    # the 4 GEN KPI indicators (enrolment, teachers, pupil-teacher ratio, female %) —
-    # the KPI row offers a Total/Public/Private toggle off this cut.
-    dx: [jwjKmtVK2wj, Dw7f4gs9RcS, eie1tIO5HtX, Nc9bgbCb6eO]
+    # Everything the KPI row, the charts, the benchmark AND the "Indicators by …" compare table
+    # need by ownership, so the Total/Public/Private toggle drives the whole page. Covers: GEN
+    # enrolment/teachers/PTR/female, per-level enrolment + boys + girls + special-needs (Primary
+    # pre+pry, JSS, SSS, IQS, Tech/Voc), the ratio inputs (classroom, toilet, useable labs,
+    # female + total teachers), and school counts by type + total (for the schools chart and the
+    # learner-school ratio; these 500 at LGA so are skipped there).
+    dx: [jwjKmtVK2wj, Dw7f4gs9RcS, eie1tIO5HtX, Nc9bgbCb6eO, HxRedgvSK2M,
+         DiEriq7urPG, d8qCE7aPWtD, NnvopxD62MT, Qwjg1QG0Hws, Rszp9Ippq5N, Mmn0SEDyzOC,
+         wDf8ZOwWgib, uSfibhbGRT1, bCMrPV3785Y,
+         IYNEmLyFgbe, vZA5RaodnuH, X4cRpKnxayU,
+         g1ozV2n8G88, VzPMQzTjenn, kitIA5LU69N,
+         u4ogrV7WUcz, STJaOAJl6eG,
+         L7wp6IPJGhV, yjH9LAuAMrk, gAfSf7sfxib, i8dMJSyq5hO, kxJmBoDtD9t, j3cxHeBhZ4m,
+         v31dkf4PhmH, I8JeN23lKHn, tuku316VSXL, CKMgwHERBfg, uDBB1WrCkST, wVjDYI2HuQb,
+         zrzIn10PQjq, uWkPykwyYn2, oOHHjng0014, PbzDc38hOsx, ABJrmFcIpT3]
+    ouLevels: [1, 2, 3]
+  # The "Indicators by …" compare table slices these whole-school indicators by School Type
+  # (tabs) and Ownership (toggle). Two cuts: by School Type alone (type tab @ Total ownership —
+  # ratios can't be summed across ownership, so we need the type-marginal), and the School Type ×
+  # Ownership cross-cut (type tab @ Public/Private). Same dx in both: Learners, Female %, the
+  # ratio inputs, and per-level special-needs counts (summed → per-type special in SQL).
+  - dim: rtQk5MWCxyR          # School Type group set (Pre/Primary, JSS, SSS, IQS/IQTE, TECH/VOC; Private/Unknown ignored in the UI)
+    slug: schooltype
+    dx: [jwjKmtVK2wj, Nc9bgbCb6eO, eie1tIO5HtX, zrzIn10PQjq, uWkPykwyYn2, oOHHjng0014, PbzDc38hOsx, ABJrmFcIpT3,
+         Rszp9Ippq5N, Mmn0SEDyzOC, bCMrPV3785Y, X4cRpKnxayU, kitIA5LU69N]
+    ouLevels: [1, 2, 3]
+  - dims: [rtQk5MWCxyR, gAmNV64G0pZ]   # School Type × Ownership cross-cut → fact_typeown (cat1=type, cat2=ownership)
+    slug: typeown
+    dx: [jwjKmtVK2wj, Nc9bgbCb6eO, eie1tIO5HtX, zrzIn10PQjq, uWkPykwyYn2, oOHHjng0014, PbzDc38hOsx, ABJrmFcIpT3,
+         Rszp9Ippq5N, Mmn0SEDyzOC, bCMrPV3785Y, X4cRpKnxayU, kitIA5LU69N]
     ouLevels: [1, 2, 3]

@@ -15,10 +15,14 @@ function arg(name, def) {
 
 async function main() {
   const cfg = loadConfig(arg('config'));
-  const outDir = arg('out', 'data/anc');
-  const { DHIS2_USERNAME: username, DHIS2_PASSWORD: password } = process.env;
-  if (!username || !password) throw new Error('Set DHIS2_USERNAME and DHIS2_PASSWORD in env');
-  const client = makeClient({ baseUrl: cfg.baseUrl, username, password });
+  const outDir = arg('out', 'data/out');
+  // Auth from env: a personal access token (preferred) OR basic username/password.
+  const { D2_TOKEN: token, DHIS2_USERNAME: username, DHIS2_PASSWORD: password } = process.env;
+  if (!token && !(username && password)) {
+    throw new Error('Set D2_TOKEN (a DHIS2 personal access token) or DHIS2_USERNAME + DHIS2_PASSWORD in env');
+  }
+  const baseUrl = process.env.D2_BASE_URL || cfg.baseUrl; // env override (e.g. test vs prod)
+  const client = makeClient({ baseUrl, token, username, password });
   mkdirSync(outDir, { recursive: true });
 
   // --- primary fact ---
@@ -31,11 +35,14 @@ async function main() {
 
   // --- disaggregation cuts ---
   for (const d of cfg.disaggregations) {
+    const dims = d.dims ?? (d.dim ? [d.dim] : []); // one group set, or several (cross-cut)
     const resps = [];
-    for (const chunk of chunkPeriods(periods)) resps.push(...await client.analyticsChunked(d.dx, d.ouLevels, chunk, d.dim));
-    const rows = resps.flatMap((r) => analyticsToDisaggRows(r, d.dim));
-    writeFileSync(join(outDir, `fact_${d.slug}.csv`),
-      toCsv(rows, ['dx', 'ou', 'pe', 'periodType', 'category_id', 'category_name', 'value']));
+    for (const chunk of chunkPeriods(periods)) resps.push(...await client.analyticsChunked(d.dx, d.ouLevels, chunk, dims));
+    const rows = resps.flatMap((r) => analyticsToDisaggRows(r, dims));
+    const cols = dims.length <= 1
+      ? ['dx', 'ou', 'pe', 'periodType', 'category_id', 'category_name', 'value']
+      : ['dx', 'ou', 'pe', 'periodType', ...dims.flatMap((_, i) => [`cat${i + 1}_id`, `cat${i + 1}_name`]), 'value'];
+    writeFileSync(join(outDir, `fact_${d.slug}.csv`), toCsv(rows, cols));
     console.log(`fact_${d.slug}.csv: ${rows.length} rows`);
   }
 

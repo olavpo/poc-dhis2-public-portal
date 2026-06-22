@@ -11,7 +11,7 @@ export function loadConfig(path) {
     ouLevels: raw.ouLevels,
     periods: raw.periods,
     disaggregations: (raw.disaggregations ?? []).map((d) => ({
-      dim: d.dim, slug: d.slug, dx: d.dx, ouLevels: d.ouLevels ?? [1],
+      dim: d.dim, dims: d.dims, slug: d.slug, dx: d.dx, ouLevels: d.ouLevels ?? [1],
     })),
   };
 }

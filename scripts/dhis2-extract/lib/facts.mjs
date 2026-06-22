@@ -11,16 +11,27 @@ export function analyticsToFactRows(resp) {
   }));
 }
 
-export function analyticsToDisaggRows(resp, dimId) {
+// One dimension → category_id/category_name (back-compat). Two+ → cat1_id/cat1_name,
+// cat2_id/cat2_name, … (e.g. School Type × Ownership cross-cut).
+export function analyticsToDisaggRows(resp, dimIds) {
+  const dims = Array.isArray(dimIds) ? dimIds : [dimIds];
   const c = idx(resp);
   const items = resp.metaData?.items ?? {};
-  return resp.rows.map((r) => ({
-    dx: r[c.dx], ou: r[c.ou], pe: r[c.pe],
-    periodType: parsePeriod(r[c.pe]).periodType,
-    category_id: r[c[dimId]],
-    category_name: items[r[c[dimId]]]?.name ?? r[c[dimId]],
-    value: Number(r[c.value]),
-  }));
+  const single = dims.length === 1;
+  return resp.rows.map((r) => {
+    const row = {
+      dx: r[c.dx], ou: r[c.ou], pe: r[c.pe],
+      periodType: parsePeriod(r[c.pe]).periodType,
+    };
+    dims.forEach((dimId, i) => {
+      const id = r[c[dimId]];
+      const name = items[id]?.name ?? id;
+      if (single) { row.category_id = id; row.category_name = name; }
+      else { row[`cat${i + 1}_id`] = id; row[`cat${i + 1}_name`] = name; }
+    });
+    row.value = Number(r[c.value]);
+    return row;
+  });
 }
 
 export function dxRowsFromMeta(responses, dxIds) {
