@@ -358,7 +358,7 @@ export function page({ ou, crumbs, childLevel, childLinkPrefix, geoUrl, federalI
 // the DuckDB-WASM engine on demand). Same content as a baked leaf: KPIs + reporting + benchmark
 // (LGA vs its parent state vs Federal) + charts + enrolment table, all toggled by ownership.
 // `${params.id}` is Evidence's runtime page param; crumbs/labels resolve via a query.
-export function leafDynamicPage(federalId) {
+export function leafDynamicPage(federalId, base = '') {
   const P = '${params.id}';                 // literal param token (single-quoted ⇒ not interpolated here)
   const ID = `'${P}'`;                      // the LGA id as a SQL value: '${params.id}'
   const stateE = `(select parent_id from census.ou where id = ${ID})`;
@@ -369,9 +369,9 @@ title: Local Government Area
 ---
 
 \`\`\`sql crumbs_q
-select 1 as ord, '/' as link, ${NAME('name')} as name from census.ou where level = '1'
+select 1 as ord, '${base}/' as link, ${NAME('name')} as name from census.ou where level = '1'
 union all
-select 2, '/asc/state-' || id, ${NAME('name')} from census.ou where id = ${stateE}
+select 2, '${base}/asc/state-' || id, ${NAME('name')} from census.ou where id = ${stateE}
 union all
 select 3, null, ${NAME('name')} from census.ou where id = ${ID}
 order by ord

@@ -89,13 +89,14 @@ const LAYOUT = `<script>
 	import '@evidence-dev/tailwind/fonts.css';
 	import '../app.css';
 	import { EvidenceDefaultLayout } from '@evidence-dev/core-components';
+	import { base } from '$app/paths';
 	export let data;
 </script>
 
 <EvidenceDefaultLayout {data} fullWidth={true} hideHeader={true} hideSidebar={true} hideTOC={true} hideBreadcrumbs={true} builtWithEvidence={false}>
 	<div slot="content">
 		<div class="dnemis-header">
-			<span class="crest"><img src="/coat_of_arms.png" alt="Nigerian Coat of Arms" /></span>
+			<span class="crest"><img src="{base}/coat_of_arms.png" alt="Nigerian Coat of Arms" /></span>
 			<div><div class="dt">Education Statistics</div><div class="ds">Nigeria Federal Ministry of Education | Digital National Education Management Information System</div></div>
 			<button class="printbtn" type="button" title="Download this page as PDF"
 				on:click={() => { window.dispatchEvent(new Event('export-beforeprint')); setTimeout(() => window.print(), 0); setTimeout(() => window.dispatchEvent(new Event('export-afterprint')), 0); }}>
