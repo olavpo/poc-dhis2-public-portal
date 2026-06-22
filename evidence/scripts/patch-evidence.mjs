@@ -75,6 +75,19 @@ patch(
   'lazy duckdb init',
 );
 
+// Tolerate the adapter-static `fallback: '200.html'` in getPrerenderedQueries. For a
+// prerender:false route (the LGA subtree, /asc/lga/[id]), its `all-queries.json` does not
+// exist, so the fallback serves the SPA shell — HTML with status 200. Stock code only guards
+// `!res.ok`, then does `res.json()`, which throws on the HTML ("Unexpected token '<'") and
+// surfaces as "Error in client-side routing". Treat a non-JSON body as "no prerendered
+// queries" so the page runs its queries live in DuckDB-WASM instead of crashing.
+patch(
+  'src/pages/+layout.js',
+  'const sql_cache_with_hashed_query_strings = await res.json();',
+  'let sql_cache_with_hashed_query_strings;\n\ttry {\n\t\tsql_cache_with_hashed_query_strings = await res.json();\n\t} catch {\n\t\treturn {}; // SPA fallback (200.html) served instead of a prerendered-query manifest\n\t}',
+  'getPrerenderedQueries tolerates SPA fallback',
+);
+
 // Layout + branding + DNEMIS header. The layout is fully under our control, so instead of
 // fragile anchor patches (which break the moment the injected markup changes) we WRITE the
 // whole +layout.svelte deterministically — idempotent regardless of its prior state:
