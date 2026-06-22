@@ -54,11 +54,13 @@
 	table { width: 100%; border-collapse: collapse; font-size: 11.5px; }
 	th { background: #fafafa; color: #5a6b73; text-align: right; padding: 8px 9px; border-bottom: 1px solid #e0e0e0; white-space: nowrap; }
 	th:first-child { text-align: left; }
-	/* Metric headers angled 45° so the wide table fits (esp. in print). Each label is anchored at
-	   the bottom-left of its column and rises to the right, sitting above its numbers; the narrow
-	   span width keeps the column ~value-width. "Org unit" stays horizontal. */
-	th.rot { height: 84px; vertical-align: bottom; text-align: left; padding: 0 0 4px 6px; white-space: nowrap; overflow: visible; }
-	th.rot span { display: inline-block; transform: rotate(-45deg); transform-origin: left bottom; width: 1.4em; font-size: 11px; font-weight: 600; line-height: 1; }
+	/* Metric headers angled ~50° so the wide table fits (esp. in print). Each label's bottom-right
+	   corner is pinned (absolutely) to the column's right edge — the same edge its right-aligned
+	   numbers sit on — so the label's right side aligns with the column regardless of label length.
+	   The label therefore rises up-and-to-the-left; anchoring on the right is the only way to pin
+	   that edge without the text dipping down into the row. "Org unit" stays horizontal. */
+	th.rot { position: relative; height: 104px; min-width: 2.6em; vertical-align: bottom; padding: 0; }
+	th.rot span { position: absolute; right: 9px; bottom: 6px; transform: rotate(50deg); transform-origin: right bottom; white-space: nowrap; font-size: 11px; font-weight: 600; line-height: 1; }
 	th.ou { text-align: left; vertical-align: bottom; }
 	td { text-align: right; padding: 7px 9px; border-bottom: 1px solid #f1f3f4; position: relative; }
 	td.name { text-align: left; }
