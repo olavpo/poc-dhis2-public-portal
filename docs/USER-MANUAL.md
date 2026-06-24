@@ -385,6 +385,8 @@ change:
 
 - `AGENTS.md` — architecture + the full gotchas list (read before authoring).
 - `scripts/dhis2-extract/README.md` — extractor config schema, auth, outputs.
+- `docs/INDICATOR-REFERENCE.md` — exactly which `dx` (indicator/data-element) UIDs feed each
+  portal variable, and the formula where a value is computed.
 - `docs/SERVER-ADMIN.md` — hosting the static site.
 - The ASC implementation: `scripts/dhis2-extract/config/asc.yaml`,
   `scripts/asc-pages/{generate,template}.mjs`, `evidence/sources/census/`,

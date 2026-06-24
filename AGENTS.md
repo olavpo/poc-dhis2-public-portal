@@ -74,7 +74,7 @@ deploy.sh  →  builds/<ts>/ + atomic `current` symlink   serve.mjs  →  static
 | `scripts/release.sh` | Build → deploy → serve (16 GB heap). |
 | `scripts/deploy.sh`, `scripts/serve.mjs` | Atomic versioned deploy + range-capable static server. |
 | `scripts/precompress.mjs` | Writes `.br`/`.gz` for JS/CSS/HTML/**wasm**/**geojson** (run by `deploy.sh`). |
-| `docs/` | `SERVER-ADMIN.md` (hosting), `USER-MANUAL.md`, plans/specs/feedback. |
+| `docs/` | `SERVER-ADMIN.md` (hosting), `USER-MANUAL.md`, `INDICATOR-REFERENCE.md` (which dx feeds each portal variable), plans/specs/feedback. |
 
 ## Baked vs. engine (the key decision when authoring pages)
 
