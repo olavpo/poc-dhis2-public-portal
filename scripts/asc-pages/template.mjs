@@ -113,7 +113,7 @@ function reportingQuery(ouId) {
         then round(100.0 * sum(case when dx in (${a}) then value else 0 end)
                          / sum(case when dx in (${e}) then value else 0 end), 1)
         else null end as completeness
-    from census.fact where ou = '${ouId}' and periodType = 'YEARLY' and pe = '2025' and dx in (${a},${e})`;
+    from census.fact where ou = '${ouId}' and periodType = 'YEARLY' and pe = '2024' and dx in (${a},${e})`;
   };
   return REPORT_MODES.map(one).join('\nunion all\n');
 }
@@ -121,7 +121,7 @@ function reportingQuery(ouId) {
 // Overall (toggle-independent) counts injected into the Public/Private KPI sets.
 function overallRows(ouId) {
   return `select dx, value from census.fact
-  where ou = '${ouId}' and periodType = 'YEARLY' and pe = '2025' and dx in (${lit(OVERALL)})`;
+  where ou = '${ouId}' and periodType = 'YEARLY' and pe = '2024' and dx in (${lit(OVERALL)})`;
 }
 
 // Each benchmark row yields the unit's value, its parent state's value (for LGA pages) and the
@@ -133,7 +133,7 @@ function overallRows(ouId) {
 // subquery (for the dynamic LGA page, whose parent state is derived from params.id).
 function benchSelect(b, i, unitE, stateE, fedE, M) {
   const cols = `'${M.m}' as mode, ${i + 1} as ord, '${b.label}' as indicator, '${b.fmt}' as fmt`;
-  const scope = `ou in (${unitE}, ${stateE}, ${fedE}) and periodType='YEARLY' and pe='2025' ${M.cat}`;
+  const scope = `ou in (${unitE}, ${stateE}, ${fedE}) and periodType='YEARLY' and pe='2024' ${M.cat}`;
   if (b.dx) {
     return `select ${cols},
       round(max(case when ou=${unitE} then value end),1) as unit,
@@ -162,19 +162,19 @@ title: ${ou.name}
 
 \`\`\`sql kpis_total
 select dx, value from census.fact
-where ou = '${ou.id}' and periodType = 'YEARLY' and pe = '2025' and dx in (${lit([...TOGGLE, ...OVERALL])})
+where ou = '${ou.id}' and periodType = 'YEARLY' and pe = '2024' and dx in (${lit([...TOGGLE, ...OVERALL])})
 \`\`\`
 
 \`\`\`sql kpis_public
 select dx, value from census.fact_ownership
-where ou = '${ou.id}' and periodType = 'YEARLY' and pe = '2025' and category_name like 'Public%' and dx in (${ownDx})
+where ou = '${ou.id}' and periodType = 'YEARLY' and pe = '2024' and category_name like 'Public%' and dx in (${ownDx})
 union all
 ${overallRows(ou.id)}
 \`\`\`
 
 \`\`\`sql kpis_private
 select dx, value from census.fact_ownership
-where ou = '${ou.id}' and periodType = 'YEARLY' and pe = '2025' and category_name like 'Private%' and dx in (${ownDx})
+where ou = '${ou.id}' and periodType = 'YEARLY' and pe = '2024' and category_name like 'Private%' and dx in (${ownDx})
 union all
 ${overallRows(ou.id)}
 \`\`\`
@@ -208,7 +208,7 @@ ${benchmark}
 // Charts + (optionally) the children choropleth, in a responsive 2-col grid. SQL blocks go
 // BEFORE the <Grid> (mdsvex gotcha). withMap true on branch pages; childLevel labels the map.
 function chartsSection(ou, withMap, geoUrl, childLinkPrefix, childLevel) {
-  const W = `f.ou = '${ou.id}' and f.periodType = 'YEARLY' and f.pe = '2025'`;
+  const W = `f.ou = '${ou.id}' and f.periodType = 'YEARLY' and f.pe = '2024'`;
   // One real Evidence query per ownership mode (Total / Public / Private). OwnershipSelect
   // picks one and hands the genuine query object to the native chart/map (which subscribes &
   // .fetch()es it). enrol/sex force every level (incl. IQS & Tech/Voc at 0) via the lv seed.
@@ -237,7 +237,7 @@ select label, value, ord from (
   const mapQ = (M) => `\`\`\`sql children_map_${M.m}
 select o.id as id, ${NAME('o.name')} as name, f.value as learners, '${childLinkPrefix}' || o.id as link
 from ${M.src} f join census.ou o on f.ou = o.id
-where o.parent_id = '${ou.id}' and f.dx = '${I.enrol}' and f.periodType = 'YEARLY' and f.pe = '2025' ${M.cat}
+where o.parent_id = '${ou.id}' and f.dx = '${I.enrol}' and f.periodType = 'YEARLY' and f.pe = '2024' ${M.cat}
 \`\`\``;
   const q3 = (fn) => MODES3.map(fn).join('\n\n');
   return `
@@ -249,15 +249,15 @@ ${q3(schoolsQ)}
 
 \`\`\`sql ownership_enrol
 select category_name, value from census.fact_ownership
-where ou = '${ou.id}' and dx = '${I.enrol}' and periodType = 'YEARLY' and pe = '2025'
+where ou = '${ou.id}' and dx = '${I.enrol}' and periodType = 'YEARLY' and pe = '2024'
 \`\`\`
 
 \`\`\`sql schools_ownership
 select 'Public' as category_name, sum(case when dx = '${SCHOOL_PUBLIC}' then value else 0 end) as value
-from census.fact where ou = '${ou.id}' and periodType = 'YEARLY' and pe = '2025'
+from census.fact where ou = '${ou.id}' and periodType = 'YEARLY' and pe = '2024'
 union all
 select 'Private', sum(case when dx = '${SCHOOL_PRIVATE}' then value else 0 end)
-from census.fact where ou = '${ou.id}' and periodType = 'YEARLY' and pe = '2025'
+from census.fact where ou = '${ou.id}' and periodType = 'YEARLY' and pe = '2024'
 \`\`\`
 ${withMap ? `
 ${q3(mapQ)}
@@ -329,7 +329,7 @@ function branchSection(ou, childLevel, childLinkPrefix, geoUrl) {
 \`\`\`sql lvl_${tab.key}_${m}
 select ${NAME('o.name')} as ou_name, '${childLinkPrefix}' || o.id as link,
   ${cols}
-from census.ou o left join ${src} f on f.ou = o.id and f.periodType = 'YEARLY' and f.pe = '2025' ${filt}
+from census.ou o left join ${src} f on f.ou = o.id and f.periodType = 'YEARLY' and f.pe = '2024' ${filt}
 where o.parent_id = '${ou.id}' group by o.name, o.id order by ou_name
 \`\`\`
 `;
@@ -379,19 +379,19 @@ order by ord
 
 \`\`\`sql kpis_total
 select dx, value from census.fact
-where ou = ${ID} and periodType = 'YEARLY' and pe = '2025' and dx in (${lit([...TOGGLE, ...OVERALL])})
+where ou = ${ID} and periodType = 'YEARLY' and pe = '2024' and dx in (${lit([...TOGGLE, ...OVERALL])})
 \`\`\`
 
 \`\`\`sql kpis_public
 select dx, value from census.fact_ownership
-where ou = ${ID} and periodType = 'YEARLY' and pe = '2025' and category_name like 'Public%' and dx in (${ownDx})
+where ou = ${ID} and periodType = 'YEARLY' and pe = '2024' and category_name like 'Public%' and dx in (${ownDx})
 union all
 ${overallRows(P)}
 \`\`\`
 
 \`\`\`sql kpis_private
 select dx, value from census.fact_ownership
-where ou = ${ID} and periodType = 'YEARLY' and pe = '2025' and category_name like 'Private%' and dx in (${ownDx})
+where ou = ${ID} and periodType = 'YEARLY' and pe = '2024' and category_name like 'Private%' and dx in (${ownDx})
 union all
 ${overallRows(P)}
 \`\`\`
@@ -425,7 +425,7 @@ ${benchmark}
 <OwnershipSelect total={enrol_total} pub={enrol_public} priv={enrol_private} let:data>
 <DataTable data={data}>
   <Column id=level title="Education level" />
-  <Column id=enrolment title="Enrolment (2025)" fmt="#,##0" />
+  <Column id=enrolment title="Enrolment (2024)" fmt="#,##0" />
 </DataTable>
 </OwnershipSelect>
 `;

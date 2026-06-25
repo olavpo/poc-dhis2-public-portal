@@ -17,7 +17,7 @@ emits one page per org unit from a shared template. This branch (`emis-pp`) poin
 that at the real Nigeria EMIS instance and ships the DNEMIS dashboard.
 
 Data is the ASC extract for **org-unit levels 1–3 (Federal / State / LGA)**, reference year
-**2025**, with **Ownership (Public/Private)** and **School Type** disaggregations. The portal
+**2024**, with **Ownership (Public/Private)** and **School Type** disaggregations. The portal
 spans the full **baked ↔ engine** spectrum:
 - **Federal (`/asc`, the site root) + each State (`/asc/state-<id>`)** — fully **baked**
   pages (no client engine downloaded): KPI row, reporting/completeness, vs-State-&-Federal
@@ -194,7 +194,7 @@ cost an hour the first time; none throw an obvious error.
   silently omits units without geometry (the national root often has none), so using it for
   the hierarchy drops the root and breaks every root-OU selector. The extractor sources
   `ou.csv` from organisationUnits and left-joins geometry by id.
-- **The instance's test data covers a specific window** (ASC reference year **2025**). Aim
+- **The instance's test data covers a specific window** (ASC reference year **2024**). Aim
   the config's `periods` there; other years return zero rows.
 - **Some dx 500 at deep levels.** Deep-level (LGA) calls — especially with an org-unit-group-set
   disaggregation — can 500 on individual indicators; the extractor **bisects and skips** the

@@ -46,7 +46,7 @@ baseUrl: http://dhis2-agent-emis-ng:8080            # required — trailing slas
 dx: [jwjKmtVK2wj, Dw7f4gs9RcS, ...]                 # required — indicator/data dx UIDs
 ouLevels: [1, 2, 3]                                 # required — org-unit levels to pull
 periods:                                            # required — either an explicit list...
-  list: ['2025']
+  list: ['2024']
   # ...or a range:
   # range: '2021..2025'
   # types: [monthly, quarterly, yearly]

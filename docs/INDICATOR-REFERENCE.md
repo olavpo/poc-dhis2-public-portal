@@ -11,7 +11,7 @@ the extracted `evidence/sources/census/dx.csv`.
 
 ## Conventions used throughout
 
-- **Period / level.** Every query filters `periodType = 'YEARLY'` and `pe = '2025'` (the ASC
+- **Period / level.** Every query filters `periodType = 'YEARLY'` and `pe = '2024'` (the ASC
   reference year) and scopes to one org unit (Federal, a State, or an LGA).
 - **Direct vs. computed.**
   - *Direct* — the value is read straight from DHIS2 with `max(... value)` (one cell per

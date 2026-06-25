@@ -17,7 +17,7 @@ branch): the build/deploy/serve pipeline, asset precompression, a range-capable 
 a **page generator** that emits one page per org unit. This branch (`emis-pp`) wires all of
 that to the real Nigeria EMIS instance.
 
-The portal covers org-unit levels **Federal / State / LGA**, reference year **2025**, with
+The portal covers org-unit levels **Federal / State / LGA**, reference year **2024**, with
 **Ownership (Public/Private)** and **School Type** breakdowns, and spans the full
 **baked ↔ engine** spectrum:
 

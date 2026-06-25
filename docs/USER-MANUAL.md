@@ -110,7 +110,7 @@ baseUrl: https://trainingdb.dhis2nigeria.org.ng/dev   # auth comes from env
 dx: [jwjKmtVK2wj, Dw7f4gs9RcS, ...]                   # indicator / data-element UIDs
 ouLevels: [1, 2, 3]                                   # Federal / State / LGA
 periods:
-  list: ['2025']                                      # the ASC reference year
+  list: ['2024']                                      # the ASC reference year
 disaggregations:                                      # optional extra-dimension "cuts"
   - dim: gAmNV64G0pZ        # Ownership (Public/Private) org-unit group set
     slug: ownership

@@ -1,6 +1,6 @@
 # Annual School Census extract from agent-emis-ng — the real Nigeria EMIS instance:
 # real metadata + test data + boundary geometry to LGA (Federal=1 / State=2 / LGA=3;
-# Ward/School below are NOT extracted, ouLevels stops at 3). Reference year 2025 (the
+# Ward/School below are NOT extracted, ouLevels stops at 3). Reference year 2024 (the
 # year the test data covers). Auth via env DHIS2_USERNAME / DHIS2_PASSWORD.
 baseUrl: https://trainingdb.dhis2nigeria.org.ng/dev
 dx: [DiEriq7urPG,L7wp6IPJGhV,NnvopxD62MT,QZl1LOTpSat,i8mFzOkO9Wi,Rszp9Ippq5N,pc4DSr5MyOC,Sydf7CTCFuC,Qsgrw7qe8cC,d8qCE7aPWtD,yjH9LAuAMrk,Qwjg1QG0Hws,JH1hYfoV2hb,uNvBLdtslJ5,Mmn0SEDyzOC,DANh9bP86R9,uXpZ0iaeH4P,QETjPTty02O,aX6SpmH2icc,zGdBeuyjOeQ,wDf8ZOwWgib,gAfSf7sfxib,uSfibhbGRT1,nghVrzkls6X,Yf6K5jD4oED,bCMrPV3785Y,eLOZ1cSBHJM,AoOq7RrHxMr,CEgyg6JJbNv,IYNEmLyFgbe,i8dMJSyq5hO,vZA5RaodnuH,jWEK2IgsZXZ,Y8uv3HrDDcF,X4cRpKnxayU,Bp8XVbKSqVX,yVJPz2WzrgH,AtbaZYTP7Xl,g1ozV2n8G88,kxJmBoDtD9t,VzPMQzTjenn,dRBLKPEMR80,mHzRpEIsf3n,kitIA5LU69N,jRh7NbBDdJI,GSJ3jeCZNsD,VAnbcYjaaZ4,lBfQKjSIx0P,nK3E5siSgHS,jwjKmtVK2wj,zKAZUEGYL52,HxRedgvSK2M,Nc9bgbCb6eO,Dw7f4gs9RcS,XZEG3yT7WmJ,Exv6Kz1TXmJ,eie1tIO5HtX,bWPz06oFs5q,cbeoGyJDnv5,io4yQysi8jU,jox8QDbnBV3,DvMfSq5pZSA,vDmeu4io2Fs,uWkPykwyYn2,DydalnMqg5w,XhYKabiEAnj,q9E9FifnCzE,
@@ -16,7 +16,7 @@ dx: [DiEriq7urPG,L7wp6IPJGhV,NnvopxD62MT,QZl1LOTpSat,i8mFzOkO9Wi,Rszp9Ippq5N,pc4
 # expected reports for the 6 census forms (reporting/completeness is derived in SQL).
 ouLevels: [1, 2, 3]
 periods:
-  list: ['2025']
+  list: ['2024']
 disaggregations:
   - dim: gAmNV64G0pZ          # "Ownership Public/Private" org-unit group set
     slug: ownership
