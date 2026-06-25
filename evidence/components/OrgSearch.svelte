@@ -3,11 +3,12 @@
 	// Loads a small static index once (client-side, cached) and navigates to the chosen
 	// unit's baked page — no query(), no per-page option bloat.
 	import { onMount } from 'svelte';
-	let units = [];            // [{label, link}]
+	import { base } from '$app/paths';
+	let units = [];            // [{label, link}] — link already base-prefixed by the generator
 	let value = '';
 	onMount(async () => {
 		try {
-			const r = await fetch('/asc/search-index.json');
+			const r = await fetch(`${base}/asc/search-index.json`);
 			units = await r.json();
 		} catch (e) { /* index missing in dev — search just stays empty */ }
 	});

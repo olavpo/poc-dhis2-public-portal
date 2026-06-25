@@ -75,6 +75,19 @@ patch(
   'lazy duckdb init',
 );
 
+// Tolerate the adapter-static `fallback: '200.html'` in getPrerenderedQueries. For a
+// prerender:false route (the LGA subtree, /asc/lga/[id]), its `all-queries.json` does not
+// exist, so the fallback serves the SPA shell — HTML with status 200. Stock code only guards
+// `!res.ok`, then does `res.json()`, which throws on the HTML ("Unexpected token '<'") and
+// surfaces as "Error in client-side routing". Treat a non-JSON body as "no prerendered
+// queries" so the page runs its queries live in DuckDB-WASM instead of crashing.
+patch(
+  'src/pages/+layout.js',
+  'const sql_cache_with_hashed_query_strings = await res.json();',
+  'let sql_cache_with_hashed_query_strings;\n\ttry {\n\t\tsql_cache_with_hashed_query_strings = await res.json();\n\t} catch {\n\t\treturn {}; // SPA fallback (200.html) served instead of a prerendered-query manifest\n\t}',
+  'getPrerenderedQueries tolerates SPA fallback',
+);
+
 // Click-only maps. Evidence's Leaflet maps (the children choropleth) pan and zoom by default;
 // here the map is purely a navigation control — tapping a region drills down — so disable
 // dragging (pan) and every zoom path (scroll/smooth-wheel, double-click, box, touch/pinch,
@@ -113,13 +126,14 @@ const LAYOUT = `<script>
 	import '@evidence-dev/tailwind/fonts.css';
 	import '../app.css';
 	import { EvidenceDefaultLayout } from '@evidence-dev/core-components';
+	import { base } from '$app/paths';
 	export let data;
 </script>
 
 <EvidenceDefaultLayout {data} fullWidth={true} hideHeader={true} hideSidebar={true} hideTOC={true} hideBreadcrumbs={true} builtWithEvidence={false}>
 	<div slot="content">
 		<div class="dnemis-header">
-			<span class="crest"><img src="/coat_of_arms.png" alt="Nigerian Coat of Arms" /></span>
+			<span class="crest"><img src="{base}/coat_of_arms.png" alt="Nigerian Coat of Arms" /></span>
 			<div><div class="dt">Education Statistics</div><div class="ds">Nigeria Federal Ministry of Education | Digital National Education Management Information System</div></div>
 			<button class="printbtn" type="button" title="Download this page as PDF"
 				on:click={() => { window.dispatchEvent(new Event('export-beforeprint')); setTimeout(() => window.print(), 0); setTimeout(() => window.dispatchEvent(new Event('export-afterprint')), 0); }}>

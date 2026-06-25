@@ -1,3 +1,9 @@
+# Served under /portal on the shared proxy. This base path is baked into Evidence's own
+# links/assets at build, and into the generated ASC page URLs (see scripts/asc-pages/) which
+# read this value — keep them in sync. Empty/remove to serve from a host root.
+deployment:
+  basePath: /portal
+
 appearance:
   default: system
   switcher: true

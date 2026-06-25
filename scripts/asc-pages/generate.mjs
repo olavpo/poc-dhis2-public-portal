@@ -28,10 +28,19 @@ ou.forEach((o) => { o.name = clean(o.name); o.parent_name = clean(o.parent_name)
 const byId = Object.fromEntries(ou.map((o) => [o.id, o]));
 const root = ou.find((o) => o.level === '1');           // the single Federal root, from the data
 const ROOT = root.id;
-// Federal → '/'; State → '/asc/state-<id>' (prerendered/baked); LGA → '/asc/lga/<id>' (a
-// subdir so a single +layout.js can mark the whole LGA tree prerender:false → those 774 pages
-// are served via the SPA fallback and rendered on-demand, keeping the baked build to ~38 pages).
-const linkFor = (o) => (o.id === ROOT ? '/' : o.level === '2' ? `/asc/state-${o.id}` : `/asc/lga/${o.id}`);
+
+// Base path (Evidence deployment.basePath) baked into every emitted link, geojson URL and
+// search-index entry. Needed because AreaMap (geoJsonUrl/link) and our custom <a> components
+// (ScopeNav, CompareTable, OrgSearch) consume these URLs RAW — Evidence does not run them
+// through addBasePath. Single source of truth: evidence.config.yaml. Empty ⇒ served at root.
+const BASE = (readFileSync('evidence/evidence.config.yaml', 'utf8')
+  .match(/^\s*basePath:\s*["']?(\/[^"'\s]*?)\/?["']?\s*$/m)?.[1]) || '';
+
+// Federal → '<base>/'; State → '<base>/asc/state-<id>' (prerendered/baked); LGA →
+// '<base>/asc/lga/<id>' (a subdir so a single +layout.js can mark the whole LGA tree
+// prerender:false → those 774 pages are served via the SPA fallback and rendered on-demand,
+// keeping the baked build to ~38 pages).
+const linkFor = (o) => (o.id === ROOT ? `${BASE}/` : o.level === '2' ? `${BASE}/asc/state-${o.id}` : `${BASE}/asc/lga/${o.id}`);
 const childrenOf = (id) => ou.filter((o) => o.parent_id === id).sort((a, b) => a.name.localeCompare(b.name));
 
 const crumbsOf = (o) => {
@@ -80,16 +89,16 @@ let n = 0;
 // federal (the root IS federal, so no "unit vs federal" — Benchmark shows the Federal column only)
 writeFileSync('evidence/pages/index.md', page({
   ou: root, crumbs: crumbsOf(root), childLevel: 'State',
-  childLinkPrefix: '/asc/state-', geoUrl: '/asc/states.geojson', federalId: ROOT, unitLabel: '',
+  childLinkPrefix: `${BASE}/asc/state-`, geoUrl: `${BASE}/asc/states.geojson`, federalId: ROOT, unitLabel: '',
 }));
 n++;
 for (const s of states) {
   writeFileSync(`evidence/pages/asc/state-${s.id}.md`, page({
     ou: s, crumbs: crumbsOf(s), childLevel: 'LGA',
-    childLinkPrefix: '/asc/lga/', geoUrl: `/asc/lgas-${s.id}.geojson`, federalId: ROOT, unitLabel: s.name,
+    childLinkPrefix: `${BASE}/asc/lga/`, geoUrl: `${BASE}/asc/lgas-${s.id}.geojson`, federalId: ROOT, unitLabel: s.name,
   }));
   n++;
 }
 // All LGAs share ONE dynamic, client-rendered route (/asc/lga/[id]) — see leafDynamicPage.
-writeFileSync('evidence/pages/asc/lga/[id].md', leafDynamicPage(ROOT));
+writeFileSync('evidence/pages/asc/lga/[id].md', leafDynamicPage(ROOT, BASE));
 console.log(`[asc-pages] generated ${n} baked pages (federal + ${states.length} states) + 1 dynamic LGA route`);

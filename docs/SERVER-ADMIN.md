@@ -35,7 +35,7 @@ Extract it to your web root, e.g. `/var/www/asc-portal`.
 | Correct **`application/wasm`** MIME for `.wasm` | The engine binary must load with the right type. LGA pages load the DuckDB-WASM engine (~6 MB, cached) and query the bundled Parquet in-browser; Federal/State don't. |
 | **HTTP range requests** | Standard; on by default in nginx/Apache. Needed for the LGA Parquet reads. |
 | Clients can reach **`extensions.duckdb.org`** | One-time, cached. DuckDB-WASM autoloads its Parquet/httpfs extensions there when an LGA page first runs a query. (Federal/State are baked, so they don't need it.) |
-| Served at the **domain root** (`https://host/`) | Internal links and `/asc.geojson` are root-absolute. Hosting under a sub-path (`/portal/`) requires a rebuild with a configured base path — ask the dev team. |
+| A **domain root** (`https://host/`) *or* a **sub-path** (`https://host/portal/`) | Default builds are root-absolute. To host under a sub-path, build with `deployment.basePath` set (e.g. `/portal`) in `evidence/evidence.config.yaml` — every link/asset is then prefixed. See [`DEPLOYMENT.md`](DEPLOYMENT.md) for the git-based `/portal` setup. |
 
 No special runtime, no open ports beyond your web server, no outbound calls from the server.
 
