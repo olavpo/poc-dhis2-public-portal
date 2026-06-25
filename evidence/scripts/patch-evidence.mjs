@@ -75,6 +75,30 @@ patch(
   'lazy duckdb init',
 );
 
+// Click-only maps. Evidence's Leaflet maps (the children choropleth) pan and zoom by default;
+// here the map is purely a navigation control — tapping a region drills down — so disable
+// dragging (pan) and every zoom path (scroll/smooth-wheel, double-click, box, touch/pinch,
+// keyboard). Per-area `click` handlers live on the layers, not the map, so drill-down + tooltips
+// still work; the view stays fitted to the data bounds. Tolerant: if Evidence's internals shift
+// on an upgrade, warn and skip rather than fail the whole build for a cosmetic tweak.
+const EVIDENCE_MAP = resolve(here, '../node_modules/@evidence-dev/core-components/dist/unsorted/viz/map/EvidenceMap.js');
+try {
+  patchAbs(
+    EVIDENCE_MAP,
+    'scrollWheelZoom: false, // disable original zoom function',
+    'scrollWheelZoom: false, dragging: false, doubleClickZoom: false, boxZoom: false, touchZoom: false, keyboard: false, // DNEMIS: click-only map',
+    'map: disable pan + click/box/touch/keyboard zoom',
+  );
+  patchAbs(
+    EVIDENCE_MAP,
+    'smoothWheelZoom: true, // enable smooth zoom',
+    'smoothWheelZoom: false, // DNEMIS: click-only map (no scroll-wheel zoom)',
+    'map: disable smooth-wheel zoom',
+  );
+} catch (e) {
+  console.warn(`  [warn] click-only map patch skipped (Evidence internals moved?): ${e.message}`);
+}
+
 // Layout + branding + DNEMIS header. The layout is fully under our control, so instead of
 // fragile anchor patches (which break the moment the injected markup changes) we WRITE the
 // whole +layout.svelte deterministically — idempotent regardless of its prior state:
