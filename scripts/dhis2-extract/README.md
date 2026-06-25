@@ -39,6 +39,20 @@ D2_TOKEN="d2pat_xxxx" \
 - `--config` — path to a YAML config (see schema below). Required.
 - `--out` — directory to write the CSV/GeoJSON outputs into (default `data/out`).
 
+Tuning env vars (all optional — defaults suit a large but healthy instance):
+
+| Env | Default | Effect |
+|---|---|---|
+| `DX_CHUNK` | `10` | dx UIDs per analytics request |
+| `OU_CHUNK` | `25` | org units per analytics request (requests are batched by explicit OU id) |
+| `HTTP_RETRIES` | `4` | retries on a transient error before giving up |
+| `HTTP_RETRY_BASE_MS` | `1000` | base backoff (exponential: 1s, 2s, 4s, … capped 15s + jitter) |
+| `EXTRACT_FAIL_ON_SKIP` | _unset_ | if set, exit non-zero when any dx×level cut was skipped |
+| `D2_BASE_URL` | config `baseUrl` | override the target instance per run |
+
+On a **struggling server, lower `OU_CHUNK` and/or `DX_CHUNK`** — smaller requests are far less
+likely to time out (see *Resilience & server load*).
+
 ## Config schema (`config/asc.yaml`)
 
 ```yaml
@@ -89,14 +103,25 @@ Notes:
 
 ## Resilience & server load
 
+Tuned for large / busy instances (a national hierarchy with hundreds of LGAs is on the high
+end of what DHIS2 40 is tested with, and a single whole-level request can overwhelm it):
+
 - Requests are **fully sequential** (one in flight at a time) — no parallel fan-out.
-- `analyticsChunked` splits the pull into one call per ou-level × dx-group (`DX_CHUNK`, default
-  20) to stay under DHIS2's analytics cell cap.
-- On a failed chunk (e.g. an indicator that 500s at a deeper level) it **bisects and retries**,
-  skipping only the offending dx (logged as `[skip]`) rather than aborting the whole run.
-- The heaviest calls are deep-level (LGA) queries, especially when an org-unit-group-set
-  disaggregation is added — lower `DX_CHUNK` or restrict that cut's `ouLevels` if the server is
-  sensitive. Make sure analytics tables are freshly generated first.
+- Each analytics request is small and bounded on **both axes**: at most `DX_CHUNK` dx and
+  `OU_CHUNK` org units. Org units are requested as **explicit ids** (batched), not as a whole
+  `ou:LEVEL-n` — so asking for level 3 doesn't pull every LGA in the country in one call. (The
+  org-unit hierarchy is fetched first to drive this.)
+- **Transient errors retry with exponential backoff** (`502`/`503`/`504` and network drops,
+  `HTTP_RETRIES`× with `HTTP_RETRY_BASE_MS` backoff). If a group still fails after retries, the
+  server is treated as unavailable and the **whole group is skipped at once** (logged `[skip]`)
+  — bisecting a gateway error would just hammer a struggling server.
+- **Structural errors bisect** — a `500`/`409` (e.g. an indicator genuinely undefined at a
+  deeper level, like the MD school-count indicators at LGA) is isolated by halving the dx-group
+  down to the single offending dx, which is skipped; the rest still contribute rows.
+- A **skip summary** prints at the end: any skipped dx×level cut means that data is *missing*
+  from the CSVs and the portal will show gaps there. 502/504 skips mean re-run when the instance
+  is healthy (and/or lower `OU_CHUNK`/`DX_CHUNK`); set `EXTRACT_FAIL_ON_SKIP=1` to make an
+  incomplete extract exit non-zero. Make sure analytics tables are freshly generated first.
 
 ## How it works
 

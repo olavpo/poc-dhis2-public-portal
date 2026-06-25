@@ -25,10 +25,20 @@ async function main() {
   const client = makeClient({ baseUrl, token, username, password });
   mkdirSync(outDir, { recursive: true });
 
+  // --- org units (hierarchy) first ---
+  // Hierarchy from /api/organisationUnits (complete — includes geometry-less units like the
+  // national root). Fetched up front so analytics requests can be chunked by explicit org-unit
+  // id (OU_CHUNK at a time) instead of asking for a whole level at once — far gentler on a large
+  // / busy instance, where one `ou:LEVEL-3` covering hundreds of LGAs times out (502/504).
+  const orgUnits = await client.organisationUnits(cfg.ouLevels);
+  const ouIdsByLevel = {};
+  for (const o of orgUnits) (ouIdsByLevel[o.level] ??= []).push(o.id);
+  console.log(`org units: ${orgUnits.length} (${cfg.ouLevels.map((l) => `L${l}:${(ouIdsByLevel[l] || []).length}`).join(' ')})`);
+
   // --- primary fact ---
   const periods = expandPeriods(cfg.periods);
   const factResponses = [];
-  for (const chunk of chunkPeriods(periods)) factResponses.push(...await client.analyticsChunked(cfg.dx, cfg.ouLevels, chunk));
+  for (const chunk of chunkPeriods(periods)) factResponses.push(...await client.analyticsChunked(cfg.dx, cfg.ouLevels, chunk, undefined, { ouIdsByLevel }));
   const factRows = factResponses.flatMap(analyticsToFactRows);
   writeFileSync(join(outDir, 'fact.csv'), toCsv(factRows, ['dx', 'ou', 'pe', 'periodType', 'value']));
   console.log(`fact.csv: ${factRows.length} rows`);
@@ -37,7 +47,7 @@ async function main() {
   for (const d of cfg.disaggregations) {
     const dims = d.dims ?? (d.dim ? [d.dim] : []); // one group set, or several (cross-cut)
     const resps = [];
-    for (const chunk of chunkPeriods(periods)) resps.push(...await client.analyticsChunked(d.dx, d.ouLevels, chunk, dims));
+    for (const chunk of chunkPeriods(periods)) resps.push(...await client.analyticsChunked(d.dx, d.ouLevels, chunk, dims, { ouIdsByLevel, label: d.slug }));
     const rows = resps.flatMap((r) => analyticsToDisaggRows(r, dims));
     const cols = dims.length <= 1
       ? ['dx', 'ou', 'pe', 'periodType', 'category_id', 'category_name', 'value']
@@ -46,10 +56,8 @@ async function main() {
     console.log(`fact_${d.slug}.csv: ${rows.length} rows`);
   }
 
-  // --- org units (hierarchy) + geometry ---
-  // Hierarchy from /api/organisationUnits (complete — includes geometry-less units like the
-  // national root); geometry from geoFeatures (only units with a boundary/point), merged by id.
-  const orgUnits = await client.organisationUnits(cfg.ouLevels);
+  // --- geometry, merged onto the hierarchy by id ---
+  // geometry from geoFeatures (only units with a boundary/point), merged by id.
   const features = [];
   for (const level of cfg.ouLevels) features.push(...(await client.geoFeatures(level)));
   const ouRows = buildOuRows(orgUnits, features);
@@ -63,6 +71,22 @@ async function main() {
   writeFileSync(join(outDir, 'pe.csv'),
     toCsv(periods.map(parsePeriod), ['period', 'periodType', 'year', 'quarter', 'month', 'startDate']));
   console.log('dx.csv, pe.csv written');
+
+  // --- skip summary ---
+  // A skipped dx×level cut means that data is MISSING from the extract (the portal will show
+  // gaps there). Surface it loudly — distinct from the routine, expected skips (e.g. the MD
+  // school-count indicators are genuinely undefined at LGA level and 500 there by design).
+  const skips = client.getSkips();
+  if (skips.length) {
+    const uniq = [...new Set(skips.map((s) => `${s.label || 'fact'} · LEVEL-${s.level} · ${s.dx}`))];
+    console.warn(`\n[warn] INCOMPLETE EXTRACT — ${uniq.length} dx×level cut(s) skipped after retries.`);
+    console.warn('       These are missing from the CSVs; the portal will show gaps for them.');
+    console.warn('       If they are 502/504 (gateway), the instance was overloaded — re-run when');
+    console.warn('       healthy, and/or lower OU_CHUNK / DX_CHUNK. Sample:');
+    for (const u of uniq.slice(0, 15)) console.warn(`         - ${u}`);
+    if (uniq.length > 15) console.warn(`         … and ${uniq.length - 15} more.`);
+    if (process.env.EXTRACT_FAIL_ON_SKIP) process.exit(2);
+  }
 }
 
 main().catch((e) => { console.error(e); process.exit(1); });

@@ -196,10 +196,16 @@ cost an hour the first time; none throw an obvious error.
   `ou.csv` from organisationUnits and left-joins geometry by id.
 - **The instance's test data covers a specific window** (ASC reference year **2024**). Aim
   the config's `periods` there; other years return zero rows.
-- **Some dx 500 at deep levels.** Deep-level (LGA) calls — especially with an org-unit-group-set
-  disaggregation — can 500 on individual indicators; the extractor **bisects and skips** the
-  offending dx (logged `[skip]`) rather than aborting. Lower `DX_CHUNK` or restrict a cut's
-  `ouLevels` if the server is sensitive, and make sure analytics tables are freshly generated.
+- **Requests are chunked on both axes; transient vs structural failures are handled differently.**
+  Each analytics call is bounded to `DX_CHUNK` dx × `OU_CHUNK` org units (env, default 10 × 25),
+  with org units requested as **explicit ids** (the hierarchy is fetched first) — never a whole
+  `ou:LEVEL-n`, which on this large instance times out (502/504). Transient errors (502/503/504,
+  network) **retry with backoff** then skip the whole group; structural errors (500/409 — e.g.
+  MD school-count indicators genuinely undefined at LGA) **bisect** to isolate and skip only the
+  offending dx. A **skip summary** prints at the end — a skipped dx×level cut is *missing data*
+  (the portal shows gaps there), so on 502/504 re-run when the instance is healthy and/or lower
+  `OU_CHUNK`/`DX_CHUNK`. Freshly (re)generate analytics tables first. (`EXTRACT_FAIL_ON_SKIP=1`
+  makes an incomplete extract exit non-zero.)
 - **`curl` needs `-g`** for DHIS2's `[...]` field syntax (URL-globbing off). Node `fetch`
   is unaffected.
 - **Writing test data back into a DHIS2 instance** (the synth seeder does this): import
