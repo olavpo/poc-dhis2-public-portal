@@ -245,6 +245,11 @@ cost an hour the first time; none throw an obvious error.
 - **Builds are memory-heavy** (and in the sandbox share host RAM with sibling containers). An
   OOM shows as `Killed` / exit 137. `release.sh` uses a 16 GB heap; the build reads local
   files and needs **no** live DHIS2.
+- **Keep `CHANGELOG.md` up to date.** Every user-facing change (a chart/label tweak, a new page
+  or capability, a deploy/hosting change, a fix a user would notice) gets an entry under an
+  `Added` / `Changed` / `Fixed` heading. Group work into a version section and bump the version
+  in `package.json` per [SemVer](https://semver.org) when cutting a release. Pure-internal
+  refactors with no observable effect don't need an entry.
 
 ## Connecting DHIS2 data
 

@@ -3,6 +3,26 @@
 All notable changes to the DNEMIS Education Statistics public portal (Nigeria Annual School
 Census) are documented here. This project adheres to [Semantic Versioning](https://semver.org).
 
+## [0.2.0] — 2026-06-26
+
+### Added
+- **Sub-path hosting.** The portal can be served under a configurable base path — currently set
+  to **`/portal`** (`deployment.basePath` in `evidence.config.yaml`) — with every link, asset and
+  GeoJSON URL prefixed automatically. To host at the domain root instead, clear `basePath`.
+- **Deployment runbook + daily regeneration script** (`docs/DEPLOYMENT.md`, `scripts/regenerate.sh`)
+  for the git-based `/portal` setup.
+
+### Changed
+- **Sex series relabelled Male / Female** (was Boys / Girls) in the "Learners by sex & level"
+  chart, with Male shown first. Only the portal's displayed terminology changed; the underlying
+  DHIS2 indicator names ("… boys" / "… girls") are untouched.
+
+### Fixed
+- **LGA pages no longer crash** with "Unexpected token '<'". The SPA fallback (`200.html`) served
+  for the `prerender:false` LGA route returned HTML where a prerendered-query manifest was
+  expected; the loader now tolerates a non-JSON body and runs the page's queries live in
+  DuckDB-WASM.
+
 ## [0.1.0] — 2026-06-24
 
 First tagged release of the portal: a fully static [Evidence](https://evidence.dev) +
@@ -37,4 +57,5 @@ extractor. Highlights of this release:
   completeness, the "Key indicators" benchmark, charts, and the "Indicators by …" compare table)
   to the exact DHIS2 indicator / data-element UID(s) and the formula behind each computed value.
 
+[0.2.0]: https://github.com/olavpo/poc-dhis2-public-portal/tree/emis-pp
 [0.1.0]: https://github.com/olavpo/poc-dhis2-public-portal/tree/emis-pp
