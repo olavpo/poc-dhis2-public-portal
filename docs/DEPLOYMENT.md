@@ -54,6 +54,42 @@ be cached forever — add a `location ^~ /portal/_app/immutable/ { alias …/cur
 > browser **downloads** `index.html` instead of rendering it. The bundled `mime.types` already
 > maps `wasm` and `webmanifest`; `.parquet`/`.arrow` are fine as `application/octet-stream`.
 
+### 2.1 Self-hosted DuckDB extension
+
+LGA pages load the DuckDB-WASM **parquet extension** from this origin (not the third-party
+`extensions.duckdb.org`) — the build mirrors it to `current/duckdb-extensions/<ver>/wasm_eh/`
+and `patch-evidence.mjs` points the engine there. Serve it like the immutable assets
+(version-pinned path → cache forever) and **without** the SPA fallback, so a missing file
+`404`s instead of returning the HTML shell (which DuckDB can't parse as WASM):
+
+```nginx
+location ^~ /portal/duckdb-extensions/ {
+    alias /opt/poc-dhis2-public-portal/current/duckdb-extensions/;
+    gzip_static on;
+    add_header Cache-Control "public, max-age=31536000, immutable";
+}
+```
+
+(`mime.types` already maps `.wasm` → `application/wasm`, so no `types { … }` block is needed.)
+
+### 2.2 Edge caching with Cloudflare (optional — for geographic reach)
+
+To serve users far from the origin (e.g. Nigeria → a Europe box) from the nearest Cloudflare
+PoP instead of round-tripping, two things are needed beyond proxied (orange-cloud) DNS:
+
+1. **A Cache Rule** — Cloudflare does **not** cache HTML (or `.parquet`) by default, only
+   static assets. Dashboard → **Caching → Cache Rules → Create rule**:
+   - **When incoming requests match**: `URI Full` · `wildcard` · `https://<host>/portal/*`
+   - **Then**: *Eligible for cache*; **Edge TTL** → "Use cache-control header if present"
+     (respects the origin: 1y on `_app/immutable` + `duckdb-extensions`, 2h on HTML/parquet).
+
+   This flips HTML, parquet (incl. range requests), and the extension to `cf-cache-status: HIT`.
+2. **Purge on deploy** — HTML/parquet have a short edge TTL, so after a redeploy a stale page
+   shell can reference `_app/immutable` chunk hashes the new build deleted. `deploy.sh` purges
+   the whole zone after flipping `current`, **if** `CF_ZONE_ID` + `CF_PURGE_TOKEN` are set in the
+   env file (§4.1); otherwise it skips. Verify with
+   `curl -sI https://<host>/portal/ | grep -i cf-cache-status` → `HIT` on the second hit.
+
 ---
 
 ## 3. Building & deploying code changes (manual)
@@ -94,6 +130,8 @@ sudo install -m 600 /dev/null /etc/dnemis-portal.env
 sudo tee /etc/dnemis-portal.env >/dev/null <<'EOF'
 D2_TOKEN=d2pat_replace_me
 # D2_BASE_URL=https://trainingdb.dhis2nigeria.org.ng   # optional: overrides baseUrl in asc.yaml
+# CF_ZONE_ID=...            # optional: Cloudflare zone (Overview → API) — enables cache purge on deploy
+# CF_PURGE_TOKEN=...        # optional: API token with the Zone "Cache Purge" permission (see §2.2)
 EOF
 sudo chmod 600 /etc/dnemis-portal.env      # root-only; the file is never committed
 ```
