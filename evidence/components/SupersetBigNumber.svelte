@@ -17,11 +17,11 @@
 </div>
 
 <style>
-	.kpi { background: #fff; border: 1px solid #e3e8e5; border-left: 4px solid #1a9c5b; border-radius: 8px; padding: 14px 16px; min-height: 84px; }
+	.kpi { background: #fff; border: 1px solid #e3e8e5; border-left: 4px solid #1a9c5b; border-radius: 8px; padding: 14px 16px 10px; min-height: 76px; }
 	.lab { font-size: 12px; color: #6b7872; font-weight: 600; display: flex; align-items: center; gap: 7px; }
 	.lab i { color: #1a9c5b; font-size: 13px; }
 	.val { font-size: 30px; font-weight: 800; letter-spacing: -.5px; margin-top: 8px; color: #0a3d2c; line-height: 1.1; }
-	.sub { font-size: 11px; font-weight: 600; color: #8a968f; text-transform: uppercase; letter-spacing: .4px; margin-top: 3px; }
+	.sub { font-size: 11px; font-weight: 600; color: #8a968f; text-transform: uppercase; letter-spacing: .4px; margin-top: 2px; }
 	:global(.dark) .kpi { background: #18181b; border-color: #3f3f46; border-left-color: #1a9c5b; }
 	:global(.dark) .val { color: #e4e4e7; }
 </style>
