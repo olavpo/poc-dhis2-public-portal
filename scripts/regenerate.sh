@@ -14,7 +14,9 @@
 # so the last good build keeps serving — the regen never publishes an empty/partial portal.
 #
 # Secrets come from an environment file outside the repo (default /etc/dnemis-portal.env,
-# override with DNEMIS_ENV_FILE), which must set D2_TOKEN (and may set D2_BASE_URL).
+# override with DNEMIS_ENV_FILE), which must set D2_TOKEN (and may set D2_BASE_URL). It may
+# also set CF_ZONE_ID + CF_PURGE_TOKEN (a token with the Zone "Cache Purge" permission) — if
+# present, deploy.sh purges the Cloudflare edge cache after flipping the symlink.
 #
 # Intended to run from cron, e.g.:
 #   59 23 * * * /opt/poc-dhis2-public-portal/scripts/regenerate.sh >> /var/log/dnemis-regen.log 2>&1
