@@ -12,10 +12,14 @@ Census) are documented here. This project adheres to [Semantic Versioning](https
 ### Changed
 - **Header** subtitle now reads "Digital **Nigeria** Education Management Information System"
   (was "National").
-- **Page layout reordered:** the reporting strip now sits **above** the KPI tiles; within it,
-  **Expected** reports are shown before **Received** (relabelled from "Schools reporting census").
-  The control bar (search · school year · ownership) sits at the very top.
+- **Page layout reordered:** the reporting strip now sits **above** the KPI tiles, and the
+  control bar (search · school year · ownership) sits at the very top.
+- **Reporting strip relabelled** to **Total schools** · **Schools reported** · **Reporting rate**.
+- **KPI row: the Schools tile is replaced by Toilets** — the useable-toilets count, with a
+  "Useable" subtitle (KPI tiles now support an optional subtitle). Unlike the MD school count,
+  toilets are available at LGA level too. Schools still feed the schools chart and benchmark.
 - **"Key indicators" table** uses a slightly larger font.
+- **Favicon** is now **education-themed** (a graduation cap) on the brand gradient (was the "d2" mark).
 
 ### Fixed
 - **Local serving under a basePath.** `serve.mjs` now serves the build under the configured

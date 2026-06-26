@@ -11,16 +11,18 @@
 const NAME = (col) => `regexp_replace(${col}, '^[a-z]{2} ', '')`;
 const lit = (ids) => ids.map((x) => `'${x}'`).join(',');
 
-// KPI-row indicators. schools is federal/state-only (blank at LGA); classrooms is all levels.
+// KPI-row indicators. classrooms + toilets are all-levels (have LGA data too); schools (MD) is
+// federal/state-only, so it's not a KPI tile — it still feeds the schools chart + benchmark.
 const I = {
   enrol: 'jwjKmtVK2wj',     // ASC-GEN Enrolment (all levels)
   teachers: 'Dw7f4gs9RcS',  // ASC-GEN Teachers
   ptr: 'eie1tIO5HtX',       // ASC-GEN Learner-teacher ratio
   schools: 'wVjDYI2HuQb',   // MD Total schools
   classrooms: 'DvMfSq5pZSA', // ASC-GEN Usable classrooms (F.2)
+  toilets: 'vDmeu4io2Fs',   // ASC-GEN Usable toilets (F.2)
 };
-const TOGGLE = [I.enrol, I.teachers];       // KPI tiles that vary with the Public/Private toggle
-const OVERALL = [I.classrooms, I.schools];  // KPI tiles that are always overall
+const TOGGLE = [I.enrol, I.teachers];        // KPI tiles that vary with the Public/Private toggle
+const OVERALL = [I.classrooms, I.toilets];   // KPI tiles that are always overall (read from fact)
 
 // MD reporting indicators — actual (submitted) + expected reports per census form. Reporting
 // completeness = Σactual ÷ Σexpected (derived in SQL).
@@ -198,7 +200,7 @@ ${benchmark}
     {dx:'${I.enrol}',title:'Learners',fmt:'int',icon:'fa-solid fa-users'},
     {dx:'${I.teachers}',title:'Teachers',fmt:'int',icon:'fa-solid fa-chalkboard-user'},
     {dx:'${I.classrooms}',title:'Classrooms',fmt:'int',icon:'fa-solid fa-school'},
-    {dx:'${I.schools}',title:'Schools',fmt:'int',icon:'fa-solid fa-building-columns'}
+    {dx:'${I.toilets}',title:'Toilets',fmt:'int',icon:'fa-solid fa-toilet',sub:'Useable'}
   ]} />
 
 ## ${benchHeading}
@@ -417,7 +419,7 @@ ${benchmark}
     {dx:'${I.enrol}',title:'Learners',fmt:'int',icon:'fa-solid fa-users'},
     {dx:'${I.teachers}',title:'Teachers',fmt:'int',icon:'fa-solid fa-chalkboard-user'},
     {dx:'${I.classrooms}',title:'Classrooms',fmt:'int',icon:'fa-solid fa-school'},
-    {dx:'${I.schools}',title:'Schools',fmt:'int',icon:'fa-solid fa-building-columns'}
+    {dx:'${I.toilets}',title:'Toilets',fmt:'int',icon:'fa-solid fa-toilet',sub:'Useable'}
   ]} />
 
 ## Key indicators vs State & Federal

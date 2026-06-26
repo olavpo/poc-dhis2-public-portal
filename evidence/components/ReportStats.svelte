@@ -11,9 +11,9 @@
 </script>
 
 <div class="rep">
-	<div class="cell"><span class="lab"><i class="fa-solid fa-file-lines"></i> School reports expected</span><span class="v">{int(r.expected)}</span></div>
-	<div class="cell"><span class="lab"><i class="fa-solid fa-file-circle-check"></i> School reports received</span><span class="v">{int(r.submitted)}</span></div>
-	<div class="cell"><span class="lab"><i class="fa-solid fa-gauge-high"></i> Reporting completeness</span><span class="v">{pct(r.completeness)}</span></div>
+	<div class="cell"><span class="lab"><i class="fa-solid fa-school"></i> Total schools</span><span class="v">{int(r.expected)}</span></div>
+	<div class="cell"><span class="lab"><i class="fa-solid fa-file-circle-check"></i> Schools reported</span><span class="v">{int(r.submitted)}</span></div>
+	<div class="cell"><span class="lab"><i class="fa-solid fa-gauge-high"></i> Reporting rate</span><span class="v">{pct(r.completeness)}</span></div>
 </div>
 
 <style>

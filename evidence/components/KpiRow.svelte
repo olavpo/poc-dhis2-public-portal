@@ -20,12 +20,12 @@
 
 	$: rows = $ownershipMode === 'public' ? pub : $ownershipMode === 'private' ? priv : total;
 	// reactive (recomputes on mode change) — a plain function call wouldn't re-run per tile
-	$: shown = kpis.map((k) => ({ title: k.title, icon: k.icon || '', fmt: FMT[k.fmt] || FMT.int, data: rows.filter((r) => r.dx === k.dx) }));
+	$: shown = kpis.map((k) => ({ title: k.title, icon: k.icon || '', sub: k.sub || '', fmt: FMT[k.fmt] || FMT.int, data: rows.filter((r) => r.dx === k.dx) }));
 </script>
 
 <div class="kpis">
 	{#each shown as k}
-		<SupersetBigNumber title={k.title} icon={k.icon} data={k.data} value="value" fmt={k.fmt} />
+		<SupersetBigNumber title={k.title} icon={k.icon} subtitle={k.sub} data={k.data} value="value" fmt={k.fmt} />
 	{/each}
 </div>
 
