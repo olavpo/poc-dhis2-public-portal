@@ -45,27 +45,27 @@ const SCHOOL_PRIVATE = 'BXTUMWSq4zQ';
 // appears in the schools-by-type chart, which uses school *counts*).
 const DLEVELS = [
   { key: 'primary', label: 'Primary',
-    enrol: ['DiEriq7urPG', 'd8qCE7aPWtD'], boys: ['L7wp6IPJGhV', 'yjH9LAuAMrk'],
-    girls: ['NnvopxD62MT', 'Qwjg1QG0Hws'], special: ['Rszp9Ippq5N', 'Mmn0SEDyzOC'] },
+    enrol: ['DiEriq7urPG', 'd8qCE7aPWtD'], male: ['L7wp6IPJGhV', 'yjH9LAuAMrk'],
+    female: ['NnvopxD62MT', 'Qwjg1QG0Hws'], special: ['Rszp9Ippq5N', 'Mmn0SEDyzOC'] },
   { key: 'jss', label: 'JSS',
-    enrol: ['wDf8ZOwWgib'], boys: ['gAfSf7sfxib'], girls: ['uSfibhbGRT1'], special: ['bCMrPV3785Y'] },
+    enrol: ['wDf8ZOwWgib'], male: ['gAfSf7sfxib'], female: ['uSfibhbGRT1'], special: ['bCMrPV3785Y'] },
   { key: 'sss', label: 'SSS',
-    enrol: ['IYNEmLyFgbe'], boys: ['i8dMJSyq5hO'], girls: ['vZA5RaodnuH'], special: ['X4cRpKnxayU'] },
+    enrol: ['IYNEmLyFgbe'], male: ['i8dMJSyq5hO'], female: ['vZA5RaodnuH'], special: ['X4cRpKnxayU'] },
   { key: 'iqs', label: 'IQS',
-    enrol: ['g1ozV2n8G88'], boys: ['kxJmBoDtD9t'], girls: ['VzPMQzTjenn'], special: ['kitIA5LU69N'] },
-  // Tech/Voc (Science & Technical Colleges) — enrolment/boys/girls now exist as ASC-STC
+    enrol: ['g1ozV2n8G88'], male: ['kxJmBoDtD9t'], female: ['VzPMQzTjenn'], special: ['kitIA5LU69N'] },
+  // Tech/Voc (Science & Technical Colleges) — enrolment/male/female now exist as ASC-STC
   // indicators; there is no STC special-needs indicator, so that column is blank for Tech/Voc.
   { key: 'techvoc', label: 'Tech/Voc',
-    enrol: ['u4ogrV7WUcz'], boys: ['j3cxHeBhZ4m'], girls: ['STJaOAJl6eG'], special: [] },
+    enrol: ['u4ogrV7WUcz'], male: ['j3cxHeBhZ4m'], female: ['STJaOAJl6eG'], special: [] },
 ];
 const whens = (pairs) => pairs.map(([id, out]) => `when '${id}' then ${out}`).join(' ');
 const ENROL_LABELS = whens(DLEVELS.flatMap((lv) => lv.enrol.map((id) => [id, `'${lv.label}'`])));
 const ENROL_ORDS = whens(DLEVELS.flatMap((lv, i) => lv.enrol.map((id) => [id, i + 1])));
 const ENROL_IDS = lit(DLEVELS.flatMap((lv) => lv.enrol));
-const SEX_LABELS = whens(DLEVELS.flatMap((lv) => [...lv.boys, ...lv.girls].map((id) => [id, `'${lv.label}'`])));
-const SEX_ORDS = whens(DLEVELS.flatMap((lv, i) => [...lv.boys, ...lv.girls].map((id) => [id, i + 1])));
-const SEX_SEX = whens(DLEVELS.flatMap((lv) => [...lv.boys.map((id) => [id, `'Boys'`]), ...lv.girls.map((id) => [id, `'Girls'`])]));
-const SEX_IDS = lit(DLEVELS.flatMap((lv) => [...lv.boys, ...lv.girls]));
+const SEX_LABELS = whens(DLEVELS.flatMap((lv) => [...lv.male, ...lv.female].map((id) => [id, `'${lv.label}'`])));
+const SEX_ORDS = whens(DLEVELS.flatMap((lv, i) => [...lv.male, ...lv.female].map((id) => [id, i + 1])));
+const SEX_SEX = whens(DLEVELS.flatMap((lv) => [...lv.male.map((id) => [id, `'Male'`]), ...lv.female.map((id) => [id, `'Female'`])]));
+const SEX_IDS = lit(DLEVELS.flatMap((lv) => [...lv.male, ...lv.female]));
 const SCHOOL_LABELS = whens(SCHOOL_TYPES.map((s) => [s.dx, `'${s.label}'`]));
 const SCHOOL_ORDS = whens(SCHOOL_TYPES.map((s, i) => [s.dx, i + 1]));
 const SCHOOL_IDS = lit(SCHOOL_TYPES.map((s) => s.dx));
@@ -221,12 +221,12 @@ from lv left join (
 ) agg on agg.level = lv.level order by lv.ord
 \`\`\``;
   const sexQ = (M) => `\`\`\`sql sex_${M.m}
-with lv(level, ord) as (values ${LEVEL_VALUES}), sx(sex) as (values ('Boys'),('Girls'))
+with lv(level, ord) as (values ${LEVEL_VALUES}), sx(sex) as (values ('Male'),('Female'))
 select lv.level as level, sx.sex as sex, coalesce(agg.learners, 0) as learners, lv.ord as ord
 from lv cross join sx left join (
   select case f.dx ${SEX_LABELS} end as level, case f.dx ${SEX_SEX} end as sex, sum(f.value) as learners
   from ${M.src} f where ${W} ${M.cat} and f.dx in (${SEX_IDS}) group by 1, 2
-) agg on agg.level = lv.level and agg.sex = sx.sex order by lv.ord, sx.sex
+) agg on agg.level = lv.level and agg.sex = sx.sex order by lv.ord, sx.sex desc
 \`\`\``;
   const schoolsQ = (M) => `\`\`\`sql schools_${M.m}
 select label, value, ord from (
