@@ -113,38 +113,35 @@ patch(
   'getPrerenderedQueries tolerates SPA fallback',
 );
 
-// Map interaction. Evidence's Leaflet maps (the children choropleth) pan and zoom by default.
-// Here the map is mainly a navigation control — tapping a region drills down — so we disable the
-// stray gesture handlers (drag-pan, scroll/smooth-wheel + double-click + box + pinch + keyboard
-// zoom) so the map never hijacks page scroll/drag, BUT keep the explicit **+/- zoom control** so
-// users can still zoom in/out: its buttons call map.zoomIn()/zoomOut() directly, which work even
-// with the gesture handlers off. Per-area `click` handlers live on the layers, so drill-down +
-// tooltips still work. Tolerant: if Evidence's internals shift on upgrade, warn and skip rather
-// than fail the build. (Pan stays off, so zoom is centred on the map; flip `dragging` on if you
-// want pan-while-zoomed.)
+// Map interaction. Evidence's Leaflet maps (the children choropleth) get the **+/- zoom control**
+// and **drag-to-pan**, but the gesture-zoom handlers (scroll/smooth-wheel, double-click, box,
+// pinch, keyboard) stay off so the map never hijacks page scroll. Per-area `click` handlers live
+// on the layers, so drill-down + tooltips still work.
+//
+// The installed file may be in one of two states — fresh stock, or an earlier "click-only" build
+// (where `dragging` was disabled) — so `mapOpt` re-reads each time and is a silent no-op when its
+// anchor is absent (a sibling line handles that state), converging both to the same end result
+// without noisy warnings.
 const EVIDENCE_MAP = resolve(here, '../node_modules/@evidence-dev/core-components/dist/unsorted/viz/map/EvidenceMap.js');
-try {
-  patchAbs(
-    EVIDENCE_MAP,
-    'zoomControl: false,',
-    'zoomControl: true, // DNEMIS: +/- zoom buttons',
-    'map: enable +/- zoom control',
-  );
-  patchAbs(
-    EVIDENCE_MAP,
-    'scrollWheelZoom: false, // disable original zoom function',
-    'scrollWheelZoom: false, dragging: false, doubleClickZoom: false, boxZoom: false, touchZoom: false, keyboard: false, // DNEMIS: click-only map',
-    'map: disable pan + wheel/click/box/touch/keyboard zoom',
-  );
-  patchAbs(
-    EVIDENCE_MAP,
-    'smoothWheelZoom: true, // enable smooth zoom',
-    'smoothWheelZoom: false, // DNEMIS: click-only map (no scroll-wheel zoom)',
-    'map: disable smooth-wheel zoom',
-  );
-} catch (e) {
-  console.warn(`  [warn] map interaction patch skipped (Evidence internals moved?): ${e.message}`);
+function mapOpt(from, to, label) {
+  let src;
+  try { src = readFileSync(EVIDENCE_MAP, 'utf8'); }
+  catch (e) { console.warn(`  [warn] ${label}: ${e.message}`); return; }
+  if (src.includes(to)) { console.log(`  [skip] ${label} already patched`); return; }
+  if (!src.includes(from)) return; // not applicable in this state — a sibling line covers it
+  writeFileSync(EVIDENCE_MAP, src.replace(from, to));
+  console.log(`  [ok]   ${label}`);
 }
+mapOpt('zoomControl: false,', 'zoomControl: true, // DNEMIS: +/- zoom buttons', 'map: +/- zoom control');
+// fresh stock → drag-pan + zoom buttons; no wheel/pinch/double-click/box/keyboard gesture zoom
+mapOpt(
+  'scrollWheelZoom: false, // disable original zoom function',
+  'scrollWheelZoom: false, dragging: true, doubleClickZoom: false, boxZoom: false, touchZoom: false, keyboard: false, // DNEMIS: drag-pan + zoom buttons only',
+  'map: gesture config (drag-pan, no wheel/pinch zoom)',
+);
+// migrate an earlier click-only build (drag-pan was disabled) to drag-pan
+mapOpt('dragging: false,', 'dragging: true,', 'map: enable drag-pan');
+mapOpt('smoothWheelZoom: true, // enable smooth zoom', 'smoothWheelZoom: false, // DNEMIS: no scroll-wheel zoom', 'map: disable smooth-wheel zoom');
 
 // Layout + branding + DNEMIS header. The layout is fully under our control, so instead of
 // fragile anchor patches (which break the moment the injected markup changes) we WRITE the

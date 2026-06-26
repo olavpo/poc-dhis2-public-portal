@@ -24,8 +24,8 @@ Census) are documented here. This project adheres to [Semantic Versioning](https
   (192/512). Evidence's default icons are fully replaced everywhere in the build, not just the
   browser-tab favicon.
 
-- **Map: +/- zoom buttons** added to the choropleth. Pan and scroll-wheel/pinch/double-click
-  zoom stay disabled (so the map never hijacks page scroll); the buttons zoom centred on the map.
+- **Map: +/- zoom buttons and drag-to-pan** on the choropleth. Scroll-wheel / pinch /
+  double-click zoom stay disabled, so the map never hijacks page scroll.
 
 ### Fixed
 - **Local serving under a basePath.** `serve.mjs` now serves the build under the configured
