@@ -7,13 +7,24 @@
  */
 import { createServer } from 'node:http';
 import { stat } from 'node:fs/promises';
-import { createReadStream, existsSync } from 'node:fs';
+import { createReadStream, existsSync, readFileSync } from 'node:fs';
 import { join, extname, normalize, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createGzip } from 'node:zlib';
 
-const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..', 'current');
+const HERE = dirname(fileURLToPath(import.meta.url));
+const ROOT = join(HERE, '..', 'current');
 const PORT = Number(process.env.SANDBOX_HOST_PORT || 8080);
+
+// Evidence deployment.basePath: if the site was built for a sub-path (e.g. /portal), every
+// asset/link URL is prefixed with it, so we must serve the build UNDER that prefix and redirect
+// the root there — otherwise `/portal/_app/...` 404s and the page loads with no CSS/JS. Mirrors
+// the production nginx setup. No basePath → served at root as before.
+let BASE = '';
+try {
+  BASE = (readFileSync(join(HERE, '..', 'evidence', 'evidence.config.yaml'), 'utf8')
+    .match(/^\s*basePath:\s*["']?(\/[^"'\s]*?)\/?["']?\s*$/m)?.[1]) || '';
+} catch { /* no config → root */ }
 
 const TYPES = {
   '.html': 'text/html; charset=utf-8',
@@ -34,6 +45,8 @@ const FALLBACK = ['200.html', 'index.html'].map((f) => join(ROOT, f)).find((p) =
 
 async function resolveFile(urlPath) {
   let rel = decodeURIComponent(urlPath.split('?')[0]);
+  // Strip the deployment basePath so `/portal/_app/foo` resolves to `<build>/_app/foo`.
+  if (BASE && (rel === BASE || rel.startsWith(BASE + '/'))) rel = rel.slice(BASE.length) || '/';
   // adapter-static serves the contents of `static/` at the web root, so the
   // manifest's `static/data/...` URLs live at `/data/...`. Alias them.
   if (rel.includes('/static/data/')) rel = rel.replace('/static/data/', '/data/');
@@ -53,6 +66,15 @@ async function resolveFile(urlPath) {
 }
 
 const server = createServer(async (req, res) => {
+  // Redirect the bare root to the basePath so a visitor hitting `/` lands on the app.
+  if (BASE) {
+    const p = (req.url || '/').split('?')[0];
+    if (p === '/' || p === '' || p === BASE) {
+      res.writeHead(302, { location: BASE + '/' });
+      res.end();
+      return;
+    }
+  }
   const file = await resolveFile(req.url || '/');
   if (!file) {
     res.writeHead(404, { 'content-type': 'text/plain' });
@@ -123,5 +145,5 @@ const server = createServer(async (req, res) => {
 });
 
 server.listen(PORT, '0.0.0.0', () => {
-  console.log(`Serving ${ROOT} on http://localhost:${PORT}`);
+  console.log(`Serving ${ROOT} on http://localhost:${PORT}${BASE}/`);
 });

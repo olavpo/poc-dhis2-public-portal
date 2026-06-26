@@ -17,6 +17,12 @@ Census) are documented here. This project adheres to [Semantic Versioning](https
   The control bar (search · school year · ownership) sits at the very top.
 - **"Key indicators" table** uses a slightly larger font.
 
+### Fixed
+- **Local serving under a basePath.** `serve.mjs` now serves the build under the configured
+  `basePath` (`/portal`) and redirects `/` → `/portal/`. Previously it served at the root, so a
+  `/portal` build loaded with no CSS/JS (every `/portal/_app/…` asset 404'd). Mirrors the
+  production nginx setup.
+
 ## [0.2.0] — 2026-06-26
 
 ### Added
