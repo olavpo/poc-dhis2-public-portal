@@ -112,6 +112,32 @@ try {
   console.warn(`  [warn] click-only map patch skipped (Evidence internals moved?): ${e.message}`);
 }
 
+// Self-hosted DuckDB extensions: when the browser engine first calls read_parquet() (LGA pages)
+// it autoloads `parquet.duckdb_extension.wasm` from its compiled-in repository
+// (extensions.duckdb.org) — a third-party host we don't control, so Cloudflare returns
+// cf-cache-status: DYNAMIC and it stays a runtime dependency. `scripts/fetch-duckdb-extensions.mjs`
+// mirrors that extension into evidence/static/duckdb-extensions/<version>/wasm_eh/; here we point
+// the engine at it. Gated on VITE_DUCKDB_EXT_REPO (set by `npm run build` only after the mirror
+// step) so the redirect activates only when the files exist — otherwise the engine falls back to
+// its default repository, unchanged (e.g. `npm run dev`). The repo value is origin-relative
+// (`/portal/duckdb-extensions`) resolved against location.origin at runtime; the engine appends
+// `/<version>/wasm_eh/<name>.duckdb_extension.wasm` itself, matching the mirrored layout.
+patchAbs(
+  resolve(USQL, 'src/client-duckdb/browser.js'),
+  "\t\tawait connection.query('SET old_implicit_casting = true;');\n\n\t\tresolveInit();",
+  "\t\tawait connection.query('SET old_implicit_casting = true;');\n\n" +
+    "\t\t// DNEMIS: redirect extension autoload to our own origin (cacheable) — see patch-evidence.mjs.\n" +
+    "\t\tif (import.meta.env.VITE_DUCKDB_EXT_REPO) {\n" +
+    "\t\t\tconst __r = import.meta.env.VITE_DUCKDB_EXT_REPO;\n" +
+    "\t\t\tconst __repo = __r.startsWith('http') ? __r : new URL(__r, location.origin).href;\n" +
+    "\t\t\tfor (const __s of ['custom_extension_repository', 'autoinstall_extension_repository']) {\n" +
+    "\t\t\t\ttry { await connection.query(`SET ${__s}='${__repo}';`); } catch (e) { /* setting absent on this version */ }\n" +
+    "\t\t\t}\n" +
+    "\t\t}\n\n" +
+    "\t\tresolveInit();",
+  'duckdb self-hosted extension repository',
+);
+
 // Layout + branding + DNEMIS header. The layout is fully under our control, so instead of
 // fragile anchor patches (which break the moment the injected markup changes) we WRITE the
 // whole +layout.svelte deterministically — idempotent regardless of its prior state:

@@ -8,7 +8,8 @@
   "scripts": {
     "patch": "node evidence/scripts/patch-evidence.mjs",
     "sources": "npm --prefix evidence run sources",
-    "build": "npm run patch && npm run pages:asc && npm --prefix evidence run build",
+    "duckdb:ext": "node scripts/fetch-duckdb-extensions.mjs",
+    "build": "npm run patch && npm run duckdb:ext && npm run pages:asc && VITE_DUCKDB_EXT_REPO=/portal/duckdb-extensions npm --prefix evidence run build",
     "dev": "npm --prefix evidence run dev",
     "deploy": "bash scripts/deploy.sh",
     "serve": "bash scripts/serve.sh",
