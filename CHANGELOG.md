@@ -16,6 +16,7 @@ Census) are documented here. This project adheres to [Semantic Versioning](https
 - **Sex series relabelled Male / Female** (was Boys / Girls) in the "Learners by sex & level"
   chart, with Male shown first. Only the portal's displayed terminology changed; the underlying
   DHIS2 indicator names ("… boys" / "… girls") are untouched.
+- **Favicon** replaced Evidence's default with a DHIS2 mark (`evidence/static/dhis2-favicon.svg`).
 
 ### Fixed
 - **LGA pages no longer crash** with "Unexpected token '<'". The SPA fallback (`200.html`) served

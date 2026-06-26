@@ -63,6 +63,16 @@ patch(
   'adapter fallback',
 );
 
+// DHIS2 favicon: replace Evidence's default favicon.ico + icon.svg with the DHIS2 mark
+// (evidence/static/dhis2-favicon.svg). %sveltekit.assets% keeps the href correct under a
+// basePath. apple-touch-icon / manifest are left as Evidence's.
+patch(
+  'src/app.html',
+  '\t\t<link rel="icon" href="%sveltekit.assets%/favicon.ico" sizes="32x32" />\n\t\t<link rel="icon" href="%sveltekit.assets%/icon.svg" type="image/svg+xml" />',
+  '\t\t<link rel="icon" type="image/svg+xml" href="%sveltekit.assets%/dhis2-favicon.svg" />',
+  'dhis2 favicon',
+);
+
 // Lazy DuckDB init: by default the layout boots the ~6 MB (compressed) DuckDB-WASM
 // engine on every page at module load. Make it lazy — start only on first await —
 // so prerendered/baked pages (which read baked .arrow results, never calling the
