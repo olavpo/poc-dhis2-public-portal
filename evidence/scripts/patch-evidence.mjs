@@ -13,13 +13,14 @@
  *
  * Patches the installed template so they survive the .evidence/template sync.
  */
-import { readFileSync, writeFileSync } from 'node:fs';
+import { readFileSync, writeFileSync, copyFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, resolve } from 'node:path';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const TPL = resolve(here, '../node_modules/@evidence-dev/evidence/template');
 const USQL = resolve(here, '../node_modules/@evidence-dev/universal-sql');
+const STATIC = resolve(here, '../static');
 
 function patchAbs(absPath, from, to, label) {
   let src = readFileSync(absPath, 'utf8');
@@ -72,6 +73,20 @@ patch(
   '\t\t<link rel="icon" type="image/svg+xml" href="%sveltekit.assets%/dhis2-favicon.svg" />',
   'dhis2 favicon',
 );
+
+// Overwrite EVERY default Evidence icon shipped by the template (favicon.ico, the auto-discovered
+// icon.svg, the iOS apple-touch-icon and the PWA manifest icons) with the project's DHIS2
+// graduation-cap versions from evidence/static/. Project static is also merged into the build,
+// but copying into the template static here guarantees it regardless of static-merge precedence —
+// so no Evidence-branded icon survives anywhere in the build, not just the <link>-referenced one.
+for (const f of ['favicon.ico', 'icon.svg', 'apple-touch-icon.png', 'icon-192.png', 'icon-512.png']) {
+  try {
+    copyFileSync(resolve(STATIC, f), resolve(TPL, 'static', f));
+    console.log(`  [ok]   icon ${f} (DHIS2 graduation cap)`);
+  } catch (e) {
+    console.warn(`  [warn] icon ${f} not copied: ${e.message}`);
+  }
+}
 
 // Lazy DuckDB init: by default the layout boots the ~6 MB (compressed) DuckDB-WASM
 // engine on every page at module load. Make it lazy — start only on first await —
