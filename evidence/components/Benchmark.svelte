@@ -51,10 +51,10 @@
 </table>
 
 <style>
-	table { width: 100%; border-collapse: collapse; font-size: 12px; }
-	th { background: #fafafa; color: #5a6b73; text-align: right; padding: 8px 10px; border-bottom: 1px solid #e0e0e0; white-space: nowrap; }
+	table { width: 100%; border-collapse: collapse; font-size: 14px; }
+	th { background: #fafafa; color: #5a6b73; text-align: right; padding: 9px 11px; border-bottom: 1px solid #e0e0e0; white-space: nowrap; }
 	th:first-child { text-align: left; }
-	td { text-align: right; padding: 8px 10px; border-bottom: 1px solid #f1f3f4; }
+	td { text-align: right; padding: 9px 11px; border-bottom: 1px solid #f1f3f4; }
 	td:first-child { text-align: left; }
 	.num { font-variant-numeric: tabular-nums; }
 	.fed { color: #6b7872; }

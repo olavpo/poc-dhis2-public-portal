@@ -127,7 +127,7 @@ try {
 // whole +layout.svelte deterministically — idempotent regardless of its prior state:
 //   • <EvidenceDefaultLayout> props: full width, no Evidence header/sidebar/TOC/footer (the
 //     DNEMIS green bar is the only chrome).
-//   • DNEMIS header: coat of arms + full title "Digital National Education Management
+//   • DNEMIS header: coat of arms + full title "Digital Nigeria Education Management
 //     Information System (DNEMIS)" + a Print button (Evidence's built-in export-beforeprint/
 //     window.print()/export-afterprint, so charts/maps render correctly for paper).
 //   • Inter + Font Awesome, h1.title hidden, and an @media print rule that drops the print
@@ -144,7 +144,7 @@ const LAYOUT = `<script>
 	<div slot="content">
 		<div class="dnemis-header">
 			<span class="crest"><img src="{base}/coat_of_arms.png" alt="Nigerian Coat of Arms" /></span>
-			<div><div class="dt">Education Statistics</div><div class="ds">Nigeria Federal Ministry of Education | Digital National Education Management Information System</div></div>
+			<div><div class="dt">Education Statistics</div><div class="ds">Nigeria Federal Ministry of Education | Digital Nigeria Education Management Information System</div></div>
 			<button class="printbtn" type="button" title="Download this page as PDF"
 				on:click={() => { window.dispatchEvent(new Event('export-beforeprint')); setTimeout(() => window.print(), 0); setTimeout(() => window.dispatchEvent(new Event('export-afterprint')), 0); }}>
 				<i class="fa-solid fa-download"></i><span>Download PDF</span>

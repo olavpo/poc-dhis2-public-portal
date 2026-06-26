@@ -3,6 +3,20 @@
 All notable changes to the DNEMIS Education Statistics public portal (Nigeria Annual School
 Census) are documented here. This project adheres to [Semantic Versioning](https://semver.org).
 
+## [0.3.0] — 2026-06-26
+
+### Added
+- **School-year box** in the control bar ("2024/2025"), styled like the search and ownership
+  controls — a placeholder for a future year selector.
+
+### Changed
+- **Header** subtitle now reads "Digital **Nigeria** Education Management Information System"
+  (was "National").
+- **Page layout reordered:** the reporting strip now sits **above** the KPI tiles; within it,
+  **Expected** reports are shown before **Received** (relabelled from "Schools reporting census").
+  The control bar (search · school year · ownership) sits at the very top.
+- **"Key indicators" table** uses a slightly larger font.
+
 ## [0.2.0] — 2026-06-26
 
 ### Added
@@ -58,5 +72,6 @@ extractor. Highlights of this release:
   completeness, the "Key indicators" benchmark, charts, and the "Indicators by …" compare table)
   to the exact DHIS2 indicator / data-element UID(s) and the formula behind each computed value.
 
+[0.3.0]: https://github.com/olavpo/poc-dhis2-public-portal/tree/emis-pp
 [0.2.0]: https://github.com/olavpo/poc-dhis2-public-portal/tree/emis-pp
 [0.1.0]: https://github.com/olavpo/poc-dhis2-public-portal/tree/emis-pp

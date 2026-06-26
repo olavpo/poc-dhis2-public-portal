@@ -189,6 +189,10 @@ ${benchmark}
 
 <ScopeNav crumbs={${JSON.stringify(crumbs)}} />
 
+<ControlBar />
+
+<ReportStats data={reporting} />
+
 <KpiRow total={kpis_total} pub={kpis_public} priv={kpis_private}
   kpis={[
     {dx:'${I.enrol}',title:'Learners',fmt:'int',icon:'fa-solid fa-users'},
@@ -196,8 +200,6 @@ ${benchmark}
     {dx:'${I.classrooms}',title:'Classrooms',fmt:'int',icon:'fa-solid fa-school'},
     {dx:'${I.schools}',title:'Schools',fmt:'int',icon:'fa-solid fa-building-columns'}
   ]} />
-
-<ReportStats data={reporting} />
 
 ## ${benchHeading}
 
@@ -406,6 +408,10 @@ ${benchmark}
 
 <ScopeNav crumbs={crumbs_q} />
 
+<ControlBar />
+
+<ReportStats data={reporting} />
+
 <KpiRow total={kpis_total} pub={kpis_public} priv={kpis_private}
   kpis={[
     {dx:'${I.enrol}',title:'Learners',fmt:'int',icon:'fa-solid fa-users'},
@@ -413,8 +419,6 @@ ${benchmark}
     {dx:'${I.classrooms}',title:'Classrooms',fmt:'int',icon:'fa-solid fa-school'},
     {dx:'${I.schools}',title:'Schools',fmt:'int',icon:'fa-solid fa-building-columns'}
   ]} />
-
-<ReportStats data={reporting} />
 
 ## Key indicators vs State & Federal
 
