@@ -1,6 +1,6 @@
 {
   "name": "dhis2-public-portal",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "private": true,
   "type": "module",
   "description": "Generic static public-portal foundation for DHIS2 — Evidence + DuckDB-WASM, served from static files",

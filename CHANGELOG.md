@@ -3,6 +3,17 @@
 All notable changes to the DNEMIS Education Statistics public portal (Nigeria Annual School
 Census) are documented here. This project adheres to [Semantic Versioning](https://semver.org).
 
+## [0.4.0] — 2026-06-26
+
+UI polish on top of 0.3.0.
+
+### Changed
+- **Key indicators table:** the indicator names (first column) are now bold.
+- **Reporting strip** enlarged toward the KPI tiles (bigger value, taller cells, aligned grid).
+- **KPI tiles:** tightened the spacing below the number so a tile without a subtitle no longer
+  looks gappy next to the "Useable" Toilets tile.
+- **Map favicon/app icons** finalised on the header's subtle forest-green gradient.
+
 ## [0.3.0] — 2026-06-26
 
 ### Added
@@ -88,6 +99,7 @@ extractor. Highlights of this release:
   completeness, the "Key indicators" benchmark, charts, and the "Indicators by …" compare table)
   to the exact DHIS2 indicator / data-element UID(s) and the formula behind each computed value.
 
+[0.4.0]: https://github.com/olavpo/poc-dhis2-public-portal/tree/emis-pp
 [0.3.0]: https://github.com/olavpo/poc-dhis2-public-portal/tree/emis-pp
 [0.2.0]: https://github.com/olavpo/poc-dhis2-public-portal/tree/emis-pp
 [0.1.0]: https://github.com/olavpo/poc-dhis2-public-portal/tree/emis-pp
