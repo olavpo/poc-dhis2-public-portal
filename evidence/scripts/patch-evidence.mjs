@@ -113,19 +113,28 @@ patch(
   'getPrerenderedQueries tolerates SPA fallback',
 );
 
-// Click-only maps. Evidence's Leaflet maps (the children choropleth) pan and zoom by default;
-// here the map is purely a navigation control — tapping a region drills down — so disable
-// dragging (pan) and every zoom path (scroll/smooth-wheel, double-click, box, touch/pinch,
-// keyboard). Per-area `click` handlers live on the layers, not the map, so drill-down + tooltips
-// still work; the view stays fitted to the data bounds. Tolerant: if Evidence's internals shift
-// on an upgrade, warn and skip rather than fail the whole build for a cosmetic tweak.
+// Map interaction. Evidence's Leaflet maps (the children choropleth) pan and zoom by default.
+// Here the map is mainly a navigation control — tapping a region drills down — so we disable the
+// stray gesture handlers (drag-pan, scroll/smooth-wheel + double-click + box + pinch + keyboard
+// zoom) so the map never hijacks page scroll/drag, BUT keep the explicit **+/- zoom control** so
+// users can still zoom in/out: its buttons call map.zoomIn()/zoomOut() directly, which work even
+// with the gesture handlers off. Per-area `click` handlers live on the layers, so drill-down +
+// tooltips still work. Tolerant: if Evidence's internals shift on upgrade, warn and skip rather
+// than fail the build. (Pan stays off, so zoom is centred on the map; flip `dragging` on if you
+// want pan-while-zoomed.)
 const EVIDENCE_MAP = resolve(here, '../node_modules/@evidence-dev/core-components/dist/unsorted/viz/map/EvidenceMap.js');
 try {
   patchAbs(
     EVIDENCE_MAP,
+    'zoomControl: false,',
+    'zoomControl: true, // DNEMIS: +/- zoom buttons',
+    'map: enable +/- zoom control',
+  );
+  patchAbs(
+    EVIDENCE_MAP,
     'scrollWheelZoom: false, // disable original zoom function',
     'scrollWheelZoom: false, dragging: false, doubleClickZoom: false, boxZoom: false, touchZoom: false, keyboard: false, // DNEMIS: click-only map',
-    'map: disable pan + click/box/touch/keyboard zoom',
+    'map: disable pan + wheel/click/box/touch/keyboard zoom',
   );
   patchAbs(
     EVIDENCE_MAP,
@@ -134,7 +143,7 @@ try {
     'map: disable smooth-wheel zoom',
   );
 } catch (e) {
-  console.warn(`  [warn] click-only map patch skipped (Evidence internals moved?): ${e.message}`);
+  console.warn(`  [warn] map interaction patch skipped (Evidence internals moved?): ${e.message}`);
 }
 
 // Layout + branding + DNEMIS header. The layout is fully under our control, so instead of
