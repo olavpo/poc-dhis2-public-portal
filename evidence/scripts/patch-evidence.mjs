@@ -76,13 +76,13 @@ patch(
 
 // Overwrite EVERY default Evidence icon shipped by the template (favicon.ico, the auto-discovered
 // icon.svg, the iOS apple-touch-icon and the PWA manifest icons) with the project's DHIS2
-// graduation-cap versions from evidence/static/. Project static is also merged into the build,
+// school-glyph versions from evidence/static/. Project static is also merged into the build,
 // but copying into the template static here guarantees it regardless of static-merge precedence —
 // so no Evidence-branded icon survives anywhere in the build, not just the <link>-referenced one.
 for (const f of ['favicon.ico', 'icon.svg', 'apple-touch-icon.png', 'icon-192.png', 'icon-512.png']) {
   try {
     copyFileSync(resolve(STATIC, f), resolve(TPL, 'static', f));
-    console.log(`  [ok]   icon ${f} (DHIS2 graduation cap)`);
+    console.log(`  [ok]   icon ${f} (DHIS2 school glyph)`);
   } catch (e) {
     console.warn(`  [warn] icon ${f} not copied: ${e.message}`);
   }

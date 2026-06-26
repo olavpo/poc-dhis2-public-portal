@@ -19,9 +19,10 @@ Census) are documented here. This project adheres to [Semantic Versioning](https
   "Useable" subtitle (KPI tiles now support an optional subtitle). Unlike the MD school count,
   toilets are available at LGA level too. Schools still feed the schools chart and benchmark.
 - **"Key indicators" table** uses a slightly larger font.
-- **All app icons are education-themed** (a graduation cap on the brand gradient): the favicon,
-  `icon.svg`, the iOS apple-touch-icon and the PWA manifest icons (192/512) — Evidence's default
-  icons are fully replaced everywhere in the build, not just the browser-tab favicon.
+- **All app icons are education-themed** — the Font Awesome `fa-school` glyph (white) on a
+  forest-green tile: the favicon, `icon.svg`, the iOS apple-touch-icon and the PWA manifest icons
+  (192/512). Evidence's default icons are fully replaced everywhere in the build, not just the
+  browser-tab favicon.
 
 ### Fixed
 - **Local serving under a basePath.** `serve.mjs` now serves the build under the configured
