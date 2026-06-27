@@ -3,6 +3,25 @@
 All notable changes to the DNEMIS Education Statistics public portal (Nigeria Annual School
 Census) are documented here. This project adheres to [Semantic Versioning](https://semver.org).
 
+## [0.5.0] — 2026-06-27
+
+### Changed
+- **Classroom & Toilet KPI tiles now disaggregate by the Public/Private toggle.** Their counts
+  (`DvMfSq5pZSA`, `vDmeu4io2Fs`) were added to the Ownership extract cut. **Requires a fresh
+  `extract:asc`** for the public/private values to populate (Total works without it).
+- **Key indicators delta ("vs …") compares against the parent State on LGA pages** (was Federal);
+  State pages still compare vs Federal.
+- **"Public Schools by Level"** (the schools bar, renamed from "Schools by type") is **pinned to
+  public schools** — it no longer follows the ownership toggle.
+- **Chart/donut relabels:** "Learners/Schools by public/private" → "… by Ownership".
+- **Removed the Learner–lab ratio** from both the Key-indicators table and the compare table.
+- **Key indicators table:** alternating-row shading and bold indicator names; removed the
+  "Charts" heading and added spacing below the table.
+
+### Docs
+- `INDICATOR-REFERENCE.md`: added a consolidated **Minister's Dashboard (MD) indicators** list
+  and tagged the MD-sourced benchmark rows.
+
 ## [0.4.0] — 2026-06-26
 
 UI polish on top of 0.3.0.
@@ -99,6 +118,7 @@ extractor. Highlights of this release:
   completeness, the "Key indicators" benchmark, charts, and the "Indicators by …" compare table)
   to the exact DHIS2 indicator / data-element UID(s) and the formula behind each computed value.
 
+[0.5.0]: https://github.com/olavpo/poc-dhis2-public-portal/tree/emis-pp
 [0.4.0]: https://github.com/olavpo/poc-dhis2-public-portal/tree/emis-pp
 [0.3.0]: https://github.com/olavpo/poc-dhis2-public-portal/tree/emis-pp
 [0.2.0]: https://github.com/olavpo/poc-dhis2-public-portal/tree/emis-pp
