@@ -38,13 +38,13 @@ the extracted `evidence/sources/census/dx.csv`.
 |---|---|---|---|---|
 | **Learners** | `jwjKmtVK2wj` | ASC-GEN Enrolment (all levels) | direct count | **Yes** — Total/Public/Private |
 | **Teachers** | `Dw7f4gs9RcS` | ASC-GEN Teachers | direct count | **Yes** |
-| **Classrooms** | `DvMfSq5pZSA` | ASC-GEN Usable classrooms (F.2) | direct count | **No** — always overall* |
-| **Schools** | `wVjDYI2HuQb` | MD: Total schools | direct count | **No** — always overall* |
+| **Classrooms** | `DvMfSq5pZSA` | ASC-GEN Usable classrooms (F.2) | direct count | **Yes** |
+| **Toilets** | `vDmeu4io2Fs` | ASC-GEN Usable toilets (F.2) | direct count | **Yes** — labelled "Useable" |
 
-\* Classrooms and Schools are *overall* figures: even on the Public/Private view they are
-re-injected from `census.fact` (`overallRows()` in the template), so they don't change with the
-toggle. **Schools is blank at LGA level** — the MD school-count indicators error (HTTP 500) at
-LGA in the analytics API and are not extracted there.
+All four KPI tiles disaggregate by the Total/Public/Private toggle — each dx is in the Ownership
+cut (`census.fact_ownership`). **Schools** (`wVjDYI2HuQb`, MD Total schools) is *not* a KPI tile:
+the MD school counts error (HTTP 500) at LGA level, so it's federal/state-only and instead feeds
+the schools chart and the learner-school benchmark.
 
 ---
 
@@ -77,9 +77,10 @@ Completeness = round(100 × Submitted ÷ Expected, 1)
 
 ## 3. "Key indicators vs State & Federal" (`Benchmark`)
 
-Seven rows; each shows the org unit's value, its parent State's value (LGA pages only), and the
+Six rows; each shows the org unit's value, its parent State's value (LGA pages only), and the
 Federal value, all switching with the ownership toggle (Total → `census.fact`; Public/Private →
-`census.fact_ownership`).
+`census.fact_ownership`). The **delta ("vs …") column** compares the unit against its parent
+**State on LGA pages**, and against **Federal** on State pages.
 
 | Row | How | dx |
 |---|---|---|
@@ -87,13 +88,11 @@ Federal value, all switching with the ownership toggle (Total → `census.fact`;
 | **Learner–classroom ratio** | direct (indicator) | `zrzIn10PQjq` Learners per classroom (updated) |
 | **Learner–school ratio** | computed `Σ enrolment ÷ Total schools` | num `jwjKmtVK2wj` ÷ den `wVjDYI2HuQb` |
 | **Learner–toilet ratio** | direct (indicator) | `uWkPykwyYn2` ASC-GEN Learner-usable toilet ratio |
-| **Learner–lab ratio** | computed `(JSS + SSS enrolment) ÷ Useable laboratories` | num `wDf8ZOwWgib` + `IYNEmLyFgbe` ÷ den `oOHHjng0014` |
 | **Female learners (%)** | direct (indicator) | `Nc9bgbCb6eO` ASC-GEN Female learners (%) |
 | **Female teachers (%)** | computed `100 × Female teachers ÷ Total teachers` | num `PbzDc38hOsx` ÷ den `ABJrmFcIpT3` |
 
-> Note: the **Learner–lab ratio here uses secondary (JSS + SSS) enrolment** over labs, whereas
-> the *compare-table* "Learner:lab" column (§5) uses **all-levels** enrolment over labs. They
-> are deliberately different metrics with the same label root.
+(The "Learner–lab" ratio was removed from this table; the compare table (§5) still has a
+"Learner:lab" column.)
 
 ---
 

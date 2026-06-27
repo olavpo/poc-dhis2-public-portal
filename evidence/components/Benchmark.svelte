@@ -11,17 +11,22 @@
 	$: shown = (rows || []).filter((r) => r.mode === $ownershipMode);
 	const FMT = { ratio: (v) => Number(v).toFixed(1), pct: (v) => Number(v).toFixed(1) + '%' };
 	const f = (v, k) => (v == null ? '—' : (FMT[k] || FMT.ratio)(v));
-	// For ratios lower is better; for % higher is better. Colour the unit vs federal delta.
+	// Compare the unit against its parent State on LGA pages (stateLabel set), else against Federal.
+	$: cmpLabel = stateLabel ? 'State' : 'Federal';
+	const base = (r) => (stateLabel ? r.state : r.federal);
+	// For ratios lower is better; for % higher is better. Colour the unit-vs-comparator delta.
 	const better = (r) => {
-		if (r.unit == null || r.federal == null) return '';
-		const d = Number(r.unit) - Number(r.federal);
+		const b = base(r);
+		if (r.unit == null || b == null) return '';
+		const d = Number(r.unit) - Number(b);
 		if (Math.abs(d) < 1e-9) return 'flat';
 		const good = r.fmt === 'pct' ? d > 0 : d < 0;
 		return good ? 'good' : 'bad';
 	};
 	const delta = (r) => {
-		if (r.unit == null || r.federal == null) return '';
-		const d = Number(r.unit) - Number(r.federal);
+		const b = base(r);
+		if (r.unit == null || b == null) return '';
+		const d = Number(r.unit) - Number(b);
 		const s = (r.fmt === 'pct' ? d.toFixed(1) + ' pp' : d.toFixed(1));
 		return (d > 0 ? '▲ +' : d < 0 ? '▼ ' : '') + s;
 	};
@@ -34,7 +39,7 @@
 			{#if unitLabel}<th class="num">{unitLabel}</th>{/if}
 			{#if stateLabel}<th class="num">{stateLabel}</th>{/if}
 			<th class="num">Federal</th>
-			{#if unitLabel}<th class="num">vs Federal</th>{/if}
+			{#if unitLabel}<th class="num">vs {cmpLabel}</th>{/if}
 		</tr>
 	</thead>
 	<tbody>
@@ -56,6 +61,7 @@
 	th:first-child { text-align: left; }
 	td { text-align: right; padding: 9px 11px; border-bottom: 1px solid #f1f3f4; }
 	td:first-child { text-align: left; font-weight: 600; color: #0a3d2c; }
+	tbody tr:nth-child(even) td { background: #f5f9f6; }
 	.num { font-variant-numeric: tabular-nums; }
 	.fed { color: #6b7872; }
 	.d.good { color: #0e7c4a; font-weight: 600; }
@@ -63,4 +69,5 @@
 	.d.flat { color: #aab3ad; }
 	:global(.dark) th { background: #27272a; color: #a1a1aa; border-color: #3f3f46; }
 	:global(.dark) td { border-color: #27272a; }
+	:global(.dark) tbody tr:nth-child(even) td { background: #202023; }
 </style>

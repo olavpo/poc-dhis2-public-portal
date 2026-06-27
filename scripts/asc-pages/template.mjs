@@ -11,8 +11,9 @@
 const NAME = (col) => `regexp_replace(${col}, '^[a-z]{2} ', '')`;
 const lit = (ids) => ids.map((x) => `'${x}'`).join(',');
 
-// KPI-row indicators. classrooms + toilets are all-levels (have LGA data too); schools (MD) is
-// federal/state-only, so it's not a KPI tile — it still feeds the schools chart + benchmark.
+// KPI-row indicators. All four KPI tiles disaggregate by the Public/Private toggle (each dx is in
+// the ownership cut). schools (MD) is federal/state-only, so it's not a KPI tile — it still feeds
+// the schools chart + benchmark.
 const I = {
   enrol: 'jwjKmtVK2wj',     // ASC-GEN Enrolment (all levels)
   teachers: 'Dw7f4gs9RcS',  // ASC-GEN Teachers
@@ -21,8 +22,8 @@ const I = {
   classrooms: 'DvMfSq5pZSA', // ASC-GEN Usable classrooms (F.2)
   toilets: 'vDmeu4io2Fs',   // ASC-GEN Usable toilets (F.2)
 };
-const TOGGLE = [I.enrol, I.teachers];        // KPI tiles that vary with the Public/Private toggle
-const OVERALL = [I.classrooms, I.toilets];   // KPI tiles that are always overall (read from fact)
+const TOGGLE = [I.enrol, I.teachers, I.classrooms, I.toilets]; // all KPI tiles vary with the toggle
+const OVERALL = [];          // none — every KPI tile disaggregates by ownership (needs each dx in the cut)
 
 // MD reporting indicators — actual (submitted) + expected reports per census form. Reporting
 // completeness = Σactual ÷ Σexpected (derived in SQL).
@@ -75,14 +76,13 @@ const SCHOOL_IDS = lit(SCHOOL_TYPES.map((s) => s.dx));
 // at 0) even where an org unit has no rows for them — e.g. LGAs.
 const LEVEL_VALUES = DLEVELS.map((lv, i) => `('${lv.label}',${i + 1})`).join(',');
 
-// Benchmark ratios for "Key indicators vs Federal". `dx` = read directly; otherwise computed
-// as factor × Σnum ÷ den (learner-lab = (JSS+SSS enrolment) ÷ useable labs; female teachers %).
+// Benchmark ratios for the "Key indicators" table. `dx` = read directly; otherwise computed as
+// factor × Σnum ÷ den (learner-school = enrolment ÷ schools; female teachers % = F ÷ all × 100).
 const BENCH = [
   { label: 'Learner–teacher ratio', fmt: 'ratio', dx: 'eie1tIO5HtX' },
   { label: 'Learner–classroom ratio', fmt: 'ratio', dx: 'zrzIn10PQjq' },
   { label: 'Learner–school ratio', fmt: 'ratio', num: ['jwjKmtVK2wj'], den: 'wVjDYI2HuQb', factor: 1 },
   { label: 'Learner–toilet ratio', fmt: 'ratio', dx: 'uWkPykwyYn2' },
-  { label: 'Learner–lab ratio', fmt: 'ratio', num: ['wDf8ZOwWgib', 'IYNEmLyFgbe'], den: 'oOHHjng0014', factor: 1 },
   { label: 'Female learners (%)', fmt: 'pct', dx: 'Nc9bgbCb6eO' },
   { label: 'Female teachers (%)', fmt: 'pct', num: ['PbzDc38hOsx'], den: 'ABJrmFcIpT3', factor: 100 },
 ];
@@ -120,10 +120,13 @@ function reportingQuery(ouId) {
   return REPORT_MODES.map(one).join('\nunion all\n');
 }
 
-// Overall (toggle-independent) counts injected into the Public/Private KPI sets.
-function overallRows(ouId) {
-  return `select dx, value from census.fact
-  where ou = '${ouId}' and periodType = 'YEARLY' and pe = '2024' and dx in (${lit(OVERALL)})`;
+// Any toggle-independent KPI counts (OVERALL) appended to the Public/Private KPI sets from
+// census.fact. Returns '' when there are none, so the `union all` is omitted (an empty
+// `dx in ()` would be invalid SQL).
+function overallUnion(ouId) {
+  return OVERALL.length
+    ? `\nunion all\nselect dx, value from census.fact where ou = '${ouId}' and periodType = 'YEARLY' and pe = '2024' and dx in (${lit(OVERALL)})`
+    : '';
 }
 
 // Each benchmark row yields the unit's value, its parent state's value (for LGA pages) and the
@@ -169,16 +172,12 @@ where ou = '${ou.id}' and periodType = 'YEARLY' and pe = '2024' and dx in (${lit
 
 \`\`\`sql kpis_public
 select dx, value from census.fact_ownership
-where ou = '${ou.id}' and periodType = 'YEARLY' and pe = '2024' and category_name like 'Public%' and dx in (${ownDx})
-union all
-${overallRows(ou.id)}
+where ou = '${ou.id}' and periodType = 'YEARLY' and pe = '2024' and category_name like 'Public%' and dx in (${ownDx})${overallUnion(ou.id)}
 \`\`\`
 
 \`\`\`sql kpis_private
 select dx, value from census.fact_ownership
-where ou = '${ou.id}' and periodType = 'YEARLY' and pe = '2024' and category_name like 'Private%' and dx in (${ownDx})
-union all
-${overallRows(ou.id)}
+where ou = '${ou.id}' and periodType = 'YEARLY' and pe = '2024' and category_name like 'Private%' and dx in (${ownDx})${overallUnion(ou.id)}
 \`\`\`
 
 \`\`\`sql reporting
@@ -266,8 +265,6 @@ from census.fact where ou = '${ou.id}' and periodType = 'YEARLY' and pe = '2024'
 ${withMap ? `
 ${q3(mapQ)}
 ` : ''}
-## Charts
-
 <Grid cols=2>
 ${withMap ? `  <OwnershipSelect total={children_map_total} pub={children_map_public} priv={children_map_private} let:data>
     <AreaMap data={data} geoJsonUrl="${geoUrl}" geoId="id" areaCol="id" value="learners" link="link" title="Learners by ${childLevel} · tap to explore" tooltip={[{id:'name',showColumnTitles:false},{id:'learners',fmt:'#,##0'}]} height={300} />
@@ -278,10 +275,10 @@ ${withMap ? `  <OwnershipSelect total={children_map_total} pub={children_map_pub
     <BarChart data={data} x=level y=learners series=sex type=grouped title="Learners by sex & level" swapXY=true sort=false />
   </OwnershipSelect>
   <OwnershipSelect total={schools_total} pub={schools_public} priv={schools_private} let:data>
-    <BarChart data={data} x=label y=value title="Schools by type" swapXY=true sort=false emptySet=pass emptyMessage="No data available at this level" />
+    <BarChart data={data} x=label y=value title="Public Schools by Level" swapXY=true sort=false emptySet=pass emptyMessage="No data available at this level" />
   </OwnershipSelect>
-  <OwnershipDonut data={ownership_enrol} title="Learners by public/private" />
-  <OwnershipDonut data={schools_ownership} title="Schools by public/private" />
+  <OwnershipDonut data={ownership_enrol} title="Learners by Ownership" />
+  <OwnershipDonut data={schools_ownership} title="Schools by Ownership" />
 </Grid>
 `;
 }
@@ -388,16 +385,12 @@ where ou = ${ID} and periodType = 'YEARLY' and pe = '2024' and dx in (${lit([...
 
 \`\`\`sql kpis_public
 select dx, value from census.fact_ownership
-where ou = ${ID} and periodType = 'YEARLY' and pe = '2024' and category_name like 'Public%' and dx in (${ownDx})
-union all
-${overallRows(P)}
+where ou = ${ID} and periodType = 'YEARLY' and pe = '2024' and category_name like 'Public%' and dx in (${ownDx})${overallUnion(P)}
 \`\`\`
 
 \`\`\`sql kpis_private
 select dx, value from census.fact_ownership
-where ou = ${ID} and periodType = 'YEARLY' and pe = '2024' and category_name like 'Private%' and dx in (${ownDx})
-union all
-${overallRows(P)}
+where ou = ${ID} and periodType = 'YEARLY' and pe = '2024' and category_name like 'Private%' and dx in (${ownDx})${overallUnion(P)}
 \`\`\`
 
 \`\`\`sql reporting

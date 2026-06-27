@@ -34,7 +34,8 @@ disaggregations:
          u4ogrV7WUcz, STJaOAJl6eG,
          L7wp6IPJGhV, yjH9LAuAMrk, gAfSf7sfxib, i8dMJSyq5hO, kxJmBoDtD9t, j3cxHeBhZ4m,
          v31dkf4PhmH, I8JeN23lKHn, tuku316VSXL, CKMgwHERBfg, uDBB1WrCkST, wVjDYI2HuQb,
-         zrzIn10PQjq, uWkPykwyYn2, oOHHjng0014, PbzDc38hOsx, ABJrmFcIpT3]
+         zrzIn10PQjq, uWkPykwyYn2, oOHHjng0014, PbzDc38hOsx, ABJrmFcIpT3,
+         DvMfSq5pZSA, vDmeu4io2Fs]   # usable classroom + toilet COUNTS — KPI tiles by ownership
     ouLevels: [1, 2, 3]
   # The "Indicators by …" compare table slices these whole-school indicators by School Type
   # (tabs) and Ownership (toggle). Two cuts: by School Type alone (type tab @ Total ownership —
