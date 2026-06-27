@@ -12,6 +12,7 @@
     "build": "npm run patch && npm run duckdb:ext && npm run pages:asc && VITE_DUCKDB_EXT_REPO=/portal/duckdb-extensions npm --prefix evidence run build",
     "dev": "npm --prefix evidence run dev",
     "deploy": "bash scripts/deploy.sh",
+    "push": "bash scripts/push-remote.sh",
     "serve": "bash scripts/serve.sh",
     "synth:asc": "node scripts/asc-synth/index.mjs",
     "extract:asc": "node scripts/dhis2-extract/index.mjs --config scripts/dhis2-extract/config/asc.yaml --out evidence/sources/census",
