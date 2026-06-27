@@ -274,9 +274,7 @@ ${withMap ? `  <OwnershipSelect total={children_map_total} pub={children_map_pub
   <OwnershipSelect total={sex_total} pub={sex_public} priv={sex_private} let:data>
     <BarChart data={data} x=level y=learners series=sex type=grouped title="Learners by sex & level" swapXY=true sort=false />
   </OwnershipSelect>
-  <OwnershipSelect total={schools_total} pub={schools_public} priv={schools_private} let:data>
-    <BarChart data={data} x=label y=value title="Public Schools by Level" swapXY=true sort=false emptySet=pass emptyMessage="No data available at this level" />
-  </OwnershipSelect>
+  <BarChart data={schools_public} x=label y=value title="Public Schools by Level" swapXY=true sort=false emptySet=pass emptyMessage="No data available at this level" />
   <OwnershipDonut data={ownership_enrol} title="Learners by Ownership" />
   <OwnershipDonut data={schools_ownership} title="Schools by Ownership" />
 </Grid>
@@ -307,8 +305,6 @@ function branchSection(ou, childLevel, childLinkPrefix, geoUrl) {
   max(case when f.dx = 'eie1tIO5HtX' then f.value end) as lt,
   max(case when f.dx = 'zrzIn10PQjq' then f.value end) as lc,
   max(case when f.dx = 'uWkPykwyYn2' then f.value end) as ltoilet,
-  round(sum(case when f.dx = 'jwjKmtVK2wj' then f.value else 0 end)
-        / nullif(max(case when f.dx = 'oOHHjng0014' then f.value end), 0), 1) as lab,
   case when max(case when f.dx = 'ABJrmFcIpT3' then f.value end) > 0
     then round(100.0 * max(case when f.dx = 'PbzDc38hOsx' then f.value end)
                      / max(case when f.dx = 'ABJrmFcIpT3' then f.value end), 1) end as femt,
@@ -344,7 +340,7 @@ ${queries}
 
 <ScrollX>
 <CompareTable tabs={[${tabs}]}
-  columns={[{key:'enrolment',label:'Learners'},{key:'lt',label:'Learner:teacher'},{key:'lc',label:'Learner:classroom'},{key:'ltoilet',label:'Learner:toilet'},{key:'lab',label:'Learner:lab'},{key:'female_l',label:'Female learners %'},{key:'femt',label:'Female teachers %'},{key:'special',label:'Special needs'}]} />
+  columns={[{key:'enrolment',label:'Learners'},{key:'lt',label:'Learner:teacher'},{key:'lc',label:'Learner:classroom'},{key:'ltoilet',label:'Learner:toilet'},{key:'female_l',label:'Female learners %'},{key:'femt',label:'Female teachers %'},{key:'special',label:'Special needs'}]} />
 </ScrollX>
 `;
 }

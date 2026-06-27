@@ -91,8 +91,7 @@ Federal value, all switching with the ownership toggle (Total → `census.fact`;
 | **Female learners (%)** | direct (indicator) | `Nc9bgbCb6eO` ASC-GEN Female learners (%) |
 | **Female teachers (%)** | computed `100 × Female teachers ÷ Total teachers` | num `PbzDc38hOsx` ÷ den `ABJrmFcIpT3` |
 
-(The "Learner–lab" ratio was removed from this table; the compare table (§5) still has a
-"Learner:lab" column.)
+(The "Learner–lab" ratio was removed from both this table and the compare table in §5.)
 
 ---
 
@@ -124,10 +123,11 @@ enrolment / boys / girls / special-needs counterparts merged into "Primary". (Th
 rows in the current extract, so their names aren't in `dx.csv` — confirm against the instance if
 Pre-Primary data is later populated.) The charts are toggle-aware (Total/Public/Private).
 
-### "Schools by type" (bar)
+### "Public Schools by Level" (bar)
 
-School *counts* per type (Minister's-Dashboard indicators); toggle-aware. **Blank at LGA** (MD
-counts 500 there). Shown as a "No data available" message where empty.
+Public-school *counts* per level (Minister's-Dashboard indicators). **Pinned to public schools**
+— it reads the `schools_public` query (`census.fact_ownership`, `Public%`) and does **not** follow
+the ownership toggle. **Blank at LGA** (the MD counts 500 there). "No data available" where empty.
 
 | Type | dx | Name |
 |---|---|---|
@@ -137,12 +137,12 @@ counts 500 there). Shown as a "No data available" message where empty.
 | IQS | `CKMgwHERBfg` | MD: ANFE (IQS/IQTE) schools |
 | Tech/Voc | `uDBB1WrCkST` | MD: Sci/Tech/Voc schools |
 
-### "Learners by public/private" (donut)
+### "Learners by Ownership" (donut)
 
 `census.fact_ownership`, dx `jwjKmtVK2wj` (Enrolment, all levels), grouped by ownership
 category. This donut *is* the ownership split, so it does not respond to the toggle.
 
-### "Schools by public/private" (donut)
+### "Schools by Ownership" (donut)
 
 `census.fact`, two direct MD counts (not toggle-driven):
 - Public = `U8ytqWQMFwD` MD: Public schools
@@ -178,7 +178,6 @@ Columns:
 | **Learner:teacher** | direct (indicator) | `eie1tIO5HtX` ASC-GEN Learner-teacher ratio |
 | **Learner:classroom** | direct (indicator) | `zrzIn10PQjq` Learners per classroom (updated) |
 | **Learner:toilet** | direct (indicator) | `uWkPykwyYn2` ASC-GEN Learner-usable toilet ratio |
-| **Learner:lab** | computed `Σ enrolment ÷ Useable laboratories` | num `jwjKmtVK2wj` ÷ den `oOHHjng0014` |
 | **Female learners %** | direct (indicator) | `Nc9bgbCb6eO` ASC-GEN Female learners (%) |
 | **Female teachers %** | computed `100 × Female teachers ÷ Total teachers` | num `PbzDc38hOsx` ÷ den `ABJrmFcIpT3` |
 | **Special needs** | sum (count) | `Rszp9Ippq5N`†, `Mmn0SEDyzOC`, `bCMrPV3785Y`, `X4cRpKnxayU`, `kitIA5LU69N` (Pre-Primary + Primary + JSS + SSS + IQS) |
