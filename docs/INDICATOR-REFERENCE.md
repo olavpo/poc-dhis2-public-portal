@@ -86,10 +86,10 @@ Federal value, all switching with the ownership toggle (Total → `census.fact`;
 |---|---|---|
 | **Learner–teacher ratio** | direct (indicator) | `eie1tIO5HtX` ASC-GEN Learner-teacher ratio |
 | **Learner–classroom ratio** | direct (indicator) | `zrzIn10PQjq` Learners per classroom (updated) |
-| **Learner–school ratio** | computed `Σ enrolment ÷ Total schools` | num `jwjKmtVK2wj` ÷ den `wVjDYI2HuQb` |
+| **Learner–school ratio** | computed `Σ enrolment ÷ Total schools` | num `jwjKmtVK2wj` ÷ den `wVjDYI2HuQb` **(MD)** |
 | **Learner–toilet ratio** | direct (indicator) | `uWkPykwyYn2` ASC-GEN Learner-usable toilet ratio |
 | **Female learners (%)** | direct (indicator) | `Nc9bgbCb6eO` ASC-GEN Female learners (%) |
-| **Female teachers (%)** | computed `100 × Female teachers ÷ Total teachers` | num `PbzDc38hOsx` ÷ den `ABJrmFcIpT3` |
+| **Female teachers (%)** | computed `100 × Female teachers ÷ Total teachers` | num `PbzDc38hOsx` **(MD)** ÷ den `ABJrmFcIpT3` **(MD)** |
 
 (The "Learner–lab" ratio was removed from both this table and the compare table in §5.)
 
@@ -190,6 +190,29 @@ Same data as the §4 "Learners by education level" chart (the `enrol_*` query), 
 of level → enrolment, toggle-aware.
 
 ---
+
+## Minister's Dashboard (MD) indicators used
+
+The portal depends on **22 `MD:` (Minister's Dashboard) indicators** — all the school *counts*,
+the reporting/completeness numbers, and the female-teachers %. (Everything else uses the regular
+`ASC-*` indicators.) ⚠️ The MD school-count indicators **error (HTTP 500) at LGA level**, so the
+features below are blank on LGA pages.
+
+**Reporting / completeness (§2)** — 6 actual + 6 expected report counts:
+`QLfdf8Jd9dc`, `Yr6FePoHpHP`, `OTZHZUXsMeN`, `zH11dcmH2Pg`, `SYwA4fNOprM`, `Jx7wWJI1WpR`
+(actual); `dh9fliYibms`, `S2cH9F1T7MU`, `jZtYw0T5xJl`, `jSbbKIsSvK3`, `stoCrMx0ED1`,
+`q5mnwKasEpF` (expected).
+
+**School-type counts — "Public Schools by Level" (§4)** — `v31dkf4PhmH` Primary, `I8JeN23lKHn`
+JS, `tuku316VSXL` SS, `CKMgwHERBfg` ANFE/IQS, `uDBB1WrCkST` Sci/Tech/Voc.
+
+**Public/Private school counts — "Schools by Ownership" donut (§4)** — `U8ytqWQMFwD` Public
+schools, `BXTUMWSq4zQ` Private schools.
+
+**Total schools (§1 KPI note + §3 Learner–school ratio)** — `wVjDYI2HuQb`.
+
+**Teacher totals — Female teachers % (§3)** — `PbzDc38hOsx` Total female teachers ÷
+`ABJrmFcIpT3` Total teachers.
 
 ## Appendix — full UID legend
 
