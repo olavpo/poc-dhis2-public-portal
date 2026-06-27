@@ -6,7 +6,7 @@
 > learning resource, not as-is in production.
 
 The **static public portal** for Nigeria's **Annual School Census (ASC)** — the "Education
-Statistics" site of the Federal Ministry of Education's **Digital National Education
+Statistics" site of the Federal Ministry of Education's **Digital Nigeria Education
 Management Information System (DNEMIS)**. Built with [Evidence](https://evidence.dev) over
 DuckDB-WASM: no database, no app server, **no live DHIS2 at runtime** — the site is
 prerendered to static files and served by any static host.

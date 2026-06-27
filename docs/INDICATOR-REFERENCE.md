@@ -102,9 +102,11 @@ Federal value, all switching with the ownership toggle (Total → `census.fact`;
 ### "Learners by education level" (bar) and "Learners by sex & level" (grouped bar)
 
 Five levels, summed from the per-stage enrolment counts. Pre-Primary is merged into **Primary**;
-ANFE is shown as **IQS**; Tech/Voc is the Science & Technical College (STC) series.
+ANFE is shown as **IQS**; Tech/Voc is the Science & Technical College (STC) series. The sex
+series are labelled **Male** / **Female** in the chart (the underlying DHIS2 indicators are
+named "… boys" / "… girls").
 
-| Level | Enrolment (Σ) | Boys (Σ) | Girls (Σ) | Special needs (Σ) |
+| Level | Enrolment (Σ) | Male (Σ) | Female (Σ) | Special needs (Σ) |
 |---|---|---|---|---|
 | **Primary** | `DiEriq7urPG`†, `d8qCE7aPWtD` | `L7wp6IPJGhV`†, `yjH9LAuAMrk` | `NnvopxD62MT`†, `Qwjg1QG0Hws` | `Rszp9Ippq5N`†, `Mmn0SEDyzOC` |
 | **JSS** | `wDf8ZOwWgib` | `gAfSf7sfxib` | `uSfibhbGRT1` | `bCMrPV3785Y` |

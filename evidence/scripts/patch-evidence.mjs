@@ -13,13 +13,14 @@
  *
  * Patches the installed template so they survive the .evidence/template sync.
  */
-import { readFileSync, writeFileSync } from 'node:fs';
+import { readFileSync, writeFileSync, copyFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, resolve } from 'node:path';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const TPL = resolve(here, '../node_modules/@evidence-dev/evidence/template');
 const USQL = resolve(here, '../node_modules/@evidence-dev/universal-sql');
+const STATIC = resolve(here, '../static');
 
 function patchAbs(absPath, from, to, label) {
   let src = readFileSync(absPath, 'utf8');
@@ -63,6 +64,30 @@ patch(
   'adapter fallback',
 );
 
+// DHIS2 favicon: replace Evidence's default favicon.ico + icon.svg with the DHIS2 mark
+// (evidence/static/dhis2-favicon.svg). %sveltekit.assets% keeps the href correct under a
+// basePath. apple-touch-icon / manifest are left as Evidence's.
+patch(
+  'src/app.html',
+  '\t\t<link rel="icon" href="%sveltekit.assets%/favicon.ico" sizes="32x32" />\n\t\t<link rel="icon" href="%sveltekit.assets%/icon.svg" type="image/svg+xml" />',
+  '\t\t<link rel="icon" type="image/svg+xml" href="%sveltekit.assets%/dhis2-favicon.svg" />',
+  'dhis2 favicon',
+);
+
+// Overwrite EVERY default Evidence icon shipped by the template (favicon.ico, the auto-discovered
+// icon.svg, the iOS apple-touch-icon and the PWA manifest icons) with the project's DHIS2
+// school-glyph versions from evidence/static/. Project static is also merged into the build,
+// but copying into the template static here guarantees it regardless of static-merge precedence —
+// so no Evidence-branded icon survives anywhere in the build, not just the <link>-referenced one.
+for (const f of ['favicon.ico', 'icon.svg', 'apple-touch-icon.png', 'icon-192.png', 'icon-512.png']) {
+  try {
+    copyFileSync(resolve(STATIC, f), resolve(TPL, 'static', f));
+    console.log(`  [ok]   icon ${f} (DHIS2 school glyph)`);
+  } catch (e) {
+    console.warn(`  [warn] icon ${f} not copied: ${e.message}`);
+  }
+}
+
 // Lazy DuckDB init: by default the layout boots the ~6 MB (compressed) DuckDB-WASM
 // engine on every page at module load. Make it lazy — start only on first await —
 // so prerendered/baked pages (which read baked .arrow results, never calling the
@@ -88,29 +113,35 @@ patch(
   'getPrerenderedQueries tolerates SPA fallback',
 );
 
-// Click-only maps. Evidence's Leaflet maps (the children choropleth) pan and zoom by default;
-// here the map is purely a navigation control — tapping a region drills down — so disable
-// dragging (pan) and every zoom path (scroll/smooth-wheel, double-click, box, touch/pinch,
-// keyboard). Per-area `click` handlers live on the layers, not the map, so drill-down + tooltips
-// still work; the view stays fitted to the data bounds. Tolerant: if Evidence's internals shift
-// on an upgrade, warn and skip rather than fail the whole build for a cosmetic tweak.
+// Map interaction. Evidence's Leaflet maps (the children choropleth) get the **+/- zoom control**
+// and **drag-to-pan**, but the gesture-zoom handlers (scroll/smooth-wheel, double-click, box,
+// pinch, keyboard) stay off so the map never hijacks page scroll. Per-area `click` handlers live
+// on the layers, so drill-down + tooltips still work.
+//
+// The installed file may be in one of two states — fresh stock, or an earlier "click-only" build
+// (where `dragging` was disabled) — so `mapOpt` re-reads each time and is a silent no-op when its
+// anchor is absent (a sibling line handles that state), converging both to the same end result
+// without noisy warnings.
 const EVIDENCE_MAP = resolve(here, '../node_modules/@evidence-dev/core-components/dist/unsorted/viz/map/EvidenceMap.js');
-try {
-  patchAbs(
-    EVIDENCE_MAP,
-    'scrollWheelZoom: false, // disable original zoom function',
-    'scrollWheelZoom: false, dragging: false, doubleClickZoom: false, boxZoom: false, touchZoom: false, keyboard: false, // DNEMIS: click-only map',
-    'map: disable pan + click/box/touch/keyboard zoom',
-  );
-  patchAbs(
-    EVIDENCE_MAP,
-    'smoothWheelZoom: true, // enable smooth zoom',
-    'smoothWheelZoom: false, // DNEMIS: click-only map (no scroll-wheel zoom)',
-    'map: disable smooth-wheel zoom',
-  );
-} catch (e) {
-  console.warn(`  [warn] click-only map patch skipped (Evidence internals moved?): ${e.message}`);
+function mapOpt(from, to, label) {
+  let src;
+  try { src = readFileSync(EVIDENCE_MAP, 'utf8'); }
+  catch (e) { console.warn(`  [warn] ${label}: ${e.message}`); return; }
+  if (src.includes(to)) { console.log(`  [skip] ${label} already patched`); return; }
+  if (!src.includes(from)) return; // not applicable in this state — a sibling line covers it
+  writeFileSync(EVIDENCE_MAP, src.replace(from, to));
+  console.log(`  [ok]   ${label}`);
 }
+mapOpt('zoomControl: false,', 'zoomControl: true, // DNEMIS: +/- zoom buttons', 'map: +/- zoom control');
+// fresh stock → drag-pan + zoom buttons; no wheel/pinch/double-click/box/keyboard gesture zoom
+mapOpt(
+  'scrollWheelZoom: false, // disable original zoom function',
+  'scrollWheelZoom: false, dragging: true, doubleClickZoom: false, boxZoom: false, touchZoom: false, keyboard: false, // DNEMIS: drag-pan + zoom buttons only',
+  'map: gesture config (drag-pan, no wheel/pinch zoom)',
+);
+// migrate an earlier click-only build (drag-pan was disabled) to drag-pan
+mapOpt('dragging: false,', 'dragging: true,', 'map: enable drag-pan');
+mapOpt('smoothWheelZoom: true, // enable smooth zoom', 'smoothWheelZoom: false, // DNEMIS: no scroll-wheel zoom', 'map: disable smooth-wheel zoom');
 
 // Self-hosted DuckDB extensions: when the browser engine first calls read_parquet() (LGA pages)
 // it autoloads `parquet.duckdb_extension.wasm` from its compiled-in repository
@@ -143,7 +174,7 @@ patchAbs(
 // whole +layout.svelte deterministically — idempotent regardless of its prior state:
 //   • <EvidenceDefaultLayout> props: full width, no Evidence header/sidebar/TOC/footer (the
 //     DNEMIS green bar is the only chrome).
-//   • DNEMIS header: coat of arms + full title "Digital National Education Management
+//   • DNEMIS header: coat of arms + full title "Digital Nigeria Education Management
 //     Information System (DNEMIS)" + a Print button (Evidence's built-in export-beforeprint/
 //     window.print()/export-afterprint, so charts/maps render correctly for paper).
 //   • Inter + Font Awesome, h1.title hidden, and an @media print rule that drops the print
@@ -160,7 +191,7 @@ const LAYOUT = `<script>
 	<div slot="content">
 		<div class="dnemis-header">
 			<span class="crest"><img src="{base}/coat_of_arms.png" alt="Nigerian Coat of Arms" /></span>
-			<div><div class="dt">Education Statistics</div><div class="ds">Nigeria Federal Ministry of Education | Digital National Education Management Information System</div></div>
+			<div><div class="dt">Education Statistics</div><div class="ds">Nigeria Federal Ministry of Education | Digital Nigeria Education Management Information System</div></div>
 			<button class="printbtn" type="button" title="Download this page as PDF"
 				on:click={() => { window.dispatchEvent(new Event('export-beforeprint')); setTimeout(() => window.print(), 0); setTimeout(() => window.dispatchEvent(new Event('export-afterprint')), 0); }}>
 				<i class="fa-solid fa-download"></i><span>Download PDF</span>
