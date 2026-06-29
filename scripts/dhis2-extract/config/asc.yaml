@@ -7,7 +7,7 @@ dx: [DiEriq7urPG,L7wp6IPJGhV,NnvopxD62MT,QZl1LOTpSat,i8mFzOkO9Wi,Rszp9Ippq5N,pc4
   wVjDYI2HuQb,v31dkf4PhmH,CKMgwHERBfg,I8JeN23lKHn,tuku316VSXL,uDBB1WrCkST,BXTUMWSq4zQ,U8ytqWQMFwD,
   QLfdf8Jd9dc,Yr6FePoHpHP,OTZHZUXsMeN,zH11dcmH2Pg,SYwA4fNOprM,Jx7wWJI1WpR,
   dh9fliYibms,S2cH9F1T7MU,jZtYw0T5xJl,jSbbKIsSvK3,stoCrMx0ED1,q5mnwKasEpF,
-  zrzIn10PQjq,oOHHjng0014,PbzDc38hOsx,ABJrmFcIpT3,
+  YN2pzjKpi3l,oOHHjng0014,PbzDc38hOsx,ABJrmFcIpT3,
   u4ogrV7WUcz,j3cxHeBhZ4m,STJaOAJl6eG]
 # Last row = ASC-STC (Science/Technical/Vocational) enrolment + boys/girls, for the Tech/Voc
 # category in the level breakdowns.
@@ -34,7 +34,7 @@ disaggregations:
          u4ogrV7WUcz, STJaOAJl6eG,
          L7wp6IPJGhV, yjH9LAuAMrk, gAfSf7sfxib, i8dMJSyq5hO, kxJmBoDtD9t, j3cxHeBhZ4m,
          v31dkf4PhmH, I8JeN23lKHn, tuku316VSXL, CKMgwHERBfg, uDBB1WrCkST, wVjDYI2HuQb,
-         zrzIn10PQjq, uWkPykwyYn2, oOHHjng0014, PbzDc38hOsx, ABJrmFcIpT3,
+         YN2pzjKpi3l, uWkPykwyYn2, oOHHjng0014, PbzDc38hOsx, ABJrmFcIpT3,
          DvMfSq5pZSA, vDmeu4io2Fs]   # usable classroom + toilet COUNTS — KPI tiles by ownership
     ouLevels: [1, 2, 3]
   # The "Indicators by …" compare table slices these whole-school indicators by School Type
@@ -44,11 +44,11 @@ disaggregations:
   # ratio inputs, and per-level special-needs counts (summed → per-type special in SQL).
   - dim: rtQk5MWCxyR          # School Type group set (Pre/Primary, JSS, SSS, IQS/IQTE, TECH/VOC; Private/Unknown ignored in the UI)
     slug: schooltype
-    dx: [jwjKmtVK2wj, Nc9bgbCb6eO, eie1tIO5HtX, zrzIn10PQjq, uWkPykwyYn2, oOHHjng0014, PbzDc38hOsx, ABJrmFcIpT3,
+    dx: [jwjKmtVK2wj, Nc9bgbCb6eO, eie1tIO5HtX, YN2pzjKpi3l, uWkPykwyYn2, oOHHjng0014, PbzDc38hOsx, ABJrmFcIpT3,
          Rszp9Ippq5N, Mmn0SEDyzOC, bCMrPV3785Y, X4cRpKnxayU, kitIA5LU69N]
     ouLevels: [1, 2, 3]
   - dims: [rtQk5MWCxyR, gAmNV64G0pZ]   # School Type × Ownership cross-cut → fact_typeown (cat1=type, cat2=ownership)
     slug: typeown
-    dx: [jwjKmtVK2wj, Nc9bgbCb6eO, eie1tIO5HtX, zrzIn10PQjq, uWkPykwyYn2, oOHHjng0014, PbzDc38hOsx, ABJrmFcIpT3,
+    dx: [jwjKmtVK2wj, Nc9bgbCb6eO, eie1tIO5HtX, YN2pzjKpi3l, uWkPykwyYn2, oOHHjng0014, PbzDc38hOsx, ABJrmFcIpT3,
          Rszp9Ippq5N, Mmn0SEDyzOC, bCMrPV3785Y, X4cRpKnxayU, kitIA5LU69N]
     ouLevels: [1, 2, 3]
