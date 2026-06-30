@@ -33,44 +33,69 @@ so every link/asset/data URL is already prefixed with `/portal`. OpenResty just 
 # Redirect the bare path to the trailing-slash form.
 location = /portal { return 301 /portal/; }
 
-location /portal/ {
+# Content-hashed assets: filename changes on every code change → cache forever, safely.
+location ^~ /portal/_app/immutable/ {
+    alias /opt/poc-dhis2-public-portal/current/_app/immutable/;
+    gzip_static on;
+    add_header Cache-Control "public, max-age=31536000, immutable";
+}
+
+# Self-hosted DuckDB-WASM extensions: version-pinned path → immutable, cache forever.
+# NO SPA fallback — a missing extension must 404, never return the HTML shell (§2.1).
+location ^~ /portal/duckdb-extensions/ {
+    alias /opt/poc-dhis2-public-portal/current/duckdb-extensions/;
+    types { application/wasm wasm; }   # safe here (wasm-only location); or map wasm in mime.types globally
+    gzip_static on;                    # serves the precompressed .gz (precompress.mjs writes it)
+    add_header Cache-Control "public, max-age=31536000, immutable";
+}
+
+# HTML + data (asc.geojson, data/+api/ Arrow/Parquet): stable URLs that change on redeploy →
+# store but ALWAYS revalidate. Cheap 304s, and a deploy is visible on the next request even if
+# a cache purge misfires (see the caching note below).
+location ^~ /portal/ {
     alias /opt/poc-dhis2-public-portal/current/;     # the deploy symlink
     try_files $uri $uri/ /portal/200.html;           # SPA fallback (LGA pages need it)
     gzip_static on;                                   # serve the precompressed .gz copies
-    expires 2h;                                       # see caching note below
+    add_header Cache-Control "public, no-cache";      # revalidate (see note); replaces `expires 2h`
 }
 ```
 
 Reload: `nginx -t && systemctl reload openresty`.
 
-**Caching (dead-simple).** `expires 2h` caches everything for two hours, then revalidates
-cheaply against the existing `etag`/`last-modified` (a tiny `304` when unchanged). Data is
-regenerated nightly and code ships ad-hoc during the day, so a couple of hours is a safe
-balance. *(Optional optimisation: the `_app/immutable/` assets are content-hashed, so they can
-be cached forever — add a `location ^~ /portal/_app/immutable/ { alias …/current/_app/immutable/; gzip_static on; add_header Cache-Control "public, max-age=31536000, immutable"; }` ahead of the `/portal/` block. Skips re-downloading the ~6 MB DuckDB-WASM engine on repeat visits. Not required.)*
+**Caching (two tiers, purge-independent).** Content-hashed assets under `_app/immutable/`
+get a 1-year `immutable` lifetime — their filename changes when their content does, so they're
+safe to cache forever (this is what skips re-downloading the ~6 MB DuckDB-WASM engine on repeat
+visits). **Everything else — HTML, the prerendered `data/`+`api/` Arrow/Parquet, `asc.geojson` —
+is served `no-cache`.** `no-cache` does *not* mean "don't cache": the edge and the browser still
+**store** the response, but they **revalidate** it against the origin on every request (a tiny
+conditional `GET` → `304 Not Modified` when unchanged, so almost no bytes move). The payoff is
+that a deploy is visible on the **next request**, with no dependence on a cache purge firing
+against the right zone.
 
-> **Do NOT add a `types { … }` block** to add a WASM/JSON MIME type. In nginx a `types` block
-> *replaces* the inherited `mime.types` for that context, so `.html` loses `text/html` and the
-> browser **downloads** `index.html` instead of rendering it. The bundled `mime.types` already
-> maps `wasm` and `webmanifest`; `.parquet`/`.arrow` are fine as `application/octet-stream`.
+> We learned this the hard way: a purge aimed at the **wrong Cloudflare zone** returns
+> `success:true` but evicts nothing, so the edge served a stale page for the full 2h TTL
+> (see §6). Under `no-cache` that failure mode can't strand a multi-hour stale copy — the
+> worst case is one extra revalidation. Purge-on-deploy (§2.2) still helps by pre-warming the
+> edge with the new build, but **correctness no longer depends on it.**
+
+> **Don't add a `types { … }` block to an HTML-serving location** (the main `/portal/` block).
+> In nginx a `types` block *replaces* the inherited `mime.types` for that context, so `.html`
+> loses `text/html` and the browser **downloads** `index.html` instead of rendering it. The
+> bundled `mime.types` already maps `wasm` and `webmanifest`; `.parquet`/`.arrow` are fine as
+> `application/octet-stream`. (A `types { … }` inside the wasm-only `duckdb-extensions/`
+> location is harmless — nothing HTML is served there.)
 
 ### 2.1 Self-hosted DuckDB extension
 
 LGA pages load the DuckDB-WASM **parquet extension** from this origin (not the third-party
 `extensions.duckdb.org`) — the build mirrors it to `current/duckdb-extensions/<ver>/wasm_eh/`
-and `patch-evidence.mjs` points the engine there. Serve it like the immutable assets
-(version-pinned path → cache forever) and **without** the SPA fallback, so a missing file
-`404`s instead of returning the HTML shell (which DuckDB can't parse as WASM):
-
-```nginx
-location ^~ /portal/duckdb-extensions/ {
-    alias /opt/poc-dhis2-public-portal/current/duckdb-extensions/;
-    gzip_static on;
-    add_header Cache-Control "public, max-age=31536000, immutable";
-}
-```
-
-(`mime.types` already maps `.wasm` → `application/wasm`, so no `types { … }` block is needed.)
+and `patch-evidence.mjs` points the engine there. The `duckdb-extensions/` `location` block in
+§2 serves it like the immutable assets (version-pinned path → cache forever) but **without** the
+SPA fallback, so a missing file `404`s instead of returning the HTML shell (which DuckDB can't
+parse as WASM). `mime.types` already maps `.wasm` → `application/wasm`; the inline
+`types { application/wasm wasm; }` in that block is just a belt-and-suspenders fallback, safe
+there because the location serves only `.wasm` (the rule against `types { … }` in §2 applies to
+HTML-serving locations).
 
 ### 2.2 Edge caching with Cloudflare (optional — for geographic reach)
 
@@ -81,7 +106,10 @@ PoP instead of round-tripping, two things are needed beyond proxied (orange-clou
    static assets. Dashboard → **Caching → Cache Rules → Create rule**:
    - **When incoming requests match**: `URI Full` · `wildcard` · `https://<host>/portal/*`
    - **Then**: *Eligible for cache*; **Edge TTL** → "Use cache-control header if present"
-     (respects the origin: 1y on `_app/immutable` + `duckdb-extensions`, 2h on HTML/parquet).
+     (respects the origin: 1y on `_app/immutable` + `duckdb-extensions`; HTML/parquet are
+     `no-cache`, so the edge revalidates them against the origin each request — see §2's note).
+   - Leave **Browser Cache TTL** on *Respect Existing Headers* (Caching → Configuration) so CF
+     doesn't override the origin's `no-cache`/`immutable` with a blanket TTL of its own.
 
    This flips HTML, parquet (incl. range requests), and the extension to `cf-cache-status: HIT`.
 2. **Purge on deploy** — HTML/parquet have a short edge TTL, so after a redeploy a stale page
@@ -90,9 +118,57 @@ PoP instead of round-tripping, two things are needed beyond proxied (orange-clou
    env file (§4.1); otherwise it skips. Verify with
    `curl -sI https://<host>/portal/ | grep -i cf-cache-status` → `HIT` on the second hit.
 
-### 2.3 Splitting build and serve across two boxes
+### 2.3 Customer domain via Cloudflare for SaaS (custom hostname) — the TXT you must not forget
 
-§2–§2.2 assume one box builds *and* serves. But the prerender hands Node a **16 GB heap**
+The portal answers on two hostnames off **one Cloudflare zone we control, `d2portal.net`**:
+
+- **`emis-ng.d2portal.net`** — an ordinary proxied (orange-cloud) record in that zone.
+- **`emis.education.gov.ng`** — the **customer's** public hostname, served through the same
+  zone as a **Cloudflare for SaaS _custom hostname_**: an external domain we do **not** own,
+  attached to our zone. (This is why a single `purge_everything` clears both — same edge.)
+
+**We don't control `education.gov.ng`.** Its DNS is delegated to a third party
+(**galaxybackbone.com**), so every record there must be *requested* from them, lands slowly,
+and contains only exactly what you spelled out.
+
+A custom hostname needs **two** records on the customer side, and **both must be requested
+together, upfront**:
+
+| Record | Purpose | Name → value |
+|---|---|---|
+| **CNAME** | Routes the hostname's traffic to Cloudflare | `emis.education.gov.ng` → *(the SaaS fallback-origin / CNAME target Cloudflare shows)* |
+| **TXT (DCV)** | Lets Cloudflare **issue the TLS certificate** (Domain Control Validation / hostname pre-validation) | `_cf-custom-hostname.emis.education.gov.ng` → *(token from the dashboard)* |
+
+Read the exact target and TXT token from the dashboard: **`d2portal.net` zone → SSL/TLS →
+Custom Hostnames → `emis.education.gov.ng`** shows the CNAME target, the validation TXT
+record(s), and the live status.
+
+> **What bit us (2026-06).** The **CNAME was added without the TXT.** The instant it
+> propagated, `emis.education.gov.ng` resolved to Cloudflare — but with **no validated
+> certificate**, so every HTTPS request failed and the hostname was effectively **dead** until
+> the TXT was added and the cert issued. Recovering meant chasing the third party to add the
+> TXT mid-incident. The TXT requirement was missed at design time; it should have been part of
+> the DNS request from day one.
+
+**Rules so it never recurs:**
+
+- **Use TXT-based (DCV) pre-validation, not HTTP validation.** HTTP validation can only
+  succeed *after* traffic already points at Cloudflare — the same chicken-and-egg that caused
+  the outage. TXT validation lets the certificate issue **before** the CNAME flips.
+- **Order: TXT first → confirm the custom hostname is `Active` (cert issued) → *then* add the
+  CNAME.** Never flip the CNAME while the hostname is still `Pending`.
+- **Hand the DNS operator everything at once** — exact name/type/value for *both* records —
+  and flag the **TXT as mandatory, not optional**. Assume any record you didn't explicitly
+  request does not exist.
+
+**Verify:** custom-hostname status `Active`; `dig +short emis.education.gov.ng` shows the
+CNAME and `dig +short TXT _cf-custom-hostname.emis.education.gov.ng` returns the token; and
+`curl -sI https://emis.education.gov.ng/portal/` returns `200` over a valid certificate (no
+TLS error).
+
+### 2.4 Splitting build and serve across two boxes
+
+§2–§2.3 assume one box builds *and* serves. But the prerender hands Node a **16 GB heap**
 ([`scripts/release.sh`](../scripts/release.sh)), which a small serving Linode can't supply, so you
 can split the roles:
 
@@ -181,7 +257,7 @@ npm run deploy     # copies evidence/build → builds/<ts>, flips `current`
 
 Once a day the portal re-extracts data from DHIS2 and republishes. The pipeline lives in
 [`scripts/regenerate.sh`](../scripts/regenerate.sh): `extract:asc → sources → build → deploy`
-(→ `push` to the serving box when `PORTAL_HOST` is set, §2.3), guarded by `flock` (no overlapping
+(→ `push` to the serving box when `PORTAL_HOST` is set, §2.4), guarded by `flock` (no overlapping
 runs) and `set -e` (a failed extract aborts **before** deploy, so the last good build keeps serving).
 
 ### 4.1 Secret (the DHIS2 token)
@@ -239,3 +315,29 @@ serve at a host root), update the OpenResty `location`/`alias`, then `npm run bu
 | LGA page: console "Error in client-side routing / Unexpected token '<'" | Stale build serving — `npm run deploy`, then hard-refresh. The `getPrerenderedQueries` SPA-fallback patch (in `patch-evidence.mjs`) handles the non-prerendered LGA route; it only applies via the root `npm run build`. |
 | Daily regen didn't run | `tail /var/log/dnemis-regen.log`; check the token in `/etc/dnemis-portal.env` and the cron timezone (§4.2). A failed extract logs the error and leaves the previous build serving. |
 | LGA pages 404 / maps blank | The `try_files … /portal/200.html` SPA fallback is missing, or `extensions.duckdb.org` is unreachable from clients. |
+| Deploy succeeded but the live page still shows the **old** "Generated …" footer (even in incognito) | The Cloudflare **edge** is serving a stale copy the purge never evicted — almost always a **wrong `CF_ZONE_ID`/token**: the purge `success:true`s against a zone that doesn't front these hosts. Diagnose it below; fix the zone ID in `/etc/dnemis-portal.env`. The `no-cache` HTML policy (§2) prevents this from persisting past one request. |
+
+**Diagnosing a stale edge** (incognito rules out *browser* cache, not the shared edge). Localise
+the stale copy before changing anything:
+
+```bash
+# 1. Is the edge serving a pre-purge object? A HIT whose `age` (seconds) is OLDER than your
+#    last purge means the purge never evicted it.
+curl -sI https://<host>/portal/ | grep -iE 'cf-cache-status|age:'
+
+# 2. Read THROUGH the edge to the origin: `?cb=` changes the cache key → forces a MISS.
+#    If this shows the new build while the plain URL shows the old one, the origin + deploy
+#    are fine and the edge/purge is the only problem.
+curl -s "https://<host>/portal/?cb=$RANDOM" | grep -oiE 'Generated[^<]*UTC'
+
+# 3. Confirm the configured zone actually fronts this host (read-only; no purge):
+set -a; . /etc/dnemis-portal.env; set +a
+curl -s -H "Authorization: Bearer $CF_PURGE_TOKEN" \
+  "https://api.cloudflare.com/client/v4/zones/$CF_ZONE_ID" | jq '.success, .result.name'
+#  → if .result.name isn't the domain you serve, that's the bug. Find the right id with:
+#    curl -s -H "Authorization: Bearer $CF_PURGE_TOKEN" \
+#      "https://api.cloudflare.com/client/v4/zones?name=<your-domain>" | jq -r '.result[].id'
+```
+
+After fixing the zone ID, a manual `purge_everything` (§2.2's API call) clears the stuck object
+immediately; verify with step 1 — `cf-cache-status` should flip to `MISS` and the footer update.
