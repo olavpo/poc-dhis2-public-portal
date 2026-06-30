@@ -3,9 +3,10 @@
 All notable changes to the DNEMIS Education Statistics public portal (Nigeria Annual School
 Census) are documented here. This project adheres to [Semantic Versioning](https://semver.org).
 
-## [Unreleased]
+
 
 ### Changed
+- **Removed "useable" subcaption from the Toilets KPI tile.** The tile now reads simply "Toilets" (was "Useable Toilets").
 - **Learner–classroom ratio now uses the sub-expression indicator** `YN2pzjKpi3l`
   ("Learners per classroom (subex)"), replacing `zrzIn10PQjq`. Same metric, but the new
   indicator excludes schools with no recorded classroom count from **both** the numerator and

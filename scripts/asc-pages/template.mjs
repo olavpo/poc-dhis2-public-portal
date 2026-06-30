@@ -199,7 +199,7 @@ ${benchmark}
     {dx:'${I.enrol}',title:'Learners',fmt:'int',icon:'fa-solid fa-users'},
     {dx:'${I.teachers}',title:'Teachers',fmt:'int',icon:'fa-solid fa-chalkboard-user'},
     {dx:'${I.classrooms}',title:'Classrooms',fmt:'int',icon:'fa-solid fa-school'},
-    {dx:'${I.toilets}',title:'Toilets',fmt:'int',icon:'fa-solid fa-toilet',sub:'Useable'}
+    {dx:'${I.toilets}',title:'Toilets',fmt:'int',icon:'fa-solid fa-toilet'}
   ]} />
 
 ## ${benchHeading}
@@ -410,7 +410,7 @@ ${benchmark}
     {dx:'${I.enrol}',title:'Learners',fmt:'int',icon:'fa-solid fa-users'},
     {dx:'${I.teachers}',title:'Teachers',fmt:'int',icon:'fa-solid fa-chalkboard-user'},
     {dx:'${I.classrooms}',title:'Classrooms',fmt:'int',icon:'fa-solid fa-school'},
-    {dx:'${I.toilets}',title:'Toilets',fmt:'int',icon:'fa-solid fa-toilet',sub:'Useable'}
+    {dx:'${I.toilets}',title:'Toilets',fmt:'int',icon:'fa-solid fa-toilet'}
   ]} />
 
 ## Key indicators vs State & Federal
