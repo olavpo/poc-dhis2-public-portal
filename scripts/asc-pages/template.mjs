@@ -76,15 +76,15 @@ const SCHOOL_IDS = lit(SCHOOL_TYPES.map((s) => s.dx));
 // at 0) even where an org unit has no rows for them — e.g. LGAs.
 const LEVEL_VALUES = DLEVELS.map((lv, i) => `('${lv.label}',${i + 1})`).join(',');
 
-// Benchmark ratios for the "Key indicators" table. `dx` = read directly; otherwise computed as
+// Benchmark ratios for the "Key Indicators" table. `dx` = read directly; otherwise computed as
 // factor × Σnum ÷ den (learner-school = enrolment ÷ schools; female teachers % = F ÷ all × 100).
 const BENCH = [
-  { label: 'Learner–teacher ratio', fmt: 'ratio', dx: 'eie1tIO5HtX' },
-  { label: 'Learner–classroom ratio', fmt: 'ratio', dx: 'YN2pzjKpi3l' },
-  { label: 'Learner–school ratio', fmt: 'ratio', num: ['jwjKmtVK2wj'], den: 'wVjDYI2HuQb', factor: 1 },
-  { label: 'Learner–toilet ratio', fmt: 'ratio', dx: 'uWkPykwyYn2' },
-  { label: 'Female learners (%)', fmt: 'pct', dx: 'Nc9bgbCb6eO' },
-  { label: 'Female teachers (%)', fmt: 'pct', num: ['PbzDc38hOsx'], den: 'ABJrmFcIpT3', factor: 100 },
+  { label: 'Learner–Teacher Ratio', fmt: 'ratio', dx: 'eie1tIO5HtX' },
+  { label: 'Learner–Classroom Ratio', fmt: 'ratio', dx: 'YN2pzjKpi3l' },
+  { label: 'Learner–School Ratio', fmt: 'ratio', num: ['jwjKmtVK2wj'], den: 'wVjDYI2HuQb', factor: 1 },
+  { label: 'Learner–Toilet Ratio', fmt: 'ratio', dx: 'uWkPykwyYn2' },
+  { label: 'Female Learners (%)', fmt: 'pct', dx: 'Nc9bgbCb6eO' },
+  { label: 'Female Teachers (%)', fmt: 'pct', num: ['PbzDc38hOsx'], den: 'ABJrmFcIpT3', factor: 100 },
 ];
 
 // The Total/Public/Private cut. Total reads census.fact; Public/Private read the ownership
@@ -160,7 +160,7 @@ function head(ou, crumbs, federalId, unitLabel, stateId, stateLabel) {
   const ownDx = lit(TOGGLE);
   const unitE = `'${ou.id}'`, fedE = `'${federalId}'`, stateE = stateId ? `'${stateId}'` : `''`;
   const benchmark = `select * from (\n${BENCH.flatMap((b, i) => MODES3.map((M) => benchSelect(b, i, unitE, stateE, fedE, M))).join('\nunion all\n')}\n) order by mode, ord`;
-  const benchHeading = stateLabel ? 'Key indicators vs State & Federal' : unitLabel ? 'Key indicators vs Federal' : 'Key indicators';
+  const benchHeading = stateLabel ? 'Key Indicators vs State & Federal' : unitLabel ? 'Key Indicators vs Federal' : 'Key Indicators';
   return `---
 title: ${ou.name}
 ---
@@ -267,12 +267,12 @@ ${q3(mapQ)}
 ` : ''}
 <Grid cols=2>
 ${withMap ? `  <OwnershipSelect total={children_map_total} pub={children_map_public} priv={children_map_private} let:data>
-    <AreaMap data={data} geoJsonUrl="${geoUrl}" geoId="id" areaCol="id" value="learners" link="link" title="Learners by ${childLevel} · tap to explore" tooltip={[{id:'name',showColumnTitles:false},{id:'learners',fmt:'#,##0'}]} height={300} />
+    <AreaMap data={data} geoJsonUrl="${geoUrl}" geoId="id" areaCol="id" value="learners" link="link" title="Learners by ${childLevel} · Tap to Explore" tooltip={[{id:'name',showColumnTitles:false},{id:'learners',fmt:'#,##0'}]} height={300} />
   </OwnershipSelect>\n` : ''}  <OwnershipSelect total={enrol_total} pub={enrol_public} priv={enrol_private} let:data>
-    <BarChart data={data} x=level y=enrolment title="Learners by education level" swapXY=true sort=false />
+    <BarChart data={data} x=level y=enrolment title="Learners by Education Level" swapXY=true sort=false />
   </OwnershipSelect>
   <OwnershipSelect total={sex_total} pub={sex_public} priv={sex_private} let:data>
-    <BarChart data={data} x=level y=learners series=sex type=grouped title="Learners by sex & level" swapXY=true sort=false />
+    <BarChart data={data} x=level y=learners series=sex type=grouped title="Learners by Gender & Level" swapXY=true sort=false />
   </OwnershipSelect>
   <BarChart data={schools_public} x=label y=value title="Public Schools by Level" swapXY=true sort=false emptySet=pass emptyMessage="No data available at this level" />
   <OwnershipDonut data={ownership_enrol} title="Learners by Ownership" />
@@ -342,7 +342,7 @@ ${queries}
 
 <ScrollX>
 <CompareTable tabs={[${tabs}]}
-  columns={[{key:'enrolment',label:'Learners'},{key:'lt',label:'Learner:teacher'},{key:'lc',label:'Learner:classroom'},{key:'ltoilet',label:'Learner:toilet'},{key:'female_l',label:'Female learners %'},{key:'femt',label:'Female teachers %'},{key:'special',label:'Special needs'}]} />
+  columns={[{key:'enrolment',label:'Learners'},{key:'lt',label:'Learner:Teacher'},{key:'lc',label:'Learner:Classroom'},{key:'ltoilet',label:'Learner:Toilet'},{key:'female_l',label:'Female Learners %'},{key:'femt',label:'Female Teachers %'},{key:'special',label:'Special Needs'}]} />
 </ScrollX>
 `;
 }
@@ -413,15 +413,15 @@ ${benchmark}
     {dx:'${I.toilets}',title:'Toilets',fmt:'int',icon:'fa-solid fa-toilet'}
   ]} />
 
-## Key indicators vs State & Federal
+## Key Indicators vs State & Federal
 
 <Benchmark rows={benchmark} unitLabel={crumbs_q?.[2]?.name ?? ''} stateLabel={crumbs_q?.[1]?.name ?? ''} />
 ` + chartsSection({ id: P }, false) + `
-## Enrolment by education level
+## Enrolment by Education Level
 
 <OwnershipSelect total={enrol_total} pub={enrol_public} priv={enrol_private} let:data>
 <DataTable data={data}>
-  <Column id=level title="Education level" />
+  <Column id=level title="Education Level" />
   <Column id=enrolment title="Enrolment (2024)" fmt="#,##0" />
 </DataTable>
 </OwnershipSelect>

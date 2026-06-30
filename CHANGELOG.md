@@ -6,6 +6,13 @@ Census) are documented here. This project adheres to [Semantic Versioning](https
 
 
 ### Changed
+- **Graph and table labels are now Title Case (Chicago style), and "Sex" → "Gender".** The
+  "Learners by sex & level" chart is now **"Learners by Gender & Level"**; chart titles, section
+  headings, benchmark rows and the "Indicators by …" compare-table columns are title-cased for
+  consistency (e.g. "Learners by education level" → "Learners by Education Level", "Key indicators
+  vs State & Federal" → "Key Indicators vs State & Federal", "Learner–teacher ratio" →
+  "Learner–Teacher Ratio", "Female learners %" → "Female Learners %", "Special needs" → "Special
+  Needs"). Wording and data are unchanged; only the displayed labels.
 - **Removed "useable" subcaption from the Toilets KPI tile.** The tile now reads simply "Toilets" (was "Useable Toilets").
 - **Learner–classroom ratio now uses the sub-expression indicator** `YN2pzjKpi3l`
   ("Learners per classroom (subex)"), replacing `zrzIn10PQjq`. Same metric, but the new
