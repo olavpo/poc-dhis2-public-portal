@@ -85,7 +85,7 @@ Federal value, all switching with the ownership toggle (Total → `census.fact`;
 | Row | How | dx |
 |---|---|---|
 | **Learner–teacher ratio** | direct (indicator) | `eie1tIO5HtX` ASC-GEN Learner-teacher ratio |
-| **Learner–classroom ratio** | direct (indicator) | `zrzIn10PQjq` Learners per classroom (updated) |
+| **Learner–classroom ratio** | direct (indicator) | `YN2pzjKpi3l` Learners per classroom (subex) |
 | **Learner–school ratio** | computed `Σ enrolment ÷ Total schools` | num `jwjKmtVK2wj` ÷ den `wVjDYI2HuQb` **(MD)** |
 | **Learner–toilet ratio** | direct (indicator) | `uWkPykwyYn2` ASC-GEN Learner-usable toilet ratio |
 | **Female learners (%)** | direct (indicator) | `Nc9bgbCb6eO` ASC-GEN Female learners (%) |
@@ -176,7 +176,7 @@ Columns:
 |---|---|---|
 | **Learners** | sum (count) | `jwjKmtVK2wj` ASC-GEN Enrolment (all levels) |
 | **Learner:teacher** | direct (indicator) | `eie1tIO5HtX` ASC-GEN Learner-teacher ratio |
-| **Learner:classroom** | direct (indicator) | `zrzIn10PQjq` Learners per classroom (updated) |
+| **Learner:classroom** | direct (indicator) | `YN2pzjKpi3l` Learners per classroom (subex) |
 | **Learner:toilet** | direct (indicator) | `uWkPykwyYn2` ASC-GEN Learner-usable toilet ratio |
 | **Female learners %** | direct (indicator) | `Nc9bgbCb6eO` ASC-GEN Female learners (%) |
 | **Female teachers %** | computed `100 × Female teachers ÷ Total teachers` | num `PbzDc38hOsx` ÷ den `ABJrmFcIpT3` |
@@ -217,7 +217,7 @@ schools, `BXTUMWSq4zQ` Private schools.
 ## Appendix — full UID legend
 
 Direct-read **indicators** (rates/%, never summed): `eie1tIO5HtX` Learner-teacher ratio,
-`zrzIn10PQjq` Learners per classroom, `uWkPykwyYn2` Learner-usable toilet ratio, `Nc9bgbCb6eO`
+`YN2pzjKpi3l` Learners per classroom, `uWkPykwyYn2` Learner-usable toilet ratio, `Nc9bgbCb6eO`
 Female learners (%).
 
 **Counts** (data elements / MD counts, summed or used as ratio parts): enrolment series (`jwjKmtVK2wj`,

@@ -5,6 +5,13 @@ Census) are documented here. This project adheres to [Semantic Versioning](https
 
 ## [Unreleased]
 
+### Changed
+- **Learner–classroom ratio now uses the sub-expression indicator** `YN2pzjKpi3l`
+  ("Learners per classroom (subex)"), replacing `zrzIn10PQjq`. Same metric, but the new
+  indicator excludes schools with no recorded classroom count from **both** the numerator and
+  denominator (via a DHIS2 `subExpression`), so non-reporting schools no longer distort the
+  ratio. Affects the "Key indicators" benchmark and the "Indicators by …" compare table.
+  **Requires a fresh `extract:asc`** for the new values to populate.
 ### Added
 - **Build-timestamp footer on every page.** A discrete, centered footer ("Generated &lt;date&gt;,
   &lt;time&gt; UTC") is baked into the shared layout at build time, so visitors can see when the

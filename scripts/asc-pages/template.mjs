@@ -80,7 +80,7 @@ const LEVEL_VALUES = DLEVELS.map((lv, i) => `('${lv.label}',${i + 1})`).join(','
 // factor × Σnum ÷ den (learner-school = enrolment ÷ schools; female teachers % = F ÷ all × 100).
 const BENCH = [
   { label: 'Learner–teacher ratio', fmt: 'ratio', dx: 'eie1tIO5HtX' },
-  { label: 'Learner–classroom ratio', fmt: 'ratio', dx: 'zrzIn10PQjq' },
+  { label: 'Learner–classroom ratio', fmt: 'ratio', dx: 'YN2pzjKpi3l' },
   { label: 'Learner–school ratio', fmt: 'ratio', num: ['jwjKmtVK2wj'], den: 'wVjDYI2HuQb', factor: 1 },
   { label: 'Learner–toilet ratio', fmt: 'ratio', dx: 'uWkPykwyYn2' },
   { label: 'Female learners (%)', fmt: 'pct', dx: 'Nc9bgbCb6eO' },
@@ -303,7 +303,7 @@ function branchSection(ou, childLevel, childLinkPrefix, geoUrl) {
   const cols = `sum(case when f.dx = 'jwjKmtVK2wj' then f.value else 0 end) as enrolment,
   max(case when f.dx = 'Nc9bgbCb6eO' then f.value end) as female_l,
   max(case when f.dx = 'eie1tIO5HtX' then f.value end) as lt,
-  max(case when f.dx = 'zrzIn10PQjq' then f.value end) as lc,
+  max(case when f.dx = 'YN2pzjKpi3l' then f.value end) as lc,
   max(case when f.dx = 'uWkPykwyYn2' then f.value end) as ltoilet,
   case when max(case when f.dx = 'ABJrmFcIpT3' then f.value end) > 0
     then round(100.0 * max(case when f.dx = 'PbzDc38hOsx' then f.value end)
