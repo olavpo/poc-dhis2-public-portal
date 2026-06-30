@@ -335,6 +335,8 @@ where o.parent_id = '${ou.id}' group by o.name, o.id order by ou_name
   const queries = TABS.flatMap((t) => ['total', 'public', 'private'].map((m) => query(t, m))).join('');
   const tabs = TABS.map((t) => `{label:'${t.label}',total:lvl_${t.key}_total,public:lvl_${t.key}_public,private:lvl_${t.key}_private}`).join(',');
   return chartsSection(ou, true, geoUrl, childLinkPrefix, childLevel) + `
+<LgaPrefetch />
+
 ${queries}
 ## Indicators by ${childLevel}
 

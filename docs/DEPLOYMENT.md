@@ -54,6 +54,106 @@ be cached forever — add a `location ^~ /portal/_app/immutable/ { alias …/cur
 > browser **downloads** `index.html` instead of rendering it. The bundled `mime.types` already
 > maps `wasm` and `webmanifest`; `.parquet`/`.arrow` are fine as `application/octet-stream`.
 
+### 2.1 Self-hosted DuckDB extension
+
+LGA pages load the DuckDB-WASM **parquet extension** from this origin (not the third-party
+`extensions.duckdb.org`) — the build mirrors it to `current/duckdb-extensions/<ver>/wasm_eh/`
+and `patch-evidence.mjs` points the engine there. Serve it like the immutable assets
+(version-pinned path → cache forever) and **without** the SPA fallback, so a missing file
+`404`s instead of returning the HTML shell (which DuckDB can't parse as WASM):
+
+```nginx
+location ^~ /portal/duckdb-extensions/ {
+    alias /opt/poc-dhis2-public-portal/current/duckdb-extensions/;
+    gzip_static on;
+    add_header Cache-Control "public, max-age=31536000, immutable";
+}
+```
+
+(`mime.types` already maps `.wasm` → `application/wasm`, so no `types { … }` block is needed.)
+
+### 2.2 Edge caching with Cloudflare (optional — for geographic reach)
+
+To serve users far from the origin (e.g. Nigeria → a Europe box) from the nearest Cloudflare
+PoP instead of round-tripping, two things are needed beyond proxied (orange-cloud) DNS:
+
+1. **A Cache Rule** — Cloudflare does **not** cache HTML (or `.parquet`) by default, only
+   static assets. Dashboard → **Caching → Cache Rules → Create rule**:
+   - **When incoming requests match**: `URI Full` · `wildcard` · `https://<host>/portal/*`
+   - **Then**: *Eligible for cache*; **Edge TTL** → "Use cache-control header if present"
+     (respects the origin: 1y on `_app/immutable` + `duckdb-extensions`, 2h on HTML/parquet).
+
+   This flips HTML, parquet (incl. range requests), and the extension to `cf-cache-status: HIT`.
+2. **Purge on deploy** — HTML/parquet have a short edge TTL, so after a redeploy a stale page
+   shell can reference `_app/immutable` chunk hashes the new build deleted. `deploy.sh` purges
+   the whole zone after flipping `current`, **if** `CF_ZONE_ID` + `CF_PURGE_TOKEN` are set in the
+   env file (§4.1); otherwise it skips. Verify with
+   `curl -sI https://<host>/portal/ | grep -i cf-cache-status` → `HIT` on the second hit.
+
+### 2.3 Splitting build and serve across two boxes
+
+§2–§2.2 assume one box builds *and* serves. But the prerender hands Node a **16 GB heap**
+([`scripts/release.sh`](../scripts/release.sh)), which a small serving Linode can't supply, so you
+can split the roles:
+
+- **Build host** (lots of RAM): the git checkout, Node, `extract → sources → build → deploy`.
+  `deploy.sh` copies `evidence/build → builds/<ts>`, **precompresses** it, and flips the *local*
+  `current`.
+- **Serving box** (small Linode): nginx + static files only. No Node, no DHIS2 access.
+
+[`scripts/push-remote.sh`](../scripts/push-remote.sh) (`npm run push`) bridges them: it rsyncs the
+already-precompressed `builds/<ts>` to the serving box under `releases/<ts>/`, flips the **remote**
+`current` symlink atomically, prunes old releases, and (if `CF_ZONE_ID`/`CF_PURGE_TOKEN` are set)
+**purges Cloudflare after the remote flip**. That post-flip purge matters: `deploy.sh` already
+purged after its *local* flip, but in split-box mode that fired before this push made the build
+live on the origin the edge pulls from — so push-remote's purge is the one that counts (last purge
+wins). It ships `builds/<ts>` (not `evidence/build`) so the `.gz`/`.br` siblings **and the
+self-hosted `duckdb-extensions/`** (§2.1) travel with it.
+
+**Serving box layout** — apps under `/opt`, release history kept out of the served tree:
+
+```
+/opt/ascportal/
+├── releases/<ts>/   ← each rsync'd build (precompressed); newest PORTAL_KEEP kept
+└── current → releases/<ts>   ← atomic flip target; nginx serves this
+```
+
+The nginx config is exactly §2/§2.1/§2.2, but every `alias` points at the serving box's own
+`/opt/ascportal/current/` (it has no repo). No web-server reload and **no sudo** for the deploy
+user — a content update is a symlink flip nginx resolves per request (just like `deploy.sh`, which
+never reloads). *Only* if the box has `open_file_cache` on (off by default) would a flip serve
+stale fds for ~60s before self-healing; set `PORTAL_RELOAD='sudo systemctl reload nginx'` (+ that
+one NOPASSWD sudo) to make the cutover instant. Most boxes don't need it.
+
+**Configure from the build host.** Use a key-based ssh alias in the build user's `~/.ssh/config`
+(a dedicated, passphrase-less deploy key — cron can't unlock a passphrase; the **private** key
+stays on the build host, only its `.pub` goes in the serving box's `~/.ssh/authorized_keys`):
+
+```sshconfig
+Host ascportal                 # ← becomes PORTAL_HOST
+    HostName 203.0.113.10
+    User deploy
+    IdentityFile ~/.ssh/ascportal_deploy
+    IdentitiesOnly yes
+```
+
+Then add to the build host's env file (alongside `D2_TOKEN`, §4.1):
+
+```bash
+PORTAL_HOST=ascportal
+PORTAL_BASE=/opt/ascportal              # default; releases/<ts>/ + current live here
+# PORTAL_KEEP=3                          # remote releases to retain (default 3)
+# PORTAL_RELOAD='sudo systemctl reload nginx'   # only if open_file_cache is on; default is a no-op
+```
+
+Publish a code change: `git pull && npm run build && npm run deploy && npm run push` (load the env
+file first so `PORTAL_HOST` is set). The nightly job does it automatically — `regenerate.sh` runs
+`push` as its 5th step when `PORTAL_HOST` is set (§4). **Rollback** is instant:
+
+```bash
+ssh ascportal "ln -sfn /opt/ascportal/releases/<older-ts> /opt/ascportal/current"
+```
+
 ---
 
 ## 3. Building & deploying code changes (manual)
@@ -80,9 +180,9 @@ npm run deploy     # copies evidence/build → builds/<ts>, flips `current`
 ## 4. Daily data regeneration
 
 Once a day the portal re-extracts data from DHIS2 and republishes. The pipeline lives in
-[`scripts/regenerate.sh`](../scripts/regenerate.sh): `extract:asc → sources → build → deploy`,
-guarded by `flock` (no overlapping runs) and `set -e` (a failed extract aborts **before**
-deploy, so the last good build keeps serving).
+[`scripts/regenerate.sh`](../scripts/regenerate.sh): `extract:asc → sources → build → deploy`
+(→ `push` to the serving box when `PORTAL_HOST` is set, §2.3), guarded by `flock` (no overlapping
+runs) and `set -e` (a failed extract aborts **before** deploy, so the last good build keeps serving).
 
 ### 4.1 Secret (the DHIS2 token)
 
@@ -94,6 +194,8 @@ sudo install -m 600 /dev/null /etc/dnemis-portal.env
 sudo tee /etc/dnemis-portal.env >/dev/null <<'EOF'
 D2_TOKEN=d2pat_replace_me
 # D2_BASE_URL=https://trainingdb.dhis2nigeria.org.ng   # optional: overrides baseUrl in asc.yaml
+# CF_ZONE_ID=...            # optional: Cloudflare zone (Overview → API) — enables cache purge on deploy
+# CF_PURGE_TOKEN=...        # optional: API token with the Zone "Cache Purge" permission (see §2.2)
 EOF
 sudo chmod 600 /etc/dnemis-portal.env      # root-only; the file is never committed
 ```
