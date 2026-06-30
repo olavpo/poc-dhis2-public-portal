@@ -95,15 +95,22 @@ baked-toggle gotcha). **LGA pages are client-rendered** through a single dynamic
 each with server-rendered ECharts) made the prerender **compile ~812 route modules** and
 OOM even at 16 GB. One dynamic route compiles to ~39 modules and builds comfortably; the
 trade-off is LGA pages load the engine in the browser (one-time, cached) and need a
-`200.html` fallback + `extensions.duckdb.org` at runtime. State pages (37) bake fine.
+`200.html` fallback at runtime. (The DuckDB-WASM parquet extension is **self-hosted** under
+`/portal/duckdb-extensions/`, so no third-party host is contacted at runtime — see below.)
+State pages (37) bake fine.
 
 ## Environment requirement (IMPORTANT)
 
-**`extensions.duckdb.org` must be reachable** — at **build time** always (`evidence sources`
-and the Node-side prerender read Parquet) and at **runtime for LGA pages** (the browser
-autoloads DuckDB-WASM's Parquet/httpfs extensions there when an LGA page first queries).
-Federal/State are baked and need it at build only. One-time, cached. The build is **stock
-`evidence sources` + stock prerendering**, no shims.
+**`extensions.duckdb.org` must be reachable at *build time* only.** At build: `evidence
+sources` and the Node-side prerender read Parquet (autoloading the extension), and `npm run
+duckdb:ext` (`scripts/fetch-duckdb-extensions.mjs`) mirrors the *browser* parquet extension —
+for the engine's own reported `version()` — into `evidence/static/duckdb-extensions/<ver>/wasm_eh/`.
+**At runtime there is no third-party dependency:** LGA pages load the DuckDB-WASM engine and its
+parquet extension from the **same origin** — the mirrored copy under `/portal/duckdb-extensions/`,
+which `patch-evidence.mjs` points the engine at via `custom_extension_repository` (gated on
+`VITE_DUCKDB_EXT_REPO`, set by `npm run build` only after the mirror step; unset → engine falls
+back to `extensions.duckdb.org`, unchanged). Federal/State are baked and need nothing at runtime.
+The build is otherwise **stock `evidence sources` + stock prerendering**, no shims.
 
 `patch-evidence.mjs` applies build-time *optimisations* (not workarounds) plus branding: an
 adapter-static `fallback: '200.html'` safety net, **lazy DuckDB-WASM init** so baked pages

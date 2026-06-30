@@ -12,6 +12,10 @@ Census) are documented here. This project adheres to [Semantic Versioning](https
   denominator (via a DHIS2 `subExpression`), so non-reporting schools no longer distort the
   ratio. Affects the "Key indicators" benchmark and the "Indicators by …" compare table.
   **Requires a fresh `extract:asc`** for the new values to populate.
+### Added
+- **Build-timestamp footer on every page.** A discrete, centered footer ("Generated &lt;date&gt;,
+  &lt;time&gt; UTC") is baked into the shared layout at build time, so visitors can see when the
+  static site was last generated. No client/engine cost; appears on Federal, State and LGA pages.
 
 ## [0.5.0] — 2026-06-27
 

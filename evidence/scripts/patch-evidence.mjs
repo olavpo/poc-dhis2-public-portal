@@ -143,6 +143,32 @@ mapOpt(
 mapOpt('dragging: false,', 'dragging: true,', 'map: enable drag-pan');
 mapOpt('smoothWheelZoom: true, // enable smooth zoom', 'smoothWheelZoom: false, // DNEMIS: no scroll-wheel zoom', 'map: disable smooth-wheel zoom');
 
+// Self-hosted DuckDB extensions: when the browser engine first calls read_parquet() (LGA pages)
+// it autoloads `parquet.duckdb_extension.wasm` from its compiled-in repository
+// (extensions.duckdb.org) — a third-party host we don't control, so Cloudflare returns
+// cf-cache-status: DYNAMIC and it stays a runtime dependency. `scripts/fetch-duckdb-extensions.mjs`
+// mirrors that extension into evidence/static/duckdb-extensions/<version>/wasm_eh/; here we point
+// the engine at it. Gated on VITE_DUCKDB_EXT_REPO (set by `npm run build` only after the mirror
+// step) so the redirect activates only when the files exist — otherwise the engine falls back to
+// its default repository, unchanged (e.g. `npm run dev`). The repo value is origin-relative
+// (`/portal/duckdb-extensions`) resolved against location.origin at runtime; the engine appends
+// `/<version>/wasm_eh/<name>.duckdb_extension.wasm` itself, matching the mirrored layout.
+patchAbs(
+  resolve(USQL, 'src/client-duckdb/browser.js'),
+  "\t\tawait connection.query('SET old_implicit_casting = true;');\n\n\t\tresolveInit();",
+  "\t\tawait connection.query('SET old_implicit_casting = true;');\n\n" +
+    "\t\t// DNEMIS: redirect extension autoload to our own origin (cacheable) — see patch-evidence.mjs.\n" +
+    "\t\tif (import.meta.env.VITE_DUCKDB_EXT_REPO) {\n" +
+    "\t\t\tconst __r = import.meta.env.VITE_DUCKDB_EXT_REPO;\n" +
+    "\t\t\tconst __repo = __r.startsWith('http') ? __r : new URL(__r, location.origin).href;\n" +
+    "\t\t\tfor (const __s of ['custom_extension_repository', 'autoinstall_extension_repository']) {\n" +
+    "\t\t\t\ttry { await connection.query(`SET ${__s}='${__repo}';`); } catch (e) { /* setting absent on this version */ }\n" +
+    "\t\t\t}\n" +
+    "\t\t}\n\n" +
+    "\t\tresolveInit();",
+  'duckdb self-hosted extension repository',
+);
+
 // Layout + branding + DNEMIS header. The layout is fully under our control, so instead of
 // fragile anchor patches (which break the moment the injected markup changes) we WRITE the
 // whole +layout.svelte deterministically — idempotent regardless of its prior state:
@@ -153,6 +179,15 @@ mapOpt('smoothWheelZoom: true, // enable smooth zoom', 'smoothWheelZoom: false, 
 //     window.print()/export-afterprint, so charts/maps render correctly for paper).
 //   • Inter + Font Awesome, h1.title hidden, and an @media print rule that drops the print
 //     button and the interactive control bar.
+//   • A discrete build-timestamp footer ("Generated <date>, <time> UTC") baked in at build
+//     time (no client/engine cost). Because this stamp changes every build, the layout is
+//     rewritten on every run — the [skip] "already current" branch below intentionally never
+//     fires for the layout. That is expected, not a stale-cache symptom.
+//
+// Build timestamp, formatted in UTC so it is correct regardless of the build machine's clock.
+const buildStamp = new Intl.DateTimeFormat('en-GB', {
+  timeZone: 'UTC', dateStyle: 'long', timeStyle: 'short',
+}).format(new Date()).replace(' at ', ', ') + ' UTC';
 const LAYOUT = `<script>
 	import '@evidence-dev/tailwind/fonts.css';
 	import '../app.css';
@@ -172,6 +207,7 @@ const LAYOUT = `<script>
 			</button>
 		</div>
 		<slot />
+		<footer class="dnemis-footer">Generated ${buildStamp}</footer>
 	</div>
 </EvidenceDefaultLayout>
 
@@ -193,6 +229,7 @@ const LAYOUT = `<script>
 	.ds { font-size: 11px; opacity: .82; font-weight: 300; margin-top: 2px; }
 	.printbtn { margin-left: auto; flex: none; display: inline-flex; align-items: center; gap: 7px; height: 34px; padding: 0 14px; border: 1px solid rgba(255,255,255,.4); border-radius: 8px; background: rgba(255,255,255,.12); color: #fff; font-size: 12.5px; font-weight: 600; cursor: pointer; }
 	.printbtn:hover { background: rgba(255,255,255,.22); }
+	.dnemis-footer { margin: 28px 0 8px; padding-top: 12px; border-top: 1px solid #e5e7eb; text-align: center; font-size: 11.5px; color: #94a3b8; font-weight: 400; }
 	@media (max-width: 560px) { .dt { font-size: 14px; } .printbtn span { display: none; } }
 	@media print {
 		.printbtn { display: none !important; }

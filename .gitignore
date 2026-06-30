@@ -26,6 +26,9 @@ evidence/pages/index.md
 evidence/pages/asc/
 evidence/static/asc/
 
+# Mirrored DuckDB-WASM extensions (downloaded by `npm run duckdb:ext`)
+evidence/static/duckdb-extensions/
+
 # Brainstorming visual companion
 .superpowers/
 
