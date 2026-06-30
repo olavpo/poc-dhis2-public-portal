@@ -3,6 +3,13 @@
 All notable changes to the DNEMIS Education Statistics public portal (Nigeria Annual School
 Census) are documented here. This project adheres to [Semantic Versioning](https://semver.org).
 
+## [Unreleased]
+
+### Added
+- **Build-timestamp footer on every page.** A discrete, centered footer ("Generated &lt;date&gt;,
+  &lt;time&gt; UTC") is baked into the shared layout at build time, so visitors can see when the
+  static site was last generated. No client/engine cost; appears on Federal, State and LGA pages.
+
 ## [0.5.0] — 2026-06-27
 
 ### Changed
