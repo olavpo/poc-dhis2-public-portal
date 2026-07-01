@@ -6,6 +6,10 @@ Census) are documented here. This project adheres to [Semantic Versioning](https
 
 
 ### Changed
+- **Coat-of-arms header image shrunk ~86% (62 KB → 8.5 KB).** It was a 200×167 truecolor PNG
+  displayed at ~44 px. Resized to 132×110 (crisp up to 3× retina) and reduced to a 256-colour
+  palette — imperceptible at display size, one fewer chunky asset on every page load. Same
+  filename, so no code change.
 - **Chart value axes show full numbers instead of the "k" abbreviation.** UAT found the "k"
   thousands suffix (e.g. an axis reading "30,000k") wasn't well understood. The three bar charts
   ("Learners by Education Level", "Learners by Gender & Level", "Public Schools by Level") now
