@@ -6,6 +6,16 @@ Census) are documented here. This project adheres to [Semantic Versioning](https
 
 
 ### Changed
+- **Chart value axes show full numbers instead of the "k" abbreviation.** UAT found the "k"
+  thousands suffix (e.g. an axis reading "30,000k") wasn't well understood. The three bar charts
+  ("Learners by Education Level", "Learners by Gender & Level", "Public Schools by Level") now
+  use `#,##0` on the value axis — e.g. `0 · 5,000,000 · … · 30,000,000` — matching the map
+  legend, KPI tiles, donut labels and compare table, which already show full numbers. This is
+  more robust than a fixed unit label ("thousands"), which couldn't fit charts spanning ~400×
+  in magnitude on one page (learners ~30 M vs schools ~80 k) or across pages (Federal millions →
+  small-LGA hundreds). **Tradeoff:** the wider labels mean fewer value-axis ticks on narrow
+  screens (ECharts thins them, and the max tick can clip slightly) — accepted, since a legible
+  unit matters more than tick density.
 - **Inter now loads first-party with `font-display: swap`; Google Fonts dropped entirely.**
   Evidence already self-hosts Inter (its bundled `@evidence-dev/tailwind/fonts.css`), so the
   Google Fonts `<link>` was redundant — Inter was being downloaded twice, from two origins. The

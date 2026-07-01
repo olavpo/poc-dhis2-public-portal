@@ -265,16 +265,23 @@ from census.fact where ou = '${ou.id}' and periodType = 'YEARLY' and pe = '2024'
 ${withMap ? `
 ${q3(mapQ)}
 ` : ''}
+<!-- Value axes use full numbers (yFmt="#,##0"), not Evidence's default "k" abbreviation:
+     UAT found "k" wasn't understood, and a fixed unit label ("thousands") can't fit charts
+     that span ~400x in magnitude on one page (learners ~30,000,000 vs schools ~80,000) or
+     across pages (Federal millions → small-LGA hundreds). Full numbers auto-scale per chart
+     and match the rest of the portal (map legend, KPI tiles, donut labels, compare table).
+     Tradeoff: the wider labels mean ECharts thins the value-axis ticks on narrow screens and
+     the max tick can clip slightly — accepted; readability of the unit beats tick density. -->
 <Grid cols=2>
 ${withMap ? `  <OwnershipSelect total={children_map_total} pub={children_map_public} priv={children_map_private} let:data>
     <AreaMap data={data} geoJsonUrl="${geoUrl}" geoId="id" areaCol="id" value="learners" link="link" title="Learners by ${childLevel} · Tap to Explore" tooltip={[{id:'name',showColumnTitles:false},{id:'learners',fmt:'#,##0'}]} height={300} />
   </OwnershipSelect>\n` : ''}  <OwnershipSelect total={enrol_total} pub={enrol_public} priv={enrol_private} let:data>
-    <BarChart data={data} x=level y=enrolment title="Learners by Education Level" swapXY=true sort=false />
+    <BarChart data={data} x=level y=enrolment yFmt="#,##0" title="Learners by Education Level" swapXY=true sort=false />
   </OwnershipSelect>
   <OwnershipSelect total={sex_total} pub={sex_public} priv={sex_private} let:data>
-    <BarChart data={data} x=level y=learners series=sex type=grouped title="Learners by Gender & Level" swapXY=true sort=false />
+    <BarChart data={data} x=level y=learners series=sex type=grouped yFmt="#,##0" title="Learners by Gender & Level" swapXY=true sort=false />
   </OwnershipSelect>
-  <BarChart data={schools_public} x=label y=value title="Public Schools by Level" swapXY=true sort=false emptySet=pass emptyMessage="No data available at this level" />
+  <BarChart data={schools_public} x=label y=value yFmt="#,##0" title="Public Schools by Level" swapXY=true sort=false emptySet=pass emptyMessage="No data available at this level" />
   <OwnershipDonut data={ownership_enrol} title="Learners by Ownership" />
   <OwnershipDonut data={schools_ownership} title="Schools by Ownership" />
 </Grid>
