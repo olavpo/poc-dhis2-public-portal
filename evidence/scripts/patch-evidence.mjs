@@ -169,6 +169,27 @@ patchAbs(
   'duckdb self-hosted extension repository',
 );
 
+// Drop the ~3,200-icon Simple Icons brand-logo set from the app bundle. Two of Evidence's
+// source-config components — NewSourceForm.svelte and SourceConfigRow.svelte — do
+// `import * as simpleIcons from '@steeze-ui/simple-icons'`. That namespace import defeats
+// tree-shaking, so the ENTIRE brand-logo set (~4.9 MB on disk, ~1.9 MB gzip) lands in the
+// app-level vendor chunk that every page statically imports (incl. the baked Federal/State
+// pages). Those source-config components are Evidence's interactive "add a data source"
+// authoring UI — never reachable in this prerendered public portal — and they only use the
+// set via dynamic `simpleIcons[name]` lookup + `name in simpleIcons`, both of which a `{}`
+// stub satisfies (missing icon → `<Icon src={undefined}>`, harmless, and never rendered here).
+// Replacing the two namespace imports lets Rollup drop the whole set; Header.svelte's *named*
+// simple-icon imports remain and tree-shake to just the handful it actually references.
+const CORE = resolve(here, '../node_modules/@evidence-dev/core-components/dist');
+for (const f of ['organisms/source-config/NewSourceForm.svelte', 'organisms/source-config/SourceConfigRow.svelte']) {
+  patchAbs(
+    resolve(CORE, f),
+    "import * as simpleIcons from '@steeze-ui/simple-icons';",
+    "const simpleIcons = {}; // DNEMIS: stub — brand-logo set never rendered on the static portal (see patch-evidence.mjs)",
+    `drop simple-icons namespace import (${f.split('/').pop()})`,
+  );
+}
+
 // Layout + branding + DNEMIS header. The layout is fully under our control, so instead of
 // fragile anchor patches (which break the moment the injected markup changes) we WRITE the
 // whole +layout.svelte deterministically — idempotent regardless of its prior state:
