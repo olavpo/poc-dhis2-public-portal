@@ -190,6 +190,28 @@ for (const f of ['organisms/source-config/NewSourceForm.svelte', 'organisms/sour
   );
 }
 
+// font-display: swap for Evidence's bundled Inter. Evidence self-hosts Inter via
+// @evidence-dev/tailwind/fonts.css (imported by the layout), but its 34 @font-face rules ship
+// `font-display: block` — text stays invisible (FOIT) until Inter loads, which Lighthouse flags
+// (~210 ms "Font display"). Flip every rule to `swap` so text paints immediately in the system
+// fallback and swaps to Inter on load. (This is why we can drop the Google Fonts <link> entirely
+// in the layout head — the first-party bundled Inter already covers every weight we use.)
+{
+  const FONTS_CSS = resolve(here, '../node_modules/@evidence-dev/tailwind/src/fonts.css');
+  try {
+    const src = readFileSync(FONTS_CSS, 'utf8');
+    if (src.includes('font-display: block')) {
+      const out = src.replaceAll('font-display: block', 'font-display: swap');
+      writeFileSync(FONTS_CSS, out);
+      console.log('  [ok]   Inter font-display: block → swap (bundled fonts.css)');
+    } else {
+      console.log('  [skip] Inter font-display already swap (no block rules)');
+    }
+  } catch (e) {
+    console.warn(`  [warn] fonts.css font-display patch skipped: ${e.message}`);
+  }
+}
+
 // Layout + branding + DNEMIS header. The layout is fully under our control, so instead of
 // fragile anchor patches (which break the moment the injected markup changes) we WRITE the
 // whole +layout.svelte deterministically — idempotent regardless of its prior state:
@@ -233,19 +255,17 @@ const LAYOUT = `<script>
 </EvidenceDefaultLayout>
 
 <svelte:head>
-	<!-- Fonts (Inter) + icons (Font Awesome) are third-party stylesheets; load them OFF the
-	     critical render path (media=print → flip to all onload) so they don't block first paint.
-	     Preconnect to the actual font/asset hosts (gstatic, cdnjs) so the fetch starts early.
-	     Inter already uses display=swap, and a <noscript> fallback keeps no-JS visitors styled.
-	     (Self-hosting these to drop the third-party origins entirely is deferred — see the
-	     self-host-fonts-icons note.) -->
-	<link rel="preconnect" href="https://fonts.googleapis.com" />
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+	<!-- Inter is served FIRST-PARTY by Evidence's bundled @evidence-dev/tailwind/fonts.css
+	     (imported above), so we do NOT load it from Google Fonts — that link was redundant
+	     (Inter downloaded twice) and a third-party origin. The bundled @font-face rules are
+	     patched to font-display:swap (see patch-evidence.mjs) so text paints immediately.
+	     Font Awesome is still third-party (cdnjs); load it OFF the critical render path
+	     (media=print → flip to all onload), preconnect so the fetch starts early, and a
+	     <noscript> fallback keeps no-JS visitors styled. (Inlining the 9 used FA icons as
+	     SVGs to drop cdnjs entirely is deferred — see the self-host-fonts-icons note.) -->
 	<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin />
-	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" media="print" onload="this.media='all'" />
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" media="print" onload="this.media='all'" />
 	<noscript>
-		<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" />
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
 	</noscript>
 </svelte:head>

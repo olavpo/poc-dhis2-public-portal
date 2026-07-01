@@ -6,6 +6,14 @@ Census) are documented here. This project adheres to [Semantic Versioning](https
 
 
 ### Changed
+- **Inter now loads first-party with `font-display: swap`; Google Fonts dropped entirely.**
+  Evidence already self-hosts Inter (its bundled `@evidence-dev/tailwind/fonts.css`), so the
+  Google Fonts `<link>` was redundant — Inter was being downloaded twice, from two origins. The
+  build patch removes the Google Fonts link (and its preconnects), leaving only the first-party
+  Inter, and flips Evidence's 34 `@font-face` rules from `font-display: block` → `swap` so text
+  paints immediately in the system fallback (clears Lighthouse's ~210 ms "Font display" flag).
+  One fewer third-party origin, no duplicate font download, no visual change. (Font Awesome is
+  still third-party on cdnjs; inlining its 9 used icons as SVGs remains deferred.)
 - **Faster first paint — third-party fonts/icons no longer block rendering.** The Google Fonts
   (Inter) and Font Awesome stylesheets are now loaded off the critical path (`media="print"` →
   flipped to `all` on load), with preconnects to the font/asset hosts and a `<noscript>`
