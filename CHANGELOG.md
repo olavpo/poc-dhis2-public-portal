@@ -6,6 +6,11 @@ Census) are documented here. This project adheres to [Semantic Versioning](https
 
 
 ### Changed
+- **Faster first paint — third-party fonts/icons no longer block rendering.** The Google Fonts
+  (Inter) and Font Awesome stylesheets are now loaded off the critical path (`media="print"` →
+  flipped to `all` on load), with preconnects to the font/asset hosts and a `<noscript>`
+  fallback. Removes ~120 ms of render-blocking (Lighthouse) with no visual change. (Self-hosting
+  these to drop the third-party origins entirely is deferred.)
 - **~1.9 MB (gzip) smaller download on every page.** Evidence bundled the entire Simple Icons
   brand-logo set (~3,200 SVG logos) into the app-wide vendor chunk via a non-tree-shakeable
   `import *` in two of its data-source-authoring components — components that never render on

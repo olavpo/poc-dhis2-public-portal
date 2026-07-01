@@ -233,9 +233,21 @@ const LAYOUT = `<script>
 </EvidenceDefaultLayout>
 
 <svelte:head>
+	<!-- Fonts (Inter) + icons (Font Awesome) are third-party stylesheets; load them OFF the
+	     critical render path (media=print → flip to all onload) so they don't block first paint.
+	     Preconnect to the actual font/asset hosts (gstatic, cdnjs) so the fetch starts early.
+	     Inter already uses display=swap, and a <noscript> fallback keeps no-JS visitors styled.
+	     (Self-hosting these to drop the third-party origins entirely is deferred — see the
+	     self-host-fonts-icons note.) -->
 	<link rel="preconnect" href="https://fonts.googleapis.com" />
-	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+	<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin />
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" media="print" onload="this.media='all'" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" media="print" onload="this.media='all'" />
+	<noscript>
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" />
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+	</noscript>
 </svelte:head>
 
 <style>
