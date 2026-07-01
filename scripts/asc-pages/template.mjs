@@ -156,14 +156,34 @@ function benchSelect(b, i, unitE, stateE, fedE, M) {
   from ${M.src} where ${scope} and dx in (${ids})`;
 }
 
+// SEO: a keyword-rich <title> + meta description per page. Evidence's @evidence-dev/preprocess
+// turns frontmatter `title`/`description` into <title>, <meta name="description"> and the
+// OpenGraph/Twitter tags automatically. (It also injects the page's single <svelte:head>, so we
+// must NOT add one here — Svelte allows only one per component; the canonical link lives in the
+// layout's <svelte:head> instead, derived per-page from $page.url — see patch-evidence.mjs.)
+// JSON.stringify emits a valid double-quoted YAML scalar (safe for the em-dash/pipe/apostrophe).
+function seo(ou) {
+  if (ou.level === '1') return {
+    title: 'Nigeria Education Statistics 2024 — Annual School Census | Federal Ministry of Education',
+    desc: 'Official Nigeria education statistics from the 2024 Annual School Census (ASC): schools, learners, teachers, classrooms and key indicators, nationally and by state — from the Federal Ministry of Education (DNEMIS).',
+  };
+  return {
+    title: `${ou.name} Education Statistics 2024 — Annual School Census | Nigeria DNEMIS`,
+    desc: `${ou.name} education statistics from Nigeria's 2024 Annual School Census: schools, learners, teachers, classrooms and key indicators by LGA — from the Federal Ministry of Education (DNEMIS).`,
+  };
+}
+
 function head(ou, crumbs, federalId, unitLabel, stateId, stateLabel) {
   const ownDx = lit(TOGGLE);
   const unitE = `'${ou.id}'`, fedE = `'${federalId}'`, stateE = stateId ? `'${stateId}'` : `''`;
   const benchmark = `select * from (\n${BENCH.flatMap((b, i) => MODES3.map((M) => benchSelect(b, i, unitE, stateE, fedE, M))).join('\nunion all\n')}\n) order by mode, ord`;
   const benchHeading = stateLabel ? 'Key Indicators vs State & Federal' : unitLabel ? 'Key Indicators vs Federal' : 'Key Indicators';
+  const { title: seoTitle, desc } = seo(ou);
   return `---
-title: ${ou.name}
+title: ${JSON.stringify(seoTitle)}
+description: ${JSON.stringify(desc)}
 ---
+
 
 \`\`\`sql kpis_total
 select dx, value from census.fact
@@ -371,7 +391,8 @@ export function leafDynamicPage(federalId, base = '') {
   const ownDx = lit(TOGGLE);
   const benchmark = `select * from (\n${BENCH.flatMap((b, i) => MODES3.map((M) => benchSelect(b, i, ID, stateE, `'${federalId}'`, M))).join('\nunion all\n')}\n) order by mode, ord`;
   return `---
-title: Local Government Area
+title: "Local Government Area Education Statistics 2024 — Annual School Census | Nigeria DNEMIS"
+description: "Local Government Area education statistics from Nigeria's 2024 Annual School Census: schools, learners, teachers, classrooms and key indicators — from the Federal Ministry of Education (DNEMIS)."
 ---
 
 \`\`\`sql crumbs_q

@@ -43,6 +43,14 @@ const BASE = (readFileSync('evidence/evidence.config.yaml', 'utf8')
 const linkFor = (o) => (o.id === ROOT ? `${BASE}/` : o.level === '2' ? `${BASE}/asc/state-${o.id}` : `${BASE}/asc/lga/${o.id}`);
 const childrenOf = (id) => ou.filter((o) => o.parent_id === id).sort((a, b) => a.name.localeCompare(b.name));
 
+// Absolute origin for canonical URLs, the sitemap and JSON-LD (override per-deploy with
+// ASC_ORIGIN). linkFor already includes the basePath, so canonFor is origin + linkFor.
+const ORIGIN = (process.env.ASC_ORIGIN || 'https://emis.education.gov.ng').replace(/\/+$/, '');
+// Trailing slash to match the served URL / the layout's $page.url.pathname canonical (SvelteKit
+// serves each baked page as <dir>/index.html → the canonical form ends in '/'). Keeps the sitemap
+// <loc> byte-identical to the <link rel="canonical"> on the page.
+const canonFor = (o) => ORIGIN + linkFor(o).replace(/\/?$/, '/');
+
 const crumbsOf = (o) => {
   const chain = []; let c = o;
   while (c) { chain.unshift(c); c = c.parent_id ? byId[c.parent_id] : null; }
@@ -99,6 +107,20 @@ for (const s of states) {
   }));
   n++;
 }
+
+// SEO: sitemap.xml + robots.txt (static → copied to the build root, served under the basePath).
+// Only the baked pages go in the sitemap — Federal + every State. LGA pages are the single
+// prerender:false SPA route, so they're intentionally excluded (not reliably indexable).
+const today = new Date().toISOString().slice(0, 10);
+const sitemapUrls = [root, ...states].map((o) => {
+  const priority = o.id === ROOT ? '1.0' : '0.8';
+  return `  <url>\n    <loc>${canonFor(o)}</loc>\n    <lastmod>${today}</lastmod>\n    <changefreq>monthly</changefreq>\n    <priority>${priority}</priority>\n  </url>`;
+}).join('\n');
+writeFileSync('evidence/static/sitemap.xml',
+  `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${sitemapUrls}\n</urlset>\n`);
+writeFileSync('evidence/static/robots.txt',
+  `User-agent: *\nAllow: /\n\nSitemap: ${ORIGIN}${BASE}/sitemap.xml\n`);
+console.log(`[asc-pages] sitemap: ${1 + states.length} baked URLs · robots.txt (origin ${ORIGIN})`);
 // All LGAs share ONE dynamic, client-rendered route (/asc/lga/[id]) — see leafDynamicPage.
 writeFileSync('evidence/pages/asc/lga/[id].md', leafDynamicPage(ROOT, BASE));
 console.log(`[asc-pages] generated ${n} baked pages (federal + ${states.length} states) + 1 dynamic LGA route`);

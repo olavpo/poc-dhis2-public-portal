@@ -5,6 +5,16 @@ Census) are documented here. This project adheres to [Semantic Versioning](https
 
 
 
+### Added
+- **SEO metadata for discoverability.** Every baked page now has a descriptive, keyword-rich
+  `<title>` and `<meta name="description">` (e.g. "Nigeria Education Statistics 2024 — Annual
+  School Census | Federal Ministry of Education"; per-state variants), plus a per-page
+  `<link rel="canonical">`. Site-wide **JSON-LD** structured data (`GovernmentOrganization` +
+  `Dataset` + `WebSite`) declares this as an official, free Nigerian education dataset — the
+  key signal for "education data" searches and Google Dataset Search. A build-generated
+  **`sitemap.xml`** (Federal + all 37 states) and **`robots.txt`** are emitted for crawlers.
+  (Override the canonical origin with `ASC_ORIGIN`; default `https://emis.education.gov.ng`.)
+
 ### Changed
 - **Coat-of-arms header image shrunk ~86% (62 KB → 8.5 KB).** It was a 200×167 truecolor PNG
   displayed at ~44 px. Resized to 132×110 (crisp up to 3× retina) and reduced to a 256-colour
