@@ -6,6 +6,12 @@ Census) are documented here. This project adheres to [Semantic Versioning](https
 
 
 ### Changed
+- **~1.9 MB (gzip) smaller download on every page.** Evidence bundled the entire Simple Icons
+  brand-logo set (~3,200 SVG logos) into the app-wide vendor chunk via a non-tree-shakeable
+  `import *` in two of its data-source-authoring components — components that never render on
+  this static portal. The build patch (`patch-evidence.mjs`) now stubs those imports, so the
+  logo set is dropped from the bundle. Landing-page JS falls from ~2.9 MB to ~950 KB (gzip);
+  baked Federal/State pages still download **0** DuckDB-WASM. No visible change.
 - **Graph and table labels are now Title Case (Chicago style), and "Sex" → "Gender".** The
   "Learners by sex & level" chart is now **"Learners by Gender & Level"**; chart titles, section
   headings, benchmark rows and the "Indicators by …" compare-table columns are title-cased for
