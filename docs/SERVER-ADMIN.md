@@ -49,6 +49,7 @@ server {
     server_name asc.example.gov.ng;          # your hostname
     root /var/www/asc-portal;                 # where you extracted the tarball
     index index.html;
+    server_tokens off;                        # don't leak the nginx version/OS (see §3.1)
 
     # ssl_certificate ... ; ssl_certificate_key ... ;   # your TLS certs
 
@@ -95,6 +96,21 @@ Header set Content-Encoding br env=no-gzip
 # SPA fallback
 FallbackResource /200.html
 ```
+
+### 3.1 Hardening — hide the server version
+
+`server_tokens off;` (in the `server { }` or `http { }` block) stops nginx from advertising its
+exact version and OS. Without it, the `Server:` response header and the **default error-page
+footer** read `nginx/1.24.0 (Ubuntu)` — the precise version + distro an attacker would use to
+match a known CVE. With it, both read just `nginx`.
+
+> If a CDN fronts the origin, the public `Server:` header is usually already the CDN's
+> (Cloudflare rewrites it to `cloudflare`), but the **error-page body still leaks the version**
+> through the proxy — so set `server_tokens off;` on the origin regardless. To drop the `nginx`
+> name entirely, serve a custom error page: `error_page 404 /404.html;` +
+> `location = /404.html { root /var/www/errors; internal; }`. Verify with
+> `curl -s https://<host>/does-not-exist | grep -i nginx` (expect just `nginx`, or nothing with a
+> custom page).
 
 ---
 
