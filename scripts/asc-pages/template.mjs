@@ -196,10 +196,10 @@ ${benchmark}
 
 <KpiRow total={kpis_total} pub={kpis_public} priv={kpis_private}
   kpis={[
-    {dx:'${I.enrol}',title:'Learners',fmt:'int',icon:'fa-solid fa-users'},
-    {dx:'${I.teachers}',title:'Teachers',fmt:'int',icon:'fa-solid fa-chalkboard-user'},
-    {dx:'${I.classrooms}',title:'Classrooms',fmt:'int',icon:'fa-solid fa-school'},
-    {dx:'${I.toilets}',title:'Toilets',fmt:'int',icon:'fa-solid fa-toilet'}
+    {dx:'${I.enrol}',title:'Learners',fmt:'int',icon:'users'},
+    {dx:'${I.teachers}',title:'Teachers',fmt:'int',icon:'chalkboard-user'},
+    {dx:'${I.classrooms}',title:'Classrooms',fmt:'int',icon:'school'},
+    {dx:'${I.toilets}',title:'Toilets',fmt:'int',icon:'toilet'}
   ]} />
 
 ## ${benchHeading}
@@ -414,10 +414,10 @@ ${benchmark}
 
 <KpiRow total={kpis_total} pub={kpis_public} priv={kpis_private}
   kpis={[
-    {dx:'${I.enrol}',title:'Learners',fmt:'int',icon:'fa-solid fa-users'},
-    {dx:'${I.teachers}',title:'Teachers',fmt:'int',icon:'fa-solid fa-chalkboard-user'},
-    {dx:'${I.classrooms}',title:'Classrooms',fmt:'int',icon:'fa-solid fa-school'},
-    {dx:'${I.toilets}',title:'Toilets',fmt:'int',icon:'fa-solid fa-toilet'}
+    {dx:'${I.enrol}',title:'Learners',fmt:'int',icon:'users'},
+    {dx:'${I.teachers}',title:'Teachers',fmt:'int',icon:'chalkboard-user'},
+    {dx:'${I.classrooms}',title:'Classrooms',fmt:'int',icon:'school'},
+    {dx:'${I.toilets}',title:'Toilets',fmt:'int',icon:'toilet'}
   ]} />
 
 ## Key Indicators vs State & Federal

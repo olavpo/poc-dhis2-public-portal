@@ -236,6 +236,7 @@ const LAYOUT = `<script>
 	import '../app.css';
 	import { EvidenceDefaultLayout } from '@evidence-dev/core-components';
 	import { base } from '$app/paths';
+	import Icon from '../components/Icon.svelte';
 	export let data;
 </script>
 
@@ -246,7 +247,7 @@ const LAYOUT = `<script>
 			<div><div class="dt">Education Statistics</div><div class="ds">Nigeria Federal Ministry of Education | Digital Nigeria Education Management Information System</div></div>
 			<button class="printbtn" type="button" title="Download this page as PDF"
 				on:click={() => { window.dispatchEvent(new Event('export-beforeprint')); setTimeout(() => window.print(), 0); setTimeout(() => window.dispatchEvent(new Event('export-afterprint')), 0); }}>
-				<i class="fa-solid fa-download"></i><span>Download PDF</span>
+				<Icon name="download" /><span>Download PDF</span>
 			</button>
 		</div>
 		<slot />
@@ -254,21 +255,11 @@ const LAYOUT = `<script>
 	</div>
 </EvidenceDefaultLayout>
 
-<svelte:head>
-	<!-- Inter is served FIRST-PARTY by Evidence's bundled @evidence-dev/tailwind/fonts.css
-	     (imported above), so we do NOT load it from Google Fonts — that link was redundant
-	     (Inter downloaded twice) and a third-party origin. The bundled @font-face rules are
-	     patched to font-display:swap (see patch-evidence.mjs) so text paints immediately.
-	     Font Awesome is still third-party (cdnjs); load it OFF the critical render path
-	     (media=print → flip to all onload), preconnect so the fetch starts early, and a
-	     <noscript> fallback keeps no-JS visitors styled. (Inlining the 9 used FA icons as
-	     SVGs to drop cdnjs entirely is deferred — see the self-host-fonts-icons note.) -->
-	<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin />
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" media="print" onload="this.media='all'" />
-	<noscript>
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
-	</noscript>
-</svelte:head>
+<!-- Inter is served FIRST-PARTY by Evidence's bundled @evidence-dev/tailwind/fonts.css (imported
+     above; its @font-face rules are patched to font-display:swap, see patch-evidence.mjs), and
+     the icons above are self-hosted SVGs (see components/Icon.svelte + icons.js). The portal
+     makes zero third-party requests at runtime (Federal/State are baked; LGA pages self-host
+     the DuckDB-WASM parquet extension too — see AGENTS.md "Environment requirement"). -->
 
 <style>
 	:global(body) { font-family: 'Inter', system-ui, -apple-system, sans-serif; }
