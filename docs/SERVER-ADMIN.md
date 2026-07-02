@@ -140,13 +140,13 @@ pages download **no** DuckDB engine — only a few hundred KB per page.
   drill-downs won't load (Federal/State still work); ask the dev team for an LGA build that
   pre-bundles the extensions.
 
-## 6. Two optional CDNs (cosmetic, loaded by the visitor's browser)
+## 6. Fonts and icons are self-hosted
 
-The page references Google Fonts (the *Inter* typeface) and Font Awesome (the nav-bar
-icons) from public CDNs. They load in the **visitor's** browser, not from your server. If
-your users may be offline or behind a strict firewall, self-host those two files; otherwise
-nothing to do — the portal works without them (it just falls back to system fonts / hides
-icon glyphs).
+The *Inter* typeface ships bundled with the build, and all icons (nav-bar chevron, breadcrumb
+home, Download PDF, KPI tiles, reporting stats) are inline SVGs. Nothing is fetched from
+Google Fonts, Font Awesome/cdnjs, or any other font/icon CDN — no action needed here, and the
+page renders correctly even for users on unreliable or firewalled networks. (The one other
+external host the portal can talk to is `extensions.duckdb.org`, for LGA pages only — see §2.)
 
 ## 7. Updating the data later
 
