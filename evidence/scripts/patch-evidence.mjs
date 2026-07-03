@@ -273,7 +273,7 @@ const LAYOUT = `<script>
 	import '../app.css';
 	import { EvidenceDefaultLayout } from '@evidence-dev/core-components';
 	import { base } from '$app/paths';
-	import { page } from '$app/stores';
+	import Icon from '../components/Icon.svelte';
 	export let data;
 </script>
 
@@ -284,7 +284,7 @@ const LAYOUT = `<script>
 			<div><div class="dt">Education Statistics</div><div class="ds">Nigeria Federal Ministry of Education | Digital Nigeria Education Management Information System</div></div>
 			<button class="printbtn" type="button" title="Download this page as PDF"
 				on:click={() => { window.dispatchEvent(new Event('export-beforeprint')); setTimeout(() => window.print(), 0); setTimeout(() => window.dispatchEvent(new Event('export-afterprint')), 0); }}>
-				<i class="fa-solid fa-download"></i><span>Download PDF</span>
+				<Icon name="download" /><span>Download PDF</span>
 			</button>
 		</div>
 		<slot />
@@ -313,6 +313,11 @@ const LAYOUT = `<script>
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
 	</noscript>
 </svelte:head>
+<!-- Inter is served FIRST-PARTY by Evidence's bundled @evidence-dev/tailwind/fonts.css (imported
+     above; its @font-face rules are patched to font-display:swap, see patch-evidence.mjs), and
+     the icons above are self-hosted SVGs (see components/Icon.svelte + icons.js). The portal
+     makes zero third-party requests at runtime (Federal/State are baked; LGA pages self-host
+     the DuckDB-WASM parquet extension too — see AGENTS.md "Environment requirement"). -->
 
 <style>
 	:global(body) { font-family: 'Inter', system-ui, -apple-system, sans-serif; }

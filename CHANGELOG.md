@@ -16,6 +16,13 @@ Census) are documented here. This project adheres to [Semantic Versioning](https
   (Override the canonical origin with `ASC_ORIGIN`; default `https://emis.education.gov.ng`.)
 
 ### Changed
+- **Font Awesome icons are now self-hosted inline SVGs; the cdnjs CDN is gone entirely.** The 9
+  icons the portal uses (KPI tiles, breadcrumb home, school-year dropdown, reporting stats,
+  Download PDF) are now inlined via a shared `Icon.svelte` component instead of loaded from
+  `cdnjs.cloudflare.com`'s Font Awesome webfont. Pixel-identical (same FA 6.4.2 path data,
+  extracted from the official npm package). This was the last third-party runtime origin —
+  the portal now makes **zero** third-party requests at runtime aside from LGA pages' one-time
+  DuckDB-WASM parquet-extension fetch. See `THIRD-PARTY-NOTICES.md` for the icon attribution.
 - **Coat-of-arms header image shrunk ~86% (62 KB → 8.5 KB).** It was a 200×167 truecolor PNG
   displayed at ~44 px. Resized to 132×110 (crisp up to 3× retina) and reduced to a 256-colour
   palette — imperceptible at display size, one fewer chunky asset on every page load. Same

@@ -49,6 +49,7 @@ server {
     server_name asc.example.gov.ng;          # your hostname
     root /var/www/asc-portal;                 # where you extracted the tarball
     index index.html;
+    server_tokens off;                        # don't leak the nginx version/OS (see §3.1)
 
     # ssl_certificate ... ; ssl_certificate_key ... ;   # your TLS certs
 
@@ -96,6 +97,21 @@ Header set Content-Encoding br env=no-gzip
 FallbackResource /200.html
 ```
 
+### 3.1 Hardening — hide the server version
+
+`server_tokens off;` (in the `server { }` or `http { }` block) stops nginx from advertising its
+exact version and OS. Without it, the `Server:` response header and the **default error-page
+footer** read `nginx/1.24.0 (Ubuntu)` — the precise version + distro an attacker would use to
+match a known CVE. With it, both read just `nginx`.
+
+> If a CDN fronts the origin, the public `Server:` header is usually already the CDN's
+> (Cloudflare rewrites it to `cloudflare`), but the **error-page body still leaks the version**
+> through the proxy — so set `server_tokens off;` on the origin regardless. To drop the `nginx`
+> name entirely, serve a custom error page: `error_page 404 /404.html;` +
+> `location = /404.html { root /var/www/errors; internal; }`. Verify with
+> `curl -s https://<host>/does-not-exist | grep -i nginx` (expect just `nginx`, or nothing with a
+> custom page).
+
 ---
 
 ## 4. Verify after deploying
@@ -124,13 +140,13 @@ pages download **no** DuckDB engine — only a few hundred KB per page.
   drill-downs won't load (Federal/State still work); ask the dev team for an LGA build that
   pre-bundles the extensions.
 
-## 6. Two optional CDNs (cosmetic, loaded by the visitor's browser)
+## 6. Fonts and icons are self-hosted
 
-The page references Google Fonts (the *Inter* typeface) and Font Awesome (the nav-bar
-icons) from public CDNs. They load in the **visitor's** browser, not from your server. If
-your users may be offline or behind a strict firewall, self-host those two files; otherwise
-nothing to do — the portal works without them (it just falls back to system fonts / hides
-icon glyphs).
+The *Inter* typeface ships bundled with the build, and all icons (nav-bar chevron, breadcrumb
+home, Download PDF, KPI tiles, reporting stats) are inline SVGs. Nothing is fetched from
+Google Fonts, Font Awesome/cdnjs, or any other font/icon CDN — no action needed here, and the
+page renders correctly even for users on unreliable or firewalled networks. (The one other
+external host the portal can talk to is `extensions.duckdb.org`, for LGA pages only — see §2.)
 
 ## 7. Updating the data later
 

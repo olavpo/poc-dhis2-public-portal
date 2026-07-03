@@ -49,9 +49,21 @@ location ^~ /portal/duckdb-extensions/ {
     add_header Cache-Control "public, max-age=31536000, immutable";
 }
 
-# HTML + data (asc.geojson, data/+api/ Arrow/Parquet): stable URLs that change on redeploy →
-# store but ALWAYS revalidate. Cheap 304s, and a deploy is visible on the next request even if
-# a cache purge misfires (see the caching note below).
+# Prerendered query results: content-hashed FILENAMES (api/prerendered_queries/<hash>.arrow) →
+# immutable. Every baked chart loads these; without this block `no-cache` revalidates all ~800
+# of them on each page load (a 304 storm). They can't change under their hash, so cache forever.
+location ^~ /portal/api/prerendered_queries/ {
+    alias /opt/poc-dhis2-public-portal/current/api/prerendered_queries/;
+    gzip_static on;
+    add_header Cache-Control "public, max-age=31536000, immutable";
+}
+
+# HTML + stable-named files (asc.geojson, /data/manifest.json, *.schema.json, evidencemeta.json,
+# version.json): stable URLs whose content changes on redeploy → store but ALWAYS revalidate.
+# Cheap 304s, and a deploy is visible on the next request even if a cache purge misfires (note
+# below). NB the .parquet under /data/ is content-addressed (hash in the path) and loads only on
+# LGA pages; it revalidates here harmlessly — make it immutable too via `location ~* \.parquet$`
+# only if you also switch this block to a plain `location /portal/` so the regex is reachable.
 location ^~ /portal/ {
     alias /opt/poc-dhis2-public-portal/current/;     # the deploy symlink
     try_files $uri $uri/ /portal/200.html;           # SPA fallback (LGA pages need it)
@@ -62,13 +74,22 @@ location ^~ /portal/ {
 
 Reload: `nginx -t && systemctl reload openresty`.
 
-**Caching (two tiers, purge-independent).** Content-hashed assets under `_app/immutable/`
-get a 1-year `immutable` lifetime — their filename changes when their content does, so they're
-safe to cache forever (this is what skips re-downloading the ~6 MB DuckDB-WASM engine on repeat
-visits). **Everything else — HTML, the prerendered `data/`+`api/` Arrow/Parquet, `asc.geojson` —
-is served `no-cache`.** `no-cache` does *not* mean "don't cache": the edge and the browser still
-**store** the response, but they **revalidate** it against the origin on every request (a tiny
-conditional `GET` → `304 Not Modified` when unchanged, so almost no bytes move). The payoff is
+**Caching (two tiers, purge-independent).** The split is by **URL shape, not file type**:
+anything with a **content hash in its name/path** is cached `immutable` (1 year); anything with
+a **stable URL whose content changes per build** is served `no-cache`.
+
+- **Immutable:** `_app/immutable/` (JS/CSS + the ~6 MB DuckDB-WASM engine), `duckdb-extensions/`,
+  the prerendered **`api/prerendered_queries/<hash>.arrow`** query results (every baked chart
+  loads these), and the hashed **`*.parquet`** under `/data/`. A new build emits new hashes and
+  fresh HTML pointing at them, so a cached copy can never be wrong — revalidating it is pure waste
+  (this is the `.arrow` 304 storm that an over-broad `no-cache` causes; see §6).
+- **`no-cache` (revalidate):** HTML, `asc.geojson`, and the stable-named metadata
+  (`/data/manifest.json`, `*.schema.json`, `api/**/evidencemeta.json`, `_app/version.json`).
+  These keep their URL across builds but change content, so the edge/browser must check.
+
+`no-cache` does *not* mean "don't cache": the edge and the browser still **store** the response,
+but they **revalidate** it against the origin on every request (a tiny conditional `GET` →
+`304 Not Modified` when unchanged, so almost no bytes move). The payoff is
 that a deploy is visible on the **next request**, with no dependence on a cache purge firing
 against the right zone.
 
@@ -315,6 +336,7 @@ serve at a host root), update the OpenResty `location`/`alias`, then `npm run bu
 | LGA page: console "Error in client-side routing / Unexpected token '<'" | Stale build serving — `npm run deploy`, then hard-refresh. The `getPrerenderedQueries` SPA-fallback patch (in `patch-evidence.mjs`) handles the non-prerendered LGA route; it only applies via the root `npm run build`. |
 | Daily regen didn't run | `tail /var/log/dnemis-regen.log`; check the token in `/etc/dnemis-portal.env` and the cron timezone (§4.2). A failed extract logs the error and leaves the previous build serving. |
 | LGA pages 404 / maps blank | The `try_files … /portal/200.html` SPA fallback is missing, or `extensions.duckdb.org` is unreachable from clients. |
+| Pages feel slow; devtools shows hundreds of `304` `.arrow` requests on every load | The `no-cache` block is also catching the content-hashed `api/prerendered_queries/<hash>.arrow` results, so each revalidates. Add the `^~ /portal/api/prerendered_queries/` **immutable** block (§2) ahead of the catch-all — they become cache HITs (no request). |
 | Deploy succeeded but the live page still shows the **old** "Generated …" footer (even in incognito) | The Cloudflare **edge** is serving a stale copy the purge never evicted — almost always a **wrong `CF_ZONE_ID`/token**: the purge `success:true`s against a zone that doesn't front these hosts. Diagnose it below; fix the zone ID in `/etc/dnemis-portal.env`. The `no-cache` HTML policy (§2) prevents this from persisting past one request. |
 
 **Diagnosing a stale edge** (incognito rules out *browser* cache, not the shared edge). Localise

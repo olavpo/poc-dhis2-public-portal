@@ -5,6 +5,7 @@
 	// other controls so it can become a real year selector later. Rendered once near the top, above
 	// the reporting strip and KPI tiles.
 	import OrgSearch from './OrgSearch.svelte';
+	import Icon from './Icon.svelte';
 	import { ownershipMode } from './ownership.js';
 	export let schoolYear = '2024/2025';
 	const MODES = [{ k: 'total', label: 'Total' }, { k: 'public', label: 'Public' }, { k: 'private', label: 'Private' }];
@@ -14,7 +15,7 @@
 	<OrgSearch />
 	<div class="ctl">
 		<span class="lbl">School year</span>
-		<div class="yearbox" title="Reference school year">{schoolYear}<i class="fa-solid fa-chevron-down"></i></div>
+		<div class="yearbox" title="Reference school year">{schoolYear}<Icon name="chevron-down" /></div>
 	</div>
 	<div class="ctl">
 		<span class="lbl">School ownership</span>
@@ -36,7 +37,7 @@
 	.lbl { font-size: 10.5px; text-transform: uppercase; letter-spacing: .6px; font-weight: 700; color: #6b7872; }
 	/* styled like a (future) selector — same height/border as the search input + toggle */
 	.yearbox { height: 34px; display: inline-flex; align-items: center; gap: 10px; padding: 0 12px; border: 1px solid #d7dee2; border-radius: 8px; background: #fff; font-size: 12.5px; font-weight: 600; color: #0a3d2c; white-space: nowrap; }
-	.yearbox i { color: #aab3ad; font-size: 11px; }
+	.yearbox :global(svg) { color: #aab3ad; font-size: 11px; }
 	.seg { display: inline-flex; height: 34px; border: 1px solid #d7dee2; border-radius: 8px; overflow: hidden; }
 	.seg button { border: none; background: #fff; padding: 0 16px; font-size: 12.5px; font-weight: 600; color: #5a6b73; cursor: pointer; border-right: 1px solid #e7ecee; }
 	.seg button:last-child { border-right: none; }
