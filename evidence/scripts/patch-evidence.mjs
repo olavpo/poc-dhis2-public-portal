@@ -273,6 +273,7 @@ const LAYOUT = `<script>
 	import '../app.css';
 	import { EvidenceDefaultLayout } from '@evidence-dev/core-components';
 	import { base } from '$app/paths';
+	import { page } from '$app/stores';
 	import Icon from '../components/Icon.svelte';
 	export let data;
 </script>
