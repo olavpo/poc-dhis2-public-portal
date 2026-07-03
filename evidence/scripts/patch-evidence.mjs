@@ -74,6 +74,43 @@ patch(
   'dhis2 favicon',
 );
 
+// SEO: site-wide JSON-LD + a few global meta, injected into app.html (raw HTML, so the JSON-LD
+// braces are safe — an mdsvex page would try to parse `{…}` as a Svelte expression). Per-page
+// <title>/description/OG come from @evidence-dev/preprocess (frontmatter) and canonical from each
+// page's <svelte:head>; those render into %sveltekit.head% AFTER this block, so nothing is
+// duplicated (preprocess emits none of robots/theme-color/og:site_name/og:type/JSON-LD). The
+// Dataset + GovernmentOrganization schema is what helps a "nigeria education data" search — it
+// declares this as an official, free education dataset (and can surface in Google Dataset Search).
+const SEO_ORIGIN = (process.env.ASC_ORIGIN || 'https://emis.education.gov.ng').replace(/\/+$/, '');
+const SEO_HOME = `${SEO_ORIGIN}/portal/`; // deployment.basePath = /portal (evidence.config.yaml)
+const MOE = 'Federal Ministry of Education, Nigeria';
+const SEO_JSONLD = JSON.stringify([
+  { '@context': 'https://schema.org', '@type': 'GovernmentOrganization', name: MOE,
+    alternateName: 'Digital Nigeria Education Management Information System (DNEMIS)',
+    url: SEO_HOME, logo: `${SEO_ORIGIN}/portal/coat_of_arms.png` },
+  { '@context': 'https://schema.org', '@type': 'Dataset',
+    name: 'Nigeria Annual School Census (ASC) 2024',
+    description: 'Education statistics for Nigeria from the 2024 Annual School Census: schools, learners, teachers, classrooms and key indicators at national, state and LGA level.',
+    url: SEO_HOME, temporalCoverage: '2024', isAccessibleForFree: true,
+    keywords: ['Nigeria education data', 'Annual School Census', 'education statistics', 'schools', 'learners', 'teachers', 'DNEMIS'],
+    spatialCoverage: { '@type': 'Place', name: 'Nigeria' },
+    creator: { '@type': 'GovernmentOrganization', name: MOE },
+    publisher: { '@type': 'GovernmentOrganization', name: MOE } },
+  { '@context': 'https://schema.org', '@type': 'WebSite',
+    name: 'Nigeria Education Statistics — DNEMIS', url: SEO_HOME },
+]);
+patch(
+  'src/app.html',
+  '\t\t%sveltekit.head%',
+  '\t\t<meta name="robots" content="index, follow" />\n' +
+    '\t\t<meta name="theme-color" content="#0a3d2c" />\n' +
+    '\t\t<meta property="og:site_name" content="Nigeria Education Statistics — DNEMIS" />\n' +
+    '\t\t<meta property="og:type" content="website" />\n' +
+    `\t\t<script type="application/ld+json">${SEO_JSONLD}</script>\n` +
+    '\t\t%sveltekit.head%',
+  'SEO: JSON-LD + global meta',
+);
+
 // Overwrite EVERY default Evidence icon shipped by the template (favicon.ico, the auto-discovered
 // icon.svg, the iOS apple-touch-icon and the PWA manifest icons) with the project's DHIS2
 // school-glyph versions from evidence/static/. Project static is also merged into the build,
@@ -236,6 +273,7 @@ const LAYOUT = `<script>
 	import '../app.css';
 	import { EvidenceDefaultLayout } from '@evidence-dev/core-components';
 	import { base } from '$app/paths';
+	import { page } from '$app/stores';
 	import Icon from '../components/Icon.svelte';
 	export let data;
 </script>
@@ -255,6 +293,27 @@ const LAYOUT = `<script>
 	</div>
 </EvidenceDefaultLayout>
 
+<svelte:head>
+	<!-- SEO canonical. The per-page <title>/description/OG come from @evidence-dev/preprocess
+	     (frontmatter), which owns the *page's* single <svelte:head>; the canonical lives here in
+	     the *layout's* head instead (a different component → no duplicate-head error), derived
+	     per-page from $page.url and baked at prerender. Origin is fixed (not $page.url.origin,
+	     which is the prerender placeholder); pathname already includes the /portal basePath. -->
+	<link rel="canonical" href={\`${SEO_ORIGIN}\${$page.url.pathname}\`} />
+	<!-- Inter is served FIRST-PARTY by Evidence's bundled @evidence-dev/tailwind/fonts.css
+	     (imported above), so we do NOT load it from Google Fonts — that link was redundant
+	     (Inter downloaded twice) and a third-party origin. The bundled @font-face rules are
+	     patched to font-display:swap (see patch-evidence.mjs) so text paints immediately.
+	     Font Awesome is still third-party (cdnjs); load it OFF the critical render path
+	     (media=print → flip to all onload), preconnect so the fetch starts early, and a
+	     <noscript> fallback keeps no-JS visitors styled. (Inlining the 9 used FA icons as
+	     SVGs to drop cdnjs entirely is deferred — see the self-host-fonts-icons note.) -->
+	<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" media="print" onload="this.media='all'" />
+	<noscript>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+	</noscript>
+</svelte:head>
 <!-- Inter is served FIRST-PARTY by Evidence's bundled @evidence-dev/tailwind/fonts.css (imported
      above; its @font-face rules are patched to font-display:swap, see patch-evidence.mjs), and
      the icons above are self-hosted SVGs (see components/Icon.svelte + icons.js). The portal

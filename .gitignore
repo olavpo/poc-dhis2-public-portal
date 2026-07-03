@@ -25,6 +25,8 @@ evidence/static/asc.geojson
 evidence/pages/index.md
 evidence/pages/asc/
 evidence/static/asc/
+evidence/static/sitemap.xml
+evidence/static/robots.txt
 
 # Mirrored DuckDB-WASM extensions (downloaded by `npm run duckdb:ext`)
 evidence/static/duckdb-extensions/
