@@ -75,12 +75,14 @@ Completeness = round(100 × Submitted ÷ Expected, 1)
 
 ---
 
-## 3. "Key indicators vs State & Federal" (`Benchmark`)
+## 3. "Key indicators vs State & National" (`Benchmark`)
 
 Six rows; each shows the org unit's value, its parent State's value (LGA pages only), and the
-Federal value, all switching with the ownership toggle (Total → `census.fact`; Public/Private →
-`census.fact_ownership`). The **delta ("vs …") column** compares the unit against its parent
-**State on LGA pages**, and against **Federal** on State pages.
+national (Federal) value, all switching with the ownership toggle (Total → `census.fact`;
+Public/Private → `census.fact_ownership`). The **delta ("vs …") column** compares the unit
+against its parent **State on LGA pages**, and against **National** on State pages. (The UI
+label is "National"; the underlying org-unit tier and data fields are still called "Federal" —
+see `Benchmark.svelte`.)
 
 | Row | How | dx |
 |---|---|---|

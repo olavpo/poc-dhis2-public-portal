@@ -75,6 +75,13 @@ Census) are documented here. This project adheres to [Semantic Versioning](https
   &lt;time&gt; UTC") is baked into the shared layout at build time, so visitors can see when the
   static site was last generated. No client/engine cost; appears on Federal, State and LGA pages.
 
+### Changed
+- **The "Key Indicators vs Federal" benchmark table now says "National."** Minister-requested
+  wording change: the comparator column header and heading ("Key Indicators vs Federal" /
+  "…vs State & Federal") now read "National" / "…vs State & National" on Federal, State and LGA
+  pages, plus the breadcrumb home icon's tooltip ("Federal overview" → "National overview"). Data
+  and behaviour are unchanged — this is a label only; the underlying org-unit tier ("Federal") and
+  data fields are unchanged in code.
 ### Fixed
 - **Basemap tiles no longer show Carto's watermark.** Carto now requires an API key on
   `basemaps.cartocdn.com`; unkeyed (or invalid-keyed) requests still return a tile but with a

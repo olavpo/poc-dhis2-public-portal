@@ -11,8 +11,8 @@
 	$: shown = (rows || []).filter((r) => r.mode === $ownershipMode);
 	const FMT = { ratio: (v) => Number(v).toFixed(1), pct: (v) => Number(v).toFixed(1) + '%' };
 	const f = (v, k) => (v == null ? '—' : (FMT[k] || FMT.ratio)(v));
-	// Compare the unit against its parent State on LGA pages (stateLabel set), else against Federal.
-	$: cmpLabel = stateLabel ? 'State' : 'Federal';
+	// Compare the unit against its parent State on LGA pages (stateLabel set), else against National.
+	$: cmpLabel = stateLabel ? 'State' : 'National';
 	const base = (r) => (stateLabel ? r.state : r.federal);
 	// For ratios lower is better; for % higher is better. Colour the unit-vs-comparator delta.
 	const better = (r) => {
@@ -38,7 +38,7 @@
 			<th>Indicator</th>
 			{#if unitLabel}<th class="num">{unitLabel}</th>{/if}
 			{#if stateLabel}<th class="num">{stateLabel}</th>{/if}
-			<th class="num">Federal</th>
+			<th class="num">National</th>
 			{#if unitLabel}<th class="num">vs {cmpLabel}</th>{/if}
 		</tr>
 	</thead>
