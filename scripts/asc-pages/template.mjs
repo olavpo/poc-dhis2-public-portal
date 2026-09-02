@@ -177,7 +177,7 @@ function head(ou, crumbs, federalId, unitLabel, stateId, stateLabel) {
   const ownDx = lit(TOGGLE);
   const unitE = `'${ou.id}'`, fedE = `'${federalId}'`, stateE = stateId ? `'${stateId}'` : `''`;
   const benchmark = `select * from (\n${BENCH.flatMap((b, i) => MODES3.map((M) => benchSelect(b, i, unitE, stateE, fedE, M))).join('\nunion all\n')}\n) order by mode, ord`;
-  const benchHeading = stateLabel ? 'Key Indicators vs State & Federal' : unitLabel ? 'Key Indicators vs Federal' : 'Key Indicators';
+  const benchHeading = stateLabel ? 'Key Indicators vs State & National' : unitLabel ? 'Key Indicators vs National' : 'Key Indicators';
   const { title: seoTitle, desc } = seo(ou);
   return `---
 title: ${JSON.stringify(seoTitle)}
@@ -441,7 +441,7 @@ ${benchmark}
     {dx:'${I.toilets}',title:'Toilets',fmt:'int',icon:'toilet'}
   ]} />
 
-## Key Indicators vs State & Federal
+## Key Indicators vs State & National
 
 <Benchmark rows={benchmark} unitLabel={crumbs_q?.[2]?.name ?? ''} stateLabel={crumbs_q?.[1]?.name ?? ''} />
 ` + chartsSection({ id: P }, false) + `

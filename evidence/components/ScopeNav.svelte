@@ -8,7 +8,7 @@
 </script>
 
 <nav class="crumb" aria-label="Breadcrumb">
-	<a class="home" href="{base}/" title="Federal overview"><Icon name="house" /></a>
+	<a class="home" href="{base}/" title="National overview"><Icon name="house" /></a>
 	{#each crumbs as c, i}<span class="sep">›</span>{#if c.link}<a href={c.link}>{c.name}</a>{:else}<span class="here">{c.name}</span>{/if}{/each}
 </nav>
 
