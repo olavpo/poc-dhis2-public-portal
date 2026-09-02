@@ -19,9 +19,11 @@
 # so the last good build keeps serving — the regen never publishes an empty/partial portal.
 #
 # Secrets come from an environment file outside the repo (default /etc/dnemis-portal.env,
-# override with DNEMIS_ENV_FILE), which must set D2_TOKEN (and may set D2_BASE_URL). It may
-# also set CF_ZONE_ID + CF_PURGE_TOKEN (a token with the Zone "Cache Purge" permission) — if
-# present, deploy.sh purges the Cloudflare edge cache after flipping the symlink.
+# override with DNEMIS_ENV_FILE), which must set D2_TOKEN (and may set D2_BASE_URL) and
+# CARTO_BASEMAP_KEY (Carto now requires a key on basemaps.cartocdn.com — `npm run build`
+# fails fast without it, see AGENTS.md). It may also set CF_ZONE_ID + CF_PURGE_TOKEN (a token
+# with the Zone "Cache Purge" permission) — if present, deploy.sh purges the Cloudflare edge
+# cache after flipping the symlink.
 #
 # Intended to run from cron, e.g.:
 #   59 23 * * * /opt/poc-dhis2-public-portal/scripts/regenerate.sh >> /var/log/dnemis-regen.log 2>&1
@@ -48,6 +50,9 @@ else
 fi
 if [ -z "${D2_TOKEN:-}" ] && [ -z "${DHIS2_USERNAME:-}" ]; then
   log "ERROR: $ENV_FILE sets neither D2_TOKEN nor DHIS2_USERNAME/DHIS2_PASSWORD"; exit 1
+fi
+if [ -z "${CARTO_BASEMAP_KEY:-}" ]; then
+  log "ERROR: $ENV_FILE does not set CARTO_BASEMAP_KEY (required — npm run build fails without it)"; exit 1
 fi
 
 cd "$REPO"
