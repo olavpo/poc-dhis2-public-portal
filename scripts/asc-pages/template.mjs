@@ -11,6 +11,17 @@
 const NAME = (col) => `regexp_replace(${col}, '^[a-z]{2} ', '')`;
 const lit = (ids) => ids.map((x) => `'${x}'`).join(',');
 
+// Carto now requires an API key on basemaps.cartocdn.com (unkeyed/invalid-keyed requests still
+// 200 but render a watermark). Baked into every generated page's AreaMap `basemap` prop, so the
+// key ends up in the static build like any other client-side map key (Carto keys are domain-
+// restricted, so this is expected — see CARTO_BASEMAP_KEY in the deploy docs). Fail fast rather
+// than silently shipping a watermarked map.
+const CARTO_BASEMAP_KEY = process.env.CARTO_BASEMAP_KEY;
+if (!CARTO_BASEMAP_KEY) {
+  throw new Error('CARTO_BASEMAP_KEY env var is required (Carto basemap tiles need an API key) — set it before running pages:asc / build.');
+}
+const BASEMAP_URL = `https://basemaps.cartocdn.com/rastertiles/light_all/{z}/{x}/{y}{r}.png?key=${CARTO_BASEMAP_KEY}`;
+
 // KPI-row indicators. All four KPI tiles disaggregate by the Public/Private toggle (each dx is in
 // the ownership cut). schools (MD) is federal/state-only, so it's not a KPI tile — it still feeds
 // the schools chart + benchmark.
@@ -294,7 +305,7 @@ ${q3(mapQ)}
      the max tick can clip slightly — accepted; readability of the unit beats tick density. -->
 <Grid cols=2>
 ${withMap ? `  <OwnershipSelect total={children_map_total} pub={children_map_public} priv={children_map_private} let:data>
-    <AreaMap data={data} geoJsonUrl="${geoUrl}" geoId="id" areaCol="id" value="learners" link="link" title="Learners by ${childLevel} · Tap to Explore" tooltip={[{id:'name',showColumnTitles:false},{id:'learners',fmt:'#,##0'}]} height={300} />
+    <AreaMap data={data} geoJsonUrl="${geoUrl}" geoId="id" areaCol="id" value="learners" link="link" title="Learners by ${childLevel} · Tap to Explore" tooltip={[{id:'name',showColumnTitles:false},{id:'learners',fmt:'#,##0'}]} height={300} basemap={"${BASEMAP_URL}"} />
   </OwnershipSelect>\n` : ''}  <OwnershipSelect total={enrol_total} pub={enrol_public} priv={enrol_private} let:data>
     <BarChart data={data} x=level y=enrolment yFmt="#,##0" title="Learners by Education Level" swapXY=true sort=false />
   </OwnershipSelect>

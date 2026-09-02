@@ -281,15 +281,17 @@ Once a day the portal re-extracts data from DHIS2 and republishes. The pipeline 
 (→ `push` to the serving box when `PORTAL_HOST` is set, §2.4), guarded by `flock` (no overlapping
 runs) and `set -e` (a failed extract aborts **before** deploy, so the last good build keeps serving).
 
-### 4.1 Secret (the DHIS2 token)
+### 4.1 Secrets (the DHIS2 token + the Carto basemap key)
 
-The extract authenticates with a DHIS2 **personal access token**. Store it in a root-owned env
-file *outside* the repo:
+The extract authenticates with a DHIS2 **personal access token**, and the build needs a **Carto
+API key** (basemap tiles require one — see AGENTS.md's "Conventions & gotchas"). Store both in a
+root-owned env file *outside* the repo:
 
 ```bash
 sudo install -m 600 /dev/null /etc/dnemis-portal.env
 sudo tee /etc/dnemis-portal.env >/dev/null <<'EOF'
 D2_TOKEN=d2pat_replace_me
+CARTO_BASEMAP_KEY=cb1_replace_me   # required — Carto basemap tiles need a key (see AGENTS.md); npm run build fails without it
 # D2_BASE_URL=https://trainingdb.dhis2nigeria.org.ng   # optional: overrides baseUrl in asc.yaml
 # CF_ZONE_ID=...            # optional: Cloudflare zone (Overview → API) — enables cache purge on deploy
 # CF_PURGE_TOKEN=...        # optional: API token with the Zone "Cache Purge" permission (see §2.2)
