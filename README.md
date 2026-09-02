@@ -40,6 +40,9 @@ npm --prefix evidence install     # Evidence + DuckDB (one-time)
 # Refresh the data from the live instance (token preferred; or DHIS2_USERNAME/PASSWORD):
 D2_TOKEN="d2pat_xxxx" npm run extract:asc
 
+# Carto now requires an API key for basemap tiles — pages:asc/build fail fast without it:
+export CARTO_BASEMAP_KEY="cb1_xxxx"
+
 # One-shot build → deploy → serve (16 GB heap; --sources also rebuilds parquet first):
 ./scripts/release.sh --sources
 # then browse http://localhost:$SANDBOX_HOST_PORT

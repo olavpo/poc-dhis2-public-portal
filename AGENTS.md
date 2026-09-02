@@ -53,7 +53,10 @@ deploy.sh  →  builds/<ts>/ + atomic `current` symlink   serve.mjs  →  static
   (or `release.sh --sources`). See `scripts/dhis2-extract/README.md`.
 - `npm run pages:asc` — regenerate the per-org-unit pages from `scripts/asc-pages/template.mjs`
   (run automatically by `npm run build`). `ASC_MAX_STATES` / `ASC_MAX_LGAS` cap the count for a
-  fast local build.
+  fast local build. Requires **`CARTO_BASEMAP_KEY=…`** in env — Carto's basemap tiles need an
+  API key (unkeyed/invalid-keyed requests still 200 but render watermarked); baked into every
+  `AreaMap`'s `basemap` prop, so the key ships client-side like any other browser map key —
+  restrict it to the portal's domain(s) in the Carto dashboard. Missing var throws immediately.
 - `npm run synth:asc` — one-off: seed a DHIS2 instance with a **synthetic** Nigeria geography +
   deterministic dummy dataValues for the real ASC data elements (used to stand up a test
   instance; not part of the normal build).
@@ -131,6 +134,12 @@ cost an hour the first time; none throw an obvious error.
   `{#each}`/`{expr}`) inside a raw-HTML island — e.g. `<div style="overflow:auto"><BarChart/></div>`
   silently fails. Use the `<Grid>` component for layout, or a `.svelte` component for
   anything custom (scroll containers, loops, DOM work — e.g. `ScrollX.svelte`).
+- **A literal `{...}` inside a plain quoted component attribute is parsed as a Svelte
+  expression, not text.** `basemap="https://.../{z}/{x}/{y}.png"` fails to compile with
+  e.g. `'z' is not defined` — Svelte reads `{z}` as a JS expression referencing an undefined
+  variable. Any attribute value containing literal braces (Leaflet tile-URL placeholders,
+  JSON-looking strings, etc.) must be wrapped as a JS string expression instead:
+  `basemap={"https://.../{z}/{x}/{y}.png"}`.
 - **Input-driven queries hang until their input initialises.** Evidence defers any query
   referencing `${inputs.x}` until `inputs.x` has a value; if it never gets one the chart
   sits in a grey "loading" skeleton forever, with **no error**. Two ways a `<Dropdown>`

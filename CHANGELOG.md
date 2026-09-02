@@ -75,6 +75,14 @@ Census) are documented here. This project adheres to [Semantic Versioning](https
   &lt;time&gt; UTC") is baked into the shared layout at build time, so visitors can see when the
   static site was last generated. No client/engine cost; appears on Federal, State and LGA pages.
 
+### Fixed
+- **Basemap tiles no longer show Carto's watermark.** Carto now requires an API key on
+  `basemaps.cartocdn.com`; unkeyed (or invalid-keyed) requests still return a tile but with a
+  watermark overlay. The Federal/State "Learners by … · Tap to Explore" map now passes a keyed
+  `basemap` URL, sourced from a new **required** `CARTO_BASEMAP_KEY` env var (`pages:asc`/`build`
+  fail fast if it's unset). The key ships client-side, like any browser map key — restrict it to
+  the portal's domain(s) in the Carto dashboard. See AGENTS.md and `docs/DEPLOYMENT.md` §4.1.
+
 ## [0.5.0] — 2026-06-27
 
 ### Changed
